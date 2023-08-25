@@ -58,16 +58,16 @@ Pour l'année 2007, le jeu de données contient des informations pour 142 pays. 
 
 ```{r echo=FALSE, fig.pos="!h"}
 library(gapminder)
-gapminder_2007 <- gapminder %>% 
-  filter(year == 2007) %>% 
-  select(-year) %>% 
-  rename_all(str_to_title) %>% 
+gapminder_2007 <- gapminder |> 
+  filter(year == 2007) |> 
+  select(-year) |> 
+  rename_all(str_to_title) |> 
   rename(`Life Expectancy` = Lifeexp,
          `GDP per Capita` = Gdppercap,
          Population = Pop)
 
-gapminder_2007 %>% 
-  head() %>% 
+gapminder_2007 |> 
+  head() |> 
   knitr::kable(caption = "Les 6 premières lignes du jeu de données `gapminder` pour l'année 2007.", booktabs = TRUE, longtable = TRUE)
 ```
 
@@ -86,7 +86,7 @@ Examinons maintenant la @fig-gapmind qui représente ces variables pour chacun d
 #| echo: false
 #| fig-cap: "Espérance de vie en fonction du PIB par habitant en 2007."
 
-gapminder_2007 %>% 
+gapminder_2007 |> 
   ggplot(aes(x = `GDP per Capita`, y = `Life Expectancy`, color = Continent, size = Population)) + 
     geom_point()
 ```
@@ -143,7 +143,7 @@ Ici, dans le jeu de données `flights`, nous allons nous intéresser à la relat
 Afin d'avoir un jeu de données plus facile à utiliser, nous nous contenterons de visualiser les vols d'Alaska Airlines, dont le code de compagnie aérienne est `"AS"`.
 
 ```{r tidy=FALSE}
-alaska_flights <- flights %>%
+alaska_flights <- flights |>
   filter(carrier == "AS")
 ```
 
@@ -417,7 +417,7 @@ ggplot(data = alaska_flights,
 ```{r tidy = FALSE}
 library(dplyr)
 set.seed(4532) # Afin que tout le monde récupère les mêmes lignes
-diams <- diamonds %>% 
+diams <- diamonds |> 
   sample_n(5000)
 ```
 
@@ -454,7 +454,7 @@ weather
 Nous allons nous intéresser à la variable `temp`, qui contient un enregistrement de température pour chaque heure de chaque jour de 2013 pour les 3 aéroports de New York. Cela représente une grande quantité de données, aussi, nous nous limiterons aux températures observées entre le premier et le 15 janvier, pour l'aéroport Newark uniquement.
 
 ```{r tidy=FALSE}
-small_weather <- weather %>% 
+small_weather <- weather |> 
   filter(origin == "EWR",
          month == 1,
          day <= 15)
@@ -496,13 +496,13 @@ ggplot(data = small_weather, mapping = aes(x = time_hour, y = temp)) +
   geom_point()
 ```
 
-Enfin, comme pour les points, il est possible de spécifier plusieurs caractéristiques esthétiques des lignes, soit en les associant à des variables, au sein de la fonction `aes()`, soit en les utilisant en guise de paramètres pour modifier l'aspect général. Les arguments les plus classiques sont une fois de plus `color` (ou `colour`) pour modifier la couleur des lignes,  `linetype` pour modifier le type de lignes (continues, pointillées, tirets, etc), et `size` pour modifier l'épaisseur des lignes.
+Enfin, comme pour les points, il est possible de spécifier plusieurs caractéristiques esthétiques des lignes, soit en les associant à des variables, au sein de la fonction `aes()`, soit en les utilisant en guise de paramètres pour modifier l'aspect général. Les arguments les plus classiques sont une fois de plus `color` (ou `colour`) pour modifier la couleur des lignes,  `linetype` pour modifier le type de lignes (continues, pointillées, tirets, etc), et `linewidth` pour modifier l'épaisseur des lignes.
 
 Reprenons le jeu de données complet `weather`, et filtrons uniquement les dates comprises entre le premier et le 15 janvier, mais cette fois pour les 3 aéroports de New York :
 
 ```{r}
 #| tidy: false
-small_weather_airports <- weather %>% 
+small_weather_airports <- weather |> 
   filter(month == 1,
          day <= 15)
 ```
@@ -926,19 +926,19 @@ Dernière chose concernant les boxplots : il s'agit d'une représentation graphi
 
 library(patchwork)
 
-pl1 <- weather %>% 
-  filter(month == 11) %>% 
+pl1 <- weather |> 
+  filter(month == 11) |> 
   ggplot(aes(x = temp)) +
     geom_histogram() +
     coord_flip()
 
-pl2 <- weather %>% 
-  filter(month == 11) %>% 
+pl2 <- weather |> 
+  filter(month == 11) |> 
   ggplot(aes(x= factor(month), y = temp)) +
     geom_boxplot(notch = TRUE)
 
-pl3 <- weather %>% 
-  filter(month == 11) %>% 
+pl3 <- weather |> 
+  filter(month == 11) |> 
   ggplot(aes(x= factor(month), y = temp)) +
   geom_jitter(width = 0.2, height=1, alpha=0.2)
 
@@ -1047,9 +1047,9 @@ Ordonner les catégories par ordre décroissant est souvent indispensable afin d
 Si nous souhaitons connaître le nombre de vols précis de chaque compagnie aérienne, il nous faut faire appel à plusieurs fonctions du package `dplyr` que nous détaillerons dans le @sec-wrangling. Ci-dessous, nous créons un nouveau tableau `carrier_table` contenant le nombre de vols de chaque compagnie aérienne et les compagnies sont ordonnées par nombres de vols décroissants :
 
 ```{r}
-carrier_table <- flights %>%   # On prend flights, puis...
-  group_by(carrier) %>%        # On groupe les données par compagnie, puis...
-  summarize(nombre = n()) %>%  # On calcule le nb de vols par Cie, puis ...
+carrier_table <- flights |>   # On prend flights, puis...
+  group_by(carrier) |>        # On groupe les données par compagnie, puis...
+  summarize(nombre = n()) |>  # On calcule le nb de vols par Cie, puis ...
   arrange(desc(nombre))        # On trie par nb de vols décroissants ...
 carrier_table                  # Enfin, on affiche la nouvelle table
 ```
@@ -1113,8 +1113,8 @@ Vous voyez donc que selon le type de données dont vous disposez (soit un tablea
 #| warning: false
 #| fig-cap: "Nombre de vols par compagnie aérienne au départ de New York en 2013."
 
-flights %>% 
-  count(carrier) %>% 
+flights |> 
+  count(carrier) |> 
   ggplot(aes(x = factor(1), y = n, fill = factor(carrier))) +
   geom_bar(width = 1, stat = "identity") +
   coord_polar(theta = "y") +
@@ -1542,7 +1542,7 @@ Le choix d'un thème et d'une police adaptés doivent vous permettre de faire de
 Vous devriez donc maintenant être bien armés pour produire 95% des graphiques dont vous aurez besoin tout au long de votre cursus universitaire. Toutefois, un point important a pour l'instant été omis : l'ajout de barres d'erreurs sur vos graphiques. Nous verrons comment faire cela un peu plus tard, après avoir appris à manipuler efficacement des tableaux de données avec les packages `tidyr` et `dplyr`.
 
 
-----
+
 
 ## Exercices {#sec-exo-3}
 
@@ -1550,8 +1550,8 @@ Commencez par créer un nouveau jeu de données en exécutant ces commandes :
 
 ```{r tidy=FALSE}
 set.seed(1234)
-small_flights <- flights %>% 
-  sample_n(1000) %>% 
+small_flights <- flights |> 
+  sample_n(1000) |> 
   filter(!is.na(arr_delay),
          distance < 3000)
 ```
@@ -1567,7 +1567,7 @@ En vous appuyant sur les fonctions et les principes de la grammaire des graphiqu
 #| warning: false
 #| fig-cap: "Première figure à reproduire"
 
-small_flights %>% 
+small_flights |> 
   ggplot(aes(x = distance, y = air_time, color = origin, shape = origin)) +
     geom_point(alpha = 0.8) +
     scale_color_brewer(palette = "Set1") +
@@ -1596,7 +1596,7 @@ Toujours avec ce jeu de données `small-flights`, tapez les commandes permettant
 #| warning: false
 #| fig-cap: "Seconde figure à reproduire"
 
-small_flights %>% 
+small_flights |> 
   ggplot(aes(x = factor(month), fill = origin)) +
     geom_bar() +
     facet_wrap(~fct_infreq(carrier), nrow = 4) +

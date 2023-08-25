@@ -467,7 +467,7 @@ div.csl-indent {
 </ol>
 <p>Afin d’avoir un jeu de données plus facile à utiliser, nous nous contenterons de visualiser les vols d’Alaska Airlines, dont le code de compagnie aérienne est <code>"AS"</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>alaska_flights <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>alaska_flights <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">"AS"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Il est normal que vous ne compreniez pas encore les commandes ci-dessus : elles seront décrites dans le <a href="05-DataWrangling.html"><span>Chapitre&nbsp;6</span></a>. Retenez juste que nous avons créé un nouveau tableau, nommé <code>alaska_flights</code>, qui contient toutes les informations des vols d’Alaska Airlines. Commencez par examiner ce tableau avec la fonction <code>View()</code>. En quoi est-il différent du tableau <code>flights</code> ?</p>
@@ -761,7 +761,7 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4532</span>) <span class="co"># Afin que tout le monde récupère les mêmes lignes</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>diams <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>diams <span class="ot">&lt;-</span> diamonds <span class="sc">|&gt;</span> </span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">5000</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="3" type="1">
@@ -811,7 +811,7 @@ div.csl-indent {
 </div>
 <p>Nous allons nous intéresser à la variable <code>temp</code>, qui contient un enregistrement de température pour chaque heure de chaque jour de 2013 pour les 3 aéroports de New York. Cela représente une grande quantité de données, aussi, nous nous limiterons aux températures observées entre le premier et le 15 janvier, pour l’aéroport Newark uniquement.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>small_weather <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>small_weather <span class="ot">&lt;-</span> weather <span class="sc">|&gt;</span> </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(origin <span class="sc">==</span> <span class="st">"EWR"</span>,</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>         month <span class="sc">==</span> <span class="dv">1</span>,</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>         day <span class="sc">&lt;=</span> <span class="dv">15</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -852,10 +852,10 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>Enfin, comme pour les points, il est possible de spécifier plusieurs caractéristiques esthétiques des lignes, soit en les associant à des variables, au sein de la fonction <code>aes()</code>, soit en les utilisant en guise de paramètres pour modifier l’aspect général. Les arguments les plus classiques sont une fois de plus <code>color</code> (ou <code>colour</code>) pour modifier la couleur des lignes, <code>linetype</code> pour modifier le type de lignes (continues, pointillées, tirets, etc), et <code>size</code> pour modifier l’épaisseur des lignes.</p>
+<p>Enfin, comme pour les points, il est possible de spécifier plusieurs caractéristiques esthétiques des lignes, soit en les associant à des variables, au sein de la fonction <code>aes()</code>, soit en les utilisant en guise de paramètres pour modifier l’aspect général. Les arguments les plus classiques sont une fois de plus <code>color</code> (ou <code>colour</code>) pour modifier la couleur des lignes, <code>linetype</code> pour modifier le type de lignes (continues, pointillées, tirets, etc), et <code>linewidth</code> pour modifier l’épaisseur des lignes.</p>
 <p>Reprenons le jeu de données complet <code>weather</code>, et filtrons uniquement les dates comprises entre le premier et le 15 janvier, mais cette fois pour les 3 aéroports de New York :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>small_weather_airports <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>small_weather_airports <span class="ot">&lt;-</span> weather <span class="sc">|&gt;</span> </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(month <span class="sc">==</span> <span class="dv">1</span>,</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>         day <span class="sc">&lt;=</span> <span class="dv">15</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1417,9 +1417,9 @@ div.csl-indent {
 <p>Ordonner les catégories par ordre décroissant est souvent indispensable afin de faciliter la lecture du graphique et les comparaisons entre catégories.</p>
 <p>Si nous souhaitons connaître le nombre de vols précis de chaque compagnie aérienne, il nous faut faire appel à plusieurs fonctions du package <code>dplyr</code> que nous détaillerons dans le <a href="05-DataWrangling.html"><span>Chapitre&nbsp;6</span></a>. Ci-dessous, nous créons un nouveau tableau <code>carrier_table</code> contenant le nombre de vols de chaque compagnie aérienne et les compagnies sont ordonnées par nombres de vols décroissants :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>carrier_table <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span>   <span class="co"># On prend flights, puis...</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span>        <span class="co"># On groupe les données par compagnie, puis...</span></span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">nombre =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span>  <span class="co"># On calcule le nb de vols par Cie, puis ...</span></span>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>carrier_table <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span>   <span class="co"># On prend flights, puis...</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">|&gt;</span>        <span class="co"># On groupe les données par compagnie, puis...</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">nombre =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span>  <span class="co"># On calcule le nb de vols par Cie, puis ...</span></span>
 <span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(nombre))        <span class="co"># On trie par nb de vols décroissants ...</span></span>
 <span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>carrier_table                  <span class="co"># Enfin, on affiche la nouvelle table</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1904,7 +1904,6 @@ Levels: 9E AA AS B6 DL EV F9 FL HA MQ OO UA US VX WN YV</code></pre>
 </div>
 <p>Le choix d’un thème et d’une police adaptés doivent vous permettre de faire des graphiques originaux et clairs. Rappelez-vous toujours que vos choix en matière de graphiques doivent avoir pour objectif principal de rendre les tendances plus faciles à décrypter pour un lecteur non familier de vos données. C’est un outil de communication au même titre que n’importe quel paragraphe d’un rapport ou compte-rendu. Et comme pour un paragraphe, la première version d’un graphique est rarement la bonne.</p>
 <p>Vous devriez donc maintenant être bien armés pour produire 95% des graphiques dont vous aurez besoin tout au long de votre cursus universitaire. Toutefois, un point important a pour l’instant été omis : l’ajout de barres d’erreurs sur vos graphiques. Nous verrons comment faire cela un peu plus tard, après avoir appris à manipuler efficacement des tableaux de données avec les packages <code>tidyr</code> et <code>dplyr</code>.</p>
-<hr>
 </section>
 </section>
 <section id="sec-exo-3" class="level2" data-number="4.10">
@@ -1912,8 +1911,8 @@ Levels: 9E AA AS B6 DL EV F9 FL HA MQ OO UA US VX WN YV</code></pre>
 <p>Commencez par créer un nouveau jeu de données en exécutant ces commandes :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>small_flights <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
-<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>small_flights <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">1000</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(arr_delay),</span>
 <span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>         distance <span class="sc">&lt;</span> <span class="dv">3000</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

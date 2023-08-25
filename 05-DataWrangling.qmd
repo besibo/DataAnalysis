@@ -28,11 +28,22 @@ library(tidyverse)
 
 ----
 
-## Le pipe `%>%`
+## Le pipe `|>`
 
 Avant d'entrer dans le vif du sujet, je souhaite introduire ici la notion de "pipe" (prononcer à l'anglo-saxonne). Le pipe est un opérateur que nous avons déjà vu apparaître à plusieurs reprises dans les chapitres précédents sans expliquer son fonctionnement.
 
-Le pipe, noté `%>%`, peut être obtenu en pressant les touches `ctrl + shift + M` de votre clavier (ou `command + shift + M` sous macOS). Il permet d'enchaîner logiquement des actions les unes à la suite des autres. Globalement, le pipe prend l'objet situé à sa gauche, et le transmet à la fonction situé à sa droite. En d'autres termes, les 2 expressions suivantes sont strictement équivalentes :
+
+```{r}
+#| label: fig-pipepref
+#| column: margin
+#| fig-cap: "Pour que ces raccourcis fonctionnent, assurez-vous que l'option `Use native pipe operator` est bien cochée dans les préférences de `RStudio`."
+#| fig-cap-location: top
+#| echo: false
+
+knitr::include_graphics('images/PipePref.png')
+```
+
+Le pipe, noté `|>`, peut être obtenu en pressant les touches `ctrl + shift + M` de votre clavier (ou `command + shift + M` sous macOS). Il permet d'enchaîner logiquement des actions les unes à la suite des autres. Globalement, le pipe prend l'objet situé à sa gauche, et le transmet à la fonction situé à sa droite. En d'autres termes, les 2 expressions suivantes sont strictement équivalentes :
 
 ```{r}
 #| eval: false
@@ -42,20 +53,20 @@ Le pipe, noté `%>%`, peut être obtenu en pressant les touches `ctrl + shift + 
 
 # Il s'agit d'un exemple fictif : ne tapez pas ceci dans votre script !
 f(x, y)
-x %>% f(y)
+x |> f(y)
 ```
 
 
 Travailler avec le pipe est très intéressant car toutes les fonctions de `dplyr` que nous allons décrire ensuite sont construites autour de la même syntaxe : on leur fournit un `data.frame` (ou encore mieux, un `tibble`), elles effectuent une opération et renvoient un nouveau `data.frame` (ou un nouveau `tibble`). Il est ainsi possible de créer des groupes de commandes cohérentes qui permettent, grâce à l'enchaînement d'étapes simples, d'aboutir à des résultats complexes.
 
-De la même façon que le `+` permet d'ajouter une couche supplémentaire à un graphique `ggplot2`, le pipe `%>%` permet d'ajouter une opération supplémentaire dans un groupe de commandes.
+De la même façon que le `+` permet d'ajouter une couche supplémentaire à un graphique `ggplot2`, le pipe `|>` permet d'ajouter une opération supplémentaire dans un groupe de commandes.
 
 Pour reprendre un exemple de la @sec-clouds sur les nuages de points, nous avions commencé par créer un objet nommé `alaska_flights` à partir de l'objet `flights` :
 
 ```{r}
 #| tidy: false
 
-alaska_flights <- flights %>%
+alaska_flights <- flights |>
   filter(carrier == "AS")
 ```
 
@@ -84,8 +95,8 @@ Voilà comment traduire cela avec le pipe :
 #| tidy: false
 #| fig-cap: "Notre premier graphique, produit grâce au pipe."
 
-flights %>% 
-  filter(carrier == "AS") %>% 
+flights |> 
+  filter(carrier == "AS") |> 
   ggplot(aes(x = dep_delay, y = arr_delay)) + 
     geom_point()
 ```
@@ -135,7 +146,7 @@ Comme son nom l'indique, `filter()` permet de filtrer des lignes en spécifiant 
 #| tidy: false
 #| eval: false
 
-alaska_flights <- flights %>% 
+alaska_flights <- flights |> 
   filter(carrier == "AS")
 ```
 
@@ -143,7 +154,7 @@ alaska_flights <- flights %>%
 #| tidy: false
 #| eval: false
 
-small_weather <- weather %>% 
+small_weather <- weather |> 
   filter(origin == "EWR",
          month == 1,
          day <= 15)
@@ -153,7 +164,7 @@ Dans les 2 cas, la première ligne de code nous permet :
 
 1. D'indiquer le nom du nouvel objet dans lequel les données modifiées seront stockées (`alaska_flights` et `small-weather`).
 2. D'indiquer de quel objet les données doivent être extraites (`flights` et `weather`).
-3. De passer cet objet à la fonction suivante avec un pipe `%>%`.
+3. De passer cet objet à la fonction suivante avec un pipe `|>`.
 
 Le premier argument de la fonction `filter()` doit être le nom d'un `data.frame` ou d'un `tibble`. Ici, puisque nous utilisons le pipe, il est inutile de spécifier cet argument : c'est ce qui est placé à gauche du pipe qui est utilisé comme premier argument de la fonction `filter()`. Les arguments suivants constituent la ou les conditions qui doivent être respectées par les lignes du tableau de départ afin d'être intégrées au nouveau tableau de données.
 
@@ -164,7 +175,7 @@ Dans la @sec-view, nous avons utilisé la fonction `View` et l'application manue
 ```{r}
 #| include: false
 
-JFK_12fev <- flights %>% 
+JFK_12fev <- flights |> 
   filter(origin == "JFK",
          month == 2,
          day == 12)
@@ -199,7 +210,7 @@ Dans le tableau `flights`, tous les vols prévus ont-ils effectivement décollé
 ```{r}
 #| tidy: false
 
-flights %>% 
+flights |> 
   filter(is.na(dep_time))
 ```
 
@@ -207,7 +218,7 @@ flights %>%
 #| tidy: false
 #| include: false
 
-naflights <- flights %>% 
+naflights <- flights |> 
   filter(is.na(dep_time))
 ```
 
@@ -218,7 +229,7 @@ Dans le même ordre d'idée, y a t-il des vols qui ont décollé mais qui ne son
 ```{r}
 #| tidy: false
 
-flights %>% 
+flights |> 
   filter(!is.na(dep_time),
          is.na(arr_time))
 ```
@@ -228,7 +239,7 @@ Notez l'utilisation du `!` pour la première condition. Nous récupérons ici le
 ```{r}
 #| tidy: false
 
-flights %>% 
+flights |> 
   filter(!is.na(dep_time) & is.na(arr_time))
 ```
 
@@ -236,7 +247,7 @@ flights %>%
 #| tidy: false
 #| include: false
 
-flights_annul <- flights %>% 
+flights_annul <- flights |> 
   filter(!is.na(dep_time) & is.na(arr_time))
 ```
 
@@ -249,7 +260,7 @@ Enfin, pour illustrer l'utilisation de `|` (le `OU` logique) et de `%in%`, imagi
 ```{r}
 #| tidy: false
 
-atl_sea_fall <- flights %>% 
+atl_sea_fall <- flights |> 
   filter(origin == "JFK", 
          dest == "ATL" | dest == "SEA", 
          month >= 10)
@@ -263,7 +274,7 @@ Une autre solution pour obtenir le même tableau est de remplacer l'expression c
 ```{r}
 #| tidy: false
 
-atl_sea_fall2 <- flights %>% 
+atl_sea_fall2 <- flights |> 
   filter(origin == "JFK", 
          dest %in% c("ATL", "SEA"), 
          month >= 10)
@@ -309,7 +320,7 @@ Ainsi, pour connaître la température moyenne et l'écart-type des température
 ```{r}
 #| tidy: false
 
-weather %>% 
+weather |> 
   summarise(moyenne = mean(temp),
             ecart_type = sd(temp))
 ```
@@ -319,7 +330,7 @@ Les fonctions `mean()` et `sd()` permettent de calculer une moyenne et un écart
 ```{r}
 #| tidy: false
 
-weather %>% 
+weather |> 
   filter(is.na(temp))
 ```
 
@@ -329,7 +340,7 @@ Pour obtenir les valeurs souhaitées, il faut indiquer à `R` d'exclure les vale
 ```{r}
 #| tidy: false
 
-weather %>% 
+weather |> 
   summarise(moyenne = mean(temp, na.rm = TRUE),
             ecart_type = sd(temp, na.rm = TRUE))
 ```
@@ -339,7 +350,7 @@ weather %>%
 #| tidy: false
 #| include: false
 
-temper <- weather %>% 
+temper <- weather |> 
   summarise(moyenne = mean(temp, na.rm = TRUE),
             ecart_type = sd(temp, na.rm = TRUE))
 ```
@@ -369,8 +380,8 @@ Pour revenir à l'exemple des températures, imaginons que nous souhaitions calc
 ```{r}
 #| tidy: false
 
-weather %>% 
-  group_by(month) %>% 
+weather |> 
+  group_by(month) |> 
   summarise(moyenne = mean(temp, na.rm = TRUE),
             ecart_type = sd(temp, na.rm = TRUE))
 ```
@@ -390,8 +401,8 @@ avec $s$, l'écart-type de l'échantillon et $n$, la taille de l'échantillon. C
 ```{r}
 #| tidy: false
 
-monthly_temp <- weather %>% 
-  group_by(month) %>% 
+monthly_temp <- weather |> 
+  group_by(month) |> 
   summarise(moyenne = mean(temp, na.rm = TRUE),
             ecart_type = sd(temp, na.rm = TRUE),
             nb_obs = n(),
@@ -414,7 +425,7 @@ Le tableau `monthly_temp` que nous venons de créer contient donc les données n
 #| warning: false
 #| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
 
-monthly_temp %>% 
+monthly_temp |> 
   ggplot(aes(x = factor(month), y = moyenne, group = 1)) +
     geom_line() + 
     geom_point() +
@@ -437,7 +448,7 @@ Vous remarquerez que :
 #| warning: false
 #| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
 
-monthly_temp %>% 
+monthly_temp |> 
   ggplot(aes(x = factor(month), y = moyenne, group = 1)) +
     geom_line() + 
     geom_point() +
@@ -457,7 +468,7 @@ monthly_temp %>%
 #| warning: false
 #| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
 
-monthly_temp %>% 
+monthly_temp |> 
   ggplot(aes(x = factor(month), y = moyenne, group = 1)) +
     geom_line() + 
     geom_point() +
@@ -477,8 +488,8 @@ Jusqu'ici, nous avons groupé les données de température par mois. Il est tout
 ```{r}
 #| tidy: false
 
-monthly_orig_temp <- weather %>% 
-  group_by(origin, month) %>% 
+monthly_orig_temp <- weather |> 
+  group_by(origin, month) |> 
   summarise(moyenne = mean(temp, na.rm = TRUE),
             ecart_type = sd(temp, na.rm = TRUE),
             nb_obs = n(),
@@ -495,7 +506,7 @@ En plus de la variable `month`, la tableau `monthly_orig_temp` contient une vari
 #| warning: false
 #| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
 
-monthly_orig_temp %>% 
+monthly_orig_temp |> 
   ggplot(aes(x = factor(month), 
              y = moyenne,
              group = origin,
@@ -519,7 +530,7 @@ monthly_orig_temp %>%
 #| warning: false
 #| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
 
-monthly_orig_temp %>% 
+monthly_orig_temp |> 
   ggplot(aes(x = factor(month), y = moyenne, group = origin, color = origin)) +
     geom_line() + 
     geom_point() +
@@ -540,7 +551,7 @@ Notez que j'utilise maintenant `group = origin` et non plus `group = 1`. Ici, le
 #| warning: false
 #| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
 
-monthly_orig_temp %>% 
+monthly_orig_temp |> 
   ggplot(aes(x = factor(month), 
              y = moyenne,
              group = origin,
@@ -566,7 +577,7 @@ monthly_orig_temp %>%
 #| warning: false
 #| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
 
-monthly_orig_temp %>% 
+monthly_orig_temp |> 
   ggplot(aes(x = factor(month), y = moyenne, group = origin, color = origin)) +
     geom_line() + 
     geom_point() +
@@ -583,8 +594,8 @@ Lorsque nous groupons par plusieurs variables, il peut-être utile d'ajouter l'a
 ```{r}
 #| tidy: false
 
-monthly_orig_temp <- weather %>% 
-  group_by(origin, month) %>% 
+monthly_orig_temp <- weather |> 
+  group_by(origin, month) |> 
   summarise(moyenne = mean(temp, na.rm = TRUE),
             ecart_type = sd(temp, na.rm = TRUE),
             nb_obs = n(),
@@ -600,9 +611,9 @@ Enfin, lorsque nous groupons par plusieurs variables, il peut être utile de pr�
 ```{r}
 #| tidy: false
 
-weather %>% 
-  group_by(origin, month) %>% 
-  summarise(moyenne = mean(temp, na.rm = TRUE)) %>% 
+weather |> 
+  group_by(origin, month) |> 
+  summarise(moyenne = mean(temp, na.rm = TRUE)) |> 
   pivot_wider(names_from = origin, 
               values_from = moyenne)
 ```
@@ -619,8 +630,8 @@ Ce code :
 ```{r}
 #| tidy: false
 
-weather %>% 
-  group_by(month) %>% 
+weather |> 
+  group_by(month) |> 
   summarise(n = n())
 ```
 
@@ -629,7 +640,7 @@ est équivalent à celui-ci :
 ```{r}
 #| tidy: false
 
-weather %>% 
+weather |> 
   count(month)
 ```
 
@@ -638,8 +649,8 @@ Comme avec `group_by()`, il est bien sûr possible d'utiliser `count()` avec plu
 ```{r}
 #| tidy: false
 
-weather %>% 
-  group_by(origin, month) %>% 
+weather |> 
+  group_by(origin, month) |> 
   summarise(nombre = n())
 ```
 
@@ -652,10 +663,10 @@ weather %>%
 #| tidy: false
 #| echo: false
 
-flights_cancelled <- flights %>%
+flights_cancelled <- flights |>
   filter(!is.na(dep_time),
-         is.na(arr_time)) %>%
-  group_by(carrier) %>% 
+         is.na(arr_time)) |>
+  group_by(carrier) |> 
   summarise(cancelled = n())
 flights_cancelled
 ```
@@ -667,8 +678,8 @@ flights_cancelled
 #| tidy: false
 #| echo: false
 
-windy <- weather %>%
-  group_by(origin, month) %>% 
+windy <- weather |>
+  group_by(origin, month) |> 
   summarise(max_wind = max(wind_speed, na.rm = TRUE),
             min_wind = min(wind_speed, na.rm = TRUE),
             moy_wind = mean(wind_speed, na.rm = TRUE))
@@ -681,9 +692,9 @@ windy
 #| tidy: false
 #| echo: false
 
-windy2 <- weather %>%
-  filter(wind_speed <= 500) %>% 
-  group_by(origin, month) %>% 
+windy2 <- weather |>
+  filter(wind_speed <= 500) |> 
+  group_by(origin, month) |> 
   summarise(max_wind = max(wind_speed, na.rm = TRUE),
             min_wind = min(wind_speed, na.rm = TRUE),
             moy_wind = mean(wind_speed, na.rm = TRUE))
@@ -698,8 +709,8 @@ windy2
 #| echo: false
 #| warning: false
 
-weather %>% 
-  filter(wind_speed < 500) %>% 
+weather |> 
+  filter(wind_speed < 500) |> 
   ggplot(aes(x = factor(month), y = wind_speed)) +
   geom_jitter(width = 0.2, height = 0, alpha = 0.2) +
   labs(x = "Mois",
@@ -742,7 +753,7 @@ Il n'est pas rare de travailler avec des tableaux contenant des centaines, voir 
 #| tidy: false
 
 # Sélection de variables par leur nom
-flights %>% 
+flights |> 
   select(year, month, day)
 ```
 
@@ -752,7 +763,7 @@ Puisque ces 3 variables sont placées les unes à côté des autres dans le tabl
 #| tidy: false
 
 # Sélection de toutes les variables entre `year` et `day` (inclues)
-flights %>% 
+flights |> 
   select(year:day)
 ```
 
@@ -763,7 +774,7 @@ flights %>%
 
 # Sélection de toutes les variables de `flights` à l'exception
 # de celles comprises entre `year` et `day` (inclues)
-flights %>% 
+flights |> 
   select(-(year:day))
 ```
 
@@ -780,7 +791,7 @@ Par exemple, il est possible de sélectionner toutes les variables contenant le 
 ```{r}
 #| tidy: false
 
-flights %>% 
+flights |> 
   select(contains("time"))
 ```
 
@@ -789,7 +800,7 @@ flights %>%
 ```{r}
 #| tidy: false
 
-flights_time <- flights %>% 
+flights_time <- flights |> 
   select(contains("time"))
 ```
 
@@ -798,7 +809,7 @@ Enfin, on peut utiliser `select()` pour renommer des variables. Mais ce n'est qu
 ```{r}
 #| tidy: false
 
-flights %>% 
+flights |> 
   select(year:day,
          heure_depart = dep_time,
          retard_depart = dep_delay)
@@ -809,7 +820,7 @@ Il est donc généralement préférable d'utiliser `rename()` pour renommer cert
 ```{r}
 #| tidy: false
 
-flights %>% 
+flights |> 
   rename(heure_depart = dep_time,
          retard_depart = dep_delay)
 ```
@@ -837,7 +848,7 @@ Voyons un exemple. Nous commençons par créer un nouveau jeu de données `fligh
 ```{r}
 #| tidy: false
 
-flights_sml <- flights %>% 
+flights_sml <- flights |> 
   select(year:day,
          ends_with("delay"),
          distance,
@@ -853,7 +864,7 @@ flights_sml
 ```{r}
 #| tidy: false
 
-flights_sml %>% 
+flights_sml |> 
   mutate(gain = dep_delay - arr_delay,
          distance = distance * 1.60934,
          speed = (distance / air_time) * 60)
@@ -864,7 +875,7 @@ Si on souhaite conserver uniquement les variables nouvellement créées par `mut
 ```{r}
 #| tidy: false
 
-flights_sml %>% 
+flights_sml |> 
   transmute(gain = dep_delay - arr_delay,
          distance = distance * 1.60934,
          speed = (distance / air_time) * 60)
@@ -875,7 +886,7 @@ Et comme toujours, pour pouvoir réutiliser ces données, on leur donne un nom :
 ```{r}
 #| tidy: false
 
-gain_speed <- flights_sml %>% 
+gain_speed <- flights_sml |> 
   transmute(gain = dep_delay - arr_delay,
          distance = distance * 1.60934,
          speed = (distance / air_time) * 60)
@@ -916,7 +927,7 @@ Ce jeu de données contient des informations sur l'Indice Gonado-Somatique (`GSI
 ```{r}
 #| tidy: false
 
-squid %>% 
+squid |> 
   mutate(Location = factor(Location))
 ```
 
@@ -925,7 +936,7 @@ De même, la variable `Sex` est codée sous forme numérique, or il devrait s'ag
 ```{r}
 #| tidy: false
 
-squid2 <- squid %>% 
+squid2 <- squid |> 
   mutate(Location = factor(Location),
          Sex = factor(Sex, levels = c(1, 2), labels = c("Male", "Female")))
 
@@ -941,7 +952,7 @@ squid2
 #| fig-width: 4
 #| fig-cap: "Indice Gonado Somatique  selon le sexe."
 
-squid2 %>% 
+squid2 |> 
   ggplot(aes(x = Sex, y = GSI)) +
     geom_boxplot(notch = TRUE)
 ```
@@ -958,7 +969,7 @@ levels(squid2$Sex)
 #| tidy: false
 
 library(forcats)
-squid3 <- squid2 %>% 
+squid3 <- squid2 |> 
   mutate(Sex = fct_rev(Sex))
 
 levels(squid3$Sex)
@@ -971,7 +982,7 @@ levels(squid3$Sex)
 #| fig-width: 4
 #| fig-cap: "Indice Gonado Somatique  selon le sexe."
 
-squid3 %>% 
+squid3 |> 
   ggplot(aes(x = Sex, y = GSI)) +
     geom_boxplot(notch = TRUE)
 ```
@@ -999,7 +1010,7 @@ Commençons par supprimer la variable `ID`, qui est totalement redondante avec l
 ```{r}
 #| tidy: false
 
-dauphin <- dauphin %>% 
+dauphin <- dauphin |> 
   select(-ID)
 dauphin
 ```
@@ -1010,7 +1021,7 @@ Les variables `Sexe`, `Statut` et `Organe` devraient elles aussi être encodées
 #| tidy: false
 #| eval: false
 
-dauphin %>% 
+dauphin |> 
   mutate(Sexe = factor(Sexe),
          Statut = factor(Statut),
          Organe = factor(Organe))
@@ -1021,7 +1032,7 @@ Nous pouvons utiliser la fonction `mutate_if()`, qui appliquera la même fonctio
 ```{r}
 #| tidy: false
 
-dauphin <- dauphin %>% 
+dauphin <- dauphin |> 
   mutate_if(is.character, as.factor)
 dauphin
 ```
@@ -1045,7 +1056,7 @@ Commençons par changer les niveaux du facteur `Sexe`. Pour cela, nous pouvons u
 ```{r}
 #| tidy: false
 
-dauphin %>% 
+dauphin |> 
   mutate(Sexe = fct_recode(Sexe, 
                            "Female" = "f",
                            "Male" = "m"))
@@ -1056,7 +1067,7 @@ Nous pouvons maintenant modifier l'ordre des niveaux de `Satut` avec la fonction
 ```{r}
 #| tidy: false
 
-dauphin <- dauphin %>% 
+dauphin <- dauphin |> 
   mutate(Sexe = fct_recode(Sexe, 
                            "Female" = "f",
                            "Male" = "m"),
@@ -1074,17 +1085,17 @@ Toutes les transformations que nous avons fait subir à ce jeu de données n'ont
 # Importation et mise en forme du jeu de données `dauphin`
 library(readxl)
 dauphin <- read_excel("data/dauphin.xls", 
-                      na = "*", skip = 9) %>%   # Importer, puis
+                      na = "*", skip = 9) |>   # Importer, puis
   rename(ID = `N°`,                 # Raccourcir les noms, puis
          Statut = `Statut reproducteur`,
          Taille = `Taille en cm`,
          Age = `Age en années`,
          Cd = `Cd (mg.kg-1)`,
          Cu = `Cu (mg.kg-1)`,
-         Hg = `Hg (mg.kg-1)`) %>% 
-  select(-ID) %>%                   # Supprimer la variable `ID`, puis
+         Hg = `Hg (mg.kg-1)`) |> 
+  select(-ID) |>                   # Supprimer la variable `ID`, puis
   mutate_if(is.character,           # 'Factoriser' les variables <chr>, puis
-            as.factor) %>%          
+            as.factor) |>          
   mutate(Sexe = fct_recode(Sexe,    # Modifier l'ordre des niveaux
                            "Female" = "f",
                            "Male" = "m"),
@@ -1118,9 +1129,9 @@ Nous n'avons pas le temps de développer ici des exemples pour chacune de ces fo
 #| echo: false
 #| fig-cap: "Consommation en fonction de la cylindrée"
 
-mpg %>% 
-  filter(class != "2seater") %>% 
-  mutate(conso = 235.215 / hwy) %>% 
+mpg |> 
+  filter(class != "2seater") |> 
+  mutate(conso = 235.215 / hwy) |> 
   ggplot(aes(x = displ, y = conso)) +
   geom_point(aes(color = class)) +
   geom_smooth(method = "lm") +
@@ -1140,9 +1151,9 @@ mpg %>%
 #| echo: false
 #| fig-cap: "Consommation en fonction de la cylindrée"
 
-mpg %>% 
-  filter(class != "2seater") %>% 
-  mutate(conso = 235.215 / hwy) %>% 
+mpg |> 
+  filter(class != "2seater") |> 
+  mutate(conso = 235.215 / hwy) |> 
   ggplot(aes(x = displ, y = conso)) +
   geom_jitter(aes(fill = class), shape=21, width=0.05, height=0.05, alpha = 0.7) +
   geom_smooth(method = "lm") +
@@ -1175,7 +1186,7 @@ La fonction `arrange()` permet de trier des tableaux en ordonnant les éléments
 ```{r}
 #| tidy: false
 
-flights %>% 
+flights |> 
   arrange(dep_delay)
 ```
 
@@ -1184,7 +1195,7 @@ Notez que la variable `dep-delay` est maintenant triée en ordre croissant. Note
 ```{r}
 #| tidy: false
 
-flights %>% 
+flights |> 
   arrange(dep_delay, month, day)
 ```
 
@@ -1195,7 +1206,7 @@ Comme indiqué plus haut, il est possible de trier les données par ordre décro
 ```{r}
 #| tidy: false
 
-flights %>% 
+flights |> 
   arrange(desc(dep_delay))
 ```
 
@@ -1208,8 +1219,8 @@ Cela est particulièrement utile après l'obtention de résumés groupés pour c
 ```{r}
 #| tidy: false
 
-flights %>% 
-  count(dest) %>% 
+flights |> 
+  count(dest) |> 
   arrange(desc(n))
 ```
 
@@ -1231,8 +1242,8 @@ Lorsque nous avons plusieurs tableaux à disposition, il peut alors être néces
 ```{r}
 #| tidy: false
 
-popular_dest <- flights %>% 
-  count(dest) %>% 
+popular_dest <- flights |> 
+  count(dest) |> 
   arrange(desc(n))
 popular_dest
 ```
@@ -1258,18 +1269,18 @@ La fonction `inner_join()` permet de relier deux tableaux en ne conservant que l
 ```{r}
 #| tidy: false
 
-inner_popular <- popular_dest %>% 
-  inner_join(airports, by = c("dest" = "faa"))
+inner_popular <- popular_dest |> 
+  inner_join(airports, by = join_by(dest == faa))
 inner_popular
 ```
 
-Le nouvel objet `inner_popular` contient donc les données du tableau `popular_dest` auxquelles ont été ajoutées les colonnes correspondantes du tableau airports. Si tout ce qui nous intéresse, c'est de connaître le nom complet des aéroports les plus populaires, on peut utiliser `select()` pour ne garder que les variables intéressantes :
+Le nouvel objet `inner_popular` contient donc les données du tableau `popular_dest` auxquelles ont été ajoutées les colonnes correspondantes du tableau `airports.` Si tout ce qui nous intéresse, c'est de connaître le nom complet des aéroports les plus populaires, on peut utiliser `select()` pour ne garder que les variables intéressantes :
 
 ```{r}
 #| tidy: false
 
-inner_popular <- popular_dest %>% 
-  inner_join(airports, by = c("dest" = "faa")) %>% 
+inner_popular <- popular_dest |> 
+  inner_join(airports, by = join_by(dest == faa)) |> 
   select(dest, name, n)
 inner_popular
 ```
@@ -1304,8 +1315,8 @@ Comme indiqué par la @fig-left ci-dessus, une jointure gauche permet de conserv
 ```{r}
 #| tidy: false
 
-left_popular <- popular_dest %>% 
-  left_join(airports, by = c("dest" = "faa")) %>% 
+left_popular <- popular_dest |> 
+  left_join(airports, by = join_by(dest == faa)) |> 
   select(dest, name, n)
 left_popular
 ```
@@ -1329,7 +1340,7 @@ Pour savoir quelles lignes de `popular_dest` manquent dans `inner_dest` (il devr
 ```{r}
 #| tidy: false
 
-left_popular %>% 
+left_popular |> 
   filter(is.na(name))
 ```
 
@@ -1357,7 +1368,7 @@ Prenons un exemple. Imaginons que nous ayons 2 tableaux contenant les mêmes var
 ```{r}
 #| tidy: false
 
-colorado <- flights %>% 
+colorado <- flights |> 
   filter(dest == "HDN")
 
 colorado
@@ -1368,7 +1379,7 @@ Le second est nommé `indiana`. Il contient les informations des vols ayant déc
 ```{r}
 #| tidy: false
 
-indiana <- flights %>% 
+indiana <- flights |> 
   filter(dest == "SBN")
 
 indiana
@@ -1385,7 +1396,7 @@ Vous noterez que le nombre de lignes du nouveau tableau est la somme des nombres
 ```{r}
 #| tidy: false
 
-flights %>% 
+flights |> 
   filter(dest %in% c("HDN", "SBN"))
 ```
 

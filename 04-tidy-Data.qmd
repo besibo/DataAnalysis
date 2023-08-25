@@ -267,8 +267,8 @@ Cette fonction sera donc rarement utilisée puisqu'elle ne permet pas d'obtenir 
 ```{r}
 #| tidy: false
 
-n_vols <- flights %>% 
-  group_by(origin, carrier) %>% 
+n_vols <- flights |> 
+  group_by(origin, carrier) |> 
   count()
 n_vols
 ```
@@ -604,7 +604,7 @@ Puisque la fonction `read.table()` importe les données sous la forme d'un data.
 #| fig-cap: "Figure à reproduire."
 
 
-dauphin %>% 
+dauphin |> 
   ggplot(aes(x = Age, y = Hg, color = Sexe)) +
     geom_smooth(method = "lm") +
     geom_point() +

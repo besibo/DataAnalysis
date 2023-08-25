@@ -102,7 +102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#pré-requis" id="toc-pré-requis" class="nav-link active" data-scroll-target="#pré-requis"><span class="header-section-number">6.1</span> Pré-requis</a></li>
-  <li><a href="#le-pipe" id="toc-le-pipe" class="nav-link" data-scroll-target="#le-pipe"><span class="header-section-number">6.2</span> Le pipe <code>%&gt;%</code></a></li>
+  <li><a href="#le-pipe" id="toc-le-pipe" class="nav-link" data-scroll-target="#le-pipe"><span class="header-section-number">6.2</span> Le pipe <code>|&gt;</code></a></li>
   <li><a href="#les-verbes-du-tripatouillage-de-données" id="toc-les-verbes-du-tripatouillage-de-données" class="nav-link" data-scroll-target="#les-verbes-du-tripatouillage-de-données"><span class="header-section-number">6.3</span> Les verbes du tripatouillage de données</a></li>
   <li><a href="#filtrer-des-lignes-avec-filter" id="toc-filtrer-des-lignes-avec-filter" class="nav-link" data-scroll-target="#filtrer-des-lignes-avec-filter"><span class="header-section-number">6.4</span> Filtrer des lignes avec <code>filter()</code></a>
   <ul class="collapse">
@@ -246,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
@@ -263,23 +263,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <hr>
 </section>
-<section id="le-pipe" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="le-pipe"><span class="header-section-number">6.2</span> Le pipe <code>%&gt;%</code></h2>
+<section id="le-pipe" class="level2 page-columns page-full" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="le-pipe"><span class="header-section-number">6.2</span> Le pipe <code>|&gt;</code></h2>
 <p>Avant d’entrer dans le vif du sujet, je souhaite introduire ici la notion de “pipe” (prononcer à l’anglo-saxonne). Le pipe est un opérateur que nous avons déjà vu apparaître à plusieurs reprises dans les chapitres précédents sans expliquer son fonctionnement.</p>
-<p>Le pipe, noté <code>%&gt;%</code>, peut être obtenu en pressant les touches <code>ctrl + shift + M</code> de votre clavier (ou <code>command + shift + M</code> sous macOS). Il permet d’enchaîner logiquement des actions les unes à la suite des autres. Globalement, le pipe prend l’objet situé à sa gauche, et le transmet à la fonction situé à sa droite. En d’autres termes, les 2 expressions suivantes sont strictement équivalentes :</p>
+<div class="cell fig-cap-location-top page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-pipepref" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/PipePref.png" class="img-fluid figure-img" width="526"></p>
+<figcaption class="figure-caption">Figure&nbsp;6.1: Pour que ces raccourcis fonctionnent, assurez-vous que l’option <code>Use native pipe operator</code> est bien cochée dans les préférences de <code>RStudio</code>.</figcaption>
+</figure>
+</div>
+</div></div></div>
+<p>Le pipe, noté <code>|&gt;</code>, peut être obtenu en pressant les touches <code>ctrl + shift + M</code> de votre clavier (ou <code>command + shift + M</code> sous macOS). Il permet d’enchaîner logiquement des actions les unes à la suite des autres. Globalement, le pipe prend l’objet situé à sa gauche, et le transmet à la fonction situé à sa droite. En d’autres termes, les 2 expressions suivantes sont strictement équivalentes :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ici, "f" est une fonction quelconque, </span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># "x" et "y" sont 2 objets dont la fonction a besoin.</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Il s'agit d'un exemple fictif : ne tapez pas ceci dans votre script !</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(x, y)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">f</span>(y)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span> <span class="fu">f</span>(y)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Travailler avec le pipe est très intéressant car toutes les fonctions de <code>dplyr</code> que nous allons décrire ensuite sont construites autour de la même syntaxe : on leur fournit un <code>data.frame</code> (ou encore mieux, un <code>tibble</code>), elles effectuent une opération et renvoient un nouveau <code>data.frame</code> (ou un nouveau <code>tibble</code>). Il est ainsi possible de créer des groupes de commandes cohérentes qui permettent, grâce à l’enchaînement d’étapes simples, d’aboutir à des résultats complexes.</p>
-<p>De la même façon que le <code>+</code> permet d’ajouter une couche supplémentaire à un graphique <code>ggplot2</code>, le pipe <code>%&gt;%</code> permet d’ajouter une opération supplémentaire dans un groupe de commandes.</p>
+<p>De la même façon que le <code>+</code> permet d’ajouter une couche supplémentaire à un graphique <code>ggplot2</code>, le pipe <code>|&gt;</code> permet d’ajouter une opération supplémentaire dans un groupe de commandes.</p>
 <p>Pour reprendre un exemple de la <a href="03-visualization.html#sec-clouds"><span>Section&nbsp;4.3</span></a> sur les nuages de points, nous avions commencé par créer un objet nommé <code>alaska_flights</code> à partir de l’objet <code>flights</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>alaska_flights <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>alaska_flights <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">"AS"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Nous avions ensuite créé notre premier nuage de points avec ce code :</p>
@@ -295,15 +305,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>Voilà comment traduire cela avec le pipe :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">"AS"</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">"AS"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dep_delay, <span class="at">y =</span> arr_delay)) <span class="sc">+</span> </span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-pipe" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="05-DataWrangling_files/figure-html/fig-pipe-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.1: Notre premier graphique, produit grâce au pipe.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.2: Notre premier graphique, produit grâce au pipe.</figcaption>
 </figure>
 </div>
 </div>
@@ -336,18 +346,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-filterfig" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/filter.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.2: Schéma de la fonction <code>filter()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.3: Schéma de la fonction <code>filter()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Comme son nom l’indique, <code>filter()</code> permet de filtrer des lignes en spécifiant un ou des critères de tri portant sur une ou plusieurs variables. Nous avons déjà utilisé cette fonction à plusieurs reprises pour créer les jeux de données <code>alaska_flights</code> et <code>small_weather</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>alaska_flights <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>alaska_flights <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">"AS"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>small_weather <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>small_weather <span class="ot">&lt;-</span> weather <span class="sc">|&gt;</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(origin <span class="sc">==</span> <span class="st">"EWR"</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>         month <span class="sc">==</span> <span class="dv">1</span>,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>         day <span class="sc">&lt;=</span> <span class="dv">15</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -356,7 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>D’indiquer le nom du nouvel objet dans lequel les données modifiées seront stockées (<code>alaska_flights</code> et <code>small-weather</code>).</li>
 <li>D’indiquer de quel objet les données doivent être extraites (<code>flights</code> et <code>weather</code>).</li>
-<li>De passer cet objet à la fonction suivante avec un pipe <code>%&gt;%</code>.</li>
+<li>De passer cet objet à la fonction suivante avec un pipe <code>|&gt;</code>.</li>
 </ol>
 <p>Le premier argument de la fonction <code>filter()</code> doit être le nom d’un <code>data.frame</code> ou d’un <code>tibble</code>. Ici, puisque nous utilisons le pipe, il est inutile de spécifier cet argument : c’est ce qui est placé à gauche du pipe qui est utilisé comme premier argument de la fonction <code>filter()</code>. Les arguments suivants constituent la ou les conditions qui doivent être respectées par les lignes du tableau de départ afin d’être intégrées au nouveau tableau de données.</p>
 </section>
@@ -387,7 +397,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Voyons comment utiliser ces opérateurs avec la fonction <code>filter()</code>.</p>
 <p>Dans le tableau <code>flights</code>, tous les vols prévus ont-ils effectivement décollé ? Une bonne façon de le savoir est de regarder si, pour la variable <code>dep_time</code> (heure de décollage), des données manquantes sont présentes :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(dep_time))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8,255 × 19
@@ -412,7 +422,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Seules les lignes contenant <code>NA</code> dans la colonne <code>dep_time</code> sont retenues. Il y a donc 8255 vols qui n’ont finalement pas décollé.</p>
 <p>Dans le même ordre d’idée, y a t-il des vols qui ont décollé mais qui ne sont pas arrivés à destination ? Là encore, une façon d’obtenir cette information est de sélectionner les vols qui ont décollé (donc pour lesquels l’heure de décollage n’est pas manquante), mais pour lesquels l’heure d’atterrissage est manquante :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(dep_time),</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">is.na</span>(arr_time))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -437,7 +447,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Notez l’utilisation du <code>!</code> pour la première condition. Nous récupérons ici les lignes pour lesquelles <code>dep_time</code> n’est pas <code>NA</code> et pour lesquelles <code>arr_time</code> est <code>NA</code>. Seules les lignes qui respectent cette double condition sont retenues. Cette syntaxe est équivalente à :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(dep_time) <span class="sc">&amp;</span> <span class="fu">is.na</span>(arr_time))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 458 × 19
@@ -463,7 +473,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Il y a donc 458 vols qui ne sont pas arrivés à destination (soit moins de 0,2% des vols au départ de New York en 2013). Selon vous, quelles raisons peuvent expliquer qu’un vol qui a décollé n’ait pas d’heure d’atterrissage ?</p>
 <p>Enfin, pour illustrer l’utilisation de <code>|</code> (le <code>OU</code> logique) et de <code>%in%</code>, imaginons que nous souhaitions extraire les informations des vols ayant quitté l’aéroport <code>JFK</code> à destination d’Atlanta, Géorgie (<code>ATL</code>) et de Seatle, Washington (<code>SEA</code>), aux mois d’octobre, novembre et décembre :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>atl_sea_fall <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>atl_sea_fall <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(origin <span class="sc">==</span> <span class="st">"JFK"</span>, </span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>         dest <span class="sc">==</span> <span class="st">"ATL"</span> <span class="sc">|</span> dest <span class="sc">==</span> <span class="st">"SEA"</span>, </span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>         month <span class="sc">&gt;=</span> <span class="dv">10</span>)</span>
@@ -491,7 +501,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Examinez ce tableau avec <code>View()</code> pour vérifier que la variable <code>dest</code> contient bien uniquement les codes <code>ATL</code> et <code>SEA</code> correspondant aux 2 aéroports qui nous intéressent. Nous avons extrait ici les vols à destination d’Atlanta <strong>et</strong> Seatle, pourtant, il nous a fallu utiliser le <code>OU</code> logique. Car chaque vol n’a qu’une unique destination, or nous souhaitons récupérer toutes les lignes pour lesquelles la destination est soit <code>ATL</code>, soit <code>SEA</code> (l’une <strong>ou</strong> l’autre).</p>
 <p>Une autre solution pour obtenir le même tableau est de remplacer l’expression contenant <code>|</code> par une expression contenant <code>%in%</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>atl_sea_fall2 <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>atl_sea_fall2 <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(origin <span class="sc">==</span> <span class="st">"JFK"</span>, </span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>         dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ATL"</span>, <span class="st">"SEA"</span>), </span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>         month <span class="sc">&gt;=</span> <span class="dv">10</span>)</span>
@@ -534,7 +544,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-summarisefig" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/summarizearrow.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.3: <strong>?(caption)</strong></figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.4: <strong>?(caption)</strong></figcaption>
 </figure>
 </div>
 </div>
@@ -544,16 +554,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-summarisefig2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/summarize.png" class="img-fluid figure-img" style="width:40.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.4: Schéma de la fonction <code>summarise()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.5: Schéma de la fonction <code>summarise()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>La <a href="#fig-summarisefig2">Figure&nbsp;<span>6.4</span></a> ci-dessus indique comment fonctionne la fonction <code>summarise()</code> : elle prend plusieurs valeurs (potentiellement, un très grand nombre) et les réduit à une unique valeur qui les résume. Lorsque l’on applique cette démarche à plusieurs colonnes d’un tableau, on obtient un tableau qui ne contient plus qu’une unique ligne de résumé.</p>
+<p>La <a href="#fig-summarisefig2">Figure&nbsp;<span>6.5</span></a> ci-dessus indique comment fonctionne la fonction <code>summarise()</code> : elle prend plusieurs valeurs (potentiellement, un très grand nombre) et les réduit à une unique valeur qui les résume. Lorsque l’on applique cette démarche à plusieurs colonnes d’un tableau, on obtient un tableau qui ne contient plus qu’une unique ligne de résumé.</p>
 <p>La valeur qui résume les données est choisie par l’utilisateur. Il peut s’agir par exemple d’un calcul de moyenne ou de variance, il peut s’agir de calculer une somme, ou d’extraire la valeur maximale ou minimale, ou encore, il peut tout simplement s’agir de déterminer un nombre d’observations.</p>
 <p>Ainsi, pour connaître la température moyenne et l’écart-type des températures dans les aéroports de New York, il suffit d’utiliser le tableau <code>weather</code> et sa variable <code>temp</code> que nous avons déjà utilisés dans les chapitres précédents :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temp),</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">ecart_type =</span> <span class="fu">sd</span>(temp))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -565,7 +575,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Les fonctions <code>mean()</code> et <code>sd()</code> permettent de calculer une moyenne et un écart-type respectivement. Ici, les valeurs retournées sont <code>NA</code> car une valeur de température est manquante :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(temp))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 15
@@ -578,7 +588,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Pour obtenir les valeurs souhaitées, il faut indiquer à <code>R</code> d’exclure les valeurs manquantes lors des calculs de moyennes et écarts-types :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">ecart_type =</span> <span class="fu">sd</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -598,7 +608,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-groupby" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/groupby.png" class="img-fluid figure-img" style="width:65.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.5: Fonctionnement de <code>group_by()</code> travaillant de concert avec <code>summarise()</code>, tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.6: Fonctionnement de <code>group_by()</code> travaillant de concert avec <code>summarise()</code>, tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
 </figure>
 </div>
 </div>
@@ -606,8 +616,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Comme son nom l’indique, la fonction <code>group_by()</code> permet de créer des sous-groupes dans un tableau, afin que le résumé des données soit calculé pour chacun des sous-groupes plutôt que sur l’ensemble du tableau. En ce sens, son fonctionnement est analogue à celui des <code>facet</code>s de <code>ggplot2</code> qui permettent de scinder les données d’un graphique en plusieurs sous-groupes.</p>
 <p>Pour revenir à l’exemple des températures, imaginons que nous souhaitions calculer les températures moyennes et les écart-types pour chaque mois de l’année. Voilà comment procéder :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">|&gt;</span> </span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">ecart_type =</span> <span class="fu">sd</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -638,8 +648,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><span class="math display">\[se \approx \frac{s}{\sqrt{n}}\]</span></p>
 <p>avec <span class="math inline">\(s\)</span>, l’écart-type de l’échantillon et <span class="math inline">\(n\)</span>, la taille de l’échantillon. Cette grandeur est très importante en statistique puisqu’elle nous permet de quantifier <strong>l’imprécision</strong> de la moyenne. Elle intervient d’ailleurs dans le calcul de l’intervalle de confiance de la moyenne d’un échantillon. Nous allons donc calculer ici ces résumés, et nous donnerons un nom au tableau créé pour pouvoir ré-utiliser ces statistiques descriptives :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>monthly_temp <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>monthly_temp <span class="ot">&lt;-</span> weather <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">|&gt;</span> </span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">ecart_type =</span> <span class="fu">sd</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">nb_obs =</span> <span class="fu">n</span>(),</span>
@@ -673,7 +683,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="6.5.3" class="anchored" data-anchor-id="ajouter-des-barres-derreurs-sur-un-graphique"><span class="header-section-number">6.5.3</span> Ajouter des barres d’erreurs sur un graphique</h3>
 <p>Le tableau <code>monthly_temp</code> que nous venons de créer contient donc les données nécessaires pour nous permettre de visualiser sur un graphique l’évolution des températures moyennes enregistrées dans les 3 aéroports de New York en 2013. Outre les température moyennes, nous devons faire figurer l’imprécision des estimations de moyenne avec des barres d’erreur (à l’aide de la fonction <code>geom_linerange()</code>). Comme expliqué plus haut, l’imprécision des moyennes calculées est estimée grâce à l’erreur standard. Toutefois, ici, les imprécisions sont tellement faibles que les barres d’erreurs resteront invisibles :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>monthly_temp <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>monthly_temp <span class="sc">|&gt;</span> </span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> moyenne, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
@@ -684,7 +694,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-errorbars" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="05-DataWrangling_files/figure-html/fig-errorbars-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.6: Évolution des températures moyennes dans 3 aéroports de New York en 2013.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.7: Évolution des températures moyennes dans 3 aéroports de New York en 2013.</figcaption>
 </figure>
 </div>
 </div>
@@ -697,7 +707,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Les barres d’erreur produites sont minuscules. Je les ai fait apparaître en rouge afin de les rendre visibles, mais même comme cela, il faut zoomer fortement pour les distinguer. Afin de rendre l’utilisation de <code>geom_linerange()</code> plus explicite, je produis ci-dessous un autre graphique en remplaçant les erreurs standard par les écart-types en guise de barres d’erreur. Attention, ce n’est pas correct d’un point de vue statistique ! Les barres d’erreur doivent permettre de visualiser l’imprécision de la moyenne. C’est donc bien les erreurs standard qu’il faut faire figurer en guise de barres d’erreurs et non les écarty-types. Le graphique ci-dessous ne figure donc qu’à titre d’exemple, afin d’illustrer de façon plus parlante le fonctionnement de la fonction <code>geom_linerange()</code> :</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>monthly_temp <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>monthly_temp <span class="sc">|&gt;</span> </span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> moyenne, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
@@ -711,7 +721,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="st">                   Il faut normalement faire figurer les erreurs standard."</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>monthly_temp <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>monthly_temp <span class="sc">|&gt;</span> </span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> moyenne, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
@@ -725,7 +735,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-errorbars2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="05-DataWrangling_files/figure-html/fig-errorbars2-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.7: Évolution des températures moyennes dans 3 aéroports de New York en 2013.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.8: Évolution des températures moyennes dans 3 aéroports de New York en 2013.</figcaption>
 </figure>
 </div>
 </div>
@@ -735,8 +745,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="6.5.4" class="anchored" data-anchor-id="grouper-par-plus-dune-variable"><span class="header-section-number">6.5.4</span> Grouper par plus d’une variable</h3>
 <p>Jusqu’ici, nous avons groupé les données de température par mois. Il est tout à fait possible de grouper les données par plus d’une variable, par exemple, par mois et par aéroport d’origine :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>monthly_orig_temp <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>monthly_orig_temp <span class="ot">&lt;-</span> weather <span class="sc">|&gt;</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month) <span class="sc">|&gt;</span> </span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">ecart_type =</span> <span class="fu">sd</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">nb_obs =</span> <span class="fu">n</span>(),</span>
@@ -766,7 +776,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>En plus de la variable <code>month</code>, la tableau <code>monthly_orig_temp</code> contient une variable <code>origin</code>. Les statistiques que nous avons calculées plus tôt sont maintenant disponibles pour chaque mois et chacun des 3 aéroports de New York. Nous pouvons utiliser ces données pour comparer les 3 aéroports :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>monthly_orig_temp <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>monthly_orig_temp <span class="sc">|&gt;</span> </span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), </span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> moyenne,</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">group =</span> origin,</span>
@@ -787,14 +797,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-errorbars3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="05-DataWrangling_files/figure-html/fig-errorbars3-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.8: Évolution des températures moyennes dans 3 aéroports de New York en 2013.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.9: Évolution des températures moyennes dans 3 aéroports de New York en 2013.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Notez que j’utilise maintenant <code>group = origin</code> et non plus <code>group = 1</code>. Ici, les températures des 3 aéroports sont tellement similaires que les courbes sont difficiles à distinguer. Nous pouvons donc utiliser <code>facet_wrap()</code> pour tenter d’améliorer la visualisation :</p>
 <div class="cell" data-fig.asp="1">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>monthly_orig_temp <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>monthly_orig_temp <span class="sc">|&gt;</span> </span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), </span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> moyenne,</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">group =</span> origin,</span>
@@ -816,15 +826,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-errorbars4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="05-DataWrangling_files/figure-html/fig-errorbars4-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.9: Évolution des températures moyennes dans 3 aéroports de New York en 2013.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.10: Évolution des températures moyennes dans 3 aéroports de New York en 2013.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Lorsque nous groupons par plusieurs variables, il peut-être utile d’ajouter l’argument <code>.groups = "drop"</code> à la fonction <code>summarise()</code> afin que le tibble obtenu soit un tibble “normal” et non un tibble toujours groupé par une ou plusieurs variables :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>monthly_orig_temp <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span> </span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>monthly_orig_temp <span class="ot">&lt;-</span> weather <span class="sc">|&gt;</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month) <span class="sc">|&gt;</span> </span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">ecart_type =</span> <span class="fu">sd</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">nb_obs =</span> <span class="fu">n</span>(),</span>
@@ -851,9 +861,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Notez qu’ajouter cet argument permet également de faire disparaître le message d’avertissement qui s’affichait après chaque utilisation de <code>group_by()</code>. C’est donc une bonne habitude d’ajouter cet argument systématiquement dans la fonction <code>summarise()</code> après utilisation de <code>group_by()</code>.</p>
 <p>Enfin, lorsque nous groupons par plusieurs variables, il peut être utile de présenter les résultats sous la forme d’un tableau large (grâce à la fonction <code>pivot_wider()</code>, voir <a href="04-tidy-Data.html#sec-spread"><span>Section&nbsp;5.2.2</span></a>) pour l’intégration dans un rapport par exemple :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month) <span class="sc">|&gt;</span> </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> origin, </span>
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> moyenne)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -885,8 +895,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Il est tellement fréquent d’avoir à grouper des données en fonction d’une variable puis à compter le nombre d’observations dans chaque catégorie avec <code>n()</code> que <code>dplyr</code> nous fournit un raccourci : la fonction <code>count()</code>.</p>
 <p>Ce code :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">|&gt;</span> </span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 2
@@ -908,7 +918,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>est équivalent à celui-ci :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(month)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 2
@@ -930,8 +940,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Comme avec <code>group_by()</code>, il est bien sûr possible d’utiliser <code>count()</code> avec plusieurs variables :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">%&gt;%</span> </span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin, month) <span class="sc">|&gt;</span> </span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">nombre =</span> <span class="fu">n</span>())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'origin'. You can override using the
@@ -1041,7 +1051,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-windspeed" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="05-DataWrangling_files/figure-html/fig-windspeed-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.10: <strong>?(caption)</strong></figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.11: <strong>?(caption)</strong></figcaption>
 </figure>
 </div>
 </div>
@@ -1075,7 +1085,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <div id="fig-selectfig" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/select.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.11: Schéma de la fonction <code>select()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.12: Schéma de la fonction <code>select()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
 </figure>
 </div>
 </div>
@@ -1084,7 +1094,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <p><code>select()</code> n’est pas particulièrement utile pour le jeu de données <code>flights</code> puisqu’il ne contient que 19 variables. Toutefois, on peut malgré tout comprendre le fonctionnement général. Par exemple, pour sélectionner uniquement les colonnes <code>year</code>, <code>month</code> et <code>day</code>, on tape :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sélection de variables par leur nom</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, month, day)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 3
@@ -1106,7 +1116,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <p>Puisque ces 3 variables sont placées les unes à côté des autres dans le tableau <code>flights</code>, on peut utiliser la notation “<code>:</code>” pour les sélectionner :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sélection de toutes les variables entre `year` et `day` (inclues)</span></span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year<span class="sc">:</span>day)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 3
@@ -1129,7 +1139,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <div class="cell">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sélection de toutes les variables de `flights` à l'exception</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="co"># de celles comprises entre `year` et `day` (inclues)</span></span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>(year<span class="sc">:</span>day))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 16
@@ -1159,7 +1169,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <p>Il en existe beaucoup d’autres. Vous pouvez consulter l’aide de <code>?select()</code> pour en savoir plus.</p>
 <p>Par exemple, il est possible de sélectionner toutes les variables contenant le mot “time” ainsi :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"time"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 6
@@ -1180,12 +1190,12 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>Évidemment, le tableau <code>flights</code> n’est pas modifié par cette opération : il contient toujours les 19 variables de départ. Pour travailler avec ces tableaux de données contenant moins de variables, il faut les stocker dans un nouvel objet en leur donnant un nom :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>flights_time <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>flights_time <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"time"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Enfin, on peut utiliser <code>select()</code> pour renommer des variables. Mais ce n’est que rarement utile car <code>select()</code> élimine toutes les variables qui n’ont pas été explicitement nommées :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year<span class="sc">:</span>day,</span>
 <span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">heure_depart =</span> dep_time,</span>
 <span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">retard_depart =</span> dep_delay)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1208,7 +1218,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>Il est donc généralement préférable d’utiliser <code>rename()</code> pour renommer certaines variables sans en éliminer aucune :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">heure_depart =</span> dep_time,</span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">retard_depart =</span> dep_delay)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1241,7 +1251,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <div id="fig-mutatefig" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/mutate.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.12: Schéma de la fonction <code>mutate()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.13: Schéma de la fonction <code>mutate()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
 </figure>
 </div>
 </div>
@@ -1249,7 +1259,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <p>La fonction <code>mutate()</code> permet de créer de nouvelles variables à partir des variables existantes, ou de modifier des variables déjà présentes dans un jeu de données. Il est en effet fréquent d’avoir besoin de calculer de nouvelles variables, souvent plus informatives que les variables disponibles.</p>
 <p>Voyons un exemple. Nous commençons par créer un nouveau jeu de données <code>flights_sml</code> en sélectionnant uniquement les variables qui nous seront utiles :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>flights_sml <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>flights_sml <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year<span class="sc">:</span>day,</span>
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">ends_with</span>(<span class="st">"delay"</span>),</span>
 <span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>         distance,</span>
@@ -1278,7 +1288,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <li><code>speed</code> afin de connaitre la vitesse moyenne des avions en vol, nous allons diviser la distance parcourue par les avions par le temps passé en l’air. Il ne faudra pas oublier de multiplier par 60 car les temps sont exprimés en minutes. Nous en profiterons pour transformer les distances exprimées en miles par des distances exprimées en kilomètres en multipliant les distances en miles par 1.60934. Ainsi, la variable <code>speed</code> sera exprimée en kilomètres par heure.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>flights_sml <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>flights_sml <span class="sc">|&gt;</span> </span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gain =</span> dep_delay <span class="sc">-</span> arr_delay,</span>
 <span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">distance =</span> distance <span class="sc">*</span> <span class="fl">1.60934</span>,</span>
 <span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">speed =</span> (distance <span class="sc">/</span> air_time) <span class="sc">*</span> <span class="dv">60</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1301,7 +1311,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>Si on souhaite conserver uniquement les variables nouvellement créées par <code>mutate()</code>, on peut utiliser <code>transmute()</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>flights_sml <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>flights_sml <span class="sc">|&gt;</span> </span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">gain =</span> dep_delay <span class="sc">-</span> arr_delay,</span>
 <span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">distance =</span> distance <span class="sc">*</span> <span class="fl">1.60934</span>,</span>
 <span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">speed =</span> (distance <span class="sc">/</span> air_time) <span class="sc">*</span> <span class="dv">60</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1324,7 +1334,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>Et comme toujours, pour pouvoir réutiliser ces données, on leur donne un nom :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>gain_speed <span class="ot">&lt;-</span> flights_sml <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>gain_speed <span class="ot">&lt;-</span> flights_sml <span class="sc">|&gt;</span> </span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">gain =</span> dep_delay <span class="sc">-</span> arr_delay,</span>
 <span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">distance =</span> distance <span class="sc">*</span> <span class="fl">1.60934</span>,</span>
 <span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">speed =</span> (distance <span class="sc">/</span> air_time) <span class="sc">*</span> <span class="dv">60</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1360,7 +1370,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>Ce jeu de données contient des informations sur l’Indice Gonado-Somatique (<code>GSI</code>) de 2644 pieuvres collectées dans 4 stations d’échantillonnage sur une période de 2 ans. La variable <code>Location</code> est codée sous forme d’entiers, or il devrait s’agir d’un facteur. La fonction <code>mutate()</code> nous permet d’effectuer la transformation :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>squid <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>squid <span class="sc">|&gt;</span> </span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Location =</span> <span class="fu">factor</span>(Location))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,644 × 6
@@ -1381,7 +1391,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>De même, la variable <code>Sex</code> est codée sous forme numérique, or il devrait s’agir d’un facteur, les “<code>1</code>” correspondants aux mâles et les “<code>2</code>” aux femelles. Nous pouvons là encore faire la modification grâce à la fonction <code>mutate()</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>squid2 <span class="ot">&lt;-</span> squid <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>squid2 <span class="ot">&lt;-</span> squid <span class="sc">|&gt;</span> </span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Location =</span> <span class="fu">factor</span>(Location),</span>
 <span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">Sex =</span> <span class="fu">factor</span>(Sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)))</span>
 <span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1405,13 +1415,13 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p><code>squid2</code> contient maintenant le tableau de départ avec les variables <code>Location</code> et <code>Sex</code> codées sous forme de facteurs. Si nous faisons un graphique avec ces nouveaux facteurs, l’ordre des catégories sera celui spécifié par la fonction <code>factor()</code>. Ainsi, si nous faisons par exemple un boxplot de <code>GSI</code> en fonction du <code>Sex</code>, voilà ce que nous obtenons :</p>
 <div class="cell" data-fig.asp="1.5">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>squid2 <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>squid2 <span class="sc">|&gt;</span> </span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Sex, <span class="at">y =</span> GSI)) <span class="sc">+</span></span>
 <span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption class="figure-caption">Indice Gonado Somatique selon le sexe.</figcaption>
 </figure>
 </div>
@@ -1427,7 +1437,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <p><code>Male</code> apparaît avant <code>Female</code>, car les niveaux de départ étaient <code>1</code> pour les mâles et <code>2</code> pour les femelles. C’est donc cet ordre qui est conservé. Le package <code>forcats</code> fournit de nombreuses fonctions permettant de manipuler les facteurs. Toutes commencent par <code>fct_</code>. Nous pouvons ici utiliser <code>fct_rev()</code> pour inverser l’ordre des niveaux. Pensez à installer et charger <code>forcats</code> si ce n’est pas déjà fait. Si vous avez chargé le <code>tidyverse</code>, <code>forcats</code> est déjà disponible :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>squid3 <span class="ot">&lt;-</span> squid2 <span class="sc">%&gt;%</span> </span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>squid3 <span class="ot">&lt;-</span> squid2 <span class="sc">|&gt;</span> </span>
 <span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sex =</span> <span class="fu">fct_rev</span>(Sex))</span>
 <span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(squid3<span class="sc">$</span>Sex)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1436,13 +1446,13 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 </div>
 <div class="cell" data-fig.asp="1.5">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>squid3 <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>squid3 <span class="sc">|&gt;</span> </span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Sex, <span class="at">y =</span> GSI)) <span class="sc">+</span></span>
 <span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption class="figure-caption">Indice Gonado Somatique selon le sexe.</figcaption>
 </figure>
 </div>
@@ -1470,7 +1480,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>Commençons par supprimer la variable <code>ID</code>, qui est totalement redondante avec les numéros de ligne :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>dauphin <span class="ot">&lt;-</span> dauphin <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>dauphin <span class="ot">&lt;-</span> dauphin <span class="sc">|&gt;</span> </span>
 <span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ID)</span>
 <span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>dauphin</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1492,14 +1502,14 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>Les variables <code>Sexe</code>, <code>Statut</code> et <code>Organe</code> devraient elles aussi être encodées sous forme de facteurs. Plutôt que de taper le code ci dessous (qui fonctionne très bien) :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>dauphin <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>dauphin <span class="sc">|&gt;</span> </span>
 <span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sexe =</span> <span class="fu">factor</span>(Sexe),</span>
 <span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">Statut =</span> <span class="fu">factor</span>(Statut),</span>
 <span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Organe =</span> <span class="fu">factor</span>(Organe))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Nous pouvons utiliser la fonction <code>mutate_if()</code>, qui appliquera la même fonction à toutes les variables respectant une condition précise. Ici, toutes les colonnes possédant le type <code>&lt;chr&gt;</code> sont des colonnes que nous souhaitons transformer en facteur. Nous pouvons donc taper ceci :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>dauphin <span class="ot">&lt;-</span> dauphin <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>dauphin <span class="ot">&lt;-</span> dauphin <span class="sc">|&gt;</span> </span>
 <span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as.factor)</span>
 <span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>dauphin</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1534,7 +1544,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <p>Or il exsite un ordre des statuts reproducteurs qui reflète une progression biologique : <code>imm</code> (immature), <code>mat</code> (mature), <code>pnl</code> (pregnant non lactating), <code>l</code> (lactating), <code>pl</code> (pregnant lactating), <code>repos</code> (repos somatique).</p>
 <p>Commençons par changer les niveaux du facteur <code>Sexe</code>. Pour cela, nous pouvons utiliser la fonction <code>fct_recode()</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>dauphin <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>dauphin <span class="sc">|&gt;</span> </span>
 <span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sexe =</span> <span class="fu">fct_recode</span>(Sexe, </span>
 <span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Female"</span> <span class="ot">=</span> <span class="st">"f"</span>,</span>
 <span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Male"</span> <span class="ot">=</span> <span class="st">"m"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1557,7 +1567,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>Nous pouvons maintenant modifier l’ordre des niveaux de <code>Satut</code> avec la fonction <code>fct_relevel()</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>dauphin <span class="ot">&lt;-</span> dauphin <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>dauphin <span class="ot">&lt;-</span> dauphin <span class="sc">|&gt;</span> </span>
 <span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sexe =</span> <span class="fu">fct_recode</span>(Sexe, </span>
 <span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Female"</span> <span class="ot">=</span> <span class="st">"f"</span>,</span>
 <span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Male"</span> <span class="ot">=</span> <span class="st">"m"</span>),</span>
@@ -1590,17 +1600,17 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importation et mise en forme du jeu de données `dauphin`</span></span>
 <span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>dauphin <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/dauphin.xls"</span>, </span>
-<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na =</span> <span class="st">"*"</span>, <span class="at">skip =</span> <span class="dv">9</span>) <span class="sc">%&gt;%</span>   <span class="co"># Importer, puis</span></span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na =</span> <span class="st">"*"</span>, <span class="at">skip =</span> <span class="dv">9</span>) <span class="sc">|&gt;</span>   <span class="co"># Importer, puis</span></span>
 <span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ID =</span> <span class="st">`</span><span class="at">N°</span><span class="st">`</span>,                 <span class="co"># Raccourcir les noms, puis</span></span>
 <span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">Statut =</span> <span class="st">`</span><span class="at">Statut reproducteur</span><span class="st">`</span>,</span>
 <span id="cb105-7"><a href="#cb105-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">Taille =</span> <span class="st">`</span><span class="at">Taille en cm</span><span class="st">`</span>,</span>
 <span id="cb105-8"><a href="#cb105-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">Age =</span> <span class="st">`</span><span class="at">Age en années</span><span class="st">`</span>,</span>
 <span id="cb105-9"><a href="#cb105-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">Cd =</span> <span class="st">`</span><span class="at">Cd (mg.kg-1)</span><span class="st">`</span>,</span>
 <span id="cb105-10"><a href="#cb105-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">Cu =</span> <span class="st">`</span><span class="at">Cu (mg.kg-1)</span><span class="st">`</span>,</span>
-<span id="cb105-11"><a href="#cb105-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Hg =</span> <span class="st">`</span><span class="at">Hg (mg.kg-1)</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb105-12"><a href="#cb105-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ID) <span class="sc">%&gt;%</span>                   <span class="co"># Supprimer la variable `ID`, puis</span></span>
+<span id="cb105-11"><a href="#cb105-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Hg =</span> <span class="st">`</span><span class="at">Hg (mg.kg-1)</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb105-12"><a href="#cb105-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ID) <span class="sc">|&gt;</span>                   <span class="co"># Supprimer la variable `ID`, puis</span></span>
 <span id="cb105-13"><a href="#cb105-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character,           <span class="co"># 'Factoriser' les variables &lt;chr&gt;, puis</span></span>
-<span id="cb105-14"><a href="#cb105-14" aria-hidden="true" tabindex="-1"></a>            as.factor) <span class="sc">%&gt;%</span>          </span>
+<span id="cb105-14"><a href="#cb105-14" aria-hidden="true" tabindex="-1"></a>            as.factor) <span class="sc">|&gt;</span>          </span>
 <span id="cb105-15"><a href="#cb105-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sexe =</span> <span class="fu">fct_recode</span>(Sexe,    <span class="co"># Modifier l'ordre des niveaux</span></span>
 <span id="cb105-16"><a href="#cb105-16" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Female"</span> <span class="ot">=</span> <span class="st">"f"</span>,</span>
 <span id="cb105-17"><a href="#cb105-17" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Male"</span> <span class="ot">=</span> <span class="st">"m"</span>),</span>
@@ -1645,20 +1655,20 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <div id="fig-consommation" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="05-DataWrangling_files/figure-html/fig-consommation-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.13: Consommation en fonction de la cylindrée</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.14: Consommation en fonction de la cylindrée</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <ol start="4" type="1">
-<li>Ce graphique présente-t-il correctement l’ensemble des données de ces 2 variables ? Pourquoi ? Comparez la <a href="#fig-consommation">Figure&nbsp;<span>6.13</span></a> de la question 3 ci-dessus et la <a href="#fig-consommation2">Figure&nbsp;<span>6.14</span></a> présentée ci-dessous. Selon vous, quels arguments et/ou fonctions ont été modifiés pour arriver à ce nouveau graphique ? Quels sont les avantages et les inconvénients de ce graphique par rapport au précédent ?</li>
+<li>Ce graphique présente-t-il correctement l’ensemble des données de ces 2 variables ? Pourquoi ? Comparez la <a href="#fig-consommation">Figure&nbsp;<span>6.14</span></a> de la question 3 ci-dessus et la <a href="#fig-consommation2">Figure&nbsp;<span>6.15</span></a> présentée ci-dessous. Selon vous, quels arguments et/ou fonctions ont été modifiés pour arriver à ce nouveau graphique ? Quels sont les avantages et les inconvénients de ce graphique par rapport au précédent ?</li>
 </ol>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-consommation2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="05-DataWrangling_files/figure-html/fig-consommation2-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.14: Consommation en fonction de la cylindrée</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.15: Consommation en fonction de la cylindrée</figcaption>
 </figure>
 </div>
 </div>
@@ -1672,7 +1682,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <div id="fig-arrangefig" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/arrange.png" class="img-fluid figure-img" style="width:40.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.15: Schéma de la fonction <code>arrange()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.16: Schéma de la fonction <code>arrange()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
 </figure>
 </div>
 </div>
@@ -1680,7 +1690,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <p>La fonction <code>arrange()</code> permet de trier des tableaux en ordonnant les éléments d’une ou plusieurs colonnes. Les tris peuvent être en ordre croissants (c’est le cas par défaut) ou décroissants (grâce à la fonction <code>desc()</code>, abréviation de “descending”).</p>
 <p><code>arrange()</code> fonctionne donc comme <code>filter()</code>, mais au lieu de sélectionner des lignes, cette fonction change leur ordre. Il faut lui fournir le nom d’un tableau et au minimum le nom d’une variable selon laquelle le tri doit être réalisé. Si plusieurs variables sont fournies, chaque variable supplémentaire permet de résoudre les égalités. Ainsi, pour ordonner le tableau <code>flights</code> par ordre croissant de retard au départ (<code>dep_delay</code>), on tape :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(dep_delay)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
@@ -1704,7 +1714,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>Notez que la variable <code>dep-delay</code> est maintenant triée en ordre croissant. Notez également que 2 vols ont eu exactement 25 minutes d’avance. Comparez le tableau précédent avec celui-ci :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(dep_delay, month, day)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
@@ -1729,7 +1739,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <p>Les lignes des 2 vols ayant 25 minutes d’avance au décollage ont été inversées : le vol du mois de mars apparaît maintenant avant le vol du mois d’octobre. La variable <code>month</code> a été utilisée pour ordonner les lignes en cas d’égalité de la variable <code>dep_delay</code>.</p>
 <p>Comme indiqué plus haut, il est possible de trier les données par ordre décroissant :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(dep_delay))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
@@ -1758,8 +1768,8 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <li>Trier les données par effectif décroissant.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dest) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dest) <span class="sc">|&gt;</span> </span>
 <span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 105 × 2
@@ -1791,8 +1801,8 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <p>Autrement dit, les informations concernant les vols vont dans un tableau, les informations concernant les aéroports dans un autre tableau, et celles concernant les avions dans un troisième tableau. Cela semble évident, pourtant, on constate souvent qu’un même tableau contient des variables qui concernent des unités d’observations différentes.</p>
 <p>Lorsque nous avons plusieurs tableaux à disposition, il peut alors être nécessaire de récuppérer des informations dans plusieurs d’entre eux afin, notamment de produire des tableaux de synthèse. Par exemple, dans la <a href="#sec-arrange"><span>Section&nbsp;6.8</span></a> ci-dessus, nous avons affiché les destinations les plus fréquentes au départ des aéroports de New York. Donnons un nom à ce tableau pour pouvoir le ré-utiliser :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>popular_dest <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
-<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dest) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>popular_dest <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dest) <span class="sc">|&gt;</span> </span>
 <span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
 <span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a>popular_dest</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1822,15 +1832,15 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <div id="fig-inner" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/innerjoin.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.16: Schéma de la fonction <code>inner_join()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.17: Schéma de la fonction <code>inner_join()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>La fonction <code>inner_join()</code> permet de relier deux tableaux en ne conservant que les lignes qui sont présentes à la fois dans l’un et dans l’autre. Il faut identifier, dans chacun des tableaux, une colonne contenant des données en commun, qui servira de guide pour mettre les lignes correctes les unes en face des autres. Ici, nous partons de notre tableau <code>popular_dest</code>, qui contient les codes des aéroports dans sa colonne <code>dest</code>, et nous faisons une “jointure interne” avec le tableau <code>airports</code> qui contient lui aussi une colonne contenant les codes des aéroports : la variable <code>faa</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>inner_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">%&gt;%</span> </span>
-<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(airports, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"dest"</span> <span class="ot">=</span> <span class="st">"faa"</span>))</span>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>inner_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">|&gt;</span> </span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span>
 <span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>inner_popular</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 101 × 9
@@ -1849,10 +1859,10 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 # ℹ 91 more rows</code></pre>
 </div>
 </div>
-<p>Le nouvel objet <code>inner_popular</code> contient donc les données du tableau <code>popular_dest</code> auxquelles ont été ajoutées les colonnes correspondantes du tableau airports. Si tout ce qui nous intéresse, c’est de connaître le nom complet des aéroports les plus populaires, on peut utiliser <code>select()</code> pour ne garder que les variables intéressantes :</p>
+<p>Le nouvel objet <code>inner_popular</code> contient donc les données du tableau <code>popular_dest</code> auxquelles ont été ajoutées les colonnes correspondantes du tableau <code>airports.</code> Si tout ce qui nous intéresse, c’est de connaître le nom complet des aéroports les plus populaires, on peut utiliser <code>select()</code> pour ne garder que les variables intéressantes :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>inner_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">%&gt;%</span> </span>
-<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(airports, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"dest"</span> <span class="ot">=</span> <span class="st">"faa"</span>)) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>inner_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">|&gt;</span> </span>
+<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa)) <span class="sc">|&gt;</span> </span>
 <span id="cb119-3"><a href="#cb119-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dest, name, n)</span>
 <span id="cb119-4"><a href="#cb119-4" aria-hidden="true" tabindex="-1"></a>inner_popular</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1888,7 +1898,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <pre><code>[1] 101</code></pre>
 </div>
 </div>
-<p>Certaines lignes ont donc été supprimées car le code aéroport dans <code>popular_dest</code> (notre tableau de départ) n’a pas été retrouvé dans la colonne <code>faa</code> du tableau <code>airports</code>. C’est le principe même de la jointure interne (voir <a href="#fig-inner">Figure&nbsp;<span>6.16</span></a>) : seules les lignes communes trouvées dans les 2 tableaux sont conservées. Si l’on souhaite absolument conserver toutes les lignes du tableau de départ, il faut faire une jointure gauche, ou “left join”.</p>
+<p>Certaines lignes ont donc été supprimées car le code aéroport dans <code>popular_dest</code> (notre tableau de départ) n’a pas été retrouvé dans la colonne <code>faa</code> du tableau <code>airports</code>. C’est le principe même de la jointure interne (voir <a href="#fig-inner">Figure&nbsp;<span>6.17</span></a>) : seules les lignes communes trouvées dans les 2 tableaux sont conservées. Si l’on souhaite absolument conserver toutes les lignes du tableau de départ, il faut faire une jointure gauche, ou “left join”.</p>
 </section>
 <section id="left_join" class="level3" data-number="6.9.3">
 <h3 data-number="6.9.3" class="anchored" data-anchor-id="left_join"><span class="header-section-number">6.9.3</span> <code>left_join()</code></h3>
@@ -1897,15 +1907,15 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <div id="fig-left" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/leftjoin.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.17: Schéma de la fonction <code>left_join()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.18: Schéma de la fonction <code>left_join()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Comme indiqué par la <a href="#fig-left">Figure&nbsp;<span>6.17</span></a> ci-dessus, une jointure gauche permet de conserver toutes les lignes du tableau de gauche, et de leur faire correspondre des lignes du second tableau. Si aucune correspondance n’est trouvée dans le second tableau, des données manquantes sont ajoutées sous forme de <code>NA</code>s. Voyons ce que cela donne avec le même exemple que précédemment :</p>
+<p>Comme indiqué par la <a href="#fig-left">Figure&nbsp;<span>6.18</span></a> ci-dessus, une jointure gauche permet de conserver toutes les lignes du tableau de gauche, et de leur faire correspondre des lignes du second tableau. Si aucune correspondance n’est trouvée dans le second tableau, des données manquantes sont ajoutées sous forme de <code>NA</code>s. Voyons ce que cela donne avec le même exemple que précédemment :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>left_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">%&gt;%</span> </span>
-<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(airports, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"dest"</span> <span class="ot">=</span> <span class="st">"faa"</span>)) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>left_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">|&gt;</span> </span>
+<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa)) <span class="sc">|&gt;</span> </span>
 <span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dest, name, n)</span>
 <span id="cb125-4"><a href="#cb125-4" aria-hidden="true" tabindex="-1"></a>left_popular</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1949,7 +1959,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>Pour savoir quelles lignes de <code>popular_dest</code> manquent dans <code>inner_dest</code> (il devrait y en avoir 4), il suffit de filtrer les lignes de <code>left_dest</code> qui contiennent des données manquantes dans la colonne <code>name</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>left_popular <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>left_popular <span class="sc">|&gt;</span> </span>
 <span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(name))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
@@ -1980,7 +1990,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </ul>
 <p>Prenons un exemple. Imaginons que nous ayons 2 tableaux contenant les mêmes variables. Le premier, nommé <code>colorado</code>, contient les informations des vols ayant décollé de New York en 2013 et ayant atterri à l’aéroport de Yempa Valley au Colorado (aéroport <code>HDN</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>colorado <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>colorado <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
 <span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">"HDN"</span>)</span>
 <span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a>colorado</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2010,7 +2020,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>Le second est nommé <code>indiana</code>. Il contient les informations des vols ayant décollé de New York en 2013 et ayant atterri à l’aéroport de South Bend en Indiana (aéroport <code>SBN</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>indiana <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>indiana <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
 <span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">"SBN"</span>)</span>
 <span id="cb139-3"><a href="#cb139-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb139-4"><a href="#cb139-4" aria-hidden="true" tabindex="-1"></a>indiana</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2058,7 +2068,7 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </div>
 <p>Vous noterez que le nombre de lignes du nouveau tableau est la somme des nombres de lignes des 2 tableaux de départ. Bien sûr, cette opération n’est utile que si les tableaux nous sont fournis séparément. Ici, il aurait été bien plus rapide d’obtenir le même résultat en tapant :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
 <span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"HDN"</span>, <span class="st">"SBN"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 25 × 19
@@ -2103,18 +2113,18 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <pre><code># A tibble: 3 × 2
       r      s
   &lt;int&gt;  &lt;dbl&gt;
-1    10 -0.145
-2     9 -1.87 
-3     8 -0.478</code></pre>
+1    10  0.872
+2     9 -0.459
+3     8  1.17 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
       x     y z         r      s
   &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;  &lt;dbl&gt;
-1     1     2 TRUE     10 -0.145
-2     2     4 FALSE     9 -1.87 
-3     3     6 FALSE     8 -0.478</code></pre>
+1     1     2 TRUE     10  0.872
+2     2     4 FALSE     9 -0.459
+3     3     6 FALSE     8  1.17 </code></pre>
 </div>
 </div>
 <p>Ici, puisque <code>a</code> et <code>b</code> ont le même nombre de lignes, il est possible de les accoler. Cela n’a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.</p>
