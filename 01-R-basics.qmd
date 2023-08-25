@@ -9,7 +9,7 @@ Avant de commencer à explorer des données dans `R`, il y a plusieurs concepts 
 2. Comment s'y prend-on pour coder dans `R` ?
 3. Que sont les `packages` ?
 
-Même si vous pensez être déjà à l'aise avec ces concepts, lisez attentivement ce chapitre et faites les exercices demandés. Cela vous rafraîchira probablement la mémoire, et il n'est pas impossible que vous appreniez une chose ou deux au passage. Une bonne maîtrise des éléments présentés dans ce chapitre est indispensable pour aborder sereinement les chapitres suivants, à commencer par le chapitre @sec-dataset, qui présente un jeu de données que nous explorerons en détail un peu plus tard. Lisez donc attentivement ce chapitre et faites bien tous les exercices demandés. 
+Même si vous pensez être déjà à l'aise avec ces concepts, lisez attentivement ce chapitre et faites les exercices demandés. Cela vous rafraîchira probablement la mémoire, et il n'est pas impossible que vous appreniez une chose ou deux au passage. Une bonne maîtrise des éléments présentés dans ce chapitre est indispensable pour aborder sereinement les chapitres suivants, à commencer par le @sec-dataset, qui présente un jeu de données que nous explorerons en détail un peu plus tard. Lisez donc attentivement ce chapitre et faites bien tous les exercices demandés. 
 
 Ce chapitre est en grande partie basé sur les 3 ressources suivantes que je vous encourage à consulter si vous souhaitez obtenir plus de détails :
 
@@ -148,7 +148,7 @@ head(airquality)
 str(airquality)
 
 # Réalisation d'un graphique présentant la relation entre la concentration
-# en ozone atmosphérique en ppb et la température en degrés Farenheit
+# en ozone atmosphérique en ppb et la température en degrés Fahrenheit
 ggplot(data = airquality, mapping = aes(x = Temp, y = Ozone)) +
   geom_point() +
   geom_smooth(method = "loess")
@@ -185,7 +185,7 @@ head(airquality)
 str(airquality)
 
 # Réalisation d'un graphique présentant la relation entre la concentration
-# en ozone atmosphérique en ppb et la température en degrés Farenheit
+# en ozone atmosphérique en ppb et la température en degrés Fahrenheit
 ggplot(data = airquality, mapping = aes(x = Temp, y = Ozone)) +
   geom_point() +
   geom_smooth(method = "loess")
@@ -521,7 +521,7 @@ Vous devrez charger à nouveau chaque package que vous souhaitez utiliser **à c
 :::
 
 
-## Exercice {#sec-Exo-1}
+## Exercice {#sec-exo-1}
 
 Dans votre dossier de travail, créez un nouveau script que vous nommerez `ExoDiamonds.R`. Vous prendrez soin d'ajouter autant de commentaires que nécessaire dans votre script afin de le structurer correctement.
 

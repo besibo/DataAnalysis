@@ -123,7 +123,7 @@ Pour apprendre à utiliser un logiciel comme `R`, il faut faire les choses soi-m
 
 Pour que cet apprentissage soit le moins problématique possible, il convient de prendre les choses dans l'ordre. C'est la raison pour laquelle les chapitres de ce livre doivent être lus dans l'ordre, et les exercices d'application faits au fur et à mesure de la lecture.
 
-Une fois compilé en pdf, ce document représente plus de 180 pages, ce qui veut dire que vous devriez vous approprier environ 12 pages par jour. En particulier, la \@sec-viz est très longue et il est facile de se laisser dépasser. 
+Une fois compilé en pdf, ce document représente plus de 180 pages, ce qui veut dire que vous devriez vous approprier environ 12 pages par jour. En particulier, la @sec-viz est très longue et il est facile de se laisser dépasser. 
 
 :::{.callout-warning}
 ## Travaillez régulièrement !

@@ -9,7 +9,7 @@ book:
   date-format: "dddd D MMMM YYYY"
   search: true
   downloads: pdf
-  repo-url: "https://github.com/besibo/DA"
+  repo-url: "https://github.com/besibo/DataAnalysis"
   chapters:
     - index.qmd
     - 01-R-basics.qmd

@@ -7,17 +7,21 @@ editor_options:
 
 ## Pré-requis 
 
-Nous abordons ici une étape essentielle de toute analyse de données : la manipulation de tableaux, la sélection de lignes, de colonnes, la création de nouvelles variables, etc. Bien souvent, les données brutes que nous importons dans R ne sont pas utiles en l'état. Il nous faut parfois sélectionner seulement certaines lignes pour travailler sur une petite partie du jeu de données. Il nous faut parfois modifier des variables existantes (pour modifier les unités par exemple) ou en créer de nouvelles à partir des variables existantes. Nous avons aussi très souvent besoin de constituer des groupes et d'obtenir des statistiques descriptives pour chaque groupe (moyenne, écart-type, erreur type, etc). Nous verrons dans ce chapitre comment faire tout cela grâce au package `dplyr` qui fournit un cadre cohérent et des fonctions simples permettant d'effectuer tous les tripatouillages de données dont nous pourrons avoir besoin.
+Nous abordons ici une étape essentielle de toute analyse de données : la manipulation de tableaux, la sélection de lignes, de colonnes, la création de nouvelles variables, etc. Bien souvent, les données brutes que nous importons dans `R` ne sont pas utiles en l'état. Il nous faut parfois sélectionner seulement certaines lignes pour travailler sur une petite partie du jeu de données. Il nous faut parfois modifier des variables existantes (pour modifier les unités par exemple) ou en créer de nouvelles à partir des variables existantes. Nous avons aussi très souvent besoin de constituer des groupes et d'obtenir des statistiques descriptives pour chaque groupe (moyenne, écart-type, erreur type, etc). Nous verrons dans ce chapitre comment faire tout cela grâce au package `dplyr` qui fournit un cadre cohérent et des fonctions simples permettant d'effectuer tous les tripatouillages de données dont nous pourrons avoir besoin.
 
 Dans ce chapitre, nous aurons besoin des packages suivants :
 ```{r}
+#| message: false
+#| warning: false
+
 library(dplyr)
 library(ggplot2)
 library(nycflights13)
 library(forcats)
 ```
 
-```{r include=FALSE}
+```{r}
+#| include: false
 library(tidyverse)
 ```
 
@@ -30,7 +34,9 @@ Avant d'entrer dans le vif du sujet, je souhaite introduire ici la notion de "pi
 
 Le pipe, noté `%>%`, peut être obtenu en pressant les touches `ctrl + shift + M` de votre clavier (ou `command + shift + M` sous macOS). Il permet d'enchaîner logiquement des actions les unes à la suite des autres. Globalement, le pipe prend l'objet situé à sa gauche, et le transmet à la fonction situé à sa droite. En d'autres termes, les 2 expressions suivantes sont strictement équivalentes :
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
+
 # Ici, "f" est une fonction quelconque, 
 # "x" et "y" sont 2 objets dont la fonction a besoin.
 
@@ -44,16 +50,22 @@ Travailler avec le pipe est très intéressant car toutes les fonctions de `dply
 
 De la même façon que le `+` permet d'ajouter une couche supplémentaire à un graphique `ggplot2`, le pipe `%>%` permet d'ajouter une opération supplémentaire dans un groupe de commandes.
 
-Pour reprendre un exemple de la section \@ref(clouds) sur les nuages de points, nous avions commencé par créer un objet nommé `alaska_flights` à partir de l'objet `flights` :
+Pour reprendre un exemple de la @sec-clouds sur les nuages de points, nous avions commencé par créer un objet nommé `alaska_flights` à partir de l'objet `flights` :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 alaska_flights <- flights %>%
   filter(carrier == "AS")
 ```
 
 Nous avions ensuite créé notre premier nuage de points avec ce code :
 
-```{r tidy=FALSE, warning = FALSE, eval=FALSE}
+```{r}
+#| tidy: false
+#| warning: false
+#| eval: false
+
 ggplot(data = alaska_flights, mapping = aes(x = dep_delay, y = arr_delay)) + 
   geom_point()
 ```
@@ -66,7 +78,12 @@ Nous savons maintenant qu'il n'est pas indispensable de faire figurer le nom des
 
 Voilà comment traduire cela avec le pipe :
 
-```{r tidy=FALSE, warning = FALSE, fig.cap="Notre premier graphique, produit grâce au pipe"}
+```{r}
+#| label: fig-pipe
+#| warning: false
+#| tidy: false
+#| fig-cap: "Notre premier graphique, produit grâce au pipe."
+
 flights %>% 
   filter(carrier == "AS") %>% 
   ggplot(aes(x = dep_delay, y = arr_delay)) + 
@@ -79,8 +96,6 @@ Comme pour le `+` de `ggplot2`, il est conseillé de placer un seul pipe par lig
 
 Toutes les commandes que nous utiliserons à partir de maintenant reposeront sur le pipe puisqu'il permet de rendre le code plus lisible.
 
-
-----
 
 ## Les verbes du tripatouillage de données
 
@@ -100,26 +115,34 @@ Toutes ces fonctions, tous ces verbes, sont utilisés de la même façon : on pr
 Enfin, gardez en tête qu'il existe beaucoup plus de fonctions dans `dplyr` que les 6 que nous allons détailler ici. Nous verrons parfois quelques variantes, mais globalement, maîtriser ces 6 fonctions simples devrait vous permettre de conduire une très large gamme de manipulations de données, et ainsi vous faciliter la vie pour la production de graphiques et l'analyse statistique de vos données.
 
 
-----
-
 ## Filtrer des lignes avec `filter()`
 
 ### Principe
 
-```{r, filterfig, echo = FALSE, out.width='50%', fig.align='center', fig.cap="(ref:filter)"}
+```{r}
+#| label: fig-filterfig
+#| echo: false
+#| out-width: '50%'
+#| fig-align: 'center'
+#| fig-cap: "Schéma de la fonction `filter()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`."
+
 knitr::include_graphics('images/filter.png')
 ```
 
-(ref:filter) Schéma de la fonction `filter()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
-
 Comme son nom l'indique, `filter()` permet de filtrer des lignes en spécifiant un ou des critères de tri portant sur une ou plusieurs variables. Nous avons déjà utilisé cette fonction à plusieurs reprises pour créer les jeux de données `alaska_flights` et `small_weather` :
 
-```{r tidy = FALSE, eval = FALSE}
+```{r}
+#| tidy: false
+#| eval: false
+
 alaska_flights <- flights %>% 
   filter(carrier == "AS")
 ```
 
-```{r tidy = FALSE, eval = FALSE}
+```{r}
+#| tidy: false
+#| eval: false
+
 small_weather <- weather %>% 
   filter(origin == "EWR",
          month == 1,
@@ -136,9 +159,11 @@ Le premier argument de la fonction `filter()` doit être le nom d'un `data.frame
 
 ### Exercice
 
-Dans la section \@ref(View), nous avons utilisé la fonction `View` et l'application manuelle de filtres pour déterminer combien de vols avaient quitté l'aéroport JFK le 12 février 2013. En utilisant la fonction `filter()`, créez un objet nommé `JFK_12fev` qui contiendra les données de ces vols.
+Dans la @sec-view, nous avons utilisé la fonction `View` et l'application manuelle de filtres pour déterminer combien de vols avaient quitté l'aéroport JFK le 12 février 2013. En utilisant la fonction `filter()`, créez un objet nommé `JFK_12fev` qui contiendra les données de ces vols.
 
-```{r include=FALSE}
+```{r}
+#| include: false
+
 JFK_12fev <- flights %>% 
   filter(origin == "JFK",
          month == 2,
@@ -150,7 +175,7 @@ Vérifiez que cet objet contient bien `r nrow(JFK_12fev)` lignes.
 
 ### Les conditions logiques
 
-Dans la section \@ref(comparaison), nous avons présenté en détail le fonctionnement des opérateurs de comparaison dans R. Relisez cette section si vous ne savez plus de quoi il s'agit. Les opérateurs de comparaison permettent de vérifier l'égalité ou l'inégalité entre des éléments. Ils renvoient `TRUE` ou `FALSE` et seront particulièrement utiles pour filtrer des lignes dans un tableau. Comme indiqué dans la section \@ref(comparaison), voici la liste des opérateurs de comparaison usuels :
+Dans la @sec-comparaison, nous avons présenté en détail le fonctionnement des opérateurs de comparaison dans R. Relisez cette section si vous ne savez plus de quoi il s'agit. Les opérateurs de comparaison permettent de vérifier l'égalité ou l'inégalité entre des éléments. Ils renvoient `TRUE` ou `FALSE` et seront particulièrement utiles pour filtrer des lignes dans un tableau. Comme indiqué dans la @sec-comparaison, voici la liste des opérateurs de comparaison usuels :
 
 * `==` : égal à
 * `!=` : différent de
@@ -171,12 +196,17 @@ Voyons comment utiliser ces opérateurs avec la fonction `filter()`.
 
 Dans le tableau `flights`, tous les vols prévus ont-ils effectivement décollé ? Une bonne façon de le savoir est de regarder si, pour la variable `dep_time` (heure de décollage), des données manquantes sont présentes :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 flights %>% 
   filter(is.na(dep_time))
 ```
 
-```{r, tidy=FALSE, include=FALSE}
+```{r}
+#| tidy: false
+#| include: false
+
 naflights <- flights %>% 
   filter(is.na(dep_time))
 ```
@@ -185,7 +215,9 @@ Seules les lignes contenant `NA` dans la colonne `dep_time` sont retenues. Il y 
 
 Dans le même ordre d'idée, y a t-il des vols qui ont décollé mais qui ne sont pas arrivés à destination ? Là encore, une façon d'obtenir cette information est de sélectionner les vols qui ont décollé (donc pour lesquels l'heure de décollage n'est pas manquante), mais pour lesquels l'heure d'atterrissage est manquante :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 flights %>% 
   filter(!is.na(dep_time),
          is.na(arr_time))
@@ -193,12 +225,17 @@ flights %>%
 
 Notez l'utilisation du `!` pour la première condition. Nous récupérons ici les lignes pour lesquelles `dep_time` n'est pas `NA` et pour lesquelles `arr_time` est `NA`. Seules les lignes qui respectent cette double condition sont retenues. Cette syntaxe est équivalente à :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 flights %>% 
   filter(!is.na(dep_time) & is.na(arr_time))
 ```
 
-```{r, tidy=FALSE, include=FALSE}
+```{r}
+#| tidy: false
+#| include: false
+
 flights_annul <- flights %>% 
   filter(!is.na(dep_time) & is.na(arr_time))
 ```
@@ -209,7 +246,9 @@ Il y a donc `r nrow(flights_annul)` vols qui ne sont pas arrivés à destination
 
 Enfin, pour illustrer l'utilisation de `|` (le `OU` logique) et de `%in%`, imaginons que nous souhaitions extraire les informations des vols ayant quitté l'aéroport `JFK` à destination d'Atlanta, Géorgie (`ATL`) et de Seatle, Washington (`SEA`), aux mois d'octobre, novembre et décembre :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 atl_sea_fall <- flights %>% 
   filter(origin == "JFK", 
          dest == "ATL" | dest == "SEA", 
@@ -221,7 +260,9 @@ Examinez ce tableau avec `View()` pour vérifier que la variable `dest` contient
 
 Une autre solution pour obtenir le même tableau est de remplacer l'expression contenant `|` par une expression contenant `%in%` :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 atl_sea_fall2 <- flights %>% 
   filter(origin == "JFK", 
          dest %in% c("ATL", "SEA"), 
@@ -236,29 +277,38 @@ identical(atl_sea_fall, atl_sea_fall2)
 ```
 
 
-----
-
 ## Créer des résumés avec `summarise()` et `group_by()`
 
 ### Principe de la fonction `summarise()`
 
-```{r, summarisefig, echo = FALSE, out.width='70%', fig.align='center'}
+```{r}
+#| label: fig-summarisefig
+#| echo: false
+#| out-width: '70%'
+#| fig-align: 'center'
+
 knitr::include_graphics('images/summarizearrow.png')
 ```
 
 ```{r, summarisefig2, echo = FALSE, out.width='40%', fig.align='center', fig.cap="(ref:summarise)"}
+#| label: fig-summarisefig2
+#| echo: false
+#| out-width: '40%'
+#| fig-align: 'center'
+#| fig-cap: Schéma de la fonction `summarise()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
+
 knitr::include_graphics('images/summarize.png')
 ```
 
-(ref:summarise) Schéma de la fonction `summarise()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
-
-La figure \@ref(fig:summarisefig2) ci-dessus indique comment fonctionne la fonction `summarise()` : elle prend plusieurs valeurs (potentiellement, un très grand nombre) et les réduit à une unique valeur qui les résume. Lorsque l'on applique cette démarche à plusieurs colonnes d'un tableau, on obtient un tableau qui ne contient plus qu'une unique ligne de résumé.
+La @fig-summarisefig2 ci-dessus indique comment fonctionne la fonction `summarise()` : elle prend plusieurs valeurs (potentiellement, un très grand nombre) et les réduit à une unique valeur qui les résume. Lorsque l'on applique cette démarche à plusieurs colonnes d'un tableau, on obtient un tableau qui ne contient plus qu'une unique ligne de résumé.
 
 La valeur qui résume les données est choisie par l'utilisateur. Il peut s'agir par exemple d'un calcul de moyenne ou de variance, il peut s'agir de calculer une somme, ou d'extraire la valeur maximale ou minimale, ou encore, il peut tout simplement s'agir de déterminer un nombre d'observations.
 
 Ainsi, pour connaître la température moyenne et l'écart-type des températures dans les aéroports de New York, il suffit d'utiliser le tableau `weather` et sa variable `temp` que nous avons déjà utilisés dans les chapitres précédents :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 weather %>% 
   summarise(moyenne = mean(temp),
             ecart_type = sd(temp))
@@ -266,45 +316,59 @@ weather %>%
 
 Les fonctions `mean()` et `sd()` permettent de calculer une moyenne et un écart-type respectivement. Ici, les valeurs retournées sont `NA` car une valeur de température est manquante :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 weather %>% 
   filter(is.na(temp))
 ```
 
-Pour obtenir les valeurs souhaitées, il faut indiquer à R d'exclure les valeurs manquantes lors des calculs de moyennes et écarts-types :
+Pour obtenir les valeurs souhaitées, il faut indiquer à `R` d'exclure les valeurs manquantes lors des calculs de moyennes et écarts-types :
 
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 weather %>% 
   summarise(moyenne = mean(temp, na.rm = TRUE),
             ecart_type = sd(temp, na.rm = TRUE))
 ```
 
 
-```{r, tidy = FALSE, include = FALSE}
+```{r}
+#| tidy: false
+#| include: false
+
 temper <- weather %>% 
   summarise(moyenne = mean(temp, na.rm = TRUE),
             ecart_type = sd(temp, na.rm = TRUE))
 ```
 
-La température moyenne est donc de `r round(temper[1,1],1)` degrés Farenheit et l'écart-type vaut `r round(temper[1,2],1)` degrés Farenheit.
+La température moyenne est donc de `r round(temper[1,1],1)` degrés Fahrenheit et l'écart-type vaut `r round(temper[1,2],1)` degrés Fahrenheit.
 
 
 ### Intérêt de la fonction `group_by()`
 
 La fonction devient particulièrement puissante lorsqu'elle est combinée avec la fonction `group_by()` :
 
-```{r, groupby, echo = FALSE, out.width='65%', fig.align='center', fig.cap="(ref:groupby)"}
+```{r}
+#| label: fig-groupby
+#| echo: false
+#| out-width: '65%'
+#| fig-align: 'center'
+#| fig-cap: Fonctionnement de `group_by()` travaillant de concert avec `summarise()`, tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
+
+
 knitr::include_graphics('images/groupby.png')
 ```
-
-(ref:groupby) Fonctionnement de `group_by()` travaillant de concert avec `summarise()`, tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
 
 Comme son nom l'indique, la fonction `group_by()` permet de créer des sous-groupes dans un tableau, afin que le résumé des données soit calculé pour chacun des sous-groupes plutôt que sur l'ensemble du tableau. En ce sens, son fonctionnement est analogue à celui des `facet`s de `ggplot2` qui permettent de scinder les données d'un graphique en plusieurs sous-groupes.
 
 Pour revenir à l'exemple des températures, imaginons que nous souhaitions calculer les températures moyennes et les écart-types pour chaque mois de l'année. Voilà comment procéder :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 weather %>% 
   group_by(month) %>% 
   summarise(moyenne = mean(temp, na.rm = TRUE),
@@ -323,7 +387,9 @@ $$se \approx \frac{s}{\sqrt{n}}$$
 
 avec $s$, l'écart-type de l'échantillon et $n$, la taille de l'échantillon. Cette grandeur est très importante en statistique puisqu'elle nous permet de quantifier **l'imprécision** de la moyenne. Elle intervient d'ailleurs dans le calcul de l'intervalle de confiance de la moyenne d'un échantillon. Nous allons donc calculer ici ces résumés, et nous donnerons un nom au tableau créé pour pouvoir ré-utiliser ces statistiques descriptives :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 monthly_temp <- weather %>% 
   group_by(month) %>% 
   summarise(moyenne = mean(temp, na.rm = TRUE),
@@ -342,7 +408,12 @@ Vous constatez ici que nous avons 4 statistiques descriptives pour chaque mois d
 
 Le tableau `monthly_temp` que nous venons de créer contient donc les données nécessaires pour nous permettre de visualiser sur un graphique l'évolution des températures moyennes enregistrées dans les 3 aéroports de New York en 2013. Outre les température moyennes, nous devons faire figurer l'imprécision des estimations de moyenne avec des barres d'erreur (à l'aide de la fonction `geom_linerange()`). Comme expliqué plus haut, l'imprécision des moyennes calculées est estimée grâce à l'erreur standard. Toutefois, ici, les imprécisions sont tellement faibles que les barres d'erreurs resteront invisibles :
 
-```{r errorbars, tidy=FALSE, warning = FALSE, fig.cap="Évolution des températures moyenne dans 3 aéroports de New York en 2013"}
+```{r}
+#| label: fig-errorbars
+#| tidy: false
+#| warning: false
+#| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
+
 monthly_temp %>% 
   ggplot(aes(x = factor(month), y = moyenne, group = 1)) +
     geom_line() + 
@@ -359,7 +430,13 @@ Vous remarquerez que :
 3. La fonction `geom_linerange()` contient de nouvelles caractéristiques esthétiques qu'il nous faut obligatoirement renseigner : les extrémités inférieures et supérieures des barres d'erreur. Il nous faut donc associer 2 variables à ces caractéristiques esthétiques. Ici, nous utilisons `moyenne - erreur_std` pour la borne inférieure des barres d'erreur, et `moyenne + erreur_std` pour la borne supérieure. Les variables `moyenne` et `erreur_std` faisant partie du tableau `monthly_temp`, `geom_linerange()` les trouve sans difficulté.
 4. Les barres d'erreur produites sont minuscules. Je les ai fait apparaître en rouge afin de les rendre visibles, mais même comme cela, il faut zoomer fortement pour les distinguer. Afin de rendre l'utilisation de `geom_linerange()` plus explicite, je produis ci-dessous un autre graphique en remplaçant les erreurs standard par les écart-types en guise de barres d'erreur. Attention, ce n'est pas correct d'un point de vue statistique ! Les barres d'erreur doivent permettre de visualiser l'imprécision de la moyenne. C'est donc bien les erreurs standard qu'il faut faire figurer en guise de barres d'erreurs et non les écarty-types. Le graphique ci-dessous ne figure donc qu'à titre d'exemple, afin d'illustrer de façon plus parlante le fonctionnement de la fonction `geom_linerange()` :
 
-```{r echoerrorbars2, eval = FALSE, tidy=FALSE, warning = FALSE, fig.cap="Évolution des températures moyenne dans 3 aéroports de New York en 2013"}
+```{r}
+#| label: fig-echoerrorbars2
+#| eval: false
+#| tidy: false
+#| warning: false
+#| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
+
 monthly_temp %>% 
   ggplot(aes(x = factor(month), y = moyenne, group = 1)) +
     geom_line() + 
@@ -367,14 +444,19 @@ monthly_temp %>%
     geom_linerange(aes(ymin = moyenne - ecart_type,
                        ymax = moyenne + ecart_type)) +
   labs(x = "Mois",
-       y = "Température (ºFarenheit)", 
+       y = "Température (ºFahrenheit)", 
        title = "Évolution des températures
                 dans 3 aéroports de New York en 2013",
        subtitle = "Attention : les barres d'erreurs sont les écarts-types.\n
                    Il faut normalement faire figurer les erreurs standard.")
 ```
 
-```{r errorbars2, echo = FALSE, tidy=FALSE, warning = FALSE, fig.cap="Évolution des températures moyenne dans 3 aéroports de New York en 2013"}
+```{r}
+#| label: fig-errorbars2
+#| tidy: false
+#| warning: false
+#| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
+
 monthly_temp %>% 
   ggplot(aes(x = factor(month), y = moyenne, group = 1)) +
     geom_line() + 
@@ -382,7 +464,7 @@ monthly_temp %>%
     geom_linerange(aes(ymin = moyenne - ecart_type,
                        ymax = moyenne + ecart_type)) +
   labs(x = "Mois",
-       y = "Température (ºFarenheit)", 
+       y = "Température (ºFahrenheit)", 
        title = "Évolution des températures dans 3 aéroports de New York en 2013",
        subtitle = "Attention : les barres d'erreurs sont les écarts-types.\nIl faut normalement faire figurer les erreurs standard.")
 ```
@@ -392,7 +474,9 @@ monthly_temp %>%
 
 Jusqu'ici, nous avons groupé les données de température par mois. Il est tout à fait possible de grouper les données par plus d'une variable, par exemple, par mois et par aéroport d'origine :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 monthly_orig_temp <- weather %>% 
   group_by(origin, month) %>% 
   summarise(moyenne = mean(temp, na.rm = TRUE),
@@ -404,7 +488,13 @@ monthly_orig_temp
 
 En plus de la variable `month`, la tableau `monthly_orig_temp` contient une variable `origin`. Les statistiques que nous avons calculées plus tôt sont maintenant disponibles pour chaque mois et chacun des 3 aéroports de New York. Nous pouvons utiliser ces données pour comparer les 3 aéroports :
 
-```{r echoerrorbars3, eval = FALSE, tidy=FALSE, warning = FALSE, fig.cap="Évolution des températures moyenne dans 3 aéroports de New York en 2013"}
+```{r}
+#| label: fig-echoerrorbars3
+#| eval: false
+#| tidy: false
+#| warning: false
+#| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
+
 monthly_orig_temp %>% 
   ggplot(aes(x = factor(month), 
              y = moyenne,
@@ -415,28 +505,41 @@ monthly_orig_temp %>%
     geom_linerange(aes(ymin = moyenne - ecart_type,
                        ymax = moyenne + ecart_type)) +
   labs(x = "Mois",
-       y = "Température (ºFarenheit)", 
+       y = "Température (ºFahrenheit)", 
        title = "Évolution des températures
                 dans 3 aéroports de New York en 2013",
        subtitle = "Attention : les barres d'erreurs sont les écarts-types.\n
                    Il faut normalement faire figurer les erreurs standard.")
 ```
 
-```{r errorbars3, echo = FALSE, tidy=FALSE, warning = FALSE, fig.cap="Évolution des températures moyenne dans 3 aéroports de New York en 2013"}
+```{r}
+#| label: fig-errorbars3
+#| echo: false
+#| tidy: false
+#| warning: false
+#| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
+
 monthly_orig_temp %>% 
   ggplot(aes(x = factor(month), y = moyenne, group = origin, color = origin)) +
     geom_line() + 
     geom_point() +
     geom_linerange(aes(ymin = moyenne - ecart_type, ymax = moyenne + ecart_type)) +
   labs(x = "Mois",
-       y = "Température (ºFarenheit)", 
+       y = "Température (ºFahrenheit)", 
        title = "Évolution des températures dans 3 aéroports de New York en 2013",
        subtitle = "Attention : les barres d'erreurs sont les écarts-types.\nIl faut normalement faire figurer les erreurs standard.")
 ```
 
 Notez que j'utilise maintenant `group = origin` et non plus `group = 1`. Ici, les températures des 3 aéroports sont tellement similaires que les courbes sont difficiles à distinguer. Nous pouvons donc utiliser `facet_wrap()` pour tenter d'améliorer la visualisation :
 
-```{r echoerrorbars4, eval = FALSE, tidy=FALSE, fig.asp = 1, warning = FALSE, fig.cap="Évolution des températures moyenne dans 3 aéroports de New York en 2013"}
+```{r}
+#| label: fig-echoerrorbars4
+#| eval: false
+#| tidy: false
+#| fig-asp: 1
+#| warning: false
+#| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
+
 monthly_orig_temp %>% 
   ggplot(aes(x = factor(month), 
              y = moyenne,
@@ -448,14 +551,21 @@ monthly_orig_temp %>%
                        ymax = moyenne + ecart_type)) +
   facet_wrap(~origin, ncol = 1) +
   labs(x = "Mois",
-       y = "Température (ºFarenheit)", 
+       y = "Température (ºFahrenheit)", 
        title = "Évolution des températures
                 dans 3 aéroports de New York en 2013",
        subtitle = "Attention : les barres d'erreurs sont les écarts-types.\n
                    Il faut normalement faire figurer les erreurs standard.")
 ```
 
-```{r errorbars4, echo = FALSE, tidy=FALSE, fig.asp = 1, warning = FALSE, fig.cap="Évolution des températures moyenne dans 3 aéroports de New York en 2013"}
+```{r}
+#| label: fig-errorbars4
+#| echo: false
+#| tidy: false
+#| fig-asp: 1
+#| warning: false
+#| fig-cap: "Évolution des températures moyennes dans 3 aéroports de New York en 2013."
+
 monthly_orig_temp %>% 
   ggplot(aes(x = factor(month), y = moyenne, group = origin, color = origin)) +
     geom_line() + 
@@ -463,14 +573,16 @@ monthly_orig_temp %>%
     geom_linerange(aes(ymin = moyenne - ecart_type, ymax = moyenne + ecart_type)) +
   facet_wrap(~origin, ncol = 1) +
   labs(x = "Mois",
-       y = "Température (ºFarenheit)", 
+       y = "Température (ºFahrenheit)", 
        title = "Évolution des températures dans 3 aéroports de New York en 2013",
        subtitle = "Attention : les barres d'erreurs sont les écarts-types.\nIl faut normalement faire figurer les erreurs standard.")
 ```
 
 Lorsque nous groupons par plusieurs variables, il peut-être utile d'ajouter l'argument `.groups = "drop"` à la fonction `summarise()` afin que le tibble obtenu soit un tibble "normal" et non un tibble toujours groupé par une ou plusieurs variables :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 monthly_orig_temp <- weather %>% 
   group_by(origin, month) %>% 
   summarise(moyenne = mean(temp, na.rm = TRUE),
@@ -483,9 +595,11 @@ monthly_orig_temp
 
 Notez qu'ajouter cet argument permet également de faire disparaître le message d'avertissement qui s'affichait après chaque utilisation de `group_by()`. C'est donc une bonne habitude d'ajouter cet argument systématiquement dans la fonction `summarise()` après utilisation de `group_by()`.
 
-Enfin, lorsque nous groupons par plusieurs variables, il peut être utile de présenter les résultats sous la forme d'un tableau large (grâce à la fonction `pivot_wider()`, voir section \@ref(spread)) pour l'intégration dans un rapport par exemple :
+Enfin, lorsque nous groupons par plusieurs variables, il peut être utile de présenter les résultats sous la forme d'un tableau large (grâce à la fonction `pivot_wider()`, voir @sec-spread) pour l'intégration dans un rapport par exemple :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 weather %>% 
   group_by(origin, month) %>% 
   summarise(moyenne = mean(temp, na.rm = TRUE)) %>% 
@@ -502,7 +616,9 @@ Il est tellement fréquent d'avoir à grouper des données en fonction d'une var
 
 Ce code : 
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 weather %>% 
   group_by(month) %>% 
   summarise(n = n())
@@ -510,25 +626,32 @@ weather %>%
 
 est équivalent à celui-ci : 
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 weather %>% 
   count(month)
 ```
 
 Comme avec `group_by()`, il est bien sûr possible d'utiliser `count()` avec plusieurs variables :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 weather %>% 
   group_by(origin, month) %>% 
   summarise(nombre = n())
 ```
 
 
-### Exercices {#Exo-11}
+### Exercices {#sec-exo-11}
 
 1. Faites un tableau indiquant combien de vols ont été annulés après le décollage, pour chaque compagnie aérienne. Vous devriez obtenir le tableau suivant :
 
-```{r, tidy=FALSE, echo=FALSE}
+```{r}
+#| tidy: false
+#| echo: false
+
 flights_cancelled <- flights %>%
   filter(!is.na(dep_time),
          is.na(arr_time)) %>%
@@ -540,7 +663,10 @@ flights_cancelled
 
 2. Faites un tableau indiquant les vitesses de vents minimales, maximales et moyennes, enregistrées chaque mois dans chaque aéroport de New York. Votre tableau devrait ressembler à ceci :
 
-```{r, tidy=FALSE, echo=FALSE}
+```{r}
+#| tidy: false
+#| echo: false
+
 windy <- weather %>%
   group_by(origin, month) %>% 
   summarise(max_wind = max(wind_speed, na.rm = TRUE),
@@ -551,7 +677,10 @@ windy
 
 3. Sachant que les vitesses du vent sont exprimées en miles par heure, certaines valeurs sont-elles surprenantes ? À l'aide de la fonction `filter()`, éliminez la ou les valeurs aberrantes. Vous devriez obtenir ce tableau :
 
-```{r, tidy=FALSE, echo=FALSE}
+```{r}
+#| tidy: false
+#| echo: false
+
 windy2 <- weather %>%
   filter(wind_speed <= 500) %>% 
   group_by(origin, month) %>% 
@@ -563,7 +692,12 @@ windy2
 
 4. En utilisant les données de vitesse de vent du tableau `weather`, produisez le graphique suivant :
 
-```{r windspeed, tidy=FALSE, warning = FALSE, echo = FALSE}
+```{r}
+#| label: fig-windspeed
+#| tidy: false
+#| echo: false
+#| warning: false
+
 weather %>% 
   filter(wind_speed < 500) %>% 
   ggplot(aes(x = factor(month), y = wind_speed)) +
@@ -587,21 +721,26 @@ sort(unique(weather$wind_speed)) / 1.151
 ```
 
 
-----
 
 ## Sélectionner des variables avec `select()`
 
-```{r, selectfig, echo = FALSE, out.width='50%', fig.align='center', fig.cap="(ref:select)"}
+```{r}
+#| label: fig-selectfig
+#| echo: false
+#| out-width: '50%'
+#| fig-align: 'center'
+#| fig-cap: "Schéma de la fonction `select()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`."
+
 knitr::include_graphics('images/select.png')
 ```
 
-(ref:select) Schéma de la fonction `select()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
-
 Il n'est pas rare de travailler avec des tableaux contenant des centaines, voir des milliers de colonnes. Dans de tels cas, il peut être utile de réduire le jeu de données aux variables qui vous intéressent. Le rôle de la fonction `select()` est de retenir uniquement les colonnes dont on a spécifié le nom, afin de recentrer l'analyse sur les variables utiles.
 
-`select()` n'est pas particulièrement utile pour le jeu de données `flights` puisqu'il ne contient que 19 variables. Toutefois, on peut malgré tout comprendre le fonctionnement général. Par exemle, pour sélectionner uniquement les colonnes `year`, `month` et `day`, on tape :
+`select()` n'est pas particulièrement utile pour le jeu de données `flights` puisqu'il ne contient que 19 variables. Toutefois, on peut malgré tout comprendre le fonctionnement général. Par exemple, pour sélectionner uniquement les colonnes `year`, `month` et `day`, on tape :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 # Sélection de variables par leur nom
 flights %>% 
   select(year, month, day)
@@ -609,7 +748,9 @@ flights %>%
 
 Puisque ces 3 variables sont placées les unes à côté des autres dans le tableau `flights`, on peut utiliser la notation "`:`" pour les sélectionner :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 # Sélection de toutes les variables entre `year` et `day` (inclues)
 flights %>% 
   select(year:day)
@@ -617,7 +758,9 @@ flights %>%
 
 À l'inverse, si on veut supprimer certaines colonnes, on peut utiliser la notation "`-`" :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 # Sélection de toutes les variables de `flights` à l'exception
 # de celles comprises entre `year` et `day` (inclues)
 flights %>% 
@@ -634,21 +777,27 @@ Il en existe beaucoup d'autres. Vous pouvez consulter l'aide de `?select()` pour
 
 Par exemple, il est possible de sélectionner toutes les variables contenant le mot "time" ainsi :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 flights %>% 
   select(contains("time"))
 ```
 
 Évidemment, le tableau `flights` n'est pas modifié par cette opération : il contient toujours les 19 variables de départ. Pour travailler avec ces tableaux de données contenant moins de variables, il faut les stocker dans un nouvel objet en leur donnant un nom :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 flights_time <- flights %>% 
   select(contains("time"))
 ```
 
 Enfin, on peut utiliser `select()` pour renommer des variables. Mais ce n'est que rarement utile car `select()` élimine toutes les variables qui n'ont pas été explicitement nommées :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 flights %>% 
   select(year:day,
          heure_depart = dep_time,
@@ -657,30 +806,37 @@ flights %>%
 
 Il est donc généralement préférable d'utiliser `rename()` pour renommer certaines variables sans en éliminer aucune :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 flights %>% 
   rename(heure_depart = dep_time,
          retard_depart = dep_delay)
 ```
 
 
-----
 
-## Créer de nouvelles variables avec `mutate()` {#mutate}
+## Créer de nouvelles variables avec `mutate()` {#sec-mutate}
 
 ### Principe
 
-```{r, mutatefig, echo = FALSE, out.width='50%', fig.align='center', fig.cap="(ref:mutate)"}
+```{r}
+#| label: fig-mutatefig
+#| echo: false
+#| out-width: '50%'
+#| fig-align: 'center'
+#| fig-cap: "Schéma de la fonction `mutate()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`."
+
 knitr::include_graphics('images/mutate.png')
 ```
-
-(ref:mutate) Schéma de la fonction `mutate()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
 
 La fonction `mutate()` permet de créer de nouvelles variables à partir des variables existantes, ou de modifier des variables déjà présentes dans un jeu de données. Il est en effet fréquent d'avoir besoin de calculer de nouvelles variables, souvent plus informatives que les variables disponibles.
 
 Voyons un exemple. Nous commençons par créer un nouveau jeu de données `flights_sml` en sélectionnant uniquement les variables qui nous seront utiles :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 flights_sml <- flights %>% 
   select(year:day,
          ends_with("delay"),
@@ -691,11 +847,12 @@ flights_sml
 
 À partir de ce nouveau tableau, nous allons calculer 2 nouvelles variables : 
 
-1. `gain` : afin de savoir si les avions peuvent rattraper une partie de leur retard en vol, nous allons calculer la différence entre le retard au départ et à l'arrivée (donc le gain de temps accumlé lors du vol). En effet, si un avion décolle avec 15 minutes de retard, mais qu
-il atterrit avec seulement 5 minutes de retard, 10 minutes ont été gagnées en vol, et les passagers sont moins mécontents.
+1. `gain` : afin de savoir si les avions peuvent rattraper une partie de leur retard en vol, nous allons calculer la différence entre le retard au départ et à l'arrivée (donc le gain de temps accumulé lors du vol). En effet, si un avion décolle avec 15 minutes de retard, mais qu'il atterrit avec seulement 5 minutes de retard, 10 minutes ont été gagnées en vol, et les passagers sont moins mécontents.
 2. `speed`  afin de connaitre la vitesse moyenne des avions en vol, nous allons diviser la distance parcourue par les avions par le temps passé en l'air. Il ne faudra pas oublier de multiplier par 60 car les temps sont exprimés en minutes. Nous en profiterons pour transformer les distances exprimées en miles par des distances exprimées en kilomètres en multipliant les distances en miles par 1.60934. Ainsi, la variable `speed` sera exprimée en kilomètres par heure.
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 flights_sml %>% 
   mutate(gain = dep_delay - arr_delay,
          distance = distance * 1.60934,
@@ -704,7 +861,9 @@ flights_sml %>%
 
 Si on souhaite conserver uniquement les variables nouvellement créées par `mutate()`, on peut utiliser `transmute()` :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 flights_sml %>% 
   transmute(gain = dep_delay - arr_delay,
          distance = distance * 1.60934,
@@ -713,7 +872,9 @@ flights_sml %>%
 
 Et comme toujours, pour pouvoir réutiliser ces données, on leur donne un nom :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 gain_speed <- flights_sml %>% 
   transmute(gain = dep_delay - arr_delay,
          distance = distance * 1.60934,
@@ -725,35 +886,45 @@ gain_speed <- flights_sml %>%
 
 Il n'est pas rare que les tableaux de données que nous importons contiennent des colonnes numériques ou de chaînes de caractères qui devraient en réalité être reconnues en tant que facteurs. La fonction `mutate()` nous permet de changer rapidement le type d'une variable afin qu'elle soit reconnue comme un facteur.
 
-À titre d'exemple, nous allons importer le jeu de données contenu dans le fichier `squid.txt` que vous pourrez [télécharger ici](data/squid.txt). Placez-le dans votre répertoire de travail et utilisez la méthode décrite à la section \@ref(plaintext) pour obtenir la commande suivante :
+À titre d'exemple, nous allons importer le jeu de données contenu dans le fichier `squid.txt` que vous pourrez [télécharger ici](data/squid.txt). Placez-le dans votre répertoire de travail et utilisez la méthode décrite à la @sec-plaintext pour obtenir la commande suivante :
 
-```{r, include=FALSE}
+```{r}
+#| include: false
+
 library(readr)
 squid <- read_delim("data/squid.txt", "\t", 
     escape_double = FALSE, trim_ws = TRUE)
 ```
 
-```{r eval=FALSE}
+```{r}
+#| eval: false
+
 library(readr)
 squid <- read_delim("squid.txt", "\t", 
     escape_double = FALSE, trim_ws = TRUE)
 squid
 ```
 
-```{r, echo=FALSE}
+```{r}
+#| echo: false
+
 squid
 ```
 
 Ce jeu de données contient des informations sur l'Indice Gonado-Somatique (`GSI`) de 2644 pieuvres collectées dans 4 stations d'échantillonnage sur une période de 2 ans. La variable `Location` est codée sous forme  d'entiers, or il devrait s'agir d'un facteur. La fonction `mutate()` nous permet d'effectuer la transformation :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 squid %>% 
   mutate(Location = factor(Location))
 ```
 
 De même, la variable `Sex` est codée sous forme numérique, or il devrait s'agir d'un facteur, les "`1`" correspondants aux mâles et les "`2`" aux femelles. Nous pouvons là encore faire la modification grâce à la fonction `mutate()` :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 squid2 <- squid %>% 
   mutate(Location = factor(Location),
          Sex = factor(Sex, levels = c(1, 2), labels = c("Male", "Female")))
@@ -763,7 +934,13 @@ squid2
 
 `squid2` contient maintenant le tableau de départ avec les variables `Location` et `Sex` codées sous forme de facteurs. Si nous faisons un graphique avec ces nouveaux facteurs, l'ordre des catégories sera celui spécifié par la fonction `factor()`. Ainsi, si nous faisons par exemple un boxplot de `GSI` en fonction du `Sex`, voilà ce que nous obtenons :
 
-```{r, tidy=FALSE, fig.asp= 1.5, out.width='50%', fig.width=4, fig.cap="Indice Gonado Somatique  selon le sexe."}
+```{r}
+#| tidy: false
+#| fig-asp: 1.5
+#| out-width: '50%'
+#| fig-width: 4
+#| fig-cap: "Indice Gonado Somatique  selon le sexe."
+
 squid2 %>% 
   ggplot(aes(x = Sex, y = GSI)) +
     geom_boxplot(notch = TRUE)
@@ -777,7 +954,9 @@ levels(squid2$Sex)
 
 `Male` apparaît avant `Female`, car les niveaux de départ étaient `1` pour les mâles et `2` pour les femelles. C'est donc cet ordre qui est conservé. Le package `forcats` fournit de nombreuses fonctions permettant de manipuler les facteurs. Toutes commencent par `fct_`. Nous pouvons ici utiliser `fct_rev()` pour inverser l'ordre des niveaux. Pensez à installer et charger `forcats` si ce n'est pas déjà fait. Si vous avez chargé le `tidyverse`, `forcats` est déjà disponible :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 library(forcats)
 squid3 <- squid2 %>% 
   mutate(Sex = fct_rev(Sex))
@@ -785,7 +964,13 @@ squid3 <- squid2 %>%
 levels(squid3$Sex)
 ```
 
-```{r, tidy=FALSE, fig.asp= 1.5, out.width='50%', fig.width=4, fig.cap="Indice Gonado Somatique  selon le sexe."}
+```{r}
+#| tidy: false
+#| fig-asp: 1.5
+#| out-width: '50%'
+#| fig-width: 4
+#| fig-cap: "Indice Gonado Somatique  selon le sexe."
+
 squid3 %>% 
   ggplot(aes(x = Sex, y = GSI)) +
     geom_boxplot(notch = TRUE)
@@ -811,7 +996,9 @@ dauphin
 
 Commençons par supprimer la variable `ID`, qui est totalement redondante avec les numéros de ligne : 
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 dauphin <- dauphin %>% 
   select(-ID)
 dauphin
@@ -819,7 +1006,10 @@ dauphin
 
 Les variables `Sexe`, `Statut` et `Organe` devraient elles aussi être encodées sous forme de facteurs. Plutôt que de taper le code ci dessous (qui fonctionne très bien) :
 
-```{r, tidy=FALSE, eval=FALSE}
+```{r}
+#| tidy: false
+#| eval: false
+
 dauphin %>% 
   mutate(Sexe = factor(Sexe),
          Statut = factor(Statut),
@@ -828,7 +1018,9 @@ dauphin %>%
 
 Nous pouvons utiliser la fonction `mutate_if()`, qui appliquera la même fonction à toutes les variables respectant une condition précise. Ici, toutes les colonnes possédant le type `<chr>` sont des colonnes que nous souhaitons transformer en facteur. Nous pouvons donc taper ceci :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 dauphin <- dauphin %>% 
   mutate_if(is.character, as.factor)
 dauphin
@@ -839,7 +1031,7 @@ Nous constatons ici que nos 3 variables catégorielles ont bien été transform�
 Nous allons encore réaliser 2 modifications :
 
 1. Nous allons transformer les niveaux `f` et `m` du facteur `Sexe` en `Female` et `Male` respectivement.
-2. Nous allons re-ordonner les niveaux du facteur `Statut`. Actuellement, les niveaux de ce facteur sont les suivants :
+2. Nous allons réordonner les niveaux du facteur `Statut`. Actuellement, les niveaux de ce facteur sont les suivants :
 
 ```{r}
 levels(dauphin$Statut)
@@ -850,7 +1042,9 @@ Or il exsite un ordre des statuts reproducteurs qui reflète une progression bio
 
 Commençons par changer les niveaux du facteur `Sexe`. Pour cela, nous pouvons utiliser la fonction `fct_recode()` :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 dauphin %>% 
   mutate(Sexe = fct_recode(Sexe, 
                            "Female" = "f",
@@ -859,7 +1053,9 @@ dauphin %>%
 
 Nous pouvons maintenant modifier l'ordre des niveaux de `Satut` avec la fonction `fct_relevel()` :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 dauphin <- dauphin %>% 
   mutate(Sexe = fct_recode(Sexe, 
                            "Female" = "f",
@@ -872,7 +1068,9 @@ levels(dauphin$Statut)
 
 Toutes les transformations que nous avons fait subir à ce jeu de données n'ont qu'un seul objectif : "ranger" ce jeu de données. Nous avons importé `dauphin` depuis un fichier externe, puis nous avons supprimé les variables inutiles et modifié celles qui devaient l'être. Toutes ces étapes peuvent être enchaînées grâce au pipe, de la façon suivante :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 # Importation et mise en forme du jeu de données `dauphin`
 library(readxl)
 dauphin <- read_excel("data/dauphin.xls", 
@@ -905,7 +1103,7 @@ Outre les fonctions `fct_rev()`, `fct_recode()` et `fct_relevel()` abordées ici
 Nous n'avons pas le temps de développer ici des exemples pour chacune de ces fonctions, mais sachez que ces fonctions existent. Vous trouverez des exemples détaillés dans [le chapitre consacré aux facteurs](http://r4ds.had.co.nz/factors.html#modifying-factor-levels) de l'ouvrage en ligne [R for Data Science](http://r4ds.had.co.nz/). C'est en anglais, mais les exemples sont très parlants. N'hésitez pas à consulter cet ouvrage et à faire des essais de mise en application avec les jeux de données vus ici (e.g. `dauphin` ou `squid`).
 
 
-### Exercices {#Exo-12}
+### Exercices {#sec-exo-12}
 
 1. Dans `ggplot2` le jeu de données `mpg` contient des informations sur 234 modèles de voitures. Examinez ce jeu de données avec la fonction `View()` et consultez l'aide de ce jeu de données pour savoir à quoi correspondent les différentes variables. Quelle(s) variable(s) nous renseignent sur la consommation des véhicules ? À quoi correspond la variable `disp` ?
 
@@ -913,7 +1111,13 @@ Nous n'avons pas le temps de développer ici des exemples pour chacune de ces fo
 
 3. Faites un graphique présentant la relation entre la cylindrée en litres et la consommation sur autoroute exprimée en nombre de litres pour 100 kilomètres. Vous excluerez de ce graphique les véhicules dont la `class`e est `2seater` (il s'agit de voitures de sports très compactes qu'il est difficile de mesurer aux autres). Sur votre graphique, la couleur devrait représenter le type de véhicule. Vous ajouterez une droite de régression en utilisant `geom_smooth(method = "lm")`. Votre graphique devrait ressembler à ceci :
 
-```{r consommation, tidy=FALSE, warning = FALSE, echo = FALSE, fig.cap = "Consommation en fonction de la cylindrée"}
+```{r}
+#| label: fig-consommation
+#| tidy: false
+#| warning: false
+#| echo: false
+#| fig-cap: "Consommation en fonction de la cylindrée"
+
 mpg %>% 
   filter(class != "2seater") %>% 
   mutate(conso = 235.215 / hwy) %>% 
@@ -927,9 +1131,15 @@ mpg %>%
   theme_minimal(base_family = "Gill Sans")
 ```
 
-4. Ce graphique présente-t'il correctement l'ensemble des données de ces 2 variables ? Pourquoi ? Comparez le graphique \@ref(fig:consommation) de la question 3 ci-dessus et le graphique \@ref(fig:consommation2) présenté ci-dessous. Selon vous, quels arguments et/ou fonctions ont été modifiés pour arriver à ce nouveau graphique ? Quels sont les avantages et les inconvénients de ce graphique par rapport au précédent ?
+4. Ce graphique présente-t-il correctement l'ensemble des données de ces 2 variables ? Pourquoi ? Comparez la @fig-consommation de la question 3 ci-dessus et la @fig-consommation2 présentée ci-dessous. Selon vous, quels arguments et/ou fonctions ont été modifiés pour arriver à ce nouveau graphique ? Quels sont les avantages et les inconvénients de ce graphique par rapport au précédent ?
 
-```{r consommation2, tidy=FALSE, warning = FALSE, echo = FALSE, fig.cap="Consommation en fonction de la cylindrée"}
+```{r}
+#| label: fig-consommation2
+#| tidy: false
+#| warning: false
+#| echo: false
+#| fig-cap: "Consommation en fonction de la cylindrée"
+
 mpg %>% 
   filter(class != "2seater") %>% 
   mutate(conso = 235.215 / hwy) %>% 
@@ -943,28 +1153,37 @@ mpg %>%
   theme_minimal(base_family = "Gill Sans")
 ```
 
-----
 
-## Trier des lignes avec `arrange()` {#arrange}
 
-```{r, arrangefig, echo = FALSE, out.width='40%', fig.align='center', fig.cap="(ref:arrange)"}
+
+## Trier des lignes avec `arrange()` {#sec-arrange}
+
+```{r}
+#| label: fig-arrangefig
+#| echo: false
+#| out-width: '40%'
+#| fig-align: 'center'
+#| fig-cap: Schéma de la fonction `arrange()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
+
 knitr::include_graphics('images/arrange.png')
 ```
 
-(ref:arrange) Schéma de la fonction `arrange()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
-
-La fonction `arrange()` permet de trier des tableaux en ordonnant les éléments d'une ou plusieurs colonnes. Les tris peuvent être en ordre croissants (c'est le cas par défaut) ou décroissants (grâce à la fonction `desc()`, abbréviation de "descending").
+La fonction `arrange()` permet de trier des tableaux en ordonnant les éléments d'une ou plusieurs colonnes. Les tris peuvent être en ordre croissants (c'est le cas par défaut) ou décroissants (grâce à la fonction `desc()`, abréviation de "descending").
 
 `arrange()` fonctionne donc comme `filter()`, mais au lieu de sélectionner des lignes, cette fonction change leur ordre. Il faut lui fournir le nom d'un tableau et au minimum le nom d'une variable selon laquelle le tri doit être réalisé. Si plusieurs variables sont fournies, chaque variable supplémentaire permet de résoudre les égalités. Ainsi, pour ordonner le tableau `flights` par ordre croissant de retard au départ (`dep_delay`), on tape :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 flights %>% 
   arrange(dep_delay)
 ```
 
 Notez que la variable `dep-delay` est maintenant triée en ordre croissant. Notez également que 2 vols ont eu exactement 25 minutes d'avance. Comparez le tableau précédent avec celui-ci :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 flights %>% 
   arrange(dep_delay, month, day)
 ```
@@ -973,7 +1192,9 @@ Les lignes des 2 vols ayant 25 minutes d'avance au décollage ont été inversé
 
 Comme indiqué plus haut, il est possible de trier les données par ordre décroissant :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 flights %>% 
   arrange(desc(dep_delay))
 ```
@@ -984,7 +1205,9 @@ Cela est particulièrement utile après l'obtention de résumés groupés pour c
 2. Grouper les données par destination (variable `dest`) et compter le nombre de vols. Ces deux opérations peuvent être effectuées avec `group_by()` puis `summarise()`, ou directement avec `count()`. *Puis*...
 3. Trier les données par effectif décroissant.
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 flights %>% 
   count(dest) %>% 
   arrange(desc(n))
@@ -992,7 +1215,6 @@ flights %>%
 
 Nous voyons ici que les aéroports `ORD` et `ATL` sont les 2 destinations les plus fréquentes, avec plus de 17000 vols par an. 
 
-----
 
 ## Associer plusieurs tableaux avec `left_join()` et `inner_join()`
 
@@ -1004,9 +1226,11 @@ Une autre règle que nous n'avons pas encore évoquée au sujet des "tidy data" 
 
 Autrement dit, les informations concernant les vols vont dans un tableau, les informations concernant les aéroports dans un autre tableau, et celles concernant les avions dans un troisième tableau. Cela semble évident, pourtant, on constate souvent qu'un même tableau contient des variables qui concernent des unités d'observations différentes.
 
-Lorsque nous avons plusieurs tableaux à disposition, il peut alors être nécessaire de récuppérer des informations dans plusieurs d'entre eux afin, notamment de produire des tableaux de synthèse. Par exemple, dans la section \@ref(arrange) ci-dessus, nous avons affiché les destinations les plus fréquentes au départ des aéroports de New York. Donnons un nom à ce tableau pour pouvoir le ré-utiliser :
+Lorsque nous avons plusieurs tableaux à disposition, il peut alors être nécessaire de récuppérer des informations dans plusieurs d'entre eux afin, notamment de produire des tableaux de synthèse. Par exemple, dans la @sec-arrange ci-dessus, nous avons affiché les destinations les plus fréquentes au départ des aéroports de New York. Donnons un nom à ce tableau pour pouvoir le ré-utiliser :
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 popular_dest <- flights %>% 
   count(dest) %>% 
   arrange(desc(n))
@@ -1019,15 +1243,21 @@ popular_dest
 
 ### `inner_join()`
 
-```{r, inner, echo = FALSE, out.width='50%', fig.align='center', fig.cap="(ref:innerjoin)"}
+```{r}
+#| label: fig-inner
+#| echo: false
+#| out-width: '50%'
+#| fig-align: 'center'
+#| fig-cap: Schéma de la fonction `inner_join()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
+
 knitr::include_graphics('images/innerjoin.png')
 ```
 
-(ref:innerjoin) Schéma de la fonction `inner_join()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
-
 La fonction `inner_join()` permet de relier deux tableaux en ne conservant que les lignes qui sont présentes à la fois dans l'un et dans l'autre. Il faut identifier, dans chacun des tableaux, une colonne contenant des données en commun, qui servira de guide pour mettre les lignes correctes les unes en face des autres. Ici, nous partons de notre tableau `popular_dest`, qui contient les codes des aéroports dans sa colonne `dest`, et nous faisons une "jointure interne" avec le tableau `airports` qui contient lui aussi une colonne contenant les codes des aéroports : la variable `faa`.
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 inner_popular <- popular_dest %>% 
   inner_join(airports, by = c("dest" = "faa"))
 inner_popular
@@ -1035,7 +1265,9 @@ inner_popular
 
 Le nouvel objet `inner_popular` contient donc les données du tableau `popular_dest` auxquelles ont été ajoutées les colonnes correspondantes du tableau airports. Si tout ce qui nous intéresse, c'est de connaître le nom complet des aéroports les plus populaires, on peut utiliser `select()` pour ne garder que les variables intéressantes :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 inner_popular <- popular_dest %>% 
   inner_join(airports, by = c("dest" = "faa")) %>% 
   select(dest, name, n)
@@ -1052,20 +1284,26 @@ nrow(popular_dest)
 nrow(inner_popular)
 ```
 
-Certaines lignes ont donc été supprimées car le code aéroport dans `popular_dest` (notre tableau de départ) n'a pas été retrouvé dans la colonne `faa` du tableau `airports`. C'est le principe même de la jointure interne (voir figure \@ref(fig:inner)) : seules les lignes communes trouvées dans les 2 tableaux sont conservées. Si l'on souhaite absolument conserver toutes les lignes du tableau de départ, il faut faire une jointure gauche, ou "left join". 
+Certaines lignes ont donc été supprimées car le code aéroport dans `popular_dest` (notre tableau de départ) n'a pas été retrouvé dans la colonne `faa` du tableau `airports`. C'est le principe même de la jointure interne (voir @fig-inner) : seules les lignes communes trouvées dans les 2 tableaux sont conservées. Si l'on souhaite absolument conserver toutes les lignes du tableau de départ, il faut faire une jointure gauche, ou "left join". 
 
 
 ### `left_join()`
 
-```{r, left, echo = FALSE, out.width='50%', fig.align='center', fig.cap="(ref:leftjoin)"}
+```{r}
+#| label: fig-left
+#| echo: false
+#| out-width: '50%'
+#| fig-align: 'center'
+#| fig-cap: Schéma de la fonction `left_join()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
+
 knitr::include_graphics('images/leftjoin.png')
 ```
 
-(ref:leftjoin) Schéma de la fonction `left_join()` tiré de la 'cheatsheet' de `dplyr` et `tidyr`.
+Comme indiqué par la @fig-left ci-dessus, une jointure gauche permet de conserver toutes les lignes du tableau de gauche, et de leur faire correspondre des lignes du second tableau. Si aucune correspondance n'est trouvée dans le second tableau, des données manquantes sont ajoutées sous forme de `NA`s. Voyons ce que cela donne avec le même exemple que précédemment :
 
-Comme indiqué par la figure \@ref(fig:left) ci-dessus, une jointure gauche permet de conserver toutes les lignes du tableau de gauche, et de leur faire correspondre des lignes du second tableau. Si aucune correspondance n'est trouvée dans le second tableau, des données manquantes sont ajoutées sous forme de `NA`s. Voyons ce que cela donne avec le même exemple que précédemment :
+```{r}
+#| tidy: false
 
-```{r, tidy = FALSE}
 left_popular <- popular_dest %>% 
   left_join(airports, by = c("dest" = "faa")) %>% 
   select(dest, name, n)
@@ -1088,7 +1326,9 @@ nrow(popular_dest)
 
 Pour savoir quelles lignes de `popular_dest` manquent dans `inner_dest` (il devrait y en avoir 4), il suffit de filtrer les lignes de `left_dest` qui contiennent des données manquantes dans la colonne `name` :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 left_popular %>% 
   filter(is.na(name))
 ```
@@ -1107,23 +1347,27 @@ Pour avoir la réponse à toutes ces questions, je vous conseille de lire [ce ch
 
 ### Accoller deux tableaux
 
-Outre l'association de tableaux en utilisant des jointures, il est parfois utile d'accoller 2 tableaux :
+Outre l'association de tableaux en utilisant des jointures, il est parfois utile d’accoler 2 tableaux :
 
 - Soit l'un au-dessous de l'autre, quand ils ont les mêmes nombres de colonnes, et si possible, les mêmes variables aux mêmes endroits. La fonction `bind_rows()` permet de faire cela.
 - Soit l'un à côté de l'autre quand ils ont le même nombre de lignes, et si possible les mêmes observations en lignes. La fonction `bind_cols()` permet de faire cela.
 
-Prenons un exemple. Imaginons que nous ayons 2 tableaux contenant les mêmes variables. Le premier, nommé `colorado`, contient les informations des vols ayant décollé de New York en 2013 et ayant atteri à l'aéroport de Yempa Valley au Colorado (aéroport `HDN`).
+Prenons un exemple. Imaginons que nous ayons 2 tableaux contenant les mêmes variables. Le premier, nommé `colorado`, contient les informations des vols ayant décollé de New York en 2013 et ayant atterri à l'aéroport de Yempa Valley au Colorado (aéroport `HDN`).
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 colorado <- flights %>% 
   filter(dest == "HDN")
 
 colorado
 ```
 
-Le second est nommé `indiana`. Il contient les informations des vols ayant décollé de New York en 2013 et ayant atteri à l'aéroport de South Bend en Indiana (aéroport `SBN`).
+Le second est nommé `indiana`. Il contient les informations des vols ayant décollé de New York en 2013 et ayant atterri à l'aéroport de South Bend en Indiana (aéroport `SBN`).
 
-```{r, tidy=FALSE}
+```{r}
+#| tidy: false
+
 indiana <- flights %>% 
   filter(dest == "SBN")
 
@@ -1138,7 +1382,9 @@ bind_rows(colorado, indiana)
 
 Vous noterez que le nombre de lignes du nouveau tableau est la somme des nombres de lignes des 2 tableaux de départ. Bien sûr, cette opération n'est utile que si les tableaux nous sont fournis séparément. Ici, il aurait été bien plus rapide d'obtenir le même résultat en tapant :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 flights %>% 
   filter(dest %in% c("HDN", "SBN"))
 ```
@@ -1146,7 +1392,9 @@ flights %>%
 
 Le fonctionnement de `bind_cols()` est le même :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
+
 a <- tibble(x = 1:3, 
             y = c(2, 4, 6),
             z = c(TRUE, FALSE, FALSE))
@@ -1161,9 +1409,7 @@ bind_cols(a,b)
 
 Ici, puisque `a` et `b` ont le même nombre de lignes, il est possible de les accoler. Cela n'a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.
 
-----
-
-## Exercices {#Exo-13}
+## Exercices {#sec-exo-13}
 
 1. Créez un tableau `delayed` indiquant, pour chaque compagnie aérienne et chaque mois de l'année, le nombre de vols ayant eu un retard supérieur à 30 minutes à l'arrivée à destination. Ce tableau devrait contenir uniquement 3 colonnes :
 
@@ -1187,7 +1433,7 @@ Ici, puisque `a` et `b` ont le même nombre de lignes, il est possible de les ac
 
 7. Quelle compagnie aérienne semble se comporter très différemment des autres ? À quoi pouvez-vous attribuer ce comportement atypique ?
 
-8. Pour les compagnies affretant un grand nombre de vols chaque année (e.g. `UA`, `B6` et `EV`), quelles sont les périodes où les plus fortes proportions de vols en retard sont observées ? Et les plus faibles ? Quelle(s) hypothèse(s) pouvez-vous formuler pour expliquer ces observations ?
+8. Pour les compagnies affrétant un grand nombre de vols chaque année (e.g. `UA`, `B6` et `EV`), quelles sont les périodes où les plus fortes proportions de vols en retard sont observées ? Et les plus faibles ? Quelle(s) hypothèse(s) pouvez-vous formuler pour expliquer ces observations ?
 
 9. Faites un tableau synthétique présentant ces résultats de la façon la plus compacte et claire que possible, afin par exemple de les intégrer à un rapport.
 
