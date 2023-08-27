@@ -1525,6 +1525,7 @@ L'argument `base_family` de chaque thème permet de spécifier une police de car
 #| tidy: false
 #| warning: false
 #| fig-cap: "Modification de la police de caractères."
+#| eval: false
 
 ggplot(flights, aes(x = fct_infreq(carrier), fill = origin)) +
   geom_bar(color = "black") +
@@ -1536,6 +1537,28 @@ ggplot(flights, aes(x = fct_infreq(carrier), fill = origin)) +
   scale_fill_brewer(palette = "Accent") +
   theme_minimal(base_family = "Gill Sans")
 ```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-asp: 1
+#| fig-cap: "Modification de la police de caractères."
+
+pplot1 <- ggplot(flights, aes(x = fct_infreq(carrier), fill = origin)) +
+  geom_bar(color = "black") +
+  facet_wrap(~origin, ncol = 1) +
+  labs(x = "Compagnie aérienne",
+       y = "Nombre de vols",
+       fill = "Aéroports de\nNew York",
+       title = "Couverture inégale des aéroports de New York") +
+  scale_fill_brewer(palette = "Accent") +
+  theme_minimal(base_family = "Gill Sans")
+
+ggsave(filename = "images/fonts1.png", plot = pplot1, width = 7, height = 7)
+```
+
+![](images/fonts1.png)
 
 Le choix d'un thème et d'une police adaptés doivent vous permettre de faire des graphiques originaux et clairs. Rappelez-vous toujours que vos choix en matière de graphiques doivent avoir pour objectif principal de rendre les tendances plus faciles à décrypter pour un lecteur non familier de vos données. C'est un outil de communication au même titre que n'importe quel paragraphe d'un rapport ou compte-rendu. Et comme pour un paragraphe, la première version d'un graphique est rarement la bonne.
 
