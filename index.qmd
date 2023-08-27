@@ -1,4 +1,4 @@
-# Introduction
+# Introduction {-}
 
 ```{r setup, include=FALSE, cache=FALSE, results=FALSE, message=FALSE}
 options(replace.assign = TRUE, width = 80)
@@ -35,7 +35,7 @@ system("cat book.bib packages.bib > all.bib")
 
 
 
-## Objectifs
+## Objectifs {-}
 
 Ce livre contient l'ensemble du matériel (contenus, exemples, exercices...) nécessaire à la réalisation des travaux pratiques d'analyse de données consacrés à la prise en main de `R` et `RStudio`.
 
@@ -53,7 +53,7 @@ Ces travaux pratiques ont essentiellement 3 objectifs :
 
 ----
 
-## Organisation
+## Organisation {-}
 
 Au total, la partie "analyse de données" de l'EC "Stratégie d'échantillonnage et analyse de données" contient :
 
@@ -62,7 +62,7 @@ Au total, la partie "analyse de données" de l'EC "Stratégie d'échantillonnage
 * 16 heures de TEA
 
 
-### Les cours magistraux
+### Les cours magistraux {-}
 
 Les cours magistraux sont globalement découpés en 2 blocs à peu près indépendants :
 
@@ -76,7 +76,7 @@ Tous les aspects vu en cours seront en effet développés lors des séances de T
 
 
 
-### Les Travaux pratiques
+### Les Travaux pratiques {-}
 
 Le contenu des séances de travaux pratiques sera découpé en 3 parties :
 
@@ -105,7 +105,7 @@ Ainsi, quand vous travaillerez à vos TP ou TEA, prenez l'habitude de garder Sla
 Si toutes les questions posées sur Slack ont trouvé une réponse, alors, inutile d'organiser une permanence. Si en revanche, certains n'ont pas compris, si les mêmes questions reviennent fréquemment, ou si des explications "en direct" sont plus efficaces qu'un long message sur Slack, alors une permanence aura lieu.
 
 
-### Le TEA
+### Le TEA {-}
 
 Les séances de TEA auront toutes lieu "à distance". Je ne suis pas tenu d'être présent lors des séances de TEA, même si une salle banalisée est systématiquement réservée pour vous permettre de vous retrouver et de travailler ensemble. Je m'engage en revanche à être disponible sur Slack pour répondre rapidement aux questions posées lors des TEA. Et si certaines questions n'ont pas trouvé de réponse pendant les séances de TEA, nous y répondront lors du TP suivant.
 
@@ -117,7 +117,7 @@ Généralement, l'organisation de votre journée sera la suivante :
 3. En fin de journée une séance de TEA et/ou de TP/permanence non obligatoire de 90 minutes pour ceux qui en ont besoin et se manifestent.
 
 
-## Progession conseillée
+## Progession conseillée {-}
 
 Pour apprendre à utiliser un logiciel comme `R`, il faut faire les choses soi-même, ne pas avoir peur des messages d'erreurs (il faut d'ailleurs apprendre à les déchiffrer pour comprendre d'où viennent les problèmes), essayer maintes fois, se tromper beaucoup, recommencer, et surtout, ne pas se décourager. J'utilise ce logiciel presque quotidiennement depuis plus de 15 ans et à chaque session de travail, je rencontre des messages d'erreur. Avec suffisamment d'habitude, on apprend à les déchiffrer, et on corrige les problèmes en quelques secondes. Ce livre est conçu pour vous faciliter la tâche, mais ne vous y trompez pas, vous rencontrerez des difficultés, et c'est normal. C'est le prix à payer pour profiter de la puissance du meilleur logiciel permettant d'analyser des données, de produire des graphiques de qualité et de réaliser toutes les statistiques dont vous aurez besoin d'ici la fin de vos études et au-delà.
 
@@ -135,7 +135,7 @@ Une fois cette UE terminée, vous pourrez évidemment consulter ce livre quand b
 
 
 
-## L'évaluation
+## L'évaluation {-}
 
 Vous aurez plusieurs types d'évaluations cette année :
 
@@ -157,7 +157,7 @@ Dans le cadre de l'approche compétences, j'essaierai d'indiquer, dans la mesure
 6. Maîtriser les logiciels `R` ou `RStudio` pour réaliser des analyses statistiques, des représentations graphiques ou des simulations numériques.
 
 
-## Licence
+## Licence {-}
 
 Ce livre est ligne est sous licence Creative Commons ([CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.fr))
 
