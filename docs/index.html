@@ -107,7 +107,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Dernière Mise à jour</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">dimanche 27 août 2023</p>
+        <p class="date">mardi 29 août 2023</p>
       </div>
     </div>
     
@@ -193,6 +193,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#les-cours-magistraux" id="toc-les-cours-magistraux" class="nav-link" data-scroll-target="#les-cours-magistraux">Les cours magistraux</a></li>
   <li><a href="#les-travaux-pratiques" id="toc-les-travaux-pratiques" class="nav-link" data-scroll-target="#les-travaux-pratiques">Les Travaux pratiques</a></li>
+  <li><a href="#utilisation-de-slack" id="toc-utilisation-de-slack" class="nav-link" data-scroll-target="#utilisation-de-slack">Utilisation de Slack</a></li>
   <li><a href="#le-tea" id="toc-le-tea" class="nav-link" data-scroll-target="#le-tea">Le TEA</a></li>
   </ul></li>
   <li><a href="#progession-conseillée" id="toc-progession-conseillée" class="nav-link" data-scroll-target="#progession-conseillée">Progession conseillée</a></li>
@@ -212,11 +213,11 @@ ul.task-list li input[type="checkbox"] {
 <h1 class="unnumbered">Introduction</h1>
 <section id="objectifs" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="objectifs">Objectifs</h2>
-<p>Ce livre contient l’ensemble du matériel (contenus, exemples, exercices…) nécessaire à la réalisation des travaux pratiques d’analyse de données consacrés à la prise en main de <code>R</code> et <code>RStudio</code>.</p>
-<p>Ces travaux pratiques ont essentiellement 3 objectifs :</p>
+<p>Ce livre contient l’ensemble du matériel (contenus, exemples, exercices…) nécessaire à la réalisation des travaux pratiques de l’EC <strong>Stratégie d’échantillonnage et analyse de données</strong> consacrés à la prise en main de <code>R</code> et <code>RStudio</code>.</p>
+<p>Ces travaux pratiques ont essentiellement 4 objectifs :</p>
 <ol type="1">
-<li>Vous faire (re)découvrir les logiciels <a href="https://cran.r-project.org">R</a> et <a href="https://www.rstudio.com">Rstudio</a> dans lesquels vous allez passer beaucoup de temps tout au long de votre cursus de master. Vous avez choisi une spécialité de master qui implique de traiter des données et de communiquer des résultats d’analyses statistiques : <code>R</code> et <code>RStudio</code> devraient être les logiciels vers lesquels vous vous tournez naturellement pour faire l’un et l’autre.</li>
-<li>Vous faire prendre conscience de l’importance des visualisations graphiques :</li>
+<li><p><strong>Vous faire découvrir les logiciels <a href="https://cran.r-project.org">R</a> et <a href="https://www.rstudio.com">Rstudio</a></strong> (<a href="01-R-basics.html"><span>Chapitre&nbsp;1</span></a> et <a href="02-dataset.html"><span>Chapitre&nbsp;2</span></a>) dans lesquels vous allez passer beaucoup de temps tout au long de votre cursus de master. Vous avez choisi une spécialité de master qui implique de traiter des données et de communiquer des résultats d’analyses statistiques : <code>R</code> et <code>RStudio</code> devraient être les logiciels vers lesquels vous vous tournez naturellement pour faire l’un et l’autre.</p></li>
+<li><p><strong>Vous apprendre à faire des graphiques de qualités</strong> dans <code>RStudio</code> et <strong>vous faire prendre conscience de l’importance des visualisations graphiques</strong> (<a href="03-visualization.html"><span>Chapitre&nbsp;3</span></a> : attention, ce chapitre est très long, ne vous laissez pas surprendre !) :</p></li>
 </ol>
 <ul>
 <li>d’une part, pour comprendre à quoi ressemblent les données en votre possession,</li>
@@ -225,13 +226,28 @@ ul.task-list li input[type="checkbox"] {
 Les données que vous serez amenés à traiter lors de vos stages, ou plus tard, lorsque vous serez en poste, ont souvent été acquises à grands frais, et au prix d’efforts importants. Il est donc de votre responsabilité d’en tirer le maximum. Et ça commence toujours (ou presque), par la réalisation de visualisations graphiques parlantes.</li>
 </ul>
 <ol start="3" type="1">
-<li>Vous apprendre comment calculer des statistiques descriptives simples, sur plusieurs types de variables, afin de vous mettre dans les meilleures conditions possibles pour aborder d’une part les statistiques plus avancées de cet EC et des EC des semestres 2 et 3, et d’autre part les comptes-rendus de TP et rapports de stage que vous aurez à produire dans ce cursus de master. Vos enseignants attendent de vous la plus grande rigueur lorsque vous analysez et présentez des résultats d’analyses statistiques. Ces TP ont pour objectifs de vous fournir les bases nécessaires pour satisfaire ce niveau d’exigence.</li>
+<li><p><strong>Vous apprendre à manipuler efficacement des tableaux de données de grande taille</strong> (<a href="04-tidy-Data.html"><span>Chapitre&nbsp;4</span></a> et <a href="05-DataWrangling.html"><span>Chapitre&nbsp;5</span></a>). Cela signifie que vous devriez être en mesure de sélectionner des variables (colonnes) d’un tableau, d’en créer de nouvelles en modifiant et/ou combinant des variables existantes, de filtrer des lignes spécifiques, d’effectuer des tris de données, de transformer des tableaux larges en tableaux longs (et réciproquement), d’effectuer des jointures entre plusieurs tableaux, etc.</p></li>
+<li><p><strong>Vous apprendre comment calculer des statistiques descriptives simples</strong>, sur plusieurs types de variables, et <strong>comment mettre en œuvre, dans <code>RStudio</code>, les procédures statistiques décrites en cours</strong>, afin de vous mettre dans les meilleures conditions possibles pour aborder d’une part les comptes-rendus de TP et rapports de stage que vous aurez à produire dans ce cursus de master et d’autre part les statistiques plus avancées que vous découvrirez lors des semestres 2 et 3. Vos enseignants attendent de vous la plus grande rigueur lorsque vous analysez et présentez des résultats d’analyses statistiques. Ces TP ont pour objectifs de vous fournir les bases nécessaires pour satisfaire ce niveau d’exigence.</p></li>
 </ol>
-<hr>
+<p>À l’issue de ces TP et TEA, vous devriez donc être suffisamment à l’aise avec le logiciel <code>RStudio</code> pour y importer des données issues de tableurs, les manipuler pour les mettre dans un format permettant les représentations graphiques et les analyses statistiques, pour produire des graphiques pertinents, adaptés aux données dont vous disposez, et d’une qualité vous permettant de les intégrer sans honte à vos compte-rendus de TP et rapports de stages, et de réaliser les tests et analyses statistiques les plus adaptés aux questions auxquelles vous tenterez de répondre.</p>
+<p>Les données que vous serez amenés à traiter lors de vos stages, ou plus tard, lorsque vous serez en poste, ont souvent été acquises à grands frais, et au prix d’efforts importants. Il est donc de votre responsabilité d’en tirer le maximum. Et ça commence toujours (ou presque), par la manipulation de données dans <code>RStudio</code> et la réalisation de visualisations graphiques parlantes. Se lancer dans les tests statistiques sans avoir une idée claire de la structure des données dont on dispose est toujours une erreur. C’est pourquoi les chapitres consacrés aux statistiques n’arrivent que dans la seconde partie de ce livre en ligne. En règle générale, face à une question scientifique précise, lorsque l’on traite des données, <strong>environ 80% du temps est consacré à la mise en forme et l’exploration (statistique et graphique) des données.</strong> La réalisation des tests et leur interprétation ne prend que rarement plus de 20% du temps. Cela souligne l’importance des 5 premiers chapitres de ce livre en ligne : plus vous serez à l’aise avec les notions et concepts décrits dans ces chapitres, plus vous serez efficaces et plus vous gagnerez du temps par la suite.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>À partir de maintenant, tous les compte-rendus de TP que vous aurez à produire dans le cadre du master Gestion de l’Environnement et Écologie Littorale devront respecter les bonnes pratiques décrites dans ce document. En particulier, les collègues de l’équipe pédagogique attendent que les graphiques que vous intégrerez à vos compte-rendus de TP soient systématiquement produits dans <code>RStudio</code>. C’est la raison pour laquelle cet enseignement arrive si tôt dans votre cursus.</p>
+</div>
+</div>
 </section>
 <section id="organisation" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="organisation">Organisation</h2>
-<p>Au total, la partie “analyse de données” de l’EC “Stratégie d’échantillonnage et analyse de données” contient :</p>
+<p>Au total, la partie <em>analyse de données</em> de l’EC “Stratégie d’échantillonnage et analyse de données” contient :</p>
 <ul>
 <li>15 heures de cours magistraux</li>
 <li>9 heures de travaux pratiques (pour chaque groupe)</li>
@@ -245,26 +261,64 @@ Les données que vous serez amenés à traiter lors de vos stages, ou plus tard,
 <li><p>un bloc de 5 heures consacrées aux statistiques multivariées telles que l’Analyse en Composantes Principales (ACP) et l’Analyse Factorielle des Correspondances (AFC).</p></li>
 </ol>
 <p>Mon objectif n’est pas de survoler l’ensemble du matériel dans ce faible volume horaire : s’il n’est pas suffisant, nous ajouterons quelques séances afin de traiter correctement l’ensemble du matériel. Je suis convaincu que tout le monde est capable de comprendre les grands principes des statistiques, et de réaliser des analyses dans un logiciel tel que <code>R</code>, y compris les plus réfractaires aux mathématiques et à l’informatique. Mais il est nécessaire de démystifier cette discipline essentielle, et si certains ont besoin de plus de temps que d’autres, nous prendrons ce temps. Les TP et TEA, décrits plus bas, sont justement organisés pour permettre à chacun d’avancer à son rythme. Mais ne vous y trompez pas, cela vous demandera <strong>beaucoup</strong> de travail pendant ces 3 semaines.</p>
-<p>Tous les aspects vu en cours seront en effet développés lors des séances de TP et de TEA. Vous aurez, pour chaque partie, des exercices à préparer et à déposer sur l’ENT. Ces exercices seront corrigés lors des séances de TP et/ou de TEA. Tout cela doit d’une part vous préparer à l’évaluation qui aura lieu conjointement avec les EC de stratégie d’échantillonnage, de remise à niveau en biologie marine et d’échantillonnage littoral, mais surtout, cela doit vous permettre d’acquérir des compétences en analyse de données, compétences qui seront attendues de vous lorsque vous sortirez diplômé·e de ce master.</p>
+<p>Tous les aspects vus en cours seront en effet développés lors des séances de TP et de TEA. Vous aurez, pour chaque partie, des exercices à préparer et nous les corrigerons ensemble lors des séances de TP et/ou de TEA. ils doivent d’une part vous préparer aux évaluations (voir plus bas) mais surtout, vous permettre d’acquérir des compétences en analyse de données, compétences qui seront attendues de vous lorsque vous sortirez diplômé·e de ce master.</p>
 </section>
 <section id="les-travaux-pratiques" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="les-travaux-pratiques">Les Travaux pratiques</h3>
-<p>Le contenu des séances de travaux pratiques sera découpé en 3 parties :</p>
+<p>Le contenu des séances de travaux pratiques sera découpé en 3 parties (inégales) :</p>
 <ol type="1">
 <li>Prise en main des logiciels <code>R</code> et <code>RStudio</code></li>
 <li>Illustration du cours sur les statistiques descriptives et inférentielles, mise en pratique et réalisation d’exercices</li>
 <li>Illustration du cours sur les statistiques multivariées, mise en pratique et réalisation d’exercices</li>
 </ol>
 <p>Pour chaque séance de TP, vous travaillerez soit à distance, soit en salle banalisée, sur vos ordinateurs personnels. La première séance aura lieu en présentiel et sera consacrée à l’installation des logiciels ainsi qu’à la présentation de l’organisation des séances.</p>
-<p>Les séances de travaux pratiques ne seront <em>pas toutes obligatoires</em> : seules quelques séances en présentiel (les dates vous seront présentées ultérieurement) le seront, probablement pas plus d’une par semaine. Pour toutes les autres séances, le fonctionnement sera celui d’une permanence non obligatoire : seuls celles et ceux qui en éprouvent le besoin sont tenus de se déplacer. Ces séances de permanence n’auront lieu que si certains parmi vous m’ont fait part de difficultés ou ont formulé des questions en amont des séances. Si aucune question ne m’a été posée en amont, les permanences n’auront pas lieu. Si une permanence a lieu, elle est ouverte à tous, quel que soit votre groupe de TP. Vous n’êtes d’ailleurs pas tenus de rester pendant 90 minutes : vous venez avec votre question, on y répond ensemble, et vous êtes libres de repartir quand bon vous semble. Les années précédentes, je voyais certains de vos collègues à chaque séance de permanence alors que d’autres ne sont jamais venus. Si vous n’en avez pas besoin, libre à vous de ne pas venir. Tant que le travail est fait et que les exercices ne vous posent pas de problème, vous êtes libres de vous organiser comme vous l’entendez.</p>
+<p>Les séances de travaux pratiques ne seront <em>pas toutes obligatoires</em> : seules quelques séances en présentiel (les dates vous seront présentées ultérieurement) le seront, probablement pas plus d’une ou deux par semaine.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’essentiel du contenu de cet enseignement peut être abordé en autonomie, à distance, grâce à ce livre en ligne, aux ressources mises à disposition sur Moodle et à votre ordinateur personnel. Cela signifie que <strong>la présence physique lors de ces séances de TP n’est pas obligatoire</strong>.</p>
+</div>
+</div>
+<p>Pour toutes les autres séances, le fonctionnement sera celui d’une permanence non obligatoire : seuls celles et ceux qui en éprouvent le besoin sont tenus de se déplacer. Ces séances de permanence n’auront lieu que si certains parmi vous m’ont fait part de difficultés ou ont formulé des questions en amont des séances. Si aucune question ne m’a été posée en amont, les permanences n’auront pas lieu. Si une permanence a lieu, elle est ouverte à tous, quel que soit votre groupe de TP. Vous n’êtes d’ailleurs pas tenus de rester pendant 90 minutes : vous venez avec votre question, on y répond ensemble, et vous êtes libres de repartir quand bon vous semble. Les années précédentes, je voyais certains de vos collègues à chaque séance de permanence alors que d’autres ne sont jamais venus. Si vous n’en avez pas besoin, libre à vous de ne pas venir. Tant que le travail est fait et que les exercices ne vous posent pas de problème, vous êtes libres de vous organiser comme vous l’entendez.</p>
 <p>Attention toutefois, venir à une séance de permanence en n’ayant pas préparé de question au préalable ne vous sera d’aucune aide. C’est parce que vous avez travaillé en amont de ces séances et que vous arrivez avec des questions que ces permanences sont utiles et efficaces. Donc si vous venez, c’est que vous avez bossé en amont !</p>
-<p><strong>Comment procéder pour savoir si une séance de permanence a lieu, ou pour poser une question ?</strong></p>
-<p>Tout se passera en ligne, grâce au logiciel <a href="https://slack.com/intl/fr-fr/">Slack</a>, qui fonctionne un peu comme un “twitter privé”. Slack facilite la communication des équipes et permet de travailler ensemble. Créez-vous un compte en ligne et installez le logiciel sur votre ordinateur (il existe aussi des versions pour tablettes et smartphones). Lorsque vous aurez installé le logiciel, <a href="https://join.slack.com/t/geel2022/shared_invite/zt-1ga9vd9zn-~aQ~lhmJRgrH2qYNjO111g">cliquez sur ce lien</a> pour vous connecter à notre espace de travail commun.</p>
+<p>Ce fonctionnement très souple a de nombreux avantages :</p>
+<ul>
+<li>vous vous organisez comme vous le souhaitez</li>
+<li>vous ne venez que lorsque vous en avez vraiment besoin</li>
+<li>celles et ceux qui se déplacent reçoivent une aide personnalisée “sur mesure”</li>
+<li>vous travaillez sur vos ordinateurs</li>
+<li>les effectifs étant réduits, les conditions de travail sont idéales</li>
+</ul>
+<p>Toutefois, pour que cette organisation fonctionne, cela demande de la rigueur de votre part, en particulier sur la régularité du travail que vous devez fournir. Si la présence en salle de TP n’est pas requise, le travail demandé est bel et bien obligatoire ! Si vous venez en salle de TP sans avoir travaillé en amont, votre venue sera totalement inutile puisque vous n’aurez pas de question à poser et que vous passerez votre séance à lire ce livre en ligne. Vous perdrez donc votre temps, celui de vos collègues, et le mien. De même, si vous attendez la 3e semaine pour vous y mettre, vous irez droit dans le mur. Outre les heures de TP/TEA prévues dans vos emplois du temps, vous devez donc prévoir du travail personnel supplémentaire, chaque jour ou presque.</p>
+</section>
+<section id="utilisation-de-slack" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="utilisation-de-slack">Utilisation de Slack</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Comment savoir si une séance de permanence a lieu, comment poser une question ?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Tout se passera en ligne, grâce au logiciel <a href="https://slack.com/intl/fr-fr/">Slack</a>, qui fonctionne un peu comme un “twitter privé”.</p>
+</div>
+</div>
+<p>Slack facilite la communication des équipes et permet de travailler ensemble. Créez-vous un compte en ligne et installez le logiciel sur votre ordinateur (il existe aussi des versions pour tablettes et smartphones). Lorsque vous aurez installé le logiciel, <a href="https://join.slack.com/t/geel2022/shared_invite/zt-1ga9vd9zn-~aQ~lhmJRgrH2qYNjO111g">cliquez sur ce lien</a> pour vous connecter à notre espace de travail commun, et reprenez la lecture de ce document.</p>
 <p>Vous verrez que 3 “chaînes” sont disponibles :</p>
 <ul>
-<li>#organisation : c’est là que les questions liées à l’organisation du cours, des TP et TEA doivent être posées. Si vous ne savez pas si une séance de permanence a lieu, posez la question ici.</li>
-<li>#rstudio : c’est ici que toutes les questions pratiques liées à l’utilisation de <code>R</code> et <code>RStudio</code> devront êtres posées. Problèmes de syntaxe, problèmes liés à l’interface, à l’installation des packages ou à l’utilisation des fonctions… Tout ce qui concerne <code>R</code> ou <code>RStudio</code> mais pas directement les statistiques sera traité ici. Vous êtes libres de poser des questions, de poster des captures d’écran, des morceaux de code, des messages d’erreur. Et vous êtes bien entendus vivement encouragés à vous entraider et à répondre aux questions de vos collègues. Je n’interviendrai ici que pour répondre aux questions laissées sans réponse ou si les réponses apportées sont inexactes. Le fonctionnement est celui d’un forum de discussion instantané. Vous en tirerez le plus grand bénéfice en participant et en n’ayant pas peur de poser des questions, même si elles vous paraissent idiotes. Rappelez-vous toujours que si vous vous posez une question, d’autres se la posent aussi probablement.</li>
-<li>#statistiques : c’est ici que toutes les questions liées aux méthodes statistiques devront être posées. Comme pour la chaîne #rstudio, vous êtes encouragés à poster des questions mais aussi des réponses. Le fonctionnement de l’ensemble se veut participatif.</li>
+<li><code>#organisation</code> : c’est là que les questions liées à l’organisation du cours, des TP et TEA doivent être posées. Si vous ne savez pas si une séance de permanence a lieu, posez la question ici.</li>
+<li><code>#rstudio</code> : c’est ici que toutes les questions pratiques liées à l’utilisation de <code>R</code> et <code>RStudio</code> devront êtres posées. Problèmes de syntaxe, problèmes liés à l’interface, à l’installation des packages ou à l’utilisation des fonctions… Tout ce qui concerne <code>R</code> ou <code>RStudio</code> mais pas directement les statistiques sera traité ici. Vous êtes libres de poser des questions, de poster des captures d’écran, des morceaux de code, des messages d’erreur. Et vous êtes bien entendus vivement encouragés à vous entraider et à répondre aux questions de vos collègues. Je n’interviendrai ici que pour répondre aux questions laissées sans réponse ou si les réponses apportées sont inexactes. Le fonctionnement est celui d’un forum de discussion instantané. Vous en tirerez le plus grand bénéfice en participant et en n’ayant pas peur de poser des questions, même si elles vous paraissent idiotes. Rappelez-vous toujours que si vous vous posez une question, d’autres se la posent aussi probablement.</li>
+<li><code>#statistiques</code> : c’est ici que toutes les questions liées aux méthodes statistiques devront être posées. Comme pour la chaîne <code>#rstudio</code>, vous êtes encouragés à poster des questions mais aussi des réponses. Le fonctionnement de l’ensemble se veut participatif.</li>
 </ul>
 <p>Ainsi, quand vous travaillerez à vos TP ou TEA, prenez l’habitude de garder Slack ouvert sur votre ordinateur. Même si vous n’avez pas de question à poser, votre participation active pour répondre à vos collègues est souhaitable et souhaitée. Votre niveau de participation sur Slack pourra faire partie de votre note finale.</p>
 <p>Si toutes les questions posées sur Slack ont trouvé une réponse, alors, inutile d’organiser une permanence. Si en revanche, certains n’ont pas compris, si les mêmes questions reviennent fréquemment, ou si des explications “en direct” sont plus efficaces qu’un long message sur Slack, alors une permanence aura lieu.</p>
@@ -275,7 +329,7 @@ Les données que vous serez amenés à traiter lors de vos stages, ou plus tard,
 <p>Généralement, l’organisation de votre journée sera la suivante :</p>
 <ol type="1">
 <li>En début de matinée, 1h30 ou 3h de cours magistraux</li>
-<li>En milieu de journée du temps libre ou pour avancer sur ce document, les exercices, la prise en main de R, etc.</li>
+<li>En milieu de journée du temps libre ou pour avancer sur ce document, les exercices, la prise en main de <code>R</code> et <code>RStudio</code>, etc.</li>
 <li>En fin de journée une séance de TEA et/ou de TP/permanence non obligatoire de 90 minutes pour ceux qui en ont besoin et se manifestent.</li>
 </ol>
 </section>
@@ -284,7 +338,7 @@ Les données que vous serez amenés à traiter lors de vos stages, ou plus tard,
 <h2 class="unnumbered anchored" data-anchor-id="progession-conseillée">Progession conseillée</h2>
 <p>Pour apprendre à utiliser un logiciel comme <code>R</code>, il faut faire les choses soi-même, ne pas avoir peur des messages d’erreurs (il faut d’ailleurs apprendre à les déchiffrer pour comprendre d’où viennent les problèmes), essayer maintes fois, se tromper beaucoup, recommencer, et surtout, ne pas se décourager. J’utilise ce logiciel presque quotidiennement depuis plus de 15 ans et à chaque session de travail, je rencontre des messages d’erreur. Avec suffisamment d’habitude, on apprend à les déchiffrer, et on corrige les problèmes en quelques secondes. Ce livre est conçu pour vous faciliter la tâche, mais ne vous y trompez pas, vous rencontrerez des difficultés, et c’est normal. C’est le prix à payer pour profiter de la puissance du meilleur logiciel permettant d’analyser des données, de produire des graphiques de qualité et de réaliser toutes les statistiques dont vous aurez besoin d’ici la fin de vos études et au-delà.</p>
 <p>Pour que cet apprentissage soit le moins problématique possible, il convient de prendre les choses dans l’ordre. C’est la raison pour laquelle les chapitres de ce livre doivent être lus dans l’ordre, et les exercices d’application faits au fur et à mesure de la lecture.</p>
-<p>Une fois compilé en pdf, ce document représente plus de 180 pages, ce qui veut dire que vous devriez vous approprier environ 12 pages par jour. En particulier, la <a href="03-visualization.html"><span>Chapitre&nbsp;3</span></a> est très longue et il est facile de se laisser dépasser.</p>
+<p>Une fois compilé en pdf, ce document représente plus de 350 pages, ce qui veut dire que vous devriez vous approprier <strong>environ 25 pages par jour</strong>. En particulier, la <a href="03-visualization.html"><span>Chapitre&nbsp;3</span></a> est très longue et il est facile de se laisser dépasser.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -295,10 +349,10 @@ Travaillez régulièrement !
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>J’insiste sur l’importance de travailler cette matière <strong>régulièrement</strong>. Vous devez vous y mettre dès maintenant et y consacrer plusieurs heures chaque jours. Interrogez vos collègues de M2 qui ont suivi cet enseignement l’an dernier : il y a beaucoup de temps à y passer et il est hélas facile de prendre et d’accumuler du retard…</p>
+<p>Que vous veniez aux séances de permanence ou non, j’insiste sur l’importance de travailler cette matière <strong>régulièrement</strong>. Vous devez vous y mettre dès maintenant et y consacrer quelques heures chaque jour. Interrogez vos collègues de M2 qui ont eu cet enseignement l’an dernier : il y a beaucoup de temps à y passer et il est hélas facile de prendre et d’accumuler du retard…</p>
 </div>
 </div>
-<p>Une fois cette UE terminée, vous pourrez évidemment consulter ce livre quand bon vous semblera, et dans n’importe quel ordre. Le champ de recherche situé en haut à gauche est d’ailleurs très utile pour (re)trouver les passages que vosu recherchez. Ce livre restera en ligne et vous pourrez y accéder même après avoir quitté l’université de La Rochelle. Vos prédécesseurs me confirment régulièrement à quel point ce livre leur est resté utile bien après le master. Soyez toutefois prévenu que les contenus de ce livre peuvent évoluer avec le temps : j’essaie en effet de remettre à jour tout ce qui doit l’être le plus régulièrement possible. Et cela signifie parfois que des sections peuvent disparaître ou être remplacées si des façons de procéder plus modernes sont préférables.</p>
+<p>Une fois cette UE terminée, vous pourrez évidemment consulter ce livre quand bon vous semblera, et dans n’importe quel ordre. Le champ de recherche situé en haut à gauche est d’ailleurs très utile pour (re)trouver les passages que vous recherchez. Ce livre restera en ligne et vous pourrez y accéder même après avoir quitté l’université de La Rochelle. Vos prédécesseurs me confirment régulièrement à quel point il leur est resté utile bien après le master. Soyez toutefois prévenu que les contenus de ce livre peuvent évoluer avec le temps : j’essaie en effet de remettre à jour tout ce qui doit l’être le plus régulièrement possible. Et cela signifie parfois que des sections peuvent disparaître ou être remplacées si des façons de procéder plus modernes sont préférables.</p>
 </section>
 <section id="lévaluation" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="lévaluation">L’évaluation</h2>
@@ -306,8 +360,8 @@ Travaillez régulièrement !
 <ol type="1">
 <li><p>Une évaluations par les pairs qui portera sur la qualité de vos scripts. Cette évaluation qui entrera pour une toute petite partie dans la note finale de l’EC a pour objectif principal de vous permettre de vous situer dans vos apprentissages. Vous évaluerez vous même, et de façon anonyme, plusieurs copies de vos camarades en suivant une grille d’évaluation critériée que nous construirons ensemble. De même, votre copie sera évaluée par plusieurs de vos camarades. Cette approche a de nombreux avantages. Elle vous permet notamment de mieux vous approprier les grilles de notations (par exemple, qu’est-ce qu’un bon script sous <code>R</code> ? À l’inverse, qu’est-ce qu’un script médiocre ? Comment être sûr que la méthode statistique choisie est la bonne pour répondre à une question donnée ? Suis-je capable de décrire correctement un tableau de données de grande taille ? Suis-je capable de produire des graphiques informatifs ?) et rends possible un retour personnalisé sur vos travaux beaucoup plus rapidement que si votre enseignant était le seul à corriger l’ensemble de vos travaux. Pas d’inquiétude, vous serez guidés à chaque étape.</p></li>
 <li><p>Une évaluation individuelle courte qui ne portera pas sur les analyses statistiques à proprement parler, mais sur votre capacité à produire un graphique de qualité, original et qui raconte une histoire intéressante sur un jeu de données imposé. Cet exercice n’est pas réalisé chaque année faute de temps.</p></li>
-<li><p>Une évaluation individuelle plus classique avec quelques exercices qui vous demanderont de mettre en œuvre les méthodes statistiques décrites lors de cours magistraux.</p></li>
-<li><p>Enfin, une évaluation qui prendra la forme d’un rapport et qui sera réalisé conjointement avec les travaux de stratégie d’échantillonnage réalisés avec Fanny Cusset. Cette partie de l’EC est en effet complémentaire de l’analyse de données puisqu’elle permet d’avoir une approche globale, de la question scientifique à la production d’un rapport et d’une soutenance, en passant par la réflexion sur la stratégie d’échantillonnage, la mise en œuvre sur le terrain, le traitement des échantillons au laboratoire, et l’exploitation statistique des résultats. Ce travail sera donc évalué conjointement par Fanny Cusset et moi. La note de la partie analyse de données portera donc essentiellement sur les parties “matériels et méthodes” et “résultats” du rapport. Il est en effet important de comprendre dès maintenant que l’analyse de données n’est pas une fin en soi : on ne fait pas des statistiques pour le plaisir, ou sans but précis. Ça n’est qu’un outil de votre panoplie d’écologue au service d’une question scientifique. L’analyse de données et les statistiques vous permettront de répondre à des questions scientifiques de façon objective, mais leur utilisation appropriée suppose que vous ayez les idées claires en amont sur la question scientifique à laquelle vous tentez de répondre. C’est cette démarche qui devrait vous guider tout au long de votre cursus de master et au-delà, dans votre vie professionnelle.</p></li>
+<li><p>Une évaluation individuelle plus classique, sur table ou à la maison, avec quelques exercices qui vous demanderont de mettre en œuvre les méthodes statistiques décrites lors de cours magistraux.</p></li>
+<li><p>Enfin, une évaluation qui prendra la forme d’un rapport et qui sera réalisé conjointement avec les travaux de stratégie d’échantillonnage réalisés avec Fanny Cusset. Cette partie de l’EC est en effet complémentaire de l’analyse de données puisqu’elle permet d’avoir une approche globale, de la question scientifique à la production d’un rapport et d’une soutenance, en passant par la réflexion sur la stratégie d’échantillonnage, la mise en œuvre sur le terrain, le traitement des échantillons au laboratoire, et l’exploitation statistique des résultats. Ce travail sera donc évalué conjointement par Fanny Cusset et moi. La note de la partie analyse de données portera essentiellement sur les parties “matériels et méthodes” et “résultats” du rapport. Il est en effet important de comprendre dès maintenant que l’analyse de données n’est pas une fin en soi : <strong>on ne fait pas des statistiques pour le plaisir, ou sans but précis. Ça n’est qu’un outil de votre panoplie d’écologue au service d’une question scientifique.</strong> L’analyse de données et les statistiques vous permettront de répondre à des questions scientifiques de façon objective, mais leur utilisation appropriée suppose que vous ayez les idées claires en amont sur la question scientifique à laquelle vous tentez de répondre. C’est cette démarche qui devrait vous guider tout au long de votre cursus de master et au-delà, dans votre vie professionnelle.</p></li>
 </ol>
 <p>Dans le cadre de l’approche compétences, j’essaierai d’indiquer, dans la mesure du possible, quelles sont les compétences et résultats d’apprentissages dont vous devrez faire l’acquisition pour chaque évaluation. À l’issue de cet enseignement, vous devriez être capables de :</p>
 <ol type="1">

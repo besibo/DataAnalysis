@@ -9,7 +9,7 @@ Jusqu'à maintenant, vous avez utilisé des données qui étaient déjà dans ce
 
 ----
 
-## Prérequis {#sec-prerek}
+## Pré-requis {#sec-prerek}
 
 Dans ce chapitre, nous aurons besoin des packages suivants :
 

@@ -1356,7 +1356,7 @@ Il y aurait bien plus à dire sur les jointures :
 Pour avoir la réponse à toutes ces questions, je vous conseille de lire [ce chapitre](http://r4ds.had.co.nz/relational-data.html) de cet ouvrage très complet sur "la science des données" avec R et le `tidyverse` : [R for Data Science](http://r4ds.had.co.nz). Les deux fonctions `inner_join()` et `left_join()` décrites ici devraient néanmoins vous permettre de couvrir l'essentiel de vos besoins.
 
 
-### Accoller deux tableaux
+### Accoler deux tableaux
 
 Outre l'association de tableaux en utilisant des jointures, il est parfois utile d’accoler 2 tableaux :
 

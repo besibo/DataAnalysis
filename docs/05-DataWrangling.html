@@ -239,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#principe-2" id="toc-principe-2" class="nav-link" data-scroll-target="#principe-2"><span class="header-section-number">5.9.1</span> Principe</a></li>
   <li><a href="#inner_join" id="toc-inner_join" class="nav-link" data-scroll-target="#inner_join"><span class="header-section-number">5.9.2</span> <code>inner_join()</code></a></li>
   <li><a href="#left_join" id="toc-left_join" class="nav-link" data-scroll-target="#left_join"><span class="header-section-number">5.9.3</span> <code>left_join()</code></a></li>
-  <li><a href="#accoller-deux-tableaux" id="toc-accoller-deux-tableaux" class="nav-link" data-scroll-target="#accoller-deux-tableaux"><span class="header-section-number">5.9.4</span> Accoller deux tableaux</a></li>
+  <li><a href="#accoler-deux-tableaux" id="toc-accoler-deux-tableaux" class="nav-link" data-scroll-target="#accoler-deux-tableaux"><span class="header-section-number">5.9.4</span> Accoler deux tableaux</a></li>
   </ul></li>
   <li><a href="#sec-exo-13" id="toc-sec-exo-13" class="nav-link" data-scroll-target="#sec-exo-13"><span class="header-section-number">5.10</span> Exercices</a></li>
   </ul>
@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Travailler avec le pipe est très intéressant car toutes les fonctions de <code>dplyr</code> que nous allons décrire ensuite sont construites autour de la même syntaxe : on leur fournit un <code>data.frame</code> (ou encore mieux, un <code>tibble</code>), elles effectuent une opération et renvoient un nouveau <code>data.frame</code> (ou un nouveau <code>tibble</code>). Il est ainsi possible de créer des groupes de commandes cohérentes qui permettent, grâce à l’enchaînement d’étapes simples, d’aboutir à des résultats complexes.</p>
 <p>De la même façon que le <code>+</code> permet d’ajouter une couche supplémentaire à un graphique <code>ggplot2</code>, le pipe <code>|&gt;</code> permet d’ajouter une opération supplémentaire dans un groupe de commandes.</p>
-<p>Pour reprendre un exemple de la <a href="03-visualization.html#sec-clouds"><span>Section&nbsp;3.3</span></a> sur les nuages de points, nous avions commencé par créer un objet nommé <code>alaska_flights</code> à partir de l’objet <code>flights</code> :</p>
+<p>Pour reprendre un exemple de la <span class="quarto-unresolved-ref">?sec-clouds</span> sur les nuages de points, nous avions commencé par créer un objet nommé <code>alaska_flights</code> à partir de l’objet <code>flights</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>alaska_flights <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">"AS"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -372,7 +372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="exercice" class="level3" data-number="5.4.2">
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="exercice"><span class="header-section-number">5.4.2</span> Exercice</h3>
-<p>Dans la <a href="02-dataset.html#sec-view"><span>Section&nbsp;2.3.1</span></a>, nous avons utilisé la fonction <code>View</code> et l’application manuelle de filtres pour déterminer combien de vols avaient quitté l’aéroport JFK le 12 février 2013. En utilisant la fonction <code>filter()</code>, créez un objet nommé <code>JFK_12fev</code> qui contiendra les données de ces vols.</p>
+<p>Dans la <a href="02-dataset.html#sec-view"><span>Section&nbsp;2.4.1</span></a>, nous avons utilisé la fonction <code>View</code> et l’application manuelle de filtres pour déterminer combien de vols avaient quitté l’aéroport JFK le 12 février 2013. En utilisant la fonction <code>filter()</code>, créez un objet nommé <code>JFK_12fev</code> qui contiendra les données de ces vols.</p>
 <p>Vérifiez que cet objet contient bien 282 lignes.</p>
 </section>
 <section id="les-conditions-logiques" class="level3" data-number="5.4.3">
@@ -1981,8 +1981,8 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 </ul>
 <p>Pour avoir la réponse à toutes ces questions, je vous conseille de lire <a href="http://r4ds.had.co.nz/relational-data.html">ce chapitre</a> de cet ouvrage très complet sur “la science des données” avec R et le <code>tidyverse</code> : <a href="http://r4ds.had.co.nz">R for Data Science</a>. Les deux fonctions <code>inner_join()</code> et <code>left_join()</code> décrites ici devraient néanmoins vous permettre de couvrir l’essentiel de vos besoins.</p>
 </section>
-<section id="accoller-deux-tableaux" class="level3" data-number="5.9.4">
-<h3 data-number="5.9.4" class="anchored" data-anchor-id="accoller-deux-tableaux"><span class="header-section-number">5.9.4</span> Accoller deux tableaux</h3>
+<section id="accoler-deux-tableaux" class="level3" data-number="5.9.4">
+<h3 data-number="5.9.4" class="anchored" data-anchor-id="accoler-deux-tableaux"><span class="header-section-number">5.9.4</span> Accoler deux tableaux</h3>
 <p>Outre l’association de tableaux en utilisant des jointures, il est parfois utile d’accoler 2 tableaux :</p>
 <ul>
 <li>Soit l’un au-dessous de l’autre, quand ils ont les mêmes nombres de colonnes, et si possible, les mêmes variables aux mêmes endroits. La fonction <code>bind_rows()</code> permet de faire cela.</li>
@@ -2113,18 +2113,18 @@ Sachant qu’en divisant des mph par 1.151 on obtient des vitesses en nœuds, qu
 <pre><code># A tibble: 3 × 2
       r       s
   &lt;int&gt;   &lt;dbl&gt;
-1    10 -0.240 
-2     9  0.0356
-3     8 -0.787 </code></pre>
+1    10 -0.0287
+2     9  1.06  
+3     8 -0.344 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
       x     y z         r       s
   &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;   &lt;dbl&gt;
-1     1     2 TRUE     10 -0.240 
-2     2     4 FALSE     9  0.0356
-3     3     6 FALSE     8 -0.787 </code></pre>
+1     1     2 TRUE     10 -0.0287
+2     2     4 FALSE     9  1.06  
+3     3     6 FALSE     8 -0.344 </code></pre>
 </div>
 </div>
 <p>Ici, puisque <code>a</code> et <code>b</code> ont le même nombre de lignes, il est possible de les accoler. Cela n’a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.</p>
