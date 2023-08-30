@@ -26,8 +26,6 @@ library(tidyverse)
 ```
 
 
-----
-
 ## Le pipe `|>`
 
 Avant d'entrer dans le vif du sujet, je souhaite introduire ici la notion de "pipe" (prononcer à l'anglo-saxonne). Le pipe est un opérateur que nous avons déjà vu apparaître à plusieurs reprises dans les chapitres précédents sans expliquer son fonctionnement.

@@ -89,7 +89,7 @@ Vous pouvez télécharger manuellement les 4 jeux de données dont nous aurons b
 - [rates](data/rates.rdata)
 - [storms](data/storms.rdata)
 
-Une fois téléchargés, les données contenues dans ces 4 fichiers peuvent être importées dans `RStudio` en cliquant sur `File > Open File...`, puis en sélectionnant un à un chacun des fichiers. Pour chaque fichier un nouvel objet doit apparaître dans votre environnement de travail (onglet `Environnement`, dans le panneau en haut à droite de RStudio). L'inconvénient de cette méthode est que les fichiers d'aide de ces jeux de données ne seront pas disponibles dans RStudio. Vous pouvez toutefois en consulter une version brute (non mise en forme) [en cliquant ici](https://github.com/rstudio/EDAWR/tree/master/man).
+Une fois téléchargés, les données contenues dans ces 4 fichiers peuvent être importées dans `RStudio` en cliquant sur `File > Open File...`, puis en sélectionnant un à un chacun des fichiers. Pour chaque fichier un nouvel objet doit apparaître dans votre environnement de travail (onglet `Environnement`, dans le panneau en haut à droite de `RStudio`). L'inconvénient de cette méthode est que les fichiers d'aide de ces jeux de données ne seront pas disponibles dans `RStudio.` Vous pouvez toutefois en consulter une version brute (non mise en forme) [en cliquant ici](https://github.com/rstudio/EDAWR/tree/master/man).
 
 
 
@@ -216,7 +216,7 @@ C'est le comportement par défaut de la fonction `pivot_longer()` : les anciens 
 cases 
 
 # On utilise ensuite pivot_longer() avec l'argument 
-# names_transform pour transformer year en facteur
+# names_transform pour transformer year en variable entière
 pivot_longer(data = cases, 
              cols = `2011`:`2013`, 
              names_to = "year", 
@@ -225,7 +225,7 @@ pivot_longer(data = cases,
 ```
 On voit ici que la variable `year` est maintenant une colonne numérique (`<int>` : nombres entiers), et non plus une variable de type "character". En utilisant `as.numeric()` au lieu de `as.integer()`, on aurait transformé la variable `year` en `<dbl>` (nombre réel au lieu de nombre entier), ce qui ici, reviendrait exactement au même.
 
-De la même façon, on peut avoir besoin de presenter la colonne `year` sous la forme d'un facteur :
+De la même façon, on peut avoir besoin de présenter la colonne `year` sous la forme d'un facteur :
 
 ```{r}
 #| tidy: false
@@ -239,7 +239,7 @@ pivot_longer(data = cases,
 
 ### La fonction `pivot_wider()` {#sec-spread}
 
-La fonction `pivot_wider()` permet de réaliser l'opération inverse de `pivot_longer()`. Elle "disperse" une unique colonne catégorielle en plusieurs colonnes, le tableau obtenue est donc plus large ("wider") que le tableau de départ.
+La fonction `pivot_wider()` permet de réaliser l'opération inverse de `pivot_longer()`. Elle "disperse" une unique colonne catégorielle en plusieurs colonnes, le tableau obtenu est donc plus large ("wider") que le tableau de départ.
 
 Reprenons par exemple notre tableau `cases_tidy` :
 
@@ -261,36 +261,41 @@ pivot_wider(data = cases_tidy,
             values_from = n_cases)
 ```
 
-Cette fonction sera donc rarement utilisée puisqu'elle ne permet pas d'obtenir des "tableaux rangés". Toutefois, elle pourra vous être utile pour présenter des résultats sous forme synthétique. Prenons un exemple avec le jeu de données `flights`. Imaginons que vous deviez créer un tableau `n_vols` présentant, pour chacun des 3 aéroports de New York, le nombre de vols affrétés par chaque compagnie aérienne en 2013. Une possibilité serait de taper ceci :
+Cette fonction sera donc rarement utilisée puisqu'elle ne permet pas d'obtenir des "tableaux rangés". Toutefois, elle pourra vous être utile dans 2 situations : 
+
+1. pour mettre en forme des données appariées afin de réaliser certains tests statistiques et graphiques spécifiques (plus de détails à ce sujet dans le @sec-moy2)
+2. pour présenter des résultats sous forme synthétique. Prenons un exemple avec le jeu de données `penguins`. Imaginons que vous deviez créer un tableau `resum` présentant les effectifs de mâles et de femelles des 3 espèces de manchots. Une possibilité serait de taper ceci :
 
 ```{r}
 #| tidy: false
 
-n_vols <- flights |> 
-  group_by(origin, carrier) |> 
+resum <- penguins |> 
+  group_by(species, sex) |> 
   count()
-n_vols
+resum
 ```
 
-Les commandes permettant de produire ce tableau seront expliquées dans le @sec-wrangling. On peut cependant constater ici que ce tableau contient 35 lignes et 3 colonnes. Il s'agit bien d'un "tableau rangé" parfaitement adapté pour faire des statistiques et des visualisations graphiques, mais son format n'est pas terrible si notre objectif est de le faire figurer dans un rapport. La solution : utiliser `pivot_wider()` :
+Les commandes permettant de produire ce tableau seront expliquées dans le @sec-wrangling. On peut cependant constater ici que ce tableau contient 8 lignes et 3 colonnes. Il s'agit bien d'un "tableau rangé" parfaitement adapté pour faire des statistiques et des visualisations graphiques, mais son format n'est pas terrible si notre objectif est de le faire figurer dans un rapport. La solution : utiliser `pivot_wider()` :
 
 ```{r}
 #| tidy: false
 
-pivot_wider(n_vols, 
-            names_from = origin, 
+resum_large <- pivot_wider(resum, 
+            names_from = sex, 
             values_from = n)
+
+resum_large
 ```
 
-Ce nouveau tableau contient maintenant 16 lignes (une par compagnie aérienne), et 4 colonnes : une pour la variable `carrier`, et 3 pour la variable `origin`, soit une colonne pour chacun des 3 aéroports de New York. On parle de tableau au format large (par opposition au "tableau rangé", dit "format long"). Cela rend la présentation dans un rapport plus aisée. 
+Ce nouveau tableau contient maintenant 3 lignes (une par espèce), et 4 colonnes : une pour la variable `species`, et 3 pour la variable `sex`, soit une colonne pour les femelles, une colonne pour les mâles, et une pour les individus dont le sexe est inconnu (`` `NA` ``). On parle de tableau au **format large** (par opposition au "tableau rangé", dit "format long"). Cela rend la présentation dans un rapport plus aisée. 
 
-Notez également que certaines compagnies aériennes ne desservent pas tous les aéroports. Par exemple, la compagnie Alaska Airlines (`AS`) ne dessert ni JFK, ni La Guardia. Pour ces catégories, notre nouveau tableau au format large indique `NA`. Or, `NA` signifie "Not Available", autrement dit : données manquantes. Ici, il ne s'agit pas du tout de données manquantes. Cela signifie simplement qu'aucun vol d'Alaska Airline n'a décollé de ces 2 aéroports. Nous pouvons donc indiquer à R quelle valeur utiliser pour les catégories qui ne sont pas représentées dans le tableau de départ grâce à l'argument `values_fill` :
+Notez également que pour l'espèce Chinstrap, tous les individus ont été sexés correctement. Le tableau au format large devrait donc indiquer `0` au lieu de `NA` dans la indique quatrième colonne de la deuxième ligne. En effet, `NA` signifie "Not Available", autrement dit : données manquantes. Ici, il ne s'agit pas du tout d'une données manquantes : cela signifie simplement qu'aucun individu de l'espèce Chinstrap ne possède un sexe inconnu. Nous pouvons donc indiquer à `R` quelle valeur utiliser pour les catégories qui ne sont pas représentées dans le tableau de départ grâce à l'argument `values_fill` :
 
 ```{r}
 #| tidy: false
 
-pivot_wider(n_vols, 
-            names_from = origin, 
+pivot_wider(resum, 
+            names_from = sex, 
             values_from = n, 
             values_fill = 0)
 ```
@@ -315,7 +320,7 @@ separate(cases_tidy, year, into = c("century", "year"), sep = 2)
 1. Le premier argument est le nom du tableau de données.
 2. Le second argument est la variable que l'on souhaite scinder en plusieurs morceaux.
 3. `into` est un vecteur qui contient le nom des nouvelles colonnes à créer
-4. `sep` peut prendre plusieurs formes. Lorsqu'on utilise un nombre, ce nombre correspond à la position de la coupure dans la variable d'origine. Ici, la variable d'origine a été coupée après le second caractère. Il est aussi possible d'utiliser un symbole. Par exemple, certaines variables contiennent des tirets `-` ou des slash `\`. Utiliser ces caractères en guise de séparateur permet de couper les variables à ce niveau là. Nous en verrons un exemple plus tard.
+4. `sep` peut prendre plusieurs formes. Lorsqu'on utilise un nombre, ce nombre correspond à la position de la coupure dans la variable d'origine. Ici, la variable d'origine a été coupée après le second caractère. Il est aussi possible d'utiliser des nombres négatifs : `R` compte alors à partir de la droite au lieu de compter à partir de la gauche. Enfin, il est aussi possible d'utiliser un symbole. Par exemple, certaines variables contiennent des tirets `-` ou des slashs `\`. Utiliser ces caractères en guise de séparateur permet de couper les variables à ce niveau là. Nous en verrons un exemple plus tard.
 
 Notez ici que les 2 nouvelles variables sont de type `<chr>`. Si nous souhaitons que ces variables soient considérées comme numériques, nous devons ajouter un argument lorsque nous utilisons `separate()` :
 
@@ -352,41 +357,53 @@ Examinez les tableaux `rates`, `storms` et `population` du package `EDAWR`.
 3. Si non, transformez-les en "tableaux rangés".
 
 
-----
 
 ## Importer des données depuis un tableur
 
 ### Les règles de base
 
-Jusqu'à maintenant, nous avons travaillé exclusivement avec des jeux de données déjà disponibles dans R. La plupart du temps, les données sur lesquelles vous devrez travailler devront au préalable être importées dans R, à partir de fichiers issus de tableurs. De tels fichiers se présentent généralement sous l'un des 2 formats suivants :
+Jusqu'à maintenant, nous avons travaillé exclusivement avec des jeux de données déjà disponibles dans `R`. La plupart du temps, les données sur lesquelles vous devrez travailler devront au préalable être importées dans `R` ou `RStudio`, à partir de fichiers issus de tableurs. De tels fichiers se présentent généralement sous l'un des 2 formats suivants :
 
-1. Fichiers au format ".csv" : il s'agit d'un format de fichier dit "texte brut", c'est à dire qu'il peut être ouvert avec n'importe quel éditeur de texte, y compris le bloc notes de Windows. L'extension ".csv" est l'abbréviation de Comma Separated Values, autrement dit, dans ce type de fichiers, les colonnes sont séparées par des virgules. Cela peut poser problème en France puisque le symbole des décimales est souvent aussi la virgule (et non le point comme dans les pays anglo-saxons). Le séparateur de colonnes utilisé en France dans les fichiers `.csv` est alors souvent le point-virgule. Il est possible de créer des fichiers `.csv` à partir de n'importe quel tableur en choisissant `Fichier > Exporter...` ou `Fichier > Enregistrer sous...` puis en sélectionnant le format approprié (les dénomminations sont variables selon les logiciels : format texte brut, format csv, plain text, etc...).
+1. Fichiers au format `.csv` : il s'agit d'un format de fichier dit "texte brut", c'est à dire qu'il peut être ouvert avec n'importe quel éditeur de texte, y compris le bloc notes de Windows. L'extension `.csv` est l'abréviation de *Comma Separated Values*, autrement dit, dans ce type de fichiers, les colonnes sont séparées par des virgules. Cela peut poser problème en France puisque le symbole des décimales est souvent aussi la virgule (et non le point comme dans les pays anglo-saxons). Le séparateur de colonnes utilisé en France dans les fichiers `.csv` est alors souvent le point-virgule. Il est possible de créer des fichiers `.csv` à partir de n'importe quel tableur en choisissant `Fichier > Exporter...` ou `Fichier > Enregistrer sous...` puis en sélectionnant le format approprié (les dénominations sont variables selon les logiciels : format texte brut, format csv, plain text, etc...).
 2. Fichiers au format tableur : `.xls` ou `.xlsx` pour Excel, `.calc` pour Open Office.
 
-Dans les 2 cas, pour que R puisse importer les données contenues dans ces fichiers, un certain nombre de règles doivent être respectées : 
+Dans les 2 cas, pour que `R` puisse importer les données contenues dans ces fichiers, un certain nombre de règles doivent être respectées : 
 
 1. La première chose à laquelle il faut veiller est la présentation des données. Les variables doivent être en colonnes et les observations en lignes. Dans l'idéal, les données doivent donc être "rangées".
 2. Les cases vides qui correspondent à des données manquantes doivent contenir les lettres `NA` en majuscule. Il est important de bien faire la distinction entre les vrais zéros (*i.e.* les grandeurs mesurées pour lesquelles un zéro a été obtenu), et les valeurs manquantes, c'est à dire pour lesquelles aucune valeur n'a pu être obtenue (*e.g.* variable non mesurée pour un individu donné ou à une station donnée).
-3. Il est généralement conseillé d'utiliser la première ligne du tableau pour stocker le nom des variables et la première colonne pour stocker le nom des observations (identifiant des individus, des échantillons ou des stations par exemple).
-4. Ne jamais utiliser de caractères spéciaux tels que #, $, %, ^, &, \*, (, ), {, }, [, ], des accents, des cédilles des guillemets ou des apostrophes... Cela pourrait causer des erreurs dans R. Si votre fichier en contient, faites une recherche (*via* le menu `Edition > Rechercher et remplacer...`) pour remplacer chaque instance par un caractère qui ne posera pas de problème.
-5. Évitez les espaces dans vos noms de variables, d'observations ou de catégories et remplacez-les par des points ou des `_`.
+3. Il est généralement conseillé d'utiliser la première ligne du tableau pour stocker le nom des variables.
+4. Pour les noms de fichiers, de colonnes ou dans le contenu des colonnes, il vaut mieux éviter les caractères spéciaux tels que #, $, %, ^, &, \*, (, ), {, }, [, ], \\, /, les accents, cédilles, guillemets ou apostrophes... Cela pourrait causer des erreurs dans `R`. Si votre fichier en contient, faites une recherche (*via* le menu `Edition > Rechercher et remplacer...`) pour remplacer chaque instance par un caractère qui ne posera pas de problème.
+5. Évitez les espaces dans vos noms de variables, d'observations ou de catégories et remplacez-les par des points ou, de préférence, des tirets bas `_`.
 6. Si des noms de lignes sont présents dans votre tableau, chaque ligne doit avoir un nom unique (il ne faut pas que plusieurs lignes portent le même nom).
 7. Des noms courts pour les variables sont généralement plus faciles à manipuler par la suite.
-8. La première valeur de votre tableau derait toujours se trouver dans la cellule A1 du tableur. Autrement dit, il ne devrait jamais y avoir de lignes incomplètes ou de lignes de commentaires au-dessus des données, ou de colonne vide à gauche de votre tableau. D'ailleurs, il ne devrait jamais y avoir de commentaires à droite ou en dessous de vos données non plus.
+8. La première valeur de votre tableau devrait toujours se trouver dans la cellule A1 du tableur. Autrement dit, il ne devrait jamais y avoir de lignes incomplètes ou de lignes de commentaires au-dessus des données, ou de colonne vide à gauche de votre tableau. D'ailleurs, il ne devrait jamais y avoir de commentaires à droite ou en dessous de vos données non plus.
+
+:::{.callout-important}
+## Différence de philosophie
+
+Quand on travaille dans un tableur, on double clique sur le nom du fichier pour l'ouvrir dans le logiciel approprié (Excel par exemple), puis on en modifie ensuite le contenu en ajoutant ou supprimant des cellules, en modifiant des données déjà existantes ou en créant des graphiques par exemple. Les modifications sont en général sauvegardées au fur et à mesure, manuellement ou automatiquement. Au final, le fichier de départ a été modifié : son contenu n'est plus le même après votre séance de travail et il est virtuellement impossible de garder la trace de toutes les opérations qui ont été effectuées lors de la séance de travail.
+
+Lorsqu'on importe des données issues d'un tableur dans `R` ou `RStudio`, la philosophie est totalement différente : les données sont copiées dans la mémoire vive de l'ordinateur au moment de l'importation, et on ne travaille donc pas directement dans le fichier de données. On travaille dans `RStudio` pour mettre en forme les données, ajouter ou modifier des variables, faire des graphiques et des tests statistiques, **en tapant des commandes dans un script**. À aucun moment le fichier tableur de départ n'est modifié, à aucun moment son contenu n'est altéré. Tout le travail que l'on effectue sur les données importées n'existe que :
+
+1. dans la mémoire vive de l'ordinateur, 
+2. et sous la forme de commandes tapées dans un script. 
+
+Pour sauvegarder notre travail, on enregistre notre script. À la prochaine session de travail, nous n'aurons plus qu'à ré-ouvrir notre script dans `RStudio`, puis à ré-envoyer dans la console la totalité des commandes qu'il contient. Ainsi, les données du fichier tableur seront ré-importées puis toutes les analyses seront exécutées à nouveau et on pourra reprendre le travail là où on l'avait laissé. Cela présente le très gros avantage de ne jamais modifier les données brutes contenues dans le fichier de départ. En outre, un script ne contient en général que quelques centaines de lignes de code au format texte brut. Cela en fait des fichiers très peu volumineux qu'il est facile de dupliquer, modifier, échanger, etc. Ils contiennent la trace de toutes les modifications et opérations que nous faisons subir aux données, ce qui en fait un outil indispensable pour la **reproductibilité des analyses**.
+:::
 
 
 ### Fichiers au format tableur (.xls ou .xlsx) {#sec-tableur}
 
-À titre d'exemple, téléchargez le fichier [dauphin.xls](data/dauphin.xls) et placez-le dans votre répertoire de travail. Ce jeu de données contient des résultats de dosages de différents métaux lourds (cadmium, cuivre et mercure) dans différents organes (foie et rein) de plusieurs dauphins communs *Delphinus delphis*. Les informations de taille, d'âge et de statut reproducteur sont également précisées. Ouvrez ce fichier dans un tableur. Vous constaterez que son format ne permet pas de l'importer tel quel dans R :
+À titre d'exemple, téléchargez le fichier [dauphin.xls](data/dauphin.xls) et placez-le dans votre répertoire de travail. Ce jeu de données contient des résultats de dosages de différents métaux lourds (cadmium, cuivre et mercure) dans différents organes (foie et rein) de plusieurs dauphins communs *Delphinus delphis*. Les informations de taille, d'âge et de statut reproducteur sont également précisées. Ouvrez ce fichier dans un tableur. Vous constaterez que son format ne permet pas de l'importer tel quel dans `R` :
 
 - Il contient des lignes vides inutiles au-dessus des données.
 - Il contient des commentaires inutiles au-dessus des données.
 - Les titres de colonnes sont complexes et contiennent des caractères spéciaux.
 - Dans le tableau, les données manquantes sont représentées soit par des "`*`", soit par des cellules vides.
 
-Importer un tel jeu de données dans R par les méthodes classiques (c'est-à-dire sans utiliser RStudio et uniquement grâce aux fonctions de base de R) demanderait donc un gros travail de mise en forme préalable. Heureusement, RStudio et le package `readxl` facilitent grandement le processus.
+Importer un tel jeu de données dans `R` par les méthodes classiques (c'est-à-dire sans utiliser `RStudio` et uniquement grâce aux fonctions de base de `R`) demanderait donc un gros travail de mise en forme préalable. Heureusement, `RStudio` et le package `readxl` facilitent grandement le processus.
 
-Dans RStudio, localisez l'onglet `Files` situé dans le panneau en bas à droite de l'interface du logiciel. Dans ce panneau, naviguez jusqu'à votre répertoire de travail, qui doit maintenant contenir le fichier `daupin.xls` que vous avez téléchargé. Cliquez sur son nom, puis, dans le menu qui s'affiche, choisissez `Import Dataset...` :
+Dans `RStudio`, localisez l'onglet `Files` situé dans le panneau en bas à droite de l'interface du logiciel. Dans ce panneau, naviguez jusqu'à votre répertoire de travail, qui doit maintenant contenir le fichier `daupin.xls` que vous avez téléchargé. Cliquez sur son nom, puis, dans le menu qui s'affiche, choisissez `Import Dataset...` :
 
 ```{r}
 #| label: fig-import
@@ -398,7 +415,7 @@ Dans RStudio, localisez l'onglet `Files` situé dans le panneau en bas à droite
 knitr::include_graphics('images/import.png')
 ```
 
-La nouvelle fenêtre qui s'ouvre est un "assistant d'importation" (@fig-import2).
+La nouvelle fenêtre qui s'ouvre est celle de l'*assistant d'importation* (@fig-import2).
 
 ```{r}
 #| label: fig-import2
@@ -417,7 +434,7 @@ Cette fenêtre contient plusieurs zones importantes :
 3. `Import Options` (en bas à gauche) : zone dans laquelle des options permettant d'importer les données correctement peuvent être spécifiées.
 4. `Code Preview` (en bas à droite) : les lignes de codes que vous pourrez copier-coller dans votre script une fois les réglages corrects effectués.
 
-Ici, nous constatons que les données ne sont pas au bon format. La première chose que nous pouvons faire est d'indiquer à R que nous souhaitons ignorer les 9 premières lignes du fichier. Ensuite, nous précisons à RStudio que l'étoile "`*`" a été utilisée pour indiquer des données manquantes (@fig-import3) :
+Ici, nous constatons que les données ne sont pas au bon format. La première chose que nous pouvons faire est d'indiquer à `R` que nous souhaitons ignorer les 9 premières lignes du fichier. Ensuite, nous précisons à RStudio que l'étoile "`*`" a été utilisée pour indiquer des données manquantes (@fig-import3) :
 
 ```{r}
 #| label: fig-import3
@@ -469,9 +486,9 @@ Nous verrons dans le @sec-wrangling comment effectuer simplement ces différente
 
 Nous allons utiliser les mêmes données que précédemment, mais cette fois-ci, elles sont contenues dans un fichier au format `.csv`. Téléchargez le fichier [dauphin.csv](data/dauphin.csv) (pour cela, faites un clic droit sur le lien et choisissez `Enregistrez la cible du lien sous...` ou une mention équivalente), placez-le dans votre répertoire de travail, et ouvrez-le avec le bloc notes Windows ou tout autre éditeur de texte brut disponible sur votre ordinateur. **Attention** : Microsoft Word n'est pas un éditeur de texte brut. Un fichier au format `.doc` ou `.docx` est illisible dans un éditeur de texte brut car outre le texte, ces formats de documents contiennent toutes les informations concernant la mise en forme du texte (polices de caractères, tailles, couleurs et autres attributs, présence de figures, de tableaux dans le document, etc.).
 
-À l'inverse, les fichiers au format `.txt`, `.csv` et même `.R` (vos scripts !) sont des fichiers au format texte brut. Vous pouvez d'ailleurs essayer d'ouvrir `dauphin.csv` depuis RStudio, en allant dans la fenêtre `Files` puis en cliquant sur le nom du fichier et en choisissant `View File`. RStudio ouvre un nouvel onglet à côté de votre script vous permettant d'inspecter le contenu de ce fichier. Par rapport au fichier Excel, vous pouvez noter un certain nombre de différences : 
+À l'inverse, les fichiers au format `.txt`, `.csv`, `.tsv` et même `.R` (vos scripts !) sont des fichiers au format texte brut. Vous pouvez d'ailleurs essayer d'ouvrir `dauphin.csv` depuis `RStudio`, en allant dans la fenêtre `Files` puis en cliquant sur le nom du fichier et en choisissant `View File`. `RStudio` ouvre un nouvel onglet à côté de votre script vous permettant d'inspecter le contenu de ce fichier. Par rapport au fichier Excel, vous pouvez noter un certain nombre de différences : 
 
-1. Les colonnes sont séparées par des tabulations.
+1. Les colonnes sont séparées par des tabulations (il aurait pu s'agir de virgules, de points-virgules, d'un caractère spécial ou de simples espaces).
 2. Les nombres décimaux utilisent la virgule (et non le point comme dans les pays anglo-saxons).
 3. Les noms de colonnes ont déjà été corrigés/simplifiés par rapport au tableau d'origine.
 4. Les valeurs manquantes sont toutes codées par des `NA`s.
@@ -480,7 +497,7 @@ Un travail d'édition du fichier `.xls` de départ a donc été réalisé en amo
 
 Attention, à ce stade, vous avez ouvert un fichier au format texte brut dans `RStudio`, mais les données contenues dans ce fichier n'ont pas été importées dans `R` pour autant. Pour les importer, on procède comme pour les fichiers au format tableur (voir @sec-tableur ci-dessus).
 
-On commence par cliquer sur `dauphin.csv` dans l'onglet `Files` de RStudio. On sélectionne ensuite `Import Dataset...` :
+On commence par cliquer sur `dauphin.csv` dans l'onglet `Files` de `RStudio.` On sélectionne ensuite `Import Dataset...` :
 
 ```{r}
 #| label: fig-importcsv1
@@ -504,9 +521,9 @@ La fenêtre qui s'ouvre est en tous points identique à celle obtenue pour l'imp
 knitr::include_graphics('images/importcsv2.png')
 ```
 
-Nous voyons ici que par défaut, RStudio considère qu'une unique colonne est présente. En effet, les fichiers `.csv` utilisent généralement la virgule pour séparer les colonnes. Ce n'est pas le cas ici. Il nous faut donc sélectionner, dans le champ `Delimiter`, l'option `Tab` (tabulation) et non `Comma` (virgule).
+Nous voyons ici que par défaut, `RStudio` considère qu'une unique colonne est présente. En effet, les fichiers `.csv` utilisent généralement la virgule pour séparer les colonnes. Ce n'est pas le cas ici. Il nous faut donc sélectionner, dans le champ `Delimiter`, l'option `Tab` (tabulation) et non `Comma` (virgule).
 
-À ce stade, chaque variable est maintenant reconnue comme telle, chaque variable occupe donc une colonne distincte. Mais les colonnes `Cd`, `Cu` et `Hg` ne contiennent pas les bonnes valeurs (vous pouvez le vérifier en consultant l'onglet `dauphin.csv` que vous avez ouvert un peu plus tôt à côté de votre script). La cause est simple : R s'attend à ce que les nombres décimaux utilisent le point en guise de symbole des décimales. Or, notre fichier `.csv` utilise la virgule. C'est une convention qui dépend du pays dans lequel vous vous trouvez, et de la langue de votre système d'exploitation (en langage technique, on parle de `Locale`). Le fichier `dauphin.csv` ayant été créé sur un ordinateur français, la virgule a été utilisée en guise de symbole des décimales. Pour l'indiquer à R, cliquez sur `Locale > Configure...`, changez le `.` en `,` dans le champ `Decimal Mark` et validez en cliquant sur `Configure`.
+À ce stade, chaque variable est maintenant reconnue comme telle, chaque variable occupe donc une colonne distincte. Mais les colonnes `Cd`, `Cu` et `Hg` ne contiennent pas les bonnes valeurs (vous pouvez le vérifier en consultant l'onglet `dauphin.csv` que vous avez ouvert un peu plus tôt à côté de votre script). La cause est simple : `R` s'attend à ce que les nombres décimaux utilisent le point en guise de symbole des décimales. Or, notre fichier `.csv` utilise la virgule. C'est une convention qui dépend du pays dans lequel vous vous trouvez, et de la langue de votre système d'exploitation (en langage technique, on parle de `Locale`). Le fichier `dauphin.csv` ayant été créé sur un ordinateur français, la virgule a été utilisée en guise de symbole des décimales. Pour l'indiquer à `R`, cliquez sur `Locale > Configure...`, changez le `.` en `,` dans le champ `Decimal Mark` et validez en cliquant sur `Configure`.
 
 ```{r}
 #| label: fig-importcsv3
@@ -518,7 +535,7 @@ Nous voyons ici que par défaut, RStudio considère qu'une unique colonne est pr
 knitr::include_graphics('images/importcsv3.png')
 ```
 
-Les données sont maintenant au bon format, prêtes à être importées dans RStudio. Afin de ne pas écraser l'objet `dauphin` que nous avons créé à partir du fichier tableur un peu plus tôt, nous stockerons ces nouvelles données dans un objet nommé `dauphin2`. Pour cela, ajoutez un `2` au nom `dauphin` dans le champ `Name` en bas à gauche :
+Les données sont maintenant au bon format, prêtes à être importées dans `RStudio.` Afin de ne pas écraser l'objet `dauphin` que nous avons créé à partir du fichier tableur un peu plus tôt, nous stockerons ces nouvelles données dans un objet nommé `dauphin2`. Pour cela, ajoutez un `2` au nom `dauphin` dans le champ `Name` en bas à gauche :
 
 ```{r}
 #| label: fig-importcsv4
@@ -530,19 +547,20 @@ Les données sont maintenant au bon format, prêtes à être importées dans RSt
 knitr::include_graphics('images/importcsv4.png')
 ```
 
-Nous n'avons plus qu'à copier-coller dans notre script le code généré automatiquement en bas à droite de la fenêtre (comme précédemment, la ligne `library(readr)` est inutile : nous avons déjà chargé ce package en début de chapitre).
+Nous n'avons plus qu'à copier-coller dans notre script le code généré automatiquement en bas à droite de la fenêtre. Comme précédemment, la ligne `library(readr)` est inutile : ce fait package fait partie du `tidyverse` et nous l'avons donc déjà chargé en début de chapitre.
 
 ```{r}
 dauphin2 <- read_delim("data/dauphin.csv", 
-    "\t", escape_double = FALSE, locale = locale(decimal_mark = ","), 
-    trim_ws = TRUE)
+                       "\t", escape_double = FALSE, 
+                       locale = locale(decimal_mark = ","), 
+                       trim_ws = TRUE)
 ```
 
 Notez que :
 
 1. C'est le package `readr` et non plus `readxl` qui est utilisé.
-2. La fonction `read_delim()` a remplacé la fonction `read_excel()`. Il existe beaucoup d'autres fonctions selon le format de vos données (par exemple `read_csv()` et `read_csv2()`). Il est inutile de toutes les connaître dans la mesure où généralement, RStudio vous propose automatiquement la plus appropriée.
-3. R indique de quelle façon les colonnes ont été "parsées", autrement dit, R indique quelles fonctions ont été utilisées pour reconnaître le type des données présentes dans chaque colonne. 
+2. La fonction `read_delim()` a remplacé la fonction `read_excel()`. Il existe beaucoup d'autres fonctions selon le format de vos données (par exemple `read_csv()` et `read_csv2()`). Il est inutile de toutes les connaître dans la mesure où généralement, `RStudio` vous propose automatiquement la plus appropriée.
+3. `R` indique de quelle façon les colonnes ont été "parsées", autrement dit, `R` indique quelles fonctions ont été utilisées pour reconnaître le type des données présentes dans chaque colonne. 
 
 Toutes les fonctions permettant d'importer des données n'ont pas nécessairement le même comportement. Ainsi, si l'on compare les objets importés depuis le fichier tableur (`dauphin`) et depuis le fichier texte brut (`dauphin2`), le type de certaines variables peut être différent :
 
@@ -551,7 +569,7 @@ dauphin
 dauphin2
 ```
 
-En particulier selon la version des packages que vosu utilisez et les réglages spéifiques de vos systèmes d'exploitation, les variables `Taille` et `Age` sont parfois considérées comme réelles dans `dauphin` mais comme entières dans `dauphin2` (ce n'est pas le cas ici). Afin d'éviter les confusions dans la suite du document, nous allons supprimer `dauphin2` en tapant :
+En particulier selon la version des packages que vous utilisez et les réglages spécifiques de vos systèmes d'exploitation, les variables `Taille` et `Age` sont parfois considérées comme réelles dans `dauphin` (`<dbl>`) mais comme entières dans `dauphin2` (`<int>`, ce n'est pas le cas ici). Afin d'éviter les confusions dans la suite du document, nous allons supprimer `dauphin2` en tapant :
 
 ```{r}
 rm(dauphin2)
@@ -567,41 +585,43 @@ dauphin2
 
 ### En cas de problème... {#sec-importproblem}
 
-Il arrive parfois que l'importation de fichiers textes bruts par la méthode décrite ci-dessus échoue en raison d'un bug du package `readr` qui gère mal la présence de caractères spéciaux (accents, cédilles, etc) dans le chemin des fichiers que l'on tente d'importer. À l'heure où j'écris ces lignes (28 novembre 2018), le bug a été corrigé dans la version de développement du package, mais toujours pas dans la version stable disponible au téléchargement sur les serveurs du CRAN. Il est donc utile de connaître une méthode alternative pour importer de tels fichiers dans R. Cette méthode repose sur "la mère de toutes les fonctions d'importation" : `read.table()`.
+Il arrive parfois que l'importation de fichiers textes bruts par la méthode décrite ci-dessus échoue en raison d'un bug du package `readr` qui gère mal la présence de caractères spéciaux (accents, cédilles, etc) dans le chemin des fichiers que l'on tente d'importer. À l'heure où j'écris ces lignes, ce bug déjà ancien est toujours présent sur certains systèmes. Il est donc utile de connaître une méthode alternative pour importer de tels fichiers dans `R`. Cette méthode repose sur "la mère de toutes les fonctions d'importation" : `read.table()`.
 
-La fonction `read.table()` est à la base de la plupart des fonctions d'importation décrites dans ce chapitre. Il est donc important d'en connaître la syntaxe et les arguments les plus importants. Cette fonction requiert en général les arguments suivants :
+La fonction `read.table()` est à la base de la plupart des fonctions d'importation décrites dans ce chapitre. Il est donc important d'en connaître la syntaxe et les arguments les plus courants. Cette fonction requiert en général les arguments suivants :
 
 1. Le chemin du fichier texte contenant les données à importer. Si le fichier se trouve dans votre répertoire de travail, il suffit de donner son nom. S'il est dans un sous-dossier de votre répertoire de travail, il faut donner le nom complet : `"sous_dossier/nom_du_fichier.csv"`.
 2. `sep` : la spécification du symbole utilisé en guise de séparateur de colonnes dans le fichier texte. Cela peut-être la virgule (`sep = ","`), le point virgule (`sep = ";"`) ou encore la tabulation (`sep = "\t"`) selon les fichiers importés. 
 3. `dec` : la spécification du symbole utilisé en guise de symbole pour les décimales. Il n'est pas nécessaire de spécifier cet argument lorsque le symbole dans le fichier source est le point. Mais si c'est une virgule (comme c'est souvent le cas dans les pays francophones), il faut alors préciser `dec = ","`.
 4. `header` : la première ligne du fichier source contient-elle des noms de variables. Si oui, il faut indiquer `header = TRUE`.
 
-Ainsi, par exemple, pour le fichier `dauphin.csv`, on peut taper ceci :
+Ainsi, par exemple, pour le fichier `dauphin.csv` que j'ai placé dans un sous-dossier de mon répertoire de travail nommé `data`, on peut taper ceci :
 
 ```{r}
 dauph <- read.table("data/dauphin.csv",
                     sep = "\t",
                     dec = ",",
                     header = TRUE)
-dauph <- as_tibble(dauph)
 dauph
 ```
 
-Puisque la fonction `read.table()` importe les données sous la forme d'un data.frame, il est nécessaire de transformer le tableau obtenu en `tibble` grâce à la fonction `as_tibble()` afin de bénéficier de tous les avantages de ce format d'objet.
+Puisque la fonction `read.table()` importe les données sous la forme d'un `data.frame`, il est nécessaire de transformer le tableau obtenu en `tibble` grâce à la fonction `as_tibble()` afin de bénéficier de tous les avantages de ce format d'objet.
+
+```{r}
+dauph <- as_tibble(dauph)
+dauph
+```
 
 
 ### Exercices {#sec-exo-10}
 
 1. L'objet `dauphin` est-il "tidy" (autrement dit, s'agit-il de "données rangées") ? Justifiez.
 2. Produisez le graphique ci-dessous :
-```{r exercicedauphin, fig.asp=1, echo=FALSE, tidy=FALSE, warning = FALSE}
+```{r}
 #| label: fig-exercicedauphin
 #| echo: false
-#| fig-asp: 1
-#| tidy: false
 #| warning: false
+#| fig-asp: 1
 #| fig-cap: "Figure à reproduire."
-
 
 dauphin |> 
   ggplot(aes(x = Age, y = Hg, color = Sexe)) +
@@ -618,7 +638,7 @@ dauphin |>
 Indice : les droites de régression avec les intervalles de confiance sont ajoutés grâce à la fonction `geom_smooth(method = "lm")`.
 
 3. Importez dans `R` le jeu de données [whoTB.csv](data/whoTB.csv). Ce jeu de données contient les cas de tuberculose (TB) rapportés par l'Organisation Mondiale de la Santé (OMS, ou WHO en anglais : World Health Organization). Les cas sont répertoriés par année, pays, âge, sexe, type de tuberculose et méthode de diagnostique. Selon vous, ce jeu de données est-il "rangé" ? Pourquoi ?
-4. Si ce jeu de données n'est pas rangé, rangez-le en utilisant les fonctions du packages `tidyr` que nous avons découvertes dans ce chapitre : `pivot_longer()`, `pivot_wider()`, `separate()` et `unite()` (vous n'aurez pas nécessairement besoin d'utiliser ces 4 fonctions, et à l'inverse, certaines devront peut-être être utilisées plusieurs fois). 
+4. Si ce jeu de données n'est pas rangé, rangez-le en utilisant les fonctions du packages `tidyr` que nous avons découvertes dans ce chapitre : `pivot_longer()`, `pivot_wider()`, `separate()` et `unite()`. Vous n'aurez pas nécessairement besoin d'utiliser ces 4 fonctions, et à l'inverse, certaines devront peut-être être utilisées plusieurs fois. 
 
 Pour vous aider, l'OMS donne la signification des codes utilisés en guise de noms pour la plupart des colonnes. Ainsi :
 
