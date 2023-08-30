@@ -285,7 +285,7 @@ ggplot(penguins, aes(x = body_mass_g)) +
 
 Deux messages nous sont adressés par le logiciel :
 
-1. `Message d'avis: Removed 2 rows containing non-finite values (stat_bin)`. Ce message indique, comme pour le premier nuage de points, que 2 individus du tableau `penguins` ont une masse corporelle inconnue (`NA`). Ces 2 individus (donc les deux lignes correspondantes), ont été ignorés pour produire ce graphique
+1. `Warning: Removed 2 rows containing non-finite values (stat_bin)`. Ce message indique, comme pour le premier nuage de points, que 2 individus du tableau `penguins` ont une masse corporelle inconnue (`NA`). Ces 2 individus (donc les deux lignes correspondantes), ont été ignorés pour produire ce graphique
 2. `'stat_bin()' using 'bins = 30'. Pick better value with 'binwidth'`. Ce message indique que `R` a choisi pour nous les limites des classes utilisées pour faire l'histogramme. Sur un histogramme, la variable d'intérêt (toujours numérique et continue), qui apparaît sur l'axe des abscisses, est en effet "découpée" en plusieurs classes, en général de même taille, afin de permettre une représentation de la **distribution des valeurs**. Ici, `R` indique qu'il a créé 30 catégories pour nous, et que nous pouvons faire un choix différent grâce à l'argument `binwidth`. Nous y reviendrons un peu plus loin.
 
 Sur ce graphique, l'axe des abscisses porte donc la variable continue "découpée" en classes de mêmes largeur, et l'axe des ordonnées renseigne sur le nombre (`count` ou fréquence absolue) d'individus observés dans chaque classe. Les zones du graphique où les barres sont les plus hautes indiquent donc les caractéristiques des individus observés le plus fréquemment. À l'inverse, les barres les plus courtes correspondent à des valeurs de masse rarement observées. Au final, ce type de graphique permet de visualiser **la distribution des données pour une variable numérique continue**.
@@ -880,7 +880,7 @@ ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) +
   geom_smooth(method = "lm")
 ```
 
-L'argument `method = "lm"` indique que nous souhaitons ajouter une droite de régression (`lm` est l'abréviation de "linear model"). L'intervalle grisé autour de la droite représente l'incertitude associée à la régression et indique que la "vraie" droite de régression, dans la population générale (et pas seulement dans notre échantillon de 344 individus) est probablement située dans cette zone grisée. Nous aurons l'occasion de revenir en détail sur la notion de régression linéaire et d'incertitude associée au semestre 6 de la licence SV.
+L'argument `method = "lm"` indique que nous souhaitons ajouter une droite de régression (`lm` est l'abréviation de "linear model"). L'intervalle grisé autour de la droite représente l'incertitude associée à la régression et indique que la "vraie" droite de régression, dans la population générale (et pas seulement dans notre échantillon de 344 individus) est probablement située dans cette zone grisée. Nous aurons l'occasion de revenir en détail sur la notion de régression linéaire et d'incertitude associée plus loin dans ce livre.
 
 #### Autres caractéristiques esthétiques
 
@@ -940,7 +940,7 @@ Globalement, la durée médiane de chômage aux USA varie de façon cyclique. La
 
 ### Les cartes
 
-Les latitudes et longitudes sont un autre type de variable numériques très particulières qui permettent notamment de produire des cartes. Il s'agit ici d'un domaine extrêmement vaste qui dépasse largement le cadre de ce livre et des cours de la licence SV. Retenez simplement qu'il est possible de produire des cartes très informatives avec `ggplot2`, et quelques autres packages spécialisés :
+Les latitudes et longitudes sont un autre type de variable numériques très particulières qui permettent notamment de produire des cartes. Il s'agit ici d'un domaine extrêmement vaste qui dépasse largement le cadre de ce livre. Retenez simplement qu'il est possible de produire des cartes très informatives avec `ggplot2`, et quelques autres packages spécialisés :
 
 ![Exemple de carte produite dans `R` avec les packages `sf`, `marmap` et `ggplot2`.](images/map.png){#fig-map}
 En règle général, les cartes portent un grand nombre de variables, numériques et/ou catégorielles. Mais tout commence toujours par 2 variables numériques, les latitudes et longitude des structures/informations que l'on souhaite représenter (traits de côte, profiles bathymétriques, lieux d'observations diverses, ...).

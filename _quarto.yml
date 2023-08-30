@@ -30,7 +30,9 @@ language:
 
 format:
   html:
-    theme: MyUnited.scss
+    theme: 
+      light: MyUnited.scss
+      dark: darkly
     highlight-style: solarized
     # code-tools:
     #   source: false

@@ -71,10 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -141,9 +143,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Analyse de Données</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/besibo/DataAnalysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <a href="./Analyse-de-Données.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
 </div>
     </div>
       </div>
@@ -206,21 +209,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table des matières</h2>
    
   <ul>
-  <li><a href="#sec-prerek" id="toc-sec-prerek" class="nav-link active" data-scroll-target="#sec-prerek"><span class="header-section-number">4.1</span> Pré-requis</a></li>
-  <li><a href="#cest-quoi-des-tidy-data" id="toc-cest-quoi-des-tidy-data" class="nav-link" data-scroll-target="#cest-quoi-des-tidy-data"><span class="header-section-number">4.2</span> C’est quoi des “tidy data” ?</a>
+  <li><a href="#préambule" id="toc-préambule" class="nav-link active" data-scroll-target="#préambule"><span class="header-section-number">4.1</span> Préambule</a></li>
+  <li><a href="#sec-prerek" id="toc-sec-prerek" class="nav-link" data-scroll-target="#sec-prerek"><span class="header-section-number">4.2</span> Pré-requis</a></li>
+  <li><a href="#cest-quoi-des-tidy-data" id="toc-cest-quoi-des-tidy-data" class="nav-link" data-scroll-target="#cest-quoi-des-tidy-data"><span class="header-section-number">4.3</span> C’est quoi des “tidy data” ?</a>
   <ul class="collapse">
-  <li><a href="#la-fonction-pivot_longer" id="toc-la-fonction-pivot_longer" class="nav-link" data-scroll-target="#la-fonction-pivot_longer"><span class="header-section-number">4.2.1</span> La fonction <code>pivot_longer()</code></a></li>
-  <li><a href="#sec-spread" id="toc-sec-spread" class="nav-link" data-scroll-target="#sec-spread"><span class="header-section-number">4.2.2</span> La fonction <code>pivot_wider()</code></a></li>
-  <li><a href="#les-fonctions-separate-et-unite" id="toc-les-fonctions-separate-et-unite" class="nav-link" data-scroll-target="#les-fonctions-separate-et-unite"><span class="header-section-number">4.2.3</span> Les fonctions <code>separate()</code> et <code>unite()</code></a></li>
-  <li><a href="#sec-exo-9" id="toc-sec-exo-9" class="nav-link" data-scroll-target="#sec-exo-9"><span class="header-section-number">4.2.4</span> Exercices</a></li>
+  <li><a href="#la-fonction-pivot_longer" id="toc-la-fonction-pivot_longer" class="nav-link" data-scroll-target="#la-fonction-pivot_longer"><span class="header-section-number">4.3.1</span> La fonction <code>pivot_longer()</code></a></li>
+  <li><a href="#sec-spread" id="toc-sec-spread" class="nav-link" data-scroll-target="#sec-spread"><span class="header-section-number">4.3.2</span> La fonction <code>pivot_wider()</code></a></li>
+  <li><a href="#les-fonctions-separate-et-unite" id="toc-les-fonctions-separate-et-unite" class="nav-link" data-scroll-target="#les-fonctions-separate-et-unite"><span class="header-section-number">4.3.3</span> Les fonctions <code>separate()</code> et <code>unite()</code></a></li>
+  <li><a href="#sec-exo-9" id="toc-sec-exo-9" class="nav-link" data-scroll-target="#sec-exo-9"><span class="header-section-number">4.3.4</span> Exercices</a></li>
   </ul></li>
-  <li><a href="#importer-des-données-depuis-un-tableur" id="toc-importer-des-données-depuis-un-tableur" class="nav-link" data-scroll-target="#importer-des-données-depuis-un-tableur"><span class="header-section-number">4.3</span> Importer des données depuis un tableur</a>
+  <li><a href="#importer-des-données-depuis-un-tableur" id="toc-importer-des-données-depuis-un-tableur" class="nav-link" data-scroll-target="#importer-des-données-depuis-un-tableur"><span class="header-section-number">4.4</span> Importer des données depuis un tableur</a>
   <ul class="collapse">
-  <li><a href="#les-règles-de-base" id="toc-les-règles-de-base" class="nav-link" data-scroll-target="#les-règles-de-base"><span class="header-section-number">4.3.1</span> Les règles de base</a></li>
-  <li><a href="#sec-tableur" id="toc-sec-tableur" class="nav-link" data-scroll-target="#sec-tableur"><span class="header-section-number">4.3.2</span> Fichiers au format tableur (.xls ou .xlsx)</a></li>
-  <li><a href="#sec-plaintext" id="toc-sec-plaintext" class="nav-link" data-scroll-target="#sec-plaintext"><span class="header-section-number">4.3.3</span> Fichiers au format texte brut (.csv)</a></li>
-  <li><a href="#sec-importproblem" id="toc-sec-importproblem" class="nav-link" data-scroll-target="#sec-importproblem"><span class="header-section-number">4.3.4</span> En cas de problème…</a></li>
-  <li><a href="#sec-exo-10" id="toc-sec-exo-10" class="nav-link" data-scroll-target="#sec-exo-10"><span class="header-section-number">4.3.5</span> Exercices</a></li>
+  <li><a href="#les-règles-de-base" id="toc-les-règles-de-base" class="nav-link" data-scroll-target="#les-règles-de-base"><span class="header-section-number">4.4.1</span> Les règles de base</a></li>
+  <li><a href="#sec-tableur" id="toc-sec-tableur" class="nav-link" data-scroll-target="#sec-tableur"><span class="header-section-number">4.4.2</span> Fichiers au format tableur (.xls ou .xlsx)</a></li>
+  <li><a href="#sec-plaintext" id="toc-sec-plaintext" class="nav-link" data-scroll-target="#sec-plaintext"><span class="header-section-number">4.4.3</span> Fichiers au format texte brut (.csv)</a></li>
+  <li><a href="#sec-importproblem" id="toc-sec-importproblem" class="nav-link" data-scroll-target="#sec-importproblem"><span class="header-section-number">4.4.4</span> En cas de problème…</a></li>
+  <li><a href="#sec-exo-10" id="toc-sec-exo-10" class="nav-link" data-scroll-target="#sec-exo-10"><span class="header-section-number">4.4.5</span> Exercices</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -231,23 +235,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Dans la <a href="01-R-basics.html#sec-objects"><span>Section&nbsp;1.3.4.1</span></a>, nous avons introduit le concept de tableaux de données ou <code>data.frame</code> dans R. Il s’agit d’une représentation rectangulaire des données, à la manière d’un tableur, dans laquelle les lignes correspondent aux observations et les colonnes correspondent à des variables décrivant chaque observation.</p>
-<p>Dans ce chapitre, nous allons aller plus loin en présentant le concept de “tidy data”, ou “données nettes/rangées/soignées/ordonnées”. Vous verrez que l’idée d’avoir des données stockées dans un format “net” va plus loin que la simple définition usuelle que le terme “rangé” peut avoir lorsque les données sont simplement bien organisées dans un tableur. Nous définirons le terme “tidy data” de manière plus rigoureuse, en établissant un ensemble de règles permettant de stocker les données correctement afin de rendre plus aisées les analyses statistiques et les représentations graphiques.</p>
-<p>Jusqu’à maintenant, vous avez utilisé des données qui étaient déjà dans ce format (c’est le cas des données contenues dans <code>flights</code> ou dans <code>diamonds</code> par exemple). Pourtant, la plupart du temps, les données que vous manipulerez dans R seront importées depuis un tableur dans lequel vous ou vos collaborateurs en aurez fait la saisie. S’assurer que les données importées manuellement dans R sont correctement “nettoyées” et mises en forme de “tidy data” est indispensable pour éviter les problèmes lors de la réalisation de graphiques (voir <a href="03-visualization.html"><span>Chapitre&nbsp;3</span></a>) comme lors de la manipulation des données pour en tirer de l’information statistique pertinente (ce que nous verrons au <a href="05-DataWrangling.html"><span>Chapitre&nbsp;5</span></a>).</p>
-<hr>
-<section id="sec-prerek" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="sec-prerek"><span class="header-section-number">4.1</span> Pré-requis</h2>
+<section id="préambule" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="préambule"><span class="header-section-number">4.1</span> Préambule</h2>
+<p>Dans la <a href="01-R-basics.html#sec-objects"><span>Section&nbsp;1.3.4.1</span></a>, nous avons introduit le concept de tableaux de données ou <code>data.frame</code> dans <code>R</code>. Il s’agit d’une représentation rectangulaire des données, à la manière d’un tableur, dans laquelle les lignes correspondent aux observations et les colonnes correspondent à des variables décrivant chaque observation.</p>
+<p>Dans ce chapitre, nous allons aller plus loin en présentant le concept de <strong>tidy data</strong>, ou “données nettes/rangées/soignées/ordonnées”. Vous verrez que l’idée d’avoir des données stockées dans un format “net” va plus loin que la simple définition usuelle que le terme “rangé” peut avoir lorsque les données sont simplement bien organisées dans un tableur. Nous définirons le terme “tidy data” de manière plus rigoureuse, en établissant un ensemble de règles permettant de stocker les données correctement afin de rendre plus aisées les analyses statistiques et les représentations graphiques.</p>
+<p>Jusqu’à maintenant, vous avez utilisé des données qui étaient déjà dans ce format (c’est le cas des données contenues dans <code>penguins</code>, <code>flights</code> ou dans <code>diamonds</code> par exemple). Pourtant, la plupart du temps, les données que vous manipulerez dans <code>R</code> seront importées depuis un tableur dans lequel vous ou vos collaborateurs en aurez fait la saisie. S’assurer que les données importées manuellement dans <code>R</code> sont correctement “nettoyées” et mises en forme de “tidy data” est indispensable pour éviter les problèmes lors de la réalisation de graphiques (voir <a href="03-visualization.html"><span>Chapitre&nbsp;3</span></a>) comme lors de la manipulation des données pour en tirer de l’information statistique pertinente (ce que nous verrons au <a href="05-DataWrangling.html"><span>Chapitre&nbsp;5</span></a>).</p>
+</section>
+<section id="sec-prerek" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-prerek"><span class="header-section-number">4.2</span> Pré-requis</h2>
 <p>Dans ce chapitre, nous aurons besoin des packages suivants :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)  <span class="co"># la dernière lettre est un "L" minuscule, pas le chiffre 1...</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)  <span class="co"># la dernière lettre est un "L" minuscule, pas le chiffre 1...</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Comme d’habitude, si vous recevez des messages d’erreur, c’est probablement parce que le package que vous essayez de charger en mémoire n’a pas été installé au préalable. Consultez la <a href="01-R-basics.html#sec-packages"><span>Section&nbsp;1.4</span></a> si vous ne savez plus comment procéder.</p>
-<p>Outre ces packages classiques, nous aurons aussi besoin du package <code>EDAWR</code> qui n’est pas disponible sur les serveurs habituels de R. Pour l’installer, on procède de la façon suivante :</p>
+<p>Outre ces packages classiques, nous aurons aussi besoin du package <code>EDAWR</code> qui n’est pas disponible sur les serveurs habituels de <code>R</code>. Pour l’installer, on procède de la façon suivante :</p>
 <ol type="1">
 <li>Installez et chargez en mémoire le package <code>remotes</code> :</li>
 </ol>
@@ -261,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install_github</span>(<span class="st">"rstudio/EDAWR"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Attention, sur les ordinateurs de l’université cette procédure ne fonctionne pas toujours. Si vous rencontrez des difficultés, suivez les instructions décrites à la fin de cette <a href="#sec-prerek"><span>Section&nbsp;4.1</span></a>.</p>
+<p>Attention, sur les ordinateurs de l’université cette procédure ne fonctionne pas toujours. Si vous rencontrez des difficultés, suivez les instructions décrites à la fin de cette <a href="#sec-prerek"><span>Section&nbsp;4.2</span></a>.</p>
 <ol start="3" type="1">
 <li>Chargez le package <code>EDAWR</code> de la façon habituelle :</li>
 </ol>
@@ -275,15 +279,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>En cas de problème pour installer le package <code>EDAWR</code> sur les ordinateurs de l’université.</strong></p>
 <p>Vous pouvez télécharger manuellement les 4 jeux de données dont nous aurons besoin grâce à ces 4 liens :</p>
 <ul>
-<li><a href="https://github.com/besibo/DA/raw/master/data/cases.rdata">cases</a></li>
-<li><a href="https://github.com/besibo/DA/raw/master/data/population.rdata">population</a></li>
-<li><a href="https://github.com/besibo/DA/raw/master/data/rates.rdata">rates</a></li>
-<li><a href="https://github.com/besibo/DA/raw/master/data/storms.rdata">storms</a></li>
+<li><a href="data/cases.rdata">cases</a></li>
+<li><a href="data/population.rdata">population</a></li>
+<li><a href="data/rates.rdata">rates</a></li>
+<li><a href="data/storms.rdata">storms</a></li>
 </ul>
-<p>Une fois téléchargés, les données contenues dans ces 4 fichiers peuvent être importées dans RStudio en cliquant sur <code>File &gt; Open File...</code>, puis en sélectionnant un à un chacun des fichiers. Pour chaque fichier un nouvel objet doit apparaître dans votre environnement de travail (onglet <code>Environnement</code>, dans le panneau en haut à droite de RStudio). L’inconvénient de cette méthode est que les fichiers d’aide de ces jeux de données ne seront pas disponibles dans RStudio. Vous pouvez toutefois en consulter une version brute (non mise en forme) <a href="https://github.com/rstudio/EDAWR/tree/master/man">en cliquant ici</a>.</p>
+<p>Une fois téléchargés, les données contenues dans ces 4 fichiers peuvent être importées dans <code>RStudio</code> en cliquant sur <code>File &gt; Open File...</code>, puis en sélectionnant un à un chacun des fichiers. Pour chaque fichier un nouvel objet doit apparaître dans votre environnement de travail (onglet <code>Environnement</code>, dans le panneau en haut à droite de RStudio). L’inconvénient de cette méthode est que les fichiers d’aide de ces jeux de données ne seront pas disponibles dans RStudio. Vous pouvez toutefois en consulter une version brute (non mise en forme) <a href="https://github.com/rstudio/EDAWR/tree/master/man">en cliquant ici</a>.</p>
 </section>
-<section id="cest-quoi-des-tidy-data" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="cest-quoi-des-tidy-data"><span class="header-section-number">4.2</span> C’est quoi des “tidy data” ?</h2>
+<section id="cest-quoi-des-tidy-data" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="cest-quoi-des-tidy-data"><span class="header-section-number">4.3</span> C’est quoi des “tidy data” ?</h2>
 <p>Les “tidy data” (nous les appellerons “données rangées” dans la suite de ce livre), sont des données qui respectent un format standardisé. En particulier :</p>
 <ul>
 <li>Chaque variable est dans une colonne unique.</li>
@@ -332,8 +336,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Donc même si nous disposons ici d’un tableau rectangulaire classique, nous sommes bien loin du format des données rangées.</p>
-<section id="la-fonction-pivot_longer" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="la-fonction-pivot_longer"><span class="header-section-number">4.2.1</span> La fonction <code>pivot_longer()</code></h3>
+<section id="la-fonction-pivot_longer" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="la-fonction-pivot_longer"><span class="header-section-number">4.3.1</span> La fonction <code>pivot_longer()</code></h3>
 <p>Afin de transformer les données non rangées du tableau <code>cases</code> en données rangées, nous allons utiliser la fonction <code>pivot_longer()</code> du package <code>tidyr</code>. Avant d’aller plus loin, essayez d’imaginer à quoi le tableau rangé devrait ressembler.</p>
 <p>La fonction <code>pivot_longer()</code> prend 4 arguments :</p>
 <ol type="1">
@@ -460,8 +464,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="sec-spread" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-spread"><span class="header-section-number">4.2.2</span> La fonction <code>pivot_wider()</code></h3>
+<section id="sec-spread" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-spread"><span class="header-section-number">4.3.2</span> La fonction <code>pivot_wider()</code></h3>
 <p>La fonction <code>pivot_wider()</code> permet de réaliser l’opération inverse de <code>pivot_longer()</code>. Elle “disperse” une unique colonne catégorielle en plusieurs colonnes, le tableau obtenue est donc plus large (“wider”) que le tableau de départ.</p>
 <p>Reprenons par exemple notre tableau <code>cases_tidy</code> :</p>
 <div class="cell">
@@ -584,8 +588,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>D’autres arguments existent. <strong>Je vous encourage vivement</strong> à consulter l’aide des fonctions <code>pivot_longer()</code> et <code>pivot_wider()</code> et à faire des essais.</p>
 </section>
-<section id="les-fonctions-separate-et-unite" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="les-fonctions-separate-et-unite"><span class="header-section-number">4.2.3</span> Les fonctions <code>separate()</code> et <code>unite()</code></h3>
+<section id="les-fonctions-separate-et-unite" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="les-fonctions-separate-et-unite"><span class="header-section-number">4.3.3</span> Les fonctions <code>separate()</code> et <code>unite()</code></h3>
 <p>Ces fonctions sont complémentaires : tout comme <code>pivot_longer()</code> et <code>pivot_wider()</code>, elles effectuent 2 opérations opposées. Reprenons le jeu de données <code>cases_tidy</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>cases_tidy</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -689,8 +693,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="sec-exo-9" class="level3" data-number="4.2.4">
-<h3 data-number="4.2.4" class="anchored" data-anchor-id="sec-exo-9"><span class="header-section-number">4.2.4</span> Exercices</h3>
+<section id="sec-exo-9" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="sec-exo-9"><span class="header-section-number">4.3.4</span> Exercices</h3>
 <p>Examinez les tableaux <code>rates</code>, <code>storms</code> et <code>population</code> du package <code>EDAWR</code>.</p>
 <ol type="1">
 <li>Ces tableaux sont-ils des “tableaux rangés” (tidy data) ?</li>
@@ -700,10 +704,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="importer-des-données-depuis-un-tableur" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="importer-des-données-depuis-un-tableur"><span class="header-section-number">4.3</span> Importer des données depuis un tableur</h2>
-<section id="les-règles-de-base" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="les-règles-de-base"><span class="header-section-number">4.3.1</span> Les règles de base</h3>
+<section id="importer-des-données-depuis-un-tableur" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="importer-des-données-depuis-un-tableur"><span class="header-section-number">4.4</span> Importer des données depuis un tableur</h2>
+<section id="les-règles-de-base" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="les-règles-de-base"><span class="header-section-number">4.4.1</span> Les règles de base</h3>
 <p>Jusqu’à maintenant, nous avons travaillé exclusivement avec des jeux de données déjà disponibles dans R. La plupart du temps, les données sur lesquelles vous devrez travailler devront au préalable être importées dans R, à partir de fichiers issus de tableurs. De tels fichiers se présentent généralement sous l’un des 2 formats suivants :</p>
 <ol type="1">
 <li>Fichiers au format “.csv” : il s’agit d’un format de fichier dit “texte brut”, c’est à dire qu’il peut être ouvert avec n’importe quel éditeur de texte, y compris le bloc notes de Windows. L’extension “.csv” est l’abbréviation de Comma Separated Values, autrement dit, dans ce type de fichiers, les colonnes sont séparées par des virgules. Cela peut poser problème en France puisque le symbole des décimales est souvent aussi la virgule (et non le point comme dans les pays anglo-saxons). Le séparateur de colonnes utilisé en France dans les fichiers <code>.csv</code> est alors souvent le point-virgule. Il est possible de créer des fichiers <code>.csv</code> à partir de n’importe quel tableur en choisissant <code>Fichier &gt; Exporter...</code> ou <code>Fichier &gt; Enregistrer sous...</code> puis en sélectionnant le format approprié (les dénomminations sont variables selon les logiciels : format texte brut, format csv, plain text, etc…).</li>
@@ -721,8 +725,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>La première valeur de votre tableau derait toujours se trouver dans la cellule A1 du tableur. Autrement dit, il ne devrait jamais y avoir de lignes incomplètes ou de lignes de commentaires au-dessus des données, ou de colonne vide à gauche de votre tableau. D’ailleurs, il ne devrait jamais y avoir de commentaires à droite ou en dessous de vos données non plus.</li>
 </ol>
 </section>
-<section id="sec-tableur" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-tableur"><span class="header-section-number">4.3.2</span> Fichiers au format tableur (.xls ou .xlsx)</h3>
+<section id="sec-tableur" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="sec-tableur"><span class="header-section-number">4.4.2</span> Fichiers au format tableur (.xls ou .xlsx)</h3>
 <p>À titre d’exemple, téléchargez le fichier <a href="data/dauphin.xls">dauphin.xls</a> et placez-le dans votre répertoire de travail. Ce jeu de données contient des résultats de dosages de différents métaux lourds (cadmium, cuivre et mercure) dans différents organes (foie et rein) de plusieurs dauphins communs <em>Delphinus delphis</em>. Les informations de taille, d’âge et de statut reproducteur sont également précisées. Ouvrez ce fichier dans un tableur. Vous constaterez que son format ne permet pas de l’importer tel quel dans R :</p>
 <ul>
 <li>Il contient des lignes vides inutiles au-dessus des données.</li>
@@ -831,8 +835,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Nous verrons dans le <a href="05-DataWrangling.html"><span>Chapitre&nbsp;5</span></a> comment effectuer simplement ces différentes opérations.</p>
 </section>
-<section id="sec-plaintext" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="sec-plaintext"><span class="header-section-number">4.3.3</span> Fichiers au format texte brut (.csv)</h3>
+<section id="sec-plaintext" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="sec-plaintext"><span class="header-section-number">4.4.3</span> Fichiers au format texte brut (.csv)</h3>
 <p>Nous allons utiliser les mêmes données que précédemment, mais cette fois-ci, elles sont contenues dans un fichier au format <code>.csv</code>. Téléchargez le fichier <a href="data/dauphin.csv">dauphin.csv</a> (pour cela, faites un clic droit sur le lien et choisissez <code>Enregistrez la cible du lien sous...</code> ou une mention équivalente), placez-le dans votre répertoire de travail, et ouvrez-le avec le bloc notes Windows ou tout autre éditeur de texte brut disponible sur votre ordinateur. <strong>Attention</strong> : Microsoft Word n’est pas un éditeur de texte brut. Un fichier au format <code>.doc</code> ou <code>.docx</code> est illisible dans un éditeur de texte brut car outre le texte, ces formats de documents contiennent toutes les informations concernant la mise en forme du texte (polices de caractères, tailles, couleurs et autres attributs, présence de figures, de tableaux dans le document, etc.).</p>
 <p>À l’inverse, les fichiers au format <code>.txt</code>, <code>.csv</code> et même <code>.R</code> (vos scripts !) sont des fichiers au format texte brut. Vous pouvez d’ailleurs essayer d’ouvrir <code>dauphin.csv</code> depuis RStudio, en allant dans la fenêtre <code>Files</code> puis en cliquant sur le nom du fichier et en choisissant <code>View File</code>. RStudio ouvre un nouvel onglet à côté de votre script vous permettant d’inspecter le contenu de ce fichier. Par rapport au fichier Excel, vous pouvez noter un certain nombre de différences :</p>
 <ol type="1">
@@ -842,7 +846,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Les valeurs manquantes sont toutes codées par des <code>NA</code>s.</li>
 </ol>
 <p>Un travail d’édition du fichier <code>.xls</code> de départ a donc été réalisé en amont de l’enregistrement au format <code>.csv</code>.</p>
-<p>Attention, à ce stade, vous avez ouvert un fichier au format texte brut dans <code>RStudio</code>, mais les données contenues dans ce fichier n’ont pas été importées dans <code>R</code> pour autant. Pour les importer, on procède comme pour les fichiers au format tableur (voir <a href="#sec-tableur"><span>Section&nbsp;4.3.2</span></a> ci-dessus).</p>
+<p>Attention, à ce stade, vous avez ouvert un fichier au format texte brut dans <code>RStudio</code>, mais les données contenues dans ce fichier n’ont pas été importées dans <code>R</code> pour autant. Pour les importer, on procède comme pour les fichiers au format tableur (voir <a href="#sec-tableur"><span>Section&nbsp;4.4.2</span></a> ci-dessus).</p>
 <p>On commence par cliquer sur <code>dauphin.csv</code> dans l’onglet <code>Files</code> de RStudio. On sélectionne ensuite <code>Import Dataset...</code> :</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -959,8 +963,8 @@ dbl (6): Id, Taille, Age, Cd, Cu, Hg
 </div>
 </div>
 </section>
-<section id="sec-importproblem" class="level3" data-number="4.3.4">
-<h3 data-number="4.3.4" class="anchored" data-anchor-id="sec-importproblem"><span class="header-section-number">4.3.4</span> En cas de problème…</h3>
+<section id="sec-importproblem" class="level3" data-number="4.4.4">
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="sec-importproblem"><span class="header-section-number">4.4.4</span> En cas de problème…</h3>
 <p>Il arrive parfois que l’importation de fichiers textes bruts par la méthode décrite ci-dessus échoue en raison d’un bug du package <code>readr</code> qui gère mal la présence de caractères spéciaux (accents, cédilles, etc) dans le chemin des fichiers que l’on tente d’importer. À l’heure où j’écris ces lignes (28 novembre 2018), le bug a été corrigé dans la version de développement du package, mais toujours pas dans la version stable disponible au téléchargement sur les serveurs du CRAN. Il est donc utile de connaître une méthode alternative pour importer de tels fichiers dans R. Cette méthode repose sur “la mère de toutes les fonctions d’importation” : <code>read.table()</code>.</p>
 <p>La fonction <code>read.table()</code> est à la base de la plupart des fonctions d’importation décrites dans ce chapitre. Il est donc important d’en connaître la syntaxe et les arguments les plus importants. Cette fonction requiert en général les arguments suivants :</p>
 <ol type="1">
@@ -996,8 +1000,8 @@ dbl (6): Id, Taille, Age, Cd, Cu, Hg
 </div>
 <p>Puisque la fonction <code>read.table()</code> importe les données sous la forme d’un data.frame, il est nécessaire de transformer le tableau obtenu en <code>tibble</code> grâce à la fonction <code>as_tibble()</code> afin de bénéficier de tous les avantages de ce format d’objet.</p>
 </section>
-<section id="sec-exo-10" class="level3" data-number="4.3.5">
-<h3 data-number="4.3.5" class="anchored" data-anchor-id="sec-exo-10"><span class="header-section-number">4.3.5</span> Exercices</h3>
+<section id="sec-exo-10" class="level3" data-number="4.4.5">
+<h3 data-number="4.4.5" class="anchored" data-anchor-id="sec-exo-10"><span class="header-section-number">4.4.5</span> Exercices</h3>
 <ol type="1">
 <li>L’objet <code>dauphin</code> est-il “tidy” (autrement dit, s’agit-il de “données rangées”) ? Justifiez.</li>
 <li>Produisez le graphique ci-dessous :</li>
@@ -1057,6 +1061,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
