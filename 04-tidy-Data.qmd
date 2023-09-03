@@ -6,7 +6,7 @@ Dans la @sec-objects, nous avons introduit le concept de tableaux de données ou
 
 Dans ce chapitre, nous allons aller plus loin en présentant le concept de **tidy data**, ou "données nettes/rangées/soignées/ordonnées". Vous verrez que l'idée d'avoir des données stockées dans un format "net" va plus loin que la simple définition usuelle que le terme "rangé" peut avoir lorsque les données sont simplement bien organisées dans un tableur. Nous définirons le terme "tidy data" de manière plus rigoureuse, en établissant un ensemble de règles permettant de stocker les données correctement afin de rendre plus aisées les analyses statistiques et les représentations graphiques.
 
-Jusqu'à maintenant, vous avez utilisé des données qui étaient déjà dans ce format (c'est le cas des données contenues dans `penguins`, `flights` ou dans `diamonds` par exemple). Pourtant, la plupart du temps, les données que vous manipulerez dans `R` seront importées depuis un tableur dans lequel vous ou vos collaborateurs en aurez fait la saisie. S'assurer que les données importées manuellement dans `R` sont correctement "nettoyées" et mises en forme de "tidy data" est indispensable pour éviter les problèmes lors de la réalisation de graphiques (voir @sec-viz) comme lors de la manipulation des données pour en tirer de l'information statistique pertinente (ce que nous verrons au @sec-wrangling).
+Jusqu'à maintenant, vous avez utilisé des données qui étaient déjà dans ce format (c'est le cas des données contenues dans `penguins`, ou dans `diamonds` par exemple). Pourtant, la plupart du temps, les données que vous manipulerez dans `R` seront importées depuis un tableur dans lequel vous ou vos collaborateurs en aurez fait la saisie. S'assurer que les données importées manuellement dans `R` sont correctement "nettoyées" et mises en forme de "tidy data" est indispensable pour éviter les problèmes lors de la réalisation de graphiques (voir @sec-viz) comme lors de la manipulation des données pour en tirer de l'information statistique pertinente (ce que nous verrons au @sec-wrangling).
 
 
 ## Pré-requis {#sec-prerek}
@@ -19,7 +19,6 @@ Dans ce chapitre, nous aurons besoin des packages suivants :
 
 library(tidyverse)
 library(palmerpenguins)
-library(nycflights13)
 library(readxl)  # la dernière lettre est un "L" minuscule, pas le chiffre 1...
 ```
 

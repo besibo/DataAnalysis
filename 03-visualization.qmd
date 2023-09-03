@@ -1457,7 +1457,7 @@ Donc, lorsqu'on obtient un graphique exploratoire parlant et que l'on souhaite l
 2. modifier les échelles avec les nombreuses fonctions `scale_XXX_YYY()`
 3. modifier le thème général avec les fonctions `theme_XX()`
 
-### Les légendes ou labels
+### Les légendes ou labels {#sec-labels}
 
 Le point de départ le plus évident est d'ajouter des labels de qualité. La fonction `labs()` du package `ggplot2` permet d'ajouter plusieurs types de labels sur vos graphiques :
 

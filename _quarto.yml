@@ -17,6 +17,7 @@ book:
     - 03-visualization.qmd
     - 04-tidy-Data.qmd
     - 05-DataWrangling.qmd
+    - 06-StatsDescript.qmd
     - references.qmd
 
 bibliography: all.bib

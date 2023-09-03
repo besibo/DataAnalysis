@@ -125,6 +125,7 @@ div.csl-indent {
 
 <body class="nav-sidebar floating">
 
+
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
@@ -211,7 +212,13 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-DataWrangling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Tripatouiller les données avec <code>dplyr</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler des tableaux avec <code>dplyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-StatsDescript.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Les statistiques descriptives</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -280,7 +287,7 @@ div.csl-indent {
   </ul></li>
   <li><a href="#peaufiner-lapparence" id="toc-peaufiner-lapparence" class="nav-link" data-scroll-target="#peaufiner-lapparence"><span class="header-section-number">3.11</span> Peaufiner l’apparence</a>
   <ul class="collapse">
-  <li><a href="#les-légendes-ou-labels" id="toc-les-légendes-ou-labels" class="nav-link" data-scroll-target="#les-légendes-ou-labels"><span class="header-section-number">3.11.1</span> Les légendes ou labels</a></li>
+  <li><a href="#les-légendes-ou-labels-sec-labels" id="toc-les-légendes-ou-labels-sec-labels" class="nav-link" data-scroll-target="#les-légendes-ou-labels-sec-labels"><span class="header-section-number">3.11.1</span> Les légendes ou labels {<span class="quarto-unresolved-ref">sec-labels</span>}</a></li>
   <li><a href="#les-échelles" id="toc-les-échelles" class="nav-link" data-scroll-target="#les-échelles"><span class="header-section-number">3.11.2</span> Les échelles</a></li>
   <li><a href="#les-thèmes" id="toc-les-thèmes" class="nav-link" data-scroll-target="#les-thèmes"><span class="header-section-number">3.11.3</span> Les thèmes</a></li>
   </ul></li>
@@ -2020,8 +2027,8 @@ Important
 <li>modifier les échelles avec les nombreuses fonctions <code>scale_XXX_YYY()</code></li>
 <li>modifier le thème général avec les fonctions <code>theme_XX()</code></li>
 </ol>
-<section id="les-légendes-ou-labels" class="level3" data-number="3.11.1">
-<h3 data-number="3.11.1" class="anchored" data-anchor-id="les-légendes-ou-labels"><span class="header-section-number">3.11.1</span> Les légendes ou labels</h3>
+<section id="les-légendes-ou-labels-sec-labels" class="level3" data-number="3.11.1">
+<h3 data-number="3.11.1" class="anchored" data-anchor-id="les-légendes-ou-labels-sec-labels"><span class="header-section-number">3.11.1</span> Les légendes ou labels {<span class="quarto-unresolved-ref">?sec-labels</span>}</h3>
 <p>Le point de départ le plus évident est d’ajouter des labels de qualité. La fonction <code>labs()</code> du package <code>ggplot2</code> permet d’ajouter plusieurs types de labels sur vos graphiques :</p>
 <ul>
 <li>Un titre (<code>title =</code>) : il doit résumer les résultats les plus importants.</li>
