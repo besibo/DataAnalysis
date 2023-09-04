@@ -29,7 +29,7 @@ Avant d'entrer dans le vif du sujet, je souhaite introduire ici la notion de "pi
 knitr::include_graphics('images/PipePref.png')
 ```
 
-Le pipe, noté `|>`, peut être obtenu en pressant les touches `ctrl + shift + M` de votre clavier (ou `command + shift + M` sous macOS). Il peut aussi être noté de la façon suivante : `|>`. Historiquement, c'est d'ailleurs ce symbole qui était systématiquement utilisé et qui apparaissait en pressant les raccourcis claviers décrits plus haut (voir @figpiperef ci-contre). Ce pipe est apparu dans le package `magrittr` qui fait partie du `tidyverse`. Cet opérateur s'est avéré tellement utile et a permis de rendre les scripts tellement plus faciles à lire, que depuis la version `4.1.0` de `R`, un pipe "natif" (`|>`, disponible par défaut, sans avoir besoin de charger le moindre package) a été rendu disponible.
+Le pipe, noté `|>`, peut être obtenu en pressant les touches `ctrl + shift + M` de votre clavier (ou `command + shift + M` sous macOS). Il peut aussi être noté de la façon suivante : `|>`. Historiquement, c'est d'ailleurs ce symbole qui était systématiquement utilisé et qui apparaissait en pressant les raccourcis claviers décrits plus haut (voir @fig-pipepref ci-contre). Ce pipe est apparu dans le package `magrittr` qui fait partie du `tidyverse`. Cet opérateur s'est avéré tellement utile et a permis de rendre les scripts tellement plus faciles à lire, que depuis la version `4.1.0` de `R`, un pipe "natif" (`|>`, disponible par défaut, sans avoir besoin de charger le moindre package) a été rendu disponible.
 
 Il permet d'enchaîner logiquement des actions les unes à la suite des autres. Globalement, le pipe prend l'objet situé à sa gauche, et le transmet à la fonction situé à sa droite. En d'autres termes, les 2 expressions suivantes sont strictement équivalentes :
 
@@ -704,7 +704,7 @@ Dans cette partie, nous allons en réalité traiter un peu plus que de la simple
 - `count()` : pour compter le nombre d'observations pour chaque niveau d'un facteur (ou modalité d'une variable catégorielle)
 - `group_by()` : pour effectuer des opérations pour chaque niveau d'un facteur (ou modalité d'une variable catégorielle). Cette dernière fonction a été rendue presque obsolète par une mise à jour récente du package `dplyr` qui introduit un nouvel argument pour plusieurs fonctions, dont `summarise()` (mais aussi `mutate()`, `filter()` et quelques autres) : l'argument `.by`. Un peu comme `group-by()`, ce nouvel argument permet d'effectuer des opérations pour chaque niveau d'un facteur (ou modalité d'une variable catégorielle). À notre niveau, les différences entre la fonction `group_by()` et l'argument `.by` ne sont pas importantes. Nous utiliserons donc de préférence la notation la plus simple, celle de l'argument `.by`.
 
-La fonction `reframe()` est très proche de la fonction `summarise()` car elle permet de créer des résumés de données plus élaborés à partir des colonnes d'un tableau. Nous verrons comment l'utiliser dans le chapitre dédié aux statistiques descriptives (@sec-statdesc).
+La fonction `reframe()` est très proche de la fonction `summarise()` car elle permet de créer des résumés de données plus élaborés à partir des colonnes d'un tableau. Nous verrons comment l'utiliser dans le chapitre dédié aux statistiques descriptives (@sec-EDA).
 
 :::{.callout-note}
 ## Lien avec les statistiques descriptives
@@ -724,7 +724,7 @@ knitr::include_graphics('images/summarizearrow.png')
 ```
 
 ```{r, summarisefig2, echo = FALSE, out.width='40%', fig.align='center', fig.cap="(ref:summarise)"}
-#| label: fig-summarisefig2
+#| label: fig-summarise2
 #| echo: false
 #| out-width: '40%'
 #| fig-align: 'center'
@@ -1071,6 +1071,123 @@ sort(unique(weather$wind_speed)) / 1.151
 ```
 
 
+## Utiliser `.by` avec d'autres fonctions
+
+Outre la fonction `summarise()`, de nombreuses autres fonctions du `tidyverse` possèdent un argument `.by`. C'est par exemple le cas des fonctions `filter()` et `mutate()` décrites plus haut, ou de la fonction `reframe()` que nous découvrirons dans la @sec-reframe. 
+
+### Un exemple avec `filter()`
+
+Pour vous montrer à quel point cet argument peut-être utile dans d'autres contextes que celui du calcul de résumés statistiques, prenons un premier exemple. Imaginez que nous souhaitions identifier, dans le tableau `penguins`, les 10% des individus les plus lourds pour chaque espèce. Une première façon de faire serait de procéder espèce par espèce, en tapant ceci :
+
+```{r}
+# Pour l'espèce Adélie
+adelie <- penguins |> 
+  filter(species == "Adelie")
+
+adelie_lourds <- adelie |> 
+  filter(body_mass_g > quantile(body_mass_g, 0.9, na.rm = TRUE))
+
+adelie_lourds 
+```
+
+Ici, j'ai commencé par créer un tableau `adelie` qui ne contient que les individus de cette espèce. L'expression `quantile(body_mass_g, 0.9, na.rm = TRUE)` permet d'identifier le quatre vingt dixième percentile des masses corporelles en grammes pour cette espèce, et la fonction `filter()` me permet de ne récupérer que les individus dont la masse est supérieure à cette valeur. Ici, nous récupérons `r nrow(adelie_lourds)` individus dans le tableau `adelie_lourds`, qui correspondent donc aux 10% des individus les plus lourds pour cette espèce. Pour obtenir la même choses pour les 3 espèces, il me faut reproduire ce code pour les manchots Chinstrap et Gentoo, puis il faut que je fusionne les 3 tableaux (voir les détails de cette fonction dans la @sec-bindrows) :
+
+```{r}
+# Pour l'espèce Chinstrap
+chinstrap <- penguins |> 
+  filter(species == "Chinstrap")
+
+chinstrap_lourds <- chinstrap |> 
+  filter(body_mass_g > quantile(body_mass_g, 0.9, na.rm = TRUE))
+
+chinstrap_lourds 
+
+
+# Pour l'espèce Gentoo
+gentoo <- penguins |> 
+  filter(species == "Gentoo")
+
+gentoo_lourds <- gentoo |> 
+  filter(body_mass_g > quantile(body_mass_g, 0.9, na.rm = TRUE))
+
+gentoo_lourds 
+
+# Fusion des 3 tableaux
+heavy_penguins <- bind_rows(adelie_lourds, chinstrap_lourds, gentoo_lourds)
+heavy_penguins
+```
+
+Nous récupérons ainsi une unique table contenant `r nrow(heavy_penguins)` que nous pourrions ensuite utiliser pour des statistiques et/ou des représentations graphiques. L'utilisation de l'argument `.by` pourrait toutefois nous éviter de taper beaucoup de code pour aboutir au même résultat :
+
+```{r}
+penguins |> 
+  filter(body_mass_g > quantile(body_mass_g, 0.9, na.rm = TRUE),
+         .by = species)
+```
+
+Cette syntaxe évite de dupliquer le code inutilement, elle évite d'avoir à créer des objets supplémentaires inutiles, et permet donc de limiter les risques d'erreur. Il vous sera donc très utile par la suite de prendre l'habitude de réfléchir aux questions posées en pensant à cet argument `.by`.
+
+
+### Un exemple avec `mutate()`
+
+Pour bien enfoncer le clou, voici un autre exemple, impliquant la fonction `mutate()`. Imaginez que nous ayons besoin d'identifier, toujours dans le tableau `penguins`, les individus de chaque espèce dont la longueur du bec est supérieure à la moyenne de l'espèce. Il nous faut donc calculer, pour chaque espèce, la moyenne des longueur de bec, puis créer une nouvelle colonne de vrais/faux pour chaque individu de chaque espèce : ceux dont le bec est supérieur à la moyenne auront `TRUE` dans cette nouvelle colonne, les autres auront `FALSE`. Voilà comment nous pourrions procéder grâce à l'argument `.by` :
+
+```{r}
+becs <- penguins |> 
+  mutate(long_bill = bill_length_mm >= mean(bill_length_mm, na.rm = TRUE),
+         .by = species)
+
+becs
+```
+
+Vous voyez qu'on peut obtenir le résultat souhaité en une seule commande. Pour mieux voir la nouvelle colonne :
+
+```{r}
+becs |> 
+  relocate(long_bill)
+```
+
+Avec ce nouveau tableau, nous pourrions faire des statistiques ou des graphiques intéressants :
+
+```{r}
+#| label: fig-billlength
+#| fig-cap: "Masse en gramme des mâles et des femelles des 3 espèces de manchots. Les femelles ont majoritairement un bec plus court (en violet) que la moyenne de l'espèce et les mâles plus longs (en orange) que la moyenne de l'espèce."
+becs |> 
+  filter(!is.na(sex)) |> 
+  ggplot(aes(x = species, y = body_mass_g, color = long_bill)) +
+  geom_jitter(height = 0, width = 0.2) +
+  facet_wrap(~sex, ncol = 2) +
+  labs(x = "", y = "Masse corporelle (g)", color = "Taille du bec") +
+  theme_bw() +
+  scale_color_manual(values = c("purple", "orange"), labels = c("Court", "Long"))
+```
+
+Mais attention, ça n'est pas du tout la même chose que de taper ceci :
+
+```{r}
+#| label: fig-billlength2
+#| fig-cap: "Masse en gramme des mâles et des femelles des 3 espèces de manchots. Les manchots Adélie ont majoritairement un bec plus court (en violet) que la moyenne toutes espèces confondues."
+penguins |> 
+  filter(!is.na(sex)) |> 
+  ggplot(aes(x = species, y = body_mass_g, color = bill_length_mm >= mean(bill_length_mm, na.rm = TRUE))) +
+  geom_jitter(height = 0, width = 0.2) +
+  facet_wrap(~sex, ncol = 2) +
+  labs(x = "", y = "Masse corporelle (g)", color = "Taille du bec") +
+  theme_bw() +
+  scale_color_manual(values = c("purple", "orange"), labels = c("Court", "Long"))
+```
+
+Dans ce code, deux choses ont changé 
+
+1. je suis parti du tableau `penguins` pour faire le graphique, et non du tableau `becs` créé plus haut
+2. et j'ai associé la couleur des points à cette expression : `bill_length_mm >= mean(bill_length_mm, na.rm = TRUE)`. 
+
+Autrement dit, les points seront d'une couleur si l'individu possède un bec plus long que la moyenne, et d'une autre couleur sinon. Mais attention, ici, il est impossible de travailler **à l'échelle de chaque espèce**. La moyenne des longueurs de becs qui est calculée est la moyenne **toutes espèces confondues**. Par conséquent, les manchots Adélie, qui ont les becs plus courts que les 2 autres espèces, apparaissent majoritairement en violet et les deux autres espèces en orange. Si ce graphique peut être utile également, il ne raconte donc pas du tout la même histoire que le précédent. Ici, nous voyons des différences inter-spécifiques, auparavant, nous mettions en évidence un dimorphisme sexuel.
+
+
+
+
+
 
 ## Associer plusieurs tableaux avec `left_join()` et `inner_join()`
 
@@ -1189,7 +1306,7 @@ popular_dest |>
   anti_join(airports, by = join_by(dest == faa))
 ```
 
-Si l'on souhaite absolument conserver toutes les lignes du tableau de départ, il faut faire une jointure gauche, ou "left join" (voir @sec_leftjoin ci-dessous).
+Si l'on souhaite absolument conserver toutes les lignes du tableau de départ, il faut faire une jointure gauche, ou "left join" (voir @sec-leftjoin ci-dessous).
 
 
 Pour notre deuxième question, on procède exactement de la même façon : on réalise une jointure de tableaux entre `late-flights` et `planes` :
@@ -1308,7 +1425,7 @@ Il y aurait bien plus à dire sur les jointures :
 Pour avoir la réponse à toutes ces questions, je vous conseille de lire [ce chapitre](http://r4ds.had.co.nz/relational-data.html) de cet ouvrage très complet sur "la science des données" avec R et le `tidyverse` : [R for Data Science](http://r4ds.had.co.nz). Les deux fonctions `inner_join()` et `left_join()` décrites ici devraient néanmoins vous permettre de couvrir l'essentiel de vos besoins. Et il je vous encourage vivement à explorer les fichiers d'aide des fonctions de jointures car il s'agit de fonctions tr`´s puissantes et dont les possibilités sont très larges.
 
 
-### Accoler deux tableaux
+### Accoler deux tableaux {#sec-bindrows}
 
 Outre l'association de tableaux en utilisant des jointures, il est parfois utile d'accoler 2 tableaux :
 

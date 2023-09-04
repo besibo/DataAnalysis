@@ -255,14 +255,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sec-count" id="toc-sec-count" class="nav-link" data-scroll-target="#sec-count"><span class="header-section-number">5.8.4</span> Un raccourci pratique pour compter des effectifs</a></li>
   <li><a href="#sec-exo10" id="toc-sec-exo10" class="nav-link" data-scroll-target="#sec-exo10"><span class="header-section-number">5.8.5</span> Exercices</a></li>
   </ul></li>
-  <li><a href="#associer-plusieurs-tableaux-avec-left_join-et-inner_join" id="toc-associer-plusieurs-tableaux-avec-left_join-et-inner_join" class="nav-link" data-scroll-target="#associer-plusieurs-tableaux-avec-left_join-et-inner_join"><span class="header-section-number">5.9</span> Associer plusieurs tableaux avec <code>left_join()</code> et <code>inner_join()</code></a>
+  <li><a href="#utiliser-.by-avec-dautres-fonctions" id="toc-utiliser-.by-avec-dautres-fonctions" class="nav-link" data-scroll-target="#utiliser-.by-avec-dautres-fonctions"><span class="header-section-number">5.9</span> Utiliser <code>.by</code> avec d’autres fonctions</a>
   <ul class="collapse">
-  <li><a href="#principe-2" id="toc-principe-2" class="nav-link" data-scroll-target="#principe-2"><span class="header-section-number">5.9.1</span> Principe</a></li>
-  <li><a href="#inner_join" id="toc-inner_join" class="nav-link" data-scroll-target="#inner_join"><span class="header-section-number">5.9.2</span> <code>inner_join()</code></a></li>
-  <li><a href="#sec-leftjoin" id="toc-sec-leftjoin" class="nav-link" data-scroll-target="#sec-leftjoin"><span class="header-section-number">5.9.3</span> <code>left_join()</code></a></li>
-  <li><a href="#accoler-deux-tableaux" id="toc-accoler-deux-tableaux" class="nav-link" data-scroll-target="#accoler-deux-tableaux"><span class="header-section-number">5.9.4</span> Accoler deux tableaux</a></li>
+  <li><a href="#un-exemple-avec-filter" id="toc-un-exemple-avec-filter" class="nav-link" data-scroll-target="#un-exemple-avec-filter"><span class="header-section-number">5.9.1</span> Un exemple avec <code>filter()</code></a></li>
+  <li><a href="#un-exemple-avec-mutate" id="toc-un-exemple-avec-mutate" class="nav-link" data-scroll-target="#un-exemple-avec-mutate"><span class="header-section-number">5.9.2</span> Un exemple avec <code>mutate()</code></a></li>
   </ul></li>
-  <li><a href="#sec-exo-13" id="toc-sec-exo-13" class="nav-link" data-scroll-target="#sec-exo-13"><span class="header-section-number">5.10</span> Exercices</a></li>
+  <li><a href="#associer-plusieurs-tableaux-avec-left_join-et-inner_join" id="toc-associer-plusieurs-tableaux-avec-left_join-et-inner_join" class="nav-link" data-scroll-target="#associer-plusieurs-tableaux-avec-left_join-et-inner_join"><span class="header-section-number">5.10</span> Associer plusieurs tableaux avec <code>left_join()</code> et <code>inner_join()</code></a>
+  <ul class="collapse">
+  <li><a href="#principe-2" id="toc-principe-2" class="nav-link" data-scroll-target="#principe-2"><span class="header-section-number">5.10.1</span> Principe</a></li>
+  <li><a href="#inner_join" id="toc-inner_join" class="nav-link" data-scroll-target="#inner_join"><span class="header-section-number">5.10.2</span> <code>inner_join()</code></a></li>
+  <li><a href="#sec-leftjoin" id="toc-sec-leftjoin" class="nav-link" data-scroll-target="#sec-leftjoin"><span class="header-section-number">5.10.3</span> <code>left_join()</code></a></li>
+  <li><a href="#sec-bindrows" id="toc-sec-bindrows" class="nav-link" data-scroll-target="#sec-bindrows"><span class="header-section-number">5.10.4</span> Accoler deux tableaux</a></li>
+  </ul></li>
+  <li><a href="#sec-exo-13" id="toc-sec-exo-13" class="nav-link" data-scroll-target="#sec-exo-13"><span class="header-section-number">5.11</span> Exercices</a></li>
   </ul>
 </nav>
     </div>
@@ -295,7 +300,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div></div></div>
-<p>Le pipe, noté <code>|&gt;</code>, peut être obtenu en pressant les touches <code>ctrl + shift + M</code> de votre clavier (ou <code>command + shift + M</code> sous macOS). Il peut aussi être noté de la façon suivante : <code>|&gt;</code>. Historiquement, c’est d’ailleurs ce symbole qui était systématiquement utilisé et qui apparaissait en pressant les raccourcis claviers décrits plus haut (voir <span class="citation" data-cites="figpiperef">(<a href="references.html#ref-figpiperef" role="doc-biblioref"><strong>figpiperef?</strong></a>)</span> ci-contre). Ce pipe est apparu dans le package <code>magrittr</code> qui fait partie du <code>tidyverse</code>. Cet opérateur s’est avéré tellement utile et a permis de rendre les scripts tellement plus faciles à lire, que depuis la version <code>4.1.0</code> de <code>R</code>, un pipe “natif” (<code>|&gt;</code>, disponible par défaut, sans avoir besoin de charger le moindre package) a été rendu disponible.</p>
+<p>Le pipe, noté <code>|&gt;</code>, peut être obtenu en pressant les touches <code>ctrl + shift + M</code> de votre clavier (ou <code>command + shift + M</code> sous macOS). Il peut aussi être noté de la façon suivante : <code>|&gt;</code>. Historiquement, c’est d’ailleurs ce symbole qui était systématiquement utilisé et qui apparaissait en pressant les raccourcis claviers décrits plus haut (voir <a href="#fig-pipepref">Figure&nbsp;<span>5.1</span></a> ci-contre). Ce pipe est apparu dans le package <code>magrittr</code> qui fait partie du <code>tidyverse</code>. Cet opérateur s’est avéré tellement utile et a permis de rendre les scripts tellement plus faciles à lire, que depuis la version <code>4.1.0</code> de <code>R</code>, un pipe “natif” (<code>|&gt;</code>, disponible par défaut, sans avoir besoin de charger le moindre package) a été rendu disponible.</p>
 <p>Il permet d’enchaîner logiquement des actions les unes à la suite des autres. Globalement, le pipe prend l’objet situé à sa gauche, et le transmet à la fonction situé à sa droite. En d’autres termes, les 2 expressions suivantes sont strictement équivalentes :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ici, "f" est une fonction quelconque, </span></span>
@@ -1189,7 +1194,7 @@ Levels: imm mat pnl pl l repos</code></pre>
 <li><code>count()</code> : pour compter le nombre d’observations pour chaque niveau d’un facteur (ou modalité d’une variable catégorielle)</li>
 <li><code>group_by()</code> : pour effectuer des opérations pour chaque niveau d’un facteur (ou modalité d’une variable catégorielle). Cette dernière fonction a été rendue presque obsolète par une mise à jour récente du package <code>dplyr</code> qui introduit un nouvel argument pour plusieurs fonctions, dont <code>summarise()</code> (mais aussi <code>mutate()</code>, <code>filter()</code> et quelques autres) : l’argument <code>.by</code>. Un peu comme <code>group-by()</code>, ce nouvel argument permet d’effectuer des opérations pour chaque niveau d’un facteur (ou modalité d’une variable catégorielle). À notre niveau, les différences entre la fonction <code>group_by()</code> et l’argument <code>.by</code> ne sont pas importantes. Nous utiliserons donc de préférence la notation la plus simple, celle de l’argument <code>.by</code>.</li>
 </ul>
-<p>La fonction <code>reframe()</code> est très proche de la fonction <code>summarise()</code> car elle permet de créer des résumés de données plus élaborés à partir des colonnes d’un tableau. Nous verrons comment l’utiliser dans le chapitre dédié aux statistiques descriptives (<span class="quarto-unresolved-ref">?sec-statdesc</span>).</p>
+<p>La fonction <code>reframe()</code> est très proche de la fonction <code>summarise()</code> car elle permet de créer des résumés de données plus élaborés à partir des colonnes d’un tableau. Nous verrons comment l’utiliser dans le chapitre dédié aux statistiques descriptives (<a href="06-EDA.html"><span>Chapitre&nbsp;6</span></a>).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1216,7 +1221,7 @@ Lien avec les statistiques descriptives
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-summarisefig2" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-summarise2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/summarize.png" class="img-fluid figure-img" style="width:40.0%"></p>
 <figcaption class="figure-caption">Figure&nbsp;5.12: Schéma de la fonction <code>summarise()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
@@ -1224,7 +1229,7 @@ Lien avec les statistiques descriptives
 </div>
 </div>
 </div>
-<p>La <a href="06-EDA.html#fig-summarise2">Figure&nbsp;<span>6.1</span></a> ci-dessus indique comment travaille la fonction <code>summarise()</code> : elle prend plusieurs valeurs (potentiellement, un très grand nombre) et les réduit à <strong>une unique valeur qui les résume</strong>. La valeur qui résume les données est choisie par l’utilisateur. Il peut s’agir par exemple d’un calcul de moyenne, de quartile ou de variance, il peut s’agir de calculer une somme, ou d’extraire la valeur maximale ou minimale, ou encore, il peut tout simplement s’agir de déterminer un nombre d’observations. Mais le fonctionnement est toujours le même : la fonction <code>summarise()</code> ne renvoie qu’une unique valeur pour une variable donnée (ou pour chaque modalité d’une variable catégorielle).</p>
+<p>La <a href="#fig-summarise2">Figure&nbsp;<span>5.12</span></a> ci-dessus indique comment travaille la fonction <code>summarise()</code> : elle prend plusieurs valeurs (potentiellement, un très grand nombre) et les réduit à <strong>une unique valeur qui les résume</strong>. La valeur qui résume les données est choisie par l’utilisateur. Il peut s’agir par exemple d’un calcul de moyenne, de quartile ou de variance, il peut s’agir de calculer une somme, ou d’extraire la valeur maximale ou minimale, ou encore, il peut tout simplement s’agir de déterminer un nombre d’observations. Mais le fonctionnement est toujours le même : la fonction <code>summarise()</code> ne renvoie qu’une unique valeur pour une variable donnée (ou pour chaque modalité d’une variable catégorielle).</p>
 <p>Ainsi, pour connaître la moyenne de la longueur du bec des manchots de l’île de Palmer, il suffit d’utiliser le tableau <code>penguins</code> du package <code>palmerpenguins</code> et sa variable <code>bill_length_mm</code> que nous avons déjà utilisée au semestre 3 :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
@@ -1671,17 +1676,244 @@ Lien avec les statistiques descriptives
 </div>
 </section>
 </section>
-<section id="associer-plusieurs-tableaux-avec-left_join-et-inner_join" class="level2" data-number="5.9">
-<h2 data-number="5.9" class="anchored" data-anchor-id="associer-plusieurs-tableaux-avec-left_join-et-inner_join"><span class="header-section-number">5.9</span> Associer plusieurs tableaux avec <code>left_join()</code> et <code>inner_join()</code></h2>
-<section id="principe-2" class="level3" data-number="5.9.1">
-<h3 data-number="5.9.1" class="anchored" data-anchor-id="principe-2"><span class="header-section-number">5.9.1</span> Principe</h3>
+<section id="utiliser-.by-avec-dautres-fonctions" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="utiliser-.by-avec-dautres-fonctions"><span class="header-section-number">5.9</span> Utiliser <code>.by</code> avec d’autres fonctions</h2>
+<p>Outre la fonction <code>summarise()</code>, de nombreuses autres fonctions du <code>tidyverse</code> possèdent un argument <code>.by</code>. C’est par exemple le cas des fonctions <code>filter()</code> et <code>mutate()</code> décrites plus haut, ou de la fonction <code>reframe()</code> que nous découvrirons dans la <a href="06-EDA.html#sec-reframe"><span>Section&nbsp;6.2</span></a>.</p>
+<section id="un-exemple-avec-filter" class="level3" data-number="5.9.1">
+<h3 data-number="5.9.1" class="anchored" data-anchor-id="un-exemple-avec-filter"><span class="header-section-number">5.9.1</span> Un exemple avec <code>filter()</code></h3>
+<p>Pour vous montrer à quel point cet argument peut-être utile dans d’autre contexte que celui du calcul de résumés statistiques, prenons un premier exemple. Imaginez que nous souhaitions identifier, dans le tableau <code>penguins</code>, les 10% des individus les plus lourds pour chaque espèce. Une première façon de faire serait de procéder espèce par espèce, en tapant ceci :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour l'espèce Adélie</span></span>
+<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>adelie <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span>)</span>
+<span id="cb113-4"><a href="#cb113-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-5"><a href="#cb113-5" aria-hidden="true" tabindex="-1"></a>adelie_lourds <span class="ot">&lt;-</span> adelie <span class="sc">|&gt;</span> </span>
+<span id="cb113-6"><a href="#cb113-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(body_mass_g <span class="sc">&gt;</span> <span class="fu">quantile</span>(body_mass_g, <span class="fl">0.9</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb113-7"><a href="#cb113-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-8"><a href="#cb113-8" aria-hidden="true" tabindex="-1"></a>adelie_lourds </span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 8
+   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1 Adelie  Torgersen           39.2          19.6               195        4675
+ 2 Adelie  Torgersen           34.6          21.1               198        4400
+ 3 Adelie  Torgersen           42.5          20.7               197        4500
+ 4 Adelie  Dream               39.8          19.1               184        4650
+ 5 Adelie  Dream               44.1          19.7               196        4400
+ 6 Adelie  Dream               39.6          18.8               190        4600
+ 7 Adelie  Biscoe              41.3          21.1               195        4400
+ 8 Adelie  Torgersen           41.8          19.4               198        4450
+ 9 Adelie  Torgersen           42.9          17.6               196        4700
+10 Adelie  Dream               39.6          18.1               186        4450
+11 Adelie  Dream               40.3          18.5               196        4350
+12 Adelie  Biscoe              41            20                 203        4725
+13 Adelie  Biscoe              43.2          19                 197        4775
+14 Adelie  Biscoe              45.6          20.3               191        4600
+15 Adelie  Dream               37.5          18.5               199        4475
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+</div>
+<p>Ici, j’ai commencé par créer un tableau <code>adelie</code> qui ne contient que les individus de cette espèce. L’expression <code>quantile(body_mass_g, 0.9, na.rm = TRUE)</code> permet d’identifier le quatre vingt dixième percentile des masses corporelles en grammes pour cette espèce, et la fonction <code>filter()</code> me permet de ne récupérer que les individus dont la masse est supérieure à cette valeur. Ici, nous récupérons 15 individus dans le tableau <code>adelie_lourds</code>, qui correspondent donc aux 10% des individus les plus lourds pour cette espèce. Pour obtenir la même choses pour les 3 espèces, il me faut reproduire ce code pour les manchots Chinstrap et Gentoo, puis il faut que je fusionne les 3 tableaux (voir les détails de cette fonction dans la <a href="#sec-bindrows"><span>Section&nbsp;5.10.4</span></a>) :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour l'espèce Chinstrap</span></span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>chinstrap <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Chinstrap"</span>)</span>
+<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-5"><a href="#cb115-5" aria-hidden="true" tabindex="-1"></a>chinstrap_lourds <span class="ot">&lt;-</span> chinstrap <span class="sc">|&gt;</span> </span>
+<span id="cb115-6"><a href="#cb115-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(body_mass_g <span class="sc">&gt;</span> <span class="fu">quantile</span>(body_mass_g, <span class="fl">0.9</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb115-7"><a href="#cb115-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-8"><a href="#cb115-8" aria-hidden="true" tabindex="-1"></a>chinstrap_lourds </span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 8
+  species   island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+  &lt;fct&gt;     &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+1 Chinstrap Dream            49.2          18.2               195        4400
+2 Chinstrap Dream            52.8          20                 205        4550
+3 Chinstrap Dream            54.2          20.8               201        4300
+4 Chinstrap Dream            52            20.7               210        4800
+5 Chinstrap Dream            53.5          19.9               205        4500
+6 Chinstrap Dream            50.8          18.5               201        4450
+7 Chinstrap Dream            49            19.6               212        4300
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour l'espèce Gentoo</span></span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>gentoo <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Gentoo"</span>)</span>
+<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a>gentoo_lourds <span class="ot">&lt;-</span> gentoo <span class="sc">|&gt;</span> </span>
+<span id="cb117-6"><a href="#cb117-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(body_mass_g <span class="sc">&gt;</span> <span class="fu">quantile</span>(body_mass_g, <span class="fl">0.9</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb117-7"><a href="#cb117-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-8"><a href="#cb117-8" aria-hidden="true" tabindex="-1"></a>gentoo_lourds </span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 8
+   species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1 Gentoo  Biscoe           48.4          14.6               213        5850
+ 2 Gentoo  Biscoe           49.3          15.7               217        5850
+ 3 Gentoo  Biscoe           49.2          15.2               221        6300
+ 4 Gentoo  Biscoe           59.6          17                 230        6050
+ 5 Gentoo  Biscoe           49.5          16.2               229        5800
+ 6 Gentoo  Biscoe           48.6          16                 230        5800
+ 7 Gentoo  Biscoe           51.1          16.3               220        6000
+ 8 Gentoo  Biscoe           45.2          16.4               223        5950
+ 9 Gentoo  Biscoe           49.8          15.9               229        5950
+10 Gentoo  Biscoe           55.1          16                 230        5850
+11 Gentoo  Biscoe           48.8          16.2               222        6000
+12 Gentoo  Biscoe           50.4          15.7               222        5750
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fusion des 3 tableaux</span></span>
+<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>heavy_penguins <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(adelie_lourds, chinstrap_lourds, gentoo_lourds)</span>
+<span id="cb119-3"><a href="#cb119-3" aria-hidden="true" tabindex="-1"></a>heavy_penguins</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 34 × 8
+   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1 Adelie  Torgersen           39.2          19.6               195        4675
+ 2 Adelie  Torgersen           34.6          21.1               198        4400
+ 3 Adelie  Torgersen           42.5          20.7               197        4500
+ 4 Adelie  Dream               39.8          19.1               184        4650
+ 5 Adelie  Dream               44.1          19.7               196        4400
+ 6 Adelie  Dream               39.6          18.8               190        4600
+ 7 Adelie  Biscoe              41.3          21.1               195        4400
+ 8 Adelie  Torgersen           41.8          19.4               198        4450
+ 9 Adelie  Torgersen           42.9          17.6               196        4700
+10 Adelie  Dream               39.6          18.1               186        4450
+# ℹ 24 more rows
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+</div>
+<p>Nous récupérons ainsi une unique table contenant 34 que nous pourrions ensuite utiliser pour des statistiques et/ou des représentations graphiques. L’utilisation de l’argument <code>.by</code> pourrait toutefois nous éviter de taper beaucoup de code pour aboutir au même résultat :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(body_mass_g <span class="sc">&gt;</span> <span class="fu">quantile</span>(body_mass_g, <span class="fl">0.9</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb121-3"><a href="#cb121-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">.by =</span> species)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 34 × 8
+   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1 Adelie  Torgersen           39.2          19.6               195        4675
+ 2 Adelie  Torgersen           34.6          21.1               198        4400
+ 3 Adelie  Torgersen           42.5          20.7               197        4500
+ 4 Adelie  Dream               39.8          19.1               184        4650
+ 5 Adelie  Dream               44.1          19.7               196        4400
+ 6 Adelie  Dream               39.6          18.8               190        4600
+ 7 Adelie  Biscoe              41.3          21.1               195        4400
+ 8 Adelie  Torgersen           41.8          19.4               198        4450
+ 9 Adelie  Torgersen           42.9          17.6               196        4700
+10 Adelie  Dream               39.6          18.1               186        4450
+# ℹ 24 more rows
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+</div>
+<p>Cette syntaxe évite de dupliquer le code inutilement, elle évite d’avoir à créer des objets supplémentaires inutiles, et permet donc de limiter les risques d’erreur. Il vous sera donc très utile par la suite de prendre l’habitude de réfléchir aux questions posées en pensant à cet argument <code>.by</code>.</p>
+</section>
+<section id="un-exemple-avec-mutate" class="level3" data-number="5.9.2">
+<h3 data-number="5.9.2" class="anchored" data-anchor-id="un-exemple-avec-mutate"><span class="header-section-number">5.9.2</span> Un exemple avec <code>mutate()</code></h3>
+<p>Pour bien enfoncer le clou, voici un autre exemple, impliquant la fonction <code>mutate()</code>. Imaginez que nous ayons besoin d’identifier, toujours dans le tableau <code>penguins</code>, les individus de chaque espèce dont la longueur du bec est supérieure à la moyenne de l’espèce. Il nous faut donc calculer, pour chaque espèce, la moyenne des longueur de bec, puis créer une nouvelle colonne de vrais/faux pour chaque individu de chaque espèce : ceux dont le bec est supérieur à la moyenne auront <code>TRUE</code> dans cette nouvelle colonne, les autres auront <code>FALSE</code>. Voilà comment nous pourrions procéder grâce à l’argument <code>.by</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>becs <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">long_bill =</span> bill_length_mm <span class="sc">&gt;=</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb123-3"><a href="#cb123-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">.by =</span> species)</span>
+<span id="cb123-4"><a href="#cb123-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-5"><a href="#cb123-5" aria-hidden="true" tabindex="-1"></a>becs</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 9
+   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7               181        3750
+ 2 Adelie  Torgersen           39.5          17.4               186        3800
+ 3 Adelie  Torgersen           40.3          18                 195        3250
+ 4 Adelie  Torgersen           NA            NA                  NA          NA
+ 5 Adelie  Torgersen           36.7          19.3               193        3450
+ 6 Adelie  Torgersen           39.3          20.6               190        3650
+ 7 Adelie  Torgersen           38.9          17.8               181        3625
+ 8 Adelie  Torgersen           39.2          19.6               195        4675
+ 9 Adelie  Torgersen           34.1          18.1               193        3475
+10 Adelie  Torgersen           42            20.2               190        4250
+# ℹ 334 more rows
+# ℹ 3 more variables: sex &lt;fct&gt;, year &lt;int&gt;, long_bill &lt;lgl&gt;</code></pre>
+</div>
+</div>
+<p>Vous voyez qu’on peut obtenir le résultat souhaité en une seule commande. Pour mieux voir la nouvelle colonne :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>becs <span class="sc">|&gt;</span> </span>
+<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(long_bill)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 9
+   long_bill species island    bill_length_mm bill_depth_mm flipper_length_mm
+   &lt;lgl&gt;     &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;
+ 1 TRUE      Adelie  Torgersen           39.1          18.7               181
+ 2 TRUE      Adelie  Torgersen           39.5          17.4               186
+ 3 TRUE      Adelie  Torgersen           40.3          18                 195
+ 4 NA        Adelie  Torgersen           NA            NA                  NA
+ 5 FALSE     Adelie  Torgersen           36.7          19.3               193
+ 6 TRUE      Adelie  Torgersen           39.3          20.6               190
+ 7 TRUE      Adelie  Torgersen           38.9          17.8               181
+ 8 TRUE      Adelie  Torgersen           39.2          19.6               195
+ 9 FALSE     Adelie  Torgersen           34.1          18.1               193
+10 TRUE      Adelie  Torgersen           42            20.2               190
+# ℹ 334 more rows
+# ℹ 3 more variables: body_mass_g &lt;int&gt;, sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+</div>
+<p>Avec ce nouveau tableau, nous pourrions faire des statistiques ou des graphiques intéressants :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>becs <span class="sc">|&gt;</span> </span>
+<span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb127-3"><a href="#cb127-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> long_bill)) <span class="sc">+</span></span>
+<span id="cb127-4"><a href="#cb127-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb127-5"><a href="#cb127-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sex, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb127-6"><a href="#cb127-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Masse corporelle (g)"</span>, <span class="at">color =</span> <span class="st">"Taille du bec"</span>) <span class="sc">+</span></span>
+<span id="cb127-7"><a href="#cb127-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb127-8"><a href="#cb127-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"purple"</span>, <span class="st">"orange"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Court"</span>, <span class="st">"Long"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-billlength" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-DataWrangling_files/figure-html/fig-billlength-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.14: Masse en gramme des mâles et des femelles des 3 espèces de manchots. Les femelles ont majoritairement un bec plus court (en violet) que la moyenne de l’espèce et les mâles plus longs (en orange) que la moyenne de l’espèce.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Mais attention, ça n’est pas du tout la même chose que de taper ceci :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> bill_length_mm <span class="sc">&gt;=</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))) <span class="sc">+</span></span>
+<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sex, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb128-6"><a href="#cb128-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Masse corporelle (g)"</span>, <span class="at">color =</span> <span class="st">"Taille du bec"</span>) <span class="sc">+</span></span>
+<span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb128-8"><a href="#cb128-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"purple"</span>, <span class="st">"orange"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Court"</span>, <span class="st">"Long"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-billlength2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-DataWrangling_files/figure-html/fig-billlength2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.15: Masse en gramme des mâles et des femelles des 3 espèces de manchots. Les manchots Adélie ont majoritairement un bec plus court (en violet) que la moyenne toutes espèces confondues.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Dans ce code, deux choses ont changé</p>
+<ol type="1">
+<li>je suis parti du tableau <code>penguins</code> pour faire le graphique, et non du tableau <code>becs</code> créé plus haut</li>
+<li>et j’ai associé la couleur des points à cette expression : <code>bill_length_mm &gt;= mean(bill_length_mm, na.rm = TRUE)</code>.</li>
+</ol>
+<p>Autrement dit, les points seront d’une couleur si l’individu possède un bec plus long que la moyenne, et d’une autre couleur sinon. Mais attention, ici, il est impossible de travailler <strong>à l’échelle de chaque espèce</strong>. La moyenne des longueurs de becs qui est calculée est la moyenne <strong>toutes espèces confondues</strong>. Par conséquent, les manchots Adélie, qui ont les becs plus courts que les 2 autres espèces, apparaissent majoritairement en violet et les deux autres espèces en orange. Si ce graphique peut être utile également, il ne raconte donc pas du tout la même histoire que le précédent. Ici, nous voyons des différences inter-spécifiques, auparavant, nous mettions en évidence un dimorphisme sexuel.</p>
+</section>
+</section>
+<section id="associer-plusieurs-tableaux-avec-left_join-et-inner_join" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="associer-plusieurs-tableaux-avec-left_join-et-inner_join"><span class="header-section-number">5.10</span> Associer plusieurs tableaux avec <code>left_join()</code> et <code>inner_join()</code></h2>
+<section id="principe-2" class="level3" data-number="5.10.1">
+<h3 data-number="5.10.1" class="anchored" data-anchor-id="principe-2"><span class="header-section-number">5.10.1</span> Principe</h3>
 <p>Une autre règle que nous n’avons pas encore évoquée au sujet des “tidy data” ou “données rangées” est la suivante :</p>
 <blockquote class="blockquote">
 <p>Chaque tableau contient des données appartenant à une unité d’observation cohérente et unique.</p>
 </blockquote>
 <p>Ainsi, le package <code>nycflights13</code> contient 5 tableaux distincts :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">package =</span> <span class="st">"nycflights13"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">package =</span> <span class="st">"nycflights13"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><code>flights</code> contient des informations concernant les vols intérieurs ayant décollé des 3 aéroports de New York en 2013 (par exemple heure prévue de décollage et d’arrivée, heure effective de décollage et d’arrivée, numéro du vol et compagnie aérienne, date et heure du vol, code des aéroports d’origine et de destination, etc.)</li>
@@ -1697,9 +1929,9 @@ Lien avec les statistiques descriptives
 </ol>
 <p>Répondre à la première question est assez simple : il suffit en apparence de compter, parmi les vols du tableau <code>flights</code>, le nombre de vols pour chaque destinations (variable <code>dest</code>), puis de trier le résultat par ordre décroissant :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
-<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dest) <span class="sc">|&gt;</span></span>
-<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dest) <span class="sc">|&gt;</span></span>
+<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 105 × 2
    dest      n
@@ -1719,16 +1951,16 @@ Lien avec les statistiques descriptives
 </div>
 <p>Le problème est ici que les aéroports de destination sont renseignés sous la forme d’un code à 3 lettres. À quel aéroport correspondent les codes <code>ORD</code> et <code>ATL</code> ? S’agit-il d’Orlando et Atlanta ? Pour le savoir, il faut aller chercher l’information qui se trouve dans le tableau <code>airports</code> : il contient, parmi d’autres variables, les codes et les noms de 1458 aéroports aux État-Unis. Il va donc nous falloir trouver un moyen de fusionner les informations du tableau que nous venons de créer (et auquel nous allons donner le nom <code>popular_dest</code>), avec les informations contenues dans le tableau <code>airports</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>popular_dest <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span></span>
-<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dest) <span class="sc">|&gt;</span></span>
-<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>popular_dest <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span></span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dest) <span class="sc">|&gt;</span></span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Pour répondre à la deuxième question, on commence là aussi par chercher des informations dans le tableau <code>flights</code> au sujet des retards à l’arrivée. Pour limiter la taille des tableaux que l’on va manipuler, on va se concentrer sur les vols ayant eu plus de 15 minutes de retard à l’arrivée :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>late_flights <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
-<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(arr_delay <span class="sc">&gt;</span> <span class="dv">15</span>)</span>
-<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>late_flights</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a>late_flights <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
+<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(arr_delay <span class="sc">&gt;</span> <span class="dv">15</span>)</span>
+<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-4"><a href="#cb133-4" aria-hidden="true" tabindex="-1"></a>late_flights</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 77,630 × 19
     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -1751,7 +1983,7 @@ Lien avec les statistiques descriptives
 </div>
 <p>Nous obtenons un tableau de 77630, mais nous n’avons aucune information sur la date de construction (et donc sur l’âge) de ces avions. Nous avons toutefois l’information de l’immatriculation de chaque avion dans la colonne <code>tailnum</code>. Or, le tableau <code>planes</code>, qui contient des informations sur les caractéristiques des avions, indique, pour chacun d’entre eux, à la fois l’immatriculation et l’année de construction. Là encore, il va donc nous falloir fusionner les informations de deux tableaux : <code>late_flights</code> que nous venons de créer, et <code>planes</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>planes</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>planes</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3,322 × 9
    tailnum  year type              manufacturer model engines seats speed engine
@@ -1771,23 +2003,23 @@ Lien avec les statistiques descriptives
 </div>
 <p>Le package <code>dplyr</code> fournit toute une gamme de fonctions permettant d’effectuer des associations de tableaux en fonction de critères spécifiés par l’utilisateur, et nous allons en utiliser deux.</p>
 </section>
-<section id="inner_join" class="level3" data-number="5.9.2">
-<h3 data-number="5.9.2" class="anchored" data-anchor-id="inner_join"><span class="header-section-number">5.9.2</span> <code>inner_join()</code></h3>
+<section id="inner_join" class="level3" data-number="5.10.2">
+<h3 data-number="5.10.2" class="anchored" data-anchor-id="inner_join"><span class="header-section-number">5.10.2</span> <code>inner_join()</code></h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-inner" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/innerjoin.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.14: Schéma de la fonction <code>inner_join()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;5.16: Schéma de la fonction <code>inner_join()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>La fonction <code>inner_join()</code> permet de relier deux tableaux en ne conservant que les lignes qui sont présentes à la fois dans l’un et dans l’autre. Il faut identifier, dans chacun des tableaux, une colonne contenant des données en commun, qui servira de guide pour mettre les lignes correctes les unes en face des autres. Ici, pour notre première questions, nous partons de notre tableau <code>popular_dest</code>, qui contient les codes des aéroports dans sa colonne <code>dest</code>, et nous faisons une “jointure interne” avec le tableau <code>airports</code> qui contient lui aussi une colonne contenant les codes des aéroports : la variable <code>faa</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a>inner_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">|&gt;</span></span>
-<span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span>
-<span id="cb121-3"><a href="#cb121-3" aria-hidden="true" tabindex="-1"></a>inner_popular</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>inner_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">|&gt;</span></span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span>
+<span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a>inner_popular</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 101 × 9
    dest      n name                           lat    lon   alt    tz dst   tzone
@@ -1808,10 +2040,10 @@ Lien avec les statistiques descriptives
 <p>Le nouvel objet <code>inner_popular</code> contient donc les données du tableau <code>popular_dest</code> auxquelles ont été ajoutées les colonnes correspondantes du tableau <code>airports.</code> C’est l’argument <code>by = join_by()</code> de la fonction <code>inner_join()</code> qui nous garantit que les bonnes lignes des deux tableaux sont mises face à face et que nous ne nous retrouvons pas avec des données totalement mélangées : pour chaque élément de la colonne <code>dest</code> du tableau <code>popular_dest</code>, l’élément correspondant de la colonne <code>faa</code> du tableau <code>airports</code> est identifié, et les variables de ces 2 lignes sont mises bout à bout dans un nouveau tableau. L’opération se répète pour tous les éléments de <code>dest</code> et de <code>faa</code>, et seules les lignes communes qui sont présente à la fois dans <code>popular_dest</code> et dans <code>airports</code> sont conservées.</p>
 <p>Si tout ce qui nous intéresse, c’est de connaître le nom complet des aéroports les plus populaires, on peut utiliser <code>select()</code> pour ne garder que les variables intéressantes :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>inner_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">|&gt;</span></span>
-<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa)) <span class="sc">|&gt;</span></span>
-<span id="cb123-3"><a href="#cb123-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dest, name, n)</span>
-<span id="cb123-4"><a href="#cb123-4" aria-hidden="true" tabindex="-1"></a>inner_popular</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>inner_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">|&gt;</span></span>
+<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa)) <span class="sc">|&gt;</span></span>
+<span id="cb139-3"><a href="#cb139-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dest, name, n)</span>
+<span id="cb139-4"><a href="#cb139-4" aria-hidden="true" tabindex="-1"></a>inner_popular</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 101 × 3
    dest  name                                   n
@@ -1836,19 +2068,19 @@ Lien avec les statistiques descriptives
 <li><code>inner_popular</code> contient 101 lignes alors que notre tableau de départ en contenait 105.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(popular_dest)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(popular_dest)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 105</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(inner_popular)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(inner_popular)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 101</code></pre>
 </div>
 </div>
-<p>Certaines lignes ont donc été supprimées car le code aéroport dans <code>popular_dest</code> (notre tableau de départ) n’a pas été retrouvé dans la colonne <code>faa</code> du tableau <code>airports</code>. C’est le principe même de la jointure interne (voir <a href="#fig-inner">Figure&nbsp;<span>5.14</span></a>) : seules les lignes communes trouvées dans les 2 tableaux sont conservées. Pour connaitre quelles lignes ont éte éliminées, on peut utiliser <code>anti_join()</code> :</p>
+<p>Certaines lignes ont donc été supprimées car le code aéroport dans <code>popular_dest</code> (notre tableau de départ) n’a pas été retrouvé dans la colonne <code>faa</code> du tableau <code>airports</code>. C’est le principe même de la jointure interne (voir <a href="#fig-inner">Figure&nbsp;<span>5.16</span></a>) : seules les lignes communes trouvées dans les 2 tableaux sont conservées. Pour connaitre quelles lignes ont éte éliminées, on peut utiliser <code>anti_join()</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>popular_dest <span class="sc">|&gt;</span></span>
-<span id="cb129-2"><a href="#cb129-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a>popular_dest <span class="sc">|&gt;</span></span>
+<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   dest      n
@@ -1859,13 +2091,13 @@ Lien avec les statistiques descriptives
 4 PSE     365</code></pre>
 </div>
 </div>
-<p>Si l’on souhaite absolument conserver toutes les lignes du tableau de départ, il faut faire une jointure gauche, ou “left join” (voir <span class="citation" data-cites="sec_leftjoin">(<a href="references.html#ref-sec_leftjoin" role="doc-biblioref"><strong>sec_leftjoin?</strong></a>)</span> ci-dessous).</p>
+<p>Si l’on souhaite absolument conserver toutes les lignes du tableau de départ, il faut faire une jointure gauche, ou “left join” (voir <a href="#sec-leftjoin"><span>Section&nbsp;5.10.3</span></a> ci-dessous).</p>
 <p>Pour notre deuxième question, on procède exactement de la même façon : on réalise une jointure de tableaux entre <code>late-flights</code> et <code>planes</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a>inner_late <span class="ot">&lt;-</span> late_flights <span class="sc">|&gt;</span> </span>
-<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(planes, <span class="at">by =</span> <span class="fu">join_by</span>(tailnum))</span>
-<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a>inner_late</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a>inner_late <span class="ot">&lt;-</span> late_flights <span class="sc">|&gt;</span> </span>
+<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(planes, <span class="at">by =</span> <span class="fu">join_by</span>(tailnum))</span>
+<span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-4"><a href="#cb147-4" aria-hidden="true" tabindex="-1"></a>inner_late</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 66,434 × 27
    year.x month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -1891,12 +2123,12 @@ Lien avec les statistiques descriptives
 <p>Ici, la variable qui nous permet d’associer les bonnes informations du tableau <code>planes</code> avec les bonnes lignes du tableau <code>late_flights</code> porte le même nom dans les deux tableaux : <code>tailnum</code>. C’est la raison pour laquelle nous spécifions simplement <code>by = join_by(tailnum)</code> (et non pas <code>by = join_by(tailnum == tailnum)</code>) dans la fonction <code>inner_join()</code>. Là encore, nous avons perdu des lignes en cours de route : de 77630 lignes dans le tableau <code>late_flights</code>, nous passons à 66434 dans le tableau <code>inner_late</code> après la jointure.</p>
 <p>Pour simplifier la suite des analyses, nous pouvons sélectionner les seules variables qui nous intéressent, et calculer l’âge des avions :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a>inner_late <span class="ot">&lt;-</span> late_flights <span class="sc">|&gt;</span> </span>
-<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(planes, <span class="at">by =</span> <span class="fu">join_by</span>(tailnum)) <span class="sc">|&gt;</span> </span>
-<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(tailnum, arr_delay, year.y) <span class="sc">|&gt;</span> </span>
-<span id="cb133-4"><a href="#cb133-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> <span class="dv">2013</span> <span class="sc">-</span> year.y)</span>
-<span id="cb133-5"><a href="#cb133-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-6"><a href="#cb133-6" aria-hidden="true" tabindex="-1"></a>inner_late</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a>inner_late <span class="ot">&lt;-</span> late_flights <span class="sc">|&gt;</span> </span>
+<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(planes, <span class="at">by =</span> <span class="fu">join_by</span>(tailnum)) <span class="sc">|&gt;</span> </span>
+<span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(tailnum, arr_delay, year.y) <span class="sc">|&gt;</span> </span>
+<span id="cb149-4"><a href="#cb149-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> <span class="dv">2013</span> <span class="sc">-</span> year.y)</span>
+<span id="cb149-5"><a href="#cb149-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb149-6"><a href="#cb149-6" aria-hidden="true" tabindex="-1"></a>inner_late</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 66,434 × 4
    tailnum arr_delay year.y   age
@@ -1922,12 +2154,12 @@ Lien avec les statistiques descriptives
 <p>Lors de la jointure, un suffixe est donc ajouté automatiquement aux deux variables <code>year</code> pour que ces 2 colonnes ne soient pas fusionnées et éviter les confusions : <code>year.x</code> (pour la colonne du premier tableau) et <code>year.y</code> (pour la colonne du deuxième tableau, celle qui nous intéresse.</p>
 <p>Pour répondre à la question posée au départ, il ne reste plus qu’à visualiser les résultats sur un graphique par exemple :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>inner_late <span class="sc">|&gt;</span> </span>
-<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> arr_delay)) <span class="sc">+</span></span>
-<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb135-4"><a href="#cb135-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
-<span id="cb135-5"><a href="#cb135-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Âge des avions (en années)"</span>, <span class="at">y =</span> <span class="st">"Retard à l'arrivée des vols (en minutes)"</span>) <span class="sc">+</span></span>
-<span id="cb135-6"><a href="#cb135-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a>inner_late <span class="sc">|&gt;</span> </span>
+<span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> arr_delay)) <span class="sc">+</span></span>
+<span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb151-4"><a href="#cb151-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb151-5"><a href="#cb151-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Âge des avions (en années)"</span>, <span class="at">y =</span> <span class="st">"Retard à l'arrivée des vols (en minutes)"</span>) <span class="sc">+</span></span>
+<span id="cb151-6"><a href="#cb151-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
 </div>
@@ -1938,29 +2170,29 @@ Lien avec les statistiques descriptives
 <pre><code>Warning: Removed 1244 rows containing missing values (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-88-1.png" class="img-fluid" width="672"></p>
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Manifestement, l’âge des avions n’a pas grand chose à voir avec l’importance des retards constatés à l’arrivée des vols. En tous cas, s’il existe une relation, elle n’est certainement pas aussi simple qu’on aurait pu le penser.</p>
 </section>
-<section id="sec-leftjoin" class="level3" data-number="5.9.3">
-<h3 data-number="5.9.3" class="anchored" data-anchor-id="sec-leftjoin"><span class="header-section-number">5.9.3</span> <code>left_join()</code></h3>
+<section id="sec-leftjoin" class="level3" data-number="5.10.3">
+<h3 data-number="5.10.3" class="anchored" data-anchor-id="sec-leftjoin"><span class="header-section-number">5.10.3</span> <code>left_join()</code></h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-left" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/leftjoin.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.15: Schéma de la fonction <code>left_join()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;5.17: Schéma de la fonction <code>left_join()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Comme indiqué par la <a href="#fig-left">Figure&nbsp;<span>5.15</span></a> ci-dessus, une jointure gauche fonctionne comme <code>inner_join()</code>, mais elle permet de conserver <em>toutes</em> les lignes du tableau de gauche, et de leur faire correspondre les lignes du second tableau. Si aucune correspondance n’est trouvée dans le second tableau, des données manquantes sont ajoutées sous forme de <code>NA</code>s. Voyons ce que cela donne avec les mêmes exemples que précédemment :</p>
+<p>Comme indiqué par la <a href="#fig-left">Figure&nbsp;<span>5.17</span></a> ci-dessus, une jointure gauche fonctionne comme <code>inner_join()</code>, mais elle permet de conserver <em>toutes</em> les lignes du tableau de gauche, et de leur faire correspondre les lignes du second tableau. Si aucune correspondance n’est trouvée dans le second tableau, des données manquantes sont ajoutées sous forme de <code>NA</code>s. Voyons ce que cela donne avec les mêmes exemples que précédemment :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>left_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">|&gt;</span></span>
-<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa)) <span class="sc">|&gt;</span></span>
-<span id="cb139-3"><a href="#cb139-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dest, name, n)</span>
-<span id="cb139-4"><a href="#cb139-4" aria-hidden="true" tabindex="-1"></a>left_popular</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a>left_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">|&gt;</span></span>
+<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa)) <span class="sc">|&gt;</span></span>
+<span id="cb155-3"><a href="#cb155-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dest, name, n)</span>
+<span id="cb155-4"><a href="#cb155-4" aria-hidden="true" tabindex="-1"></a>left_popular</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 105 × 3
    dest  name                                   n
@@ -1980,30 +2212,30 @@ Lien avec les statistiques descriptives
 </div>
 <p>En apparence, le tableau <code>left_popular</code>, créé avec <code>left_join()</code> semble identique au tableau <code>inner_popular</code> créé avec <code>inner_join()</code>. Pourtant, ce n’est pas le cas :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(inner_popular, left_popular)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(inner_popular, left_popular)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
 </div>
 <p>En l’occurrence, nous avons vu que <code>inner_popular</code> ne contenait pas autant de ligne que le tableau de départ <code>popular_dest</code>. Avec une jointure gauche, les lignes du tableau de départ sont toutes conservées. <code>popular_dest</code> et <code>left_popular</code> ont donc le même nombre de lignes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(inner_popular)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(inner_popular)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 101</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(left_popular)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(left_popular)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 105</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(popular_dest)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(popular_dest)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 105</code></pre>
 </div>
 </div>
 <p>Pour savoir quelles lignes de <code>popular_dest</code> manquent dans <code>inner_dest</code> (il devrait y en avoir 4), il suffit de filtrer les lignes de <code>left_dest</code> qui contiennent des données manquantes dans la colonne <code>name</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a>left_popular <span class="sc">|&gt;</span></span>
-<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(name))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a>left_popular <span class="sc">|&gt;</span></span>
+<span id="cb165-2"><a href="#cb165-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(name))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   dest  name      n
@@ -2017,15 +2249,15 @@ Lien avec les statistiques descriptives
 <p>On trouve évidemment les mêmes résultats qu’avec la fonction <code>anti_join()</code> évoquée plus haut. Une rapide recherche sur internet vous apprendra que ces aéroports ne sont pas situés sur le sol américain. Trois d’entre eux sont situés à Puerto Rico (<code>SJU</code>, <code>BQN</code> et <code>PSE</code>) et le dernier (<code>STT</code>) est situé aux Îles Vierges.</p>
 <p>De la même façon, répondre à la deuxième question avec une jointure gauche est presque identique à ce que nous avons vu avec <code>inner_join()</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a>late_flights <span class="sc">|&gt;</span> </span>
-<span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(planes, <span class="at">by =</span> <span class="fu">join_by</span>(tailnum)) <span class="sc">|&gt;</span> </span>
-<span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(tailnum, arr_delay, year.y) <span class="sc">|&gt;</span> </span>
-<span id="cb151-4"><a href="#cb151-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> <span class="dv">2013</span> <span class="sc">-</span> year.y) <span class="sc">|&gt;</span> </span>
-<span id="cb151-5"><a href="#cb151-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> arr_delay)) <span class="sc">+</span></span>
-<span id="cb151-6"><a href="#cb151-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb151-7"><a href="#cb151-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
-<span id="cb151-8"><a href="#cb151-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Âge des avions (en années)"</span>, <span class="at">y =</span> <span class="st">"Retard à l'arrivée des vols (en minutes)"</span>) <span class="sc">+</span></span>
-<span id="cb151-9"><a href="#cb151-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a>late_flights <span class="sc">|&gt;</span> </span>
+<span id="cb167-2"><a href="#cb167-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(planes, <span class="at">by =</span> <span class="fu">join_by</span>(tailnum)) <span class="sc">|&gt;</span> </span>
+<span id="cb167-3"><a href="#cb167-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(tailnum, arr_delay, year.y) <span class="sc">|&gt;</span> </span>
+<span id="cb167-4"><a href="#cb167-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> <span class="dv">2013</span> <span class="sc">-</span> year.y) <span class="sc">|&gt;</span> </span>
+<span id="cb167-5"><a href="#cb167-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> arr_delay)) <span class="sc">+</span></span>
+<span id="cb167-6"><a href="#cb167-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb167-7"><a href="#cb167-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb167-8"><a href="#cb167-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Âge des avions (en années)"</span>, <span class="at">y =</span> <span class="st">"Retard à l'arrivée des vols (en minutes)"</span>) <span class="sc">+</span></span>
+<span id="cb167-9"><a href="#cb167-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
 </div>
@@ -2036,7 +2268,7 @@ Lien avec les statistiques descriptives
 <pre><code>Warning: Removed 1244 rows containing missing values (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-94-1.png" class="img-fluid" width="672"></p>
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-101-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Attention toutefois : le fait que <code>left_join()</code> et <code>inner_join()</code> fournisse le même résultat n’est pas systématique. Ici, c’est bien le choix de la question d’intérêt qui fait que nous pouvons choisir l’une ou l’autre de ces fonctions de façon interchangeable. Mais ça ne sera pas toujours le cas. Quand on a besoin de conserver toutes les lignes du tableau de départ (ce qui est souvent lecas), il faudra utiliser <code>left_join()</code>.</p>
@@ -2048,8 +2280,8 @@ Lien avec les statistiques descriptives
 </ul>
 <p>Pour avoir la réponse à toutes ces questions, je vous conseille de lire <a href="http://r4ds.had.co.nz/relational-data.html">ce chapitre</a> de cet ouvrage très complet sur “la science des données” avec R et le <code>tidyverse</code> : <a href="http://r4ds.had.co.nz">R for Data Science</a>. Les deux fonctions <code>inner_join()</code> et <code>left_join()</code> décrites ici devraient néanmoins vous permettre de couvrir l’essentiel de vos besoins. Et il je vous encourage vivement à explorer les fichiers d’aide des fonctions de jointures car il s’agit de fonctions tr`´s puissantes et dont les possibilités sont très larges.</p>
 </section>
-<section id="accoler-deux-tableaux" class="level3" data-number="5.9.4">
-<h3 data-number="5.9.4" class="anchored" data-anchor-id="accoler-deux-tableaux"><span class="header-section-number">5.9.4</span> Accoler deux tableaux</h3>
+<section id="sec-bindrows" class="level3" data-number="5.10.4">
+<h3 data-number="5.10.4" class="anchored" data-anchor-id="sec-bindrows"><span class="header-section-number">5.10.4</span> Accoler deux tableaux</h3>
 <p>Outre l’association de tableaux en utilisant des jointures, il est parfois utile d’accoler 2 tableaux :</p>
 <ul>
 <li>Soit l’un au-dessous de l’autre, quand ils ont les mêmes nombres de colonnes, et si possible, les mêmes variables aux mêmes endroits. La fonction <code>bind_rows()</code> permet de faire cela.</li>
@@ -2057,10 +2289,10 @@ Lien avec les statistiques descriptives
 </ul>
 <p>Prenons un exemple. Imaginons que nous ayons 2 tableaux contenant les mêmes variables. Le premier, nommé <code>colorado</code>, contient les informations des vols ayant décollé de New York en 2013 et ayant atterri à l’aéroport de Yempa Valley au Colorado (aéroport <code>HDN</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a>colorado <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span></span>
-<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">"HDN"</span>)</span>
-<span id="cb155-3"><a href="#cb155-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-4"><a href="#cb155-4" aria-hidden="true" tabindex="-1"></a>colorado</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb171"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1" aria-hidden="true" tabindex="-1"></a>colorado <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span></span>
+<span id="cb171-2"><a href="#cb171-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">"HDN"</span>)</span>
+<span id="cb171-3"><a href="#cb171-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-4"><a href="#cb171-4" aria-hidden="true" tabindex="-1"></a>colorado</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 15 × 19
     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -2087,10 +2319,10 @@ Lien avec les statistiques descriptives
 </div>
 <p>Le second est nommé <code>indiana</code>. Il contient les informations des vols ayant décollé de New York en 2013 et ayant atterri à l’aéroport de South Bend en Indiana (aéroport <code>SBN</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a>indiana <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span></span>
-<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">"SBN"</span>)</span>
-<span id="cb157-3"><a href="#cb157-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb157-4"><a href="#cb157-4" aria-hidden="true" tabindex="-1"></a>indiana</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb173"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1" aria-hidden="true" tabindex="-1"></a>indiana <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span></span>
+<span id="cb173-2"><a href="#cb173-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">"SBN"</span>)</span>
+<span id="cb173-3"><a href="#cb173-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb173-4"><a href="#cb173-4" aria-hidden="true" tabindex="-1"></a>indiana</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 19
     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -2112,7 +2344,7 @@ Lien avec les statistiques descriptives
 </div>
 <p>Puisque les variables de ces 2 tableaux sont les mêmes, nous pouvons “empiler” ces 2 tableaux pour n’en former qu’un seul :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(colorado, indiana)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb175"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(colorado, indiana)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 25 × 19
     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -2135,8 +2367,8 @@ Lien avec les statistiques descriptives
 </div>
 <p>Vous noterez que le nombre de lignes du nouveau tableau est la somme des nombres de lignes des 2 tableaux de départ. Bien sûr, cette opération n’est utile que si les tableaux nous sont fournis séparément. Ici, il aurait été bien plus rapide d’obtenir le même résultat en tapant :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
-<span id="cb161-2"><a href="#cb161-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"HDN"</span>, <span class="st">"SBN"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb177-2"><a href="#cb177-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"HDN"</span>, <span class="st">"SBN"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 25 × 19
     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -2159,14 +2391,14 @@ Lien avec les statistiques descriptives
 </div>
 <p>Le fonctionnement de <code>bind_cols()</code> est le même :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>),</span>
-<span id="cb163-3"><a href="#cb163-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">z =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>))</span>
-<span id="cb163-4"><a href="#cb163-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-5"><a href="#cb163-5" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">r =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">8</span>,</span>
-<span id="cb163-6"><a href="#cb163-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">s =</span> <span class="fu">rnorm</span>(<span class="dv">3</span>))</span>
-<span id="cb163-7"><a href="#cb163-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-8"><a href="#cb163-8" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb179-2"><a href="#cb179-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>),</span>
+<span id="cb179-3"><a href="#cb179-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">z =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>))</span>
+<span id="cb179-4"><a href="#cb179-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb179-5"><a href="#cb179-5" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">r =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">8</span>,</span>
+<span id="cb179-6"><a href="#cb179-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">s =</span> <span class="fu">rnorm</span>(<span class="dv">3</span>))</span>
+<span id="cb179-7"><a href="#cb179-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb179-8"><a href="#cb179-8" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
       x     y z    
@@ -2175,30 +2407,30 @@ Lien avec les statistiques descriptives
 2     2     4 FALSE
 3     3     6 FALSE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
-      r     s
-  &lt;int&gt; &lt;dbl&gt;
-1    10 1.67 
-2     9 0.546
-3     8 0.106</code></pre>
+      r      s
+  &lt;int&gt;  &lt;dbl&gt;
+1    10 -0.680
+2     9 -0.218
+3     8  0.806</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
-      x     y z         r     s
-  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt; &lt;dbl&gt;
-1     1     2 TRUE     10 1.67 
-2     2     4 FALSE     9 0.546
-3     3     6 FALSE     8 0.106</code></pre>
+      x     y z         r      s
+  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;  &lt;dbl&gt;
+1     1     2 TRUE     10 -0.680
+2     2     4 FALSE     9 -0.218
+3     3     6 FALSE     8  0.806</code></pre>
 </div>
 </div>
 <p>Ici, puisque <code>a</code> et <code>b</code> ont le même nombre de lignes, il est possible de les accoler. Cela n’a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.</p>
 </section>
 </section>
-<section id="sec-exo-13" class="level2" data-number="5.10">
-<h2 data-number="5.10" class="anchored" data-anchor-id="sec-exo-13"><span class="header-section-number">5.10</span> Exercices</h2>
+<section id="sec-exo-13" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="sec-exo-13"><span class="header-section-number">5.11</span> Exercices</h2>
 <ol type="1">
 <li>Créez un tableau <code>delayed</code> indiquant, pour chaque compagnie aérienne et chaque mois de l’année, le nombre de vols ayant eu un retard supérieur à 30 minutes à l’arrivée à destination. Ce tableau devrait contenir uniquement 3 colonnes :</li>
 </ol>
