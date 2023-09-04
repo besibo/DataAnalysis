@@ -696,7 +696,7 @@ Deux catégories sont aussi fréquemment observées l'une que l'autre : les mâl
 
 
 
-## Créer des résumés avec `summarise()`
+## Créer des résumés avec `summarise()` {#sec-summarise}
 
 Dans cette partie, nous allons en réalité traiter un peu plus que de la simple fonction `summarise()`. Nous aborderons :
 

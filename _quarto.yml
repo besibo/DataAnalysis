@@ -13,11 +13,13 @@ book:
   chapters:
     - index.qmd
     - 01-R-basics.qmd
-    - 02-dataset.qmd
-    - 03-visualization.qmd
-    - 04-tidy-Data.qmd
+    - 02-Dataset.qmd
+    - 03-Visualization.qmd
+    - 04-Tidy-Data.qmd
     - 05-DataWrangling.qmd
-    - 06-StatsDescript.qmd
+    - 06-EDA.qmd
+    - 07-Incertitude.qmd
+    - 08-ErrorBars.qmd
     - references.qmd
 
 bibliography: all.bib

@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./02-dataset.html" rel="next">
+<link href="./02-Dataset.html" rel="next">
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -174,19 +174,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-dataset.html" class="sidebar-item-text sidebar-link">
+  <a href="./02-Dataset.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Explorez votre premier jeu de données</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-visualization.html" class="sidebar-item-text sidebar-link">
+  <a href="./03-Visualization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualiser des données avec <code>ggplot2</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-tidy-Data.html" class="sidebar-item-text sidebar-link">
+  <a href="./04-Tidy-Data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></span></a>
   </div>
 </li>
@@ -198,8 +198,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-StatsDescript.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Les statistiques descriptives</span></span></a>
+  <a href="./06-EDA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploration statistique des données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Incertitude.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dispersion et incertitude</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ErrorBars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Visualiser l’incertitude et la dispersion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -254,7 +266,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Comment s’y prend-on pour coder dans <code>R</code> ?</li>
 <li>Que sont les <code>packages</code> ?</li>
 </ol>
-<p>Même si vous pensez être déjà à l’aise avec ces concepts, lisez attentivement ce chapitre et faites les exercices demandés. Cela vous rafraîchira probablement la mémoire, et il n’est pas impossible que vous appreniez une chose ou deux au passage. Une bonne maîtrise des éléments présentés dans ce chapitre est indispensable pour aborder sereinement les chapitres suivants, à commencer par le <a href="02-dataset.html"><span>Chapitre&nbsp;2</span></a>, qui présente un jeu de données que nous explorerons en détail un peu plus tard. Lisez donc attentivement ce chapitre et faites bien tous les exercices demandés.</p>
+<p>Même si vous pensez être déjà à l’aise avec ces concepts, lisez attentivement ce chapitre et faites les exercices demandés. Cela vous rafraîchira probablement la mémoire, et il n’est pas impossible que vous appreniez une chose ou deux au passage. Une bonne maîtrise des éléments présentés dans ce chapitre est indispensable pour aborder sereinement les chapitres suivants, à commencer par le <a href="02-Dataset.html"><span>Chapitre&nbsp;2</span></a>, qui présente un jeu de données que nous explorerons en détail un peu plus tard. Lisez donc attentivement ce chapitre et faites bien tous les exercices demandés.</p>
 <p>Ce chapitre est en grande partie basé sur les 3 ressources suivantes que je vous encourage à consulter si vous souhaitez obtenir plus de détails :</p>
 <ol type="1">
 <li>L’ouvrage intitulé <a href="https://moderndive.com/index.html">ModernDive</a>, de Chester Ismay et Albert Y. Kim. Une bonne partie de ce livre est très largement inspirée de cet ouvrage. C’est en anglais, mais c’est un très bon texte d’introduction aux statistiques sous <code>R</code> et <code>RStudio</code>.</li>
@@ -570,7 +582,7 @@ Pour résumer… <i class="fa-solid fa-laptop-code" aria-label="laptop-code"></i
 </ul></li>
 <li><a href="https://campus.datacamp.com/courses/introduction-a-r/chapitre-5-les-jeux-de-donnees?ex=1">Chapitre 5 : les jeux de données ou <code>data.frame</code></a>
 <ul>
-<li>Les <code>data.frame</code>s sont similaires aux feuilles de calcul rectangulaires que l’on peut produire dans un tableur. Dans <code>R</code>, ce sont des objets rectangulaires (des tableaux !) contenant des jeux de données : les lignes correspondent aux observations et les colonnes aux variables décrivant les observations. La plupart du temps, c’est le format de données que nous utiliserons. Plus de détails dans le <a href="02-dataset.html"><span>Chapitre&nbsp;2</span></a></li>
+<li>Les <code>data.frame</code>s sont similaires aux feuilles de calcul rectangulaires que l’on peut produire dans un tableur. Dans <code>R</code>, ce sont des objets rectangulaires (des tableaux !) contenant des jeux de données : les lignes correspondent aux observations et les colonnes aux variables décrivant les observations. La plupart du temps, c’est le format de données que nous utiliserons. Plus de détails dans le <a href="02-Dataset.html"><span>Chapitre&nbsp;2</span></a></li>
 </ul></li>
 </ul>
 <p>Avant de passer à la suite, il nous reste 2 grandes notions à découvrir dans le domaine du code et de la syntaxe afin de pouvoir travailler efficacement dans <code>R</code> : les opérateurs de comparaison d’une part, et les fonctions d’autre part. Pour les découvrir et expérimenter, et puisque vous avez terminé les tutoriels DataCamp, reprenez maintenant <code>RStudio</code> et travaillez dans votre script.</p>
@@ -859,7 +871,7 @@ Erreur ou avertissement ? <i class="fa-solid fa-bomb" aria-label="bomb"></i> ou 
 <h2 data-number="1.4" class="anchored" data-anchor-id="sec-packages"><span class="header-section-number">1.4</span> Les packages additionels</h2>
 <p>Une source de confusion importante pour les nouveaux utilisateurs de <code>R</code> est la notion de package. Les packages étendent les fonctionnalités de <code>R</code> en fournissant des fonctions, des données et de la documentation supplémentaires et peuvent être téléchargés gratuitement sur Internet. Ils sont écrits par une communauté mondiale d’utilisateurs de <code>R</code>. Par exemple, parmi les plus de 18000 packages disponibles à l’heure actuelle, nous utiliseront fréquemment :</p>
 <ul>
-<li>Le package <code>ggplot2</code> pour la visualisation des données dans le <a href="03-visualization.html"><span>Chapitre&nbsp;3</span></a></li>
+<li>Le package <code>ggplot2</code> pour la visualisation des données dans le <a href="03-Visualization.html"><span>Chapitre&nbsp;3</span></a></li>
 <li>Le package <code>dplyr</code> pour manipuler des tableaux de données dans le <a href="05-DataWrangling.html"><span>Chapitre&nbsp;5</span></a></li>
 </ul>
 <p>Une bonne analogie pour les packages <code>R</code> : ils sont comme les apps que vous téléchargez sur un téléphone portable. <code>R</code> est comme un nouveau téléphone mobile. Il est capable de faire certaines choses lorsque vous l’utilisez pour la première fois, mais il ne sait pas tout faire. Les packages sont comme les apps que vous pouvez télécharger dans l’App Store et Google Play. Pour utiliser un package, comme pour utiliser Instagram, vous devez :</p>
@@ -1313,7 +1325,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02-dataset.html" class="pagination-link">
+      <a href="./02-Dataset.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Explorez votre premier jeu de données</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./06-StatsDescript.html" rel="next">
-<link href="./04-tidy-Data.html" rel="prev">
+<link href="./06-EDA.html" rel="next">
+<link href="./04-Tidy-Data.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -174,19 +174,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-dataset.html" class="sidebar-item-text sidebar-link">
+  <a href="./02-Dataset.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Explorez votre premier jeu de données</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-visualization.html" class="sidebar-item-text sidebar-link">
+  <a href="./03-Visualization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualiser des données avec <code>ggplot2</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-tidy-Data.html" class="sidebar-item-text sidebar-link">
+  <a href="./04-Tidy-Data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></span></a>
   </div>
 </li>
@@ -198,8 +198,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-StatsDescript.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Les statistiques descriptives</span></span></a>
+  <a href="./06-EDA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploration statistique des données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Incertitude.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dispersion et incertitude</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ErrorBars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Visualiser l’incertitude et la dispersion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -221,7 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#pré-requis" id="toc-pré-requis" class="nav-link active" data-scroll-target="#pré-requis"><span class="header-section-number">5.1</span> Pré-requis</a></li>
   <li><a href="#le-pipe" id="toc-le-pipe" class="nav-link" data-scroll-target="#le-pipe"><span class="header-section-number">5.2</span> Le pipe <code>|&gt;</code></a></li>
   <li><a href="#les-verbes-du-tripatouillage-de-données" id="toc-les-verbes-du-tripatouillage-de-données" class="nav-link" data-scroll-target="#les-verbes-du-tripatouillage-de-données"><span class="header-section-number">5.3</span> Les verbes du tripatouillage de données</a></li>
-  <li><a href="#filtrer-des-lignes-avec-filter-sec-filter" id="toc-filtrer-des-lignes-avec-filter-sec-filter" class="nav-link" data-scroll-target="#filtrer-des-lignes-avec-filter-sec-filter"><span class="header-section-number">5.4</span> Filtrer des lignes avec <code>filter()</code> {<span class="quarto-unresolved-ref">sec-filter</span>}</a>
+  <li><a href="#sec-filter" id="toc-sec-filter" class="nav-link" data-scroll-target="#sec-filter"><span class="header-section-number">5.4</span> Filtrer des lignes avec <code>filter()</code></a>
   <ul class="collapse">
   <li><a href="#principe" id="toc-principe" class="nav-link" data-scroll-target="#principe"><span class="header-section-number">5.4.1</span> Principe</a></li>
   <li><a href="#exercice" id="toc-exercice" class="nav-link" data-scroll-target="#exercice"><span class="header-section-number">5.4.2</span> Exercice</a></li>
@@ -235,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sec-exo-12" id="toc-sec-exo-12" class="nav-link" data-scroll-target="#sec-exo-12"><span class="header-section-number">5.6.3</span> Exercices</a></li>
   </ul></li>
   <li><a href="#sec-arrange" id="toc-sec-arrange" class="nav-link" data-scroll-target="#sec-arrange"><span class="header-section-number">5.7</span> Trier des lignes avec <code>arrange()</code></a></li>
-  <li><a href="#créer-des-résumés-avec-summarise" id="toc-créer-des-résumés-avec-summarise" class="nav-link" data-scroll-target="#créer-des-résumés-avec-summarise"><span class="header-section-number">5.8</span> Créer des résumés avec <code>summarise()</code></a>
+  <li><a href="#sec-summarise" id="toc-sec-summarise" class="nav-link" data-scroll-target="#sec-summarise"><span class="header-section-number">5.8</span> Créer des résumés avec <code>summarise()</code></a>
   <ul class="collapse">
   <li><a href="#principe-de-la-fonction-summarise" id="toc-principe-de-la-fonction-summarise" class="nav-link" data-scroll-target="#principe-de-la-fonction-summarise"><span class="header-section-number">5.8.1</span> Principe de la fonction <code>summarise()</code></a></li>
   <li><a href="#intérêt-de-largument-.by" id="toc-intérêt-de-largument-.by" class="nav-link" data-scroll-target="#intérêt-de-largument-.by"><span class="header-section-number">5.8.2</span> Intérêt de l’argument <code>.by</code></a></li>
@@ -295,7 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Travailler avec le pipe est très intéressant car toutes les fonctions de <code>dplyr</code> que nous allons décrire ensuite sont construites autour de la même syntaxe : on leur fournit un <code>data.frame</code> (ou encore mieux, un <code>tibble</code>), elles effectuent une opération et renvoient un nouveau <code>data.frame</code> (ou un nouveau <code>tibble</code>). Il est ainsi possible de créer des groupes de commandes cohérentes qui permettent, grâce à l’enchaînement d’étapes simples, d’aboutir à des résultats complexes.</p>
 <p>De la même façon que le <code>+</code> permet d’ajouter une couche supplémentaire à un graphique <code>ggplot2</code>, le pipe <code>|&gt;</code> permet d’ajouter une opération supplémentaire dans un groupe de commandes.</p>
-<p>Pour reprendre un exemple de la <a href="03-visualization.html#sec-empil"><span>Section&nbsp;3.8.1</span></a> sur les diagrammes bâtons empilés, nous avions utilisé ce code :</p>
+<p>Pour reprendre un exemple de la <a href="03-Visualization.html#sec-empil"><span>Section&nbsp;3.8.1</span></a> sur les diagrammes bâtons empilés, nous avions utilisé ce code :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
@@ -357,8 +369,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Toutes ces fonctions, tous ces verbes, sont utilisés de la même façon : on prend un <code>data.frame</code>, grâce au pipe, on le transmet à l’une de ces fonctions dont on précise les arguments entre parenthèses, la fonction nous renvoie un nouveau tableau modifié. Évidemment, on peut enchaîner les actions pour modifier plusieurs fois le même tableau, c’est tout l’intérêt du pipe.</p>
 <p>Enfin, gardez en tête qu’il existe beaucoup plus de fonctions dans <code>dplyr</code> que la dizaine que nous allons détailler ici. Nous verrons parfois quelques variantes, mais globalement, maîtriser ces fonctions simples devrait vous permettre de conduire une très large gamme de manipulations de données, et ainsi vous faciliter la vie pour la production de graphiques et l’analyse statistique de vos données.</p>
 </section>
-<section id="filtrer-des-lignes-avec-filter-sec-filter" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="filtrer-des-lignes-avec-filter-sec-filter"><span class="header-section-number">5.4</span> Filtrer des lignes avec <code>filter()</code> {<span class="quarto-unresolved-ref">?sec-filter</span>}</h2>
+<section id="sec-filter" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sec-filter"><span class="header-section-number">5.4</span> Filtrer des lignes avec <code>filter()</code></h2>
 <section id="principe" class="level3" data-number="5.4.1">
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="principe"><span class="header-section-number">5.4.1</span> Principe</h3>
 <div class="cell" data-layout-align="center">
@@ -903,7 +915,7 @@ Levels: imm mat pnl pl l repos</code></pre>
 </div>
 </div>
 </div>
-<p>Il conviendrait ici de changer les légendes de l’axe des <code>x</code> et de l’échelle de couleurs avec la fonction <code>labs()</code> (voir <span class="quarto-unresolved-ref">?sec-labels</span>).</p>
+<p>Il conviendrait ici de changer les légendes de l’axe des <code>x</code> et de l’échelle de couleurs avec la fonction <code>labs()</code> (voir <a href="03-Visualization.html#sec-labels"><span>Section&nbsp;3.11.1</span></a>).</p>
 <p>Il existe de nombreuses autres fonctions très utiles dans le package <code>forcats</code>. L’une d’entre elles est la fonction <code>fct_recode()</code>, qui permet de changer le nom des modalités d’un facteur. Par exemple :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>dauphin <span class="sc">|&gt;</span> </span>
@@ -1169,8 +1181,8 @@ Levels: imm mat pnl pl l repos</code></pre>
 </div>
 <p>Deux catégories sont aussi fréquemment observées l’une que l’autre : les mâles et femelles de l’espèce Adélie, pour lesquels 73 individus ont été observés.</p>
 </section>
-<section id="créer-des-résumés-avec-summarise" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="créer-des-résumés-avec-summarise"><span class="header-section-number">5.8</span> Créer des résumés avec <code>summarise()</code></h2>
+<section id="sec-summarise" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="sec-summarise"><span class="header-section-number">5.8</span> Créer des résumés avec <code>summarise()</code></h2>
 <p>Dans cette partie, nous allons en réalité traiter un peu plus que de la simple fonction <code>summarise()</code>. Nous aborderons :</p>
 <ul>
 <li><code>summarise()</code> : pour créer des résumés de données simples à partir des colonnes d’un tableau</li>
@@ -1212,7 +1224,7 @@ Lien avec les statistiques descriptives
 </div>
 </div>
 </div>
-<p>La <span class="quarto-unresolved-ref">?fig-summarise2</span> ci-dessus indique comment travaille la fonction <code>summarise()</code> : elle prend plusieurs valeurs (potentiellement, un très grand nombre) et les réduit à <strong>une unique valeur qui les résume</strong>. La valeur qui résume les données est choisie par l’utilisateur. Il peut s’agir par exemple d’un calcul de moyenne, de quartile ou de variance, il peut s’agir de calculer une somme, ou d’extraire la valeur maximale ou minimale, ou encore, il peut tout simplement s’agir de déterminer un nombre d’observations. Mais le fonctionnement est toujours le même : la fonction <code>summarise()</code> ne renvoie qu’une unique valeur pour une variable donnée (ou pour chaque modalité d’une variable catégorielle).</p>
+<p>La <a href="06-EDA.html#fig-summarise2">Figure&nbsp;<span>6.1</span></a> ci-dessus indique comment travaille la fonction <code>summarise()</code> : elle prend plusieurs valeurs (potentiellement, un très grand nombre) et les réduit à <strong>une unique valeur qui les résume</strong>. La valeur qui résume les données est choisie par l’utilisateur. Il peut s’agir par exemple d’un calcul de moyenne, de quartile ou de variance, il peut s’agir de calculer une somme, ou d’extraire la valeur maximale ou minimale, ou encore, il peut tout simplement s’agir de déterminer un nombre d’observations. Mais le fonctionnement est toujours le même : la fonction <code>summarise()</code> ne renvoie qu’une unique valeur pour une variable donnée (ou pour chaque modalité d’une variable catégorielle).</p>
 <p>Ainsi, pour connaître la moyenne de la longueur du bec des manchots de l’île de Palmer, il suffit d’utiliser le tableau <code>penguins</code> du package <code>palmerpenguins</code> et sa variable <code>bill_length_mm</code> que nous avons déjà utilisée au semestre 3 :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
@@ -1342,7 +1354,7 @@ Lien avec les statistiques descriptives
 <p>Et l’objet obtenu au final n’est pas strictement identique : avec la fonction <code>group_by()</code>, et dans certaines situations, le tibble obtenu conserve l’information du regroupement effectué, ce qui peut être utile dans certaines situations, mais peut parfois poser problème et causer l’affichage de messages d’avertissements dans la console. Ce comportement n’est pas observé avec l’argument <code>.by</code> qui ne groupe les données qu’au moment du calcul des indices dans la fonction <code>summarise()</code> et n’en conserve pas la trace ensuite. C’est la raison pour laquelle nous privilégierons cette méthode.</p>
 <p>Pour aller plus loin, ajoutons à ce résumé 2 variables supplémentaires : le nombre de mesures et l’<strong>erreur standard</strong> (notée <span class="math inline">\(se\)</span>), qui peut être calculée de la façon suivante :</p>
 <p><span class="math display">\[se \approx \frac{s}{\sqrt{n}}\]</span></p>
-<p>avec <span class="math inline">\(s\)</span>, l’écart-type de l’échantillon et <span class="math inline">\(n\)</span>, la taille de l’échantillon (plus d’informations sur cette statistique très importante dans la <span class="quarto-unresolved-ref">?sec-disp</span>). Nous allons donc calculer ici ces résumés, et nous donnerons un nom au tableau créé pour pouvoir ré-utiliser ces statistiques descriptives :</p>
+<p>avec <span class="math inline">\(s\)</span>, l’écart-type de l’échantillon et <span class="math inline">\(n\)</span>, la taille de l’échantillon (plus d’informations sur cette statistique très importante dans la <a href="07-Incertitude.html"><span>Chapitre&nbsp;7</span></a>). Nous allons donc calculer ici ces résumés, et nous donnerons un nom au tableau créé pour pouvoir ré-utiliser ces statistiques descriptives :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>stats_esp <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -1416,8 +1428,8 @@ Lien avec les statistiques descriptives
 6 Chinstrap male      51.1       1.56     34      0.268</code></pre>
 </div>
 </div>
-<p>Si vous ne comprenez pas la commande <code>filter(!is.na(sex))</code>, je vous encourage vivement à relire la <span class="quarto-unresolved-ref">?sec-filter</span>.</p>
-<p>Enfin, lorsque nous groupons par plusieurs variables, il peut être utile de présenter les résultats sous la forme d’un tableau large (grâce à la fonction <code>pivot_wider()</code>) pour l’intégration dans un rapport par exemple (voir la <a href="04-tidy-Data.html#sec-spread"><span>Section&nbsp;4.3.2</span></a>). La fonction <code>pivot_wider()</code> permet de passer d’un tableau qui possède ce format :</p>
+<p>Si vous ne comprenez pas la commande <code>filter(!is.na(sex))</code>, je vous encourage vivement à relire la <a href="#sec-filter"><span>Section&nbsp;5.4</span></a>.</p>
+<p>Enfin, lorsque nous groupons par plusieurs variables, il peut être utile de présenter les résultats sous la forme d’un tableau large (grâce à la fonction <code>pivot_wider()</code>) pour l’intégration dans un rapport par exemple (voir la <a href="04-Tidy-Data.html#sec-spread"><span>Section&nbsp;4.3.2</span></a>). La fonction <code>pivot_wider()</code> permet de passer d’un tableau qui possède ce format :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
 <span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
@@ -2168,18 +2180,18 @@ Lien avec les statistiques descriptives
 <pre><code># A tibble: 3 × 2
       r     s
   &lt;int&gt; &lt;dbl&gt;
-1    10 0.581
-2     9 0.278
-3     8 0.575</code></pre>
+1    10 1.67 
+2     9 0.546
+3     8 0.106</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
       x     y z         r     s
   &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt; &lt;dbl&gt;
-1     1     2 TRUE     10 0.581
-2     2     4 FALSE     9 0.278
-3     3     6 FALSE     8 0.575</code></pre>
+1     1     2 TRUE     10 1.67 
+2     2     4 FALSE     9 0.546
+3     3     6 FALSE     8 0.106</code></pre>
 </div>
 </div>
 <p>Ici, puisque <code>a</code> et <code>b</code> ont le même nombre de lignes, il est possible de les accoler. Cela n’a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.</p>
@@ -2583,13 +2595,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./04-tidy-Data.html" class="pagination-link">
+      <a href="./04-Tidy-Data.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./06-StatsDescript.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Les statistiques descriptives</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./06-EDA.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploration statistique des données</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

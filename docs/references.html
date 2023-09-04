@@ -49,7 +49,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./06-StatsDescript.html" rel="prev">
+<link href="./08-ErrorBars.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -156,19 +156,19 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-dataset.html" class="sidebar-item-text sidebar-link">
+  <a href="./02-Dataset.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Explorez votre premier jeu de données</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-visualization.html" class="sidebar-item-text sidebar-link">
+  <a href="./03-Visualization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualiser des données avec <code>ggplot2</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-tidy-Data.html" class="sidebar-item-text sidebar-link">
+  <a href="./04-Tidy-Data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></span></a>
   </div>
 </li>
@@ -180,8 +180,20 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-StatsDescript.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Les statistiques descriptives</span></span></a>
+  <a href="./06-EDA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploration statistique des données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Incertitude.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dispersion et incertitude</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ErrorBars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Visualiser l’incertitude et la dispersion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -220,11 +232,35 @@ Horst, Allison, Alison Hill, and Kristen Gorman. 2022.
 Jeppson, Haley, Heike Hofmann, and Di Cook. 2021. <em>Ggmosaic: Mosaic
 Plots in the Ggplot2 Framework</em>. <a href="https://github.com/haleyjeppson/ggmosaic">https://github.com/haleyjeppson/ggmosaic</a>.
 </div>
+<div id="ref-R-skimr" class="csl-entry" role="listitem">
+Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia,
+Hao Zhu, and Shannon Ellis. 2022. <em>Skimr: Compact and Flexible
+Summaries of Data</em>. <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>.
+</div>
+<div id="ref-R-nycflights13" class="csl-entry" role="listitem">
+Wickham, Hadley. 2021. <em>Nycflights13: Flights That Departed NYC in
+2013</em>. <a href="https://github.com/hadley/nycflights13">https://github.com/hadley/nycflights13</a>.
+</div>
+<div id="ref-R-tidyverse" class="csl-entry" role="listitem">
+———. 2023. <em>Tidyverse: Easily Install and Load the Tidyverse</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.
+</div>
 <div id="ref-R-ggplot2" class="csl-entry" role="listitem">
 Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen,
 Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, and Dewey
 Dunnington. 2023. <em>Ggplot2: Create Elegant Data Visualisations Using
 the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
+</div>
+<div id="ref-R-dplyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, and Davis
+Vaughan. 2023. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+<div id="ref-R-readr" class="csl-entry" role="listitem">
+Wickham, Hadley, Jim Hester, and Jennifer Bryan. 2023. <em>Readr: Read
+Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.
+</div>
+<div id="ref-R-tidyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Davis Vaughan, and Maximilian Girlich. 2023. <em>Tidyr:
+Tidy Messy Data</em>. <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a>.
 </div>
 <div id="ref-wilkinson2005" class="csl-entry" role="listitem">
 Wilkinson, Leland. 2005. <em>The Grammar of Graphics</em>. 2nd ed.
@@ -601,8 +637,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./06-StatsDescript.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Les statistiques descriptives</span></span>
+      <a href="./08-ErrorBars.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Visualiser l’incertitude et la dispersion</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
