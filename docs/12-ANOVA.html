@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Analyse de Données - 12&nbsp; Comparaison de moyennes : plus de 2 groupes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./13-Correlation.html" rel="next">
+<link href="./11-TwoSampleTests.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12-ANOVA.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title"><span id="sec-anova" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></span></h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analyse de Données</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/besibo/DataAnalysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Analyse-de-Données.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-R-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R et RStudio : les bases</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Dataset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Explorez votre premier jeu de données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-Visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualiser des données avec <code>ggplot2</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-Tidy-Data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-DataWrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler des tableaux avec <code>dplyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-EDA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploration statistique des données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Incertitude.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dispersion et incertitude</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ErrorBars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Visualiser l’incertitude et la dispersion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-OneSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Comparaison de la moyenne d’une population à une valeur théorique</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-TwoSamplePairedTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-TwoSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-ANOVA.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-Correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Régression linéaire</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-PropTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Comparaison de proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#sec-packages4" id="toc-sec-packages4" class="nav-link active" data-scroll-target="#sec-packages4"><span class="header-section-number">12.1</span> Pré-requis</a></li>
+  <li><a href="#contexte" id="toc-contexte" class="nav-link" data-scroll-target="#contexte"><span class="header-section-number">12.2</span> Contexte</a></li>
+  <li><a href="#importation-et-mise-en-forme-des-données" id="toc-importation-et-mise-en-forme-des-données" class="nav-link" data-scroll-target="#importation-et-mise-en-forme-des-données"><span class="header-section-number">12.3</span> Importation et mise en forme des données</a></li>
+  <li><a href="#exploration-statistique-des-données" id="toc-exploration-statistique-des-données" class="nav-link" data-scroll-target="#exploration-statistique-des-données"><span class="header-section-number">12.4</span> Exploration statistique des données</a></li>
+  <li><a href="#exploration-graphique" id="toc-exploration-graphique" class="nav-link" data-scroll-target="#exploration-graphique"><span class="header-section-number">12.5</span> Exploration graphique</a></li>
+  <li><a href="#le-test-paramétrique" id="toc-le-test-paramétrique" class="nav-link" data-scroll-target="#le-test-paramétrique"><span class="header-section-number">12.6</span> Le test paramétrique</a>
+  <ul class="collapse">
+  <li><a href="#réalisation-du-test" id="toc-réalisation-du-test" class="nav-link" data-scroll-target="#réalisation-du-test"><span class="header-section-number">12.6.1</span> Réalisation du test</a></li>
+  <li><a href="#sec-caanova" id="toc-sec-caanova" class="nav-link" data-scroll-target="#sec-caanova"><span class="header-section-number">12.6.2</span> Conditions d’application</a></li>
+  <li><a href="#interprétation-des-résultats" id="toc-interprétation-des-résultats" class="nav-link" data-scroll-target="#interprétation-des-résultats"><span class="header-section-number">12.6.3</span> Interprétation des résultats</a></li>
+  <li><a href="#tests-a-posteriori-ou-tests-post-hoc" id="toc-tests-a-posteriori-ou-tests-post-hoc" class="nav-link" data-scroll-target="#tests-a-posteriori-ou-tests-post-hoc"><span class="header-section-number">12.6.4</span> Tests <em>a posteriori</em> ou tests <em>post-hoc</em></a></li>
+  </ul></li>
+  <li><a href="#lalternative-non-paramétrique" id="toc-lalternative-non-paramétrique" class="nav-link" data-scroll-target="#lalternative-non-paramétrique"><span class="header-section-number">12.7</span> L’alternative non paramétrique</a>
+  <ul class="collapse">
+  <li><a href="#la-robustesse-de-lanova" id="toc-la-robustesse-de-lanova" class="nav-link" data-scroll-target="#la-robustesse-de-lanova"><span class="header-section-number">12.7.1</span> La robustesse de l’ANOVA</a></li>
+  <li><a href="#réalisation-du-tests-et-interprétation" id="toc-réalisation-du-tests-et-interprétation" class="nav-link" data-scroll-target="#réalisation-du-tests-et-interprétation"><span class="header-section-number">12.7.2</span> Réalisation du tests et interprétation</a></li>
+  <li><a href="#tests-a-posteriori-ou-tests-post-hoc-1" id="toc-tests-a-posteriori-ou-tests-post-hoc-1" class="nav-link" data-scroll-target="#tests-a-posteriori-ou-tests-post-hoc-1"><span class="header-section-number">12.7.3</span> Tests <em>a posteriori</em> ou tests <em>post-hoc</em></a></li>
+  </ul></li>
+  <li><a href="#exercices-dapplication" id="toc-exercices-dapplication" class="nav-link" data-scroll-target="#exercices-dapplication"><span class="header-section-number">12.8</span> Exercices d’application</a>
+  <ul class="collapse">
+  <li><a href="#cardamine-pensylvanica" id="toc-cardamine-pensylvanica" class="nav-link" data-scroll-target="#cardamine-pensylvanica"><span class="header-section-number">12.8.1</span> <em>Cardamine pensylvanica</em></a></li>
+  <li><a href="#insecticides" id="toc-insecticides" class="nav-link" data-scroll-target="#insecticides"><span class="header-section-number">12.8.2</span> Insecticides</a></li>
+  <li><a href="#la-longueur-des-nageoires-des-manchots-femelles" id="toc-la-longueur-des-nageoires-des-manchots-femelles" class="nav-link" data-scroll-target="#la-longueur-des-nageoires-des-manchots-femelles"><span class="header-section-number">12.8.3</span> La longueur des nageoires des manchots femelles</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="sec-packages4" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="sec-packages4"><span class="header-section-number">12.1</span> Pré-requis</h2>
+<p>Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu <code>Session &gt; Restart R</code>). Inutile en revanche de créer un nouveau <code>Rproject</code> : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même <code>Rproject</code>. Comme toujours, consultez <a href="https://besibo.github.io/BiometrieS3/01-R-basics.html#sec-code">le livre en ligne du semestre 3</a> si vous ne savez plus comment faire.</p>
+<p>Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé <code>RStudio</code>), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d’utiliser :</p>
+<ul>
+<li>le <code>tidyverse</code> <span class="citation" data-cites="R-tidyverse">(<a href="references.html#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span>, qui comprend notamment le package <code>readr</code> <span class="citation" data-cites="R-readr">(<a href="references.html#ref-R-readr" role="doc-biblioref">Wickham, Hester, et Bryan 2023</a>)</span>, pour importer facilement des fichiers <code>.csv</code> au format <code>tibble</code>, le package <code>dplyr</code> <span class="citation" data-cites="R-dplyr">(<a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al. 2023</a>)</span>, pour manipuler des tableaux, et le package <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al. 2023</a>)</span> pour les représentations graphiques.</li>
+<li><code>readxl</code> <span class="citation" data-cites="R-readxl">(<a href="references.html#ref-R-readxl" role="doc-biblioref">Wickham et Bryan 2023</a>)</span>, pour importer facilement des fichiers Excel au format <code>tibble</code>.</li>
+<li><code>skimr</code> <span class="citation" data-cites="R-skimr">(<a href="references.html#ref-R-skimr" role="doc-biblioref">Waring et al. 2022</a>)</span>, qui permet de calculer des résumés de données très informatifs.</li>
+<li><code>car</code> <span class="citation" data-cites="R-car">(<a href="references.html#ref-R-car" role="doc-biblioref">Fox, Weisberg, et Price 2023</a>)</span>, qui permet d’effectuer le test de comparaison des variances de Levene.</li>
+<li><code>broom</code> <span class="citation" data-cites="R-broom">(<a href="references.html#ref-R-broom" role="doc-biblioref">Robinson, Hayes, et Couch 2023</a>)</span>, qui fait partie du <code>tidyverse</code> mais qu’il faut charger explicitement. La fonction <code>tidy()</code> de ce package nous permettra de “ranger” correctement les résultats de tests dans un <code>tibble</code>.</li>
+<li><code>DescTools</code> <span class="citation" data-cites="R-DescTools">(<a href="references.html#ref-R-DescTools" role="doc-biblioref">Signorell 2023</a>)</span>, afin de réaliser un test spécifique de comparaisons multiples. N’oubliez pas de l’installer si nécessaire, avant de le charger en mémoire.</li>
+<li>le package <code>palmerpenguins</code> <span class="citation" data-cites="R-palmerpenguins">(<a href="references.html#ref-R-palmerpenguins" role="doc-biblioref">Horst, Hill, et Gorman 2022</a>)</span> pour accéder au jeu de données <code>penguins</code> que nous utiliserons pour les exercices d’application.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Vous aurez également besoin des jeux de données suivants que vous pouvez dès maintenant télécharger dans votre répertoire de travail :</p>
+<ul>
+<li><a href="data/Light.csv"><code>Light.csv</code></a></li>
+<li><a href="data/Insectes.csv"><code>Insectes.csv</code></a></li>
+</ul>
+<p>Enfin, je spécifie ici une fois pour toutes le thème que j’utiliserai pour tous les graphiques de ce chapitre. Libre à vous de choisir un thème différent ou de vous contenter du thème proposé par défaut :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="contexte" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="contexte"><span class="header-section-number">12.2</span> Contexte</h2>
+<!-- ## L'analyse de variance à un facteur -->
+<!-- ### Exploration préalable des données -->
+<p>Voyager dans un pays éloigné peut faire souffrir de décalage horaire. Habituellement, la resynchronisation de l’horloge interne circadienne dans le nouveau fuseau horaire est réalisée grâce à la perception de la lumière par les yeux. Ce changement progressif du rythme de notre horloge interne est appelé “décalage de phase”. Ce phénomène a été étudié par 2 chercheurs en 1998 <span class="citation" data-cites="Campbell1998">(<a href="references.html#ref-Campbell1998" role="doc-biblioref">Campbell et Murphy 1998</a>)</span>, qui ont montré que ce décalage de phase pouvait également être obtenu en exposant des sujets à la lumière, non pas au niveau de leurs yeux, mais au niveau de leur <a href="https://fr.wikipedia.org/wiki/Fosse_poplitée">fosse (ou creux) poplitée</a>, c’est-à-dire, derrière les genoux.<br>
+Cette découverte a été vivement critiquée par certains, et saluée comme une découverte majeure par d’autres. Toutefois, certains aspects du design expérimental de l’étude de 1998 ont été mis en doute en 2002 : il semble en effet que lors de l’exposition du creux poplité, les yeux de certains patients ont été également exposés à de faibles intensités lumineuses. Pour vérifier les trouvailles de Campbell et Murphy, Wright et Czeisler <span class="citation" data-cites="Wright2002">(<a href="references.html#ref-Wright2002" role="doc-biblioref">Wright et Czeisler 2002</a>)</span> ont ré-examiné ce phénomène. La nouvelle expérience a évalué les rythmes circadiens en mesurant les cycles quotidiens de production de mélatonine chez 22 participants placés au hasard dans 3 groupes. Les patients étaient réveillés en pleine nuit et exposés :</p>
+<ol type="1">
+<li>Soit à 3 heures de lumière appliquée exclusivement derrière leurs genoux (groupe <code>knee</code>).</li>
+<li>Soit à 3 heures de lumière appliquée exclusivement à leurs yeux (groupe <code>eyes</code>).</li>
+<li>Soit à 3 heures d’obscurité totale (groupe <code>control</code>).</li>
+</ol>
+<p>Le décalage de phase du cycle de production de mélatonine était mesuré 48h plus tard. Des chiffres négatifs indiquent un retard de production de mélatonine. C’est l’effet théorique attendu du traitement lumineux administré. Un décalage de phase positif indique une production de mélatonine plus précoce. Une absence de changement se traduit par un décalage de phase de 0.</p>
+</section>
+<section id="importation-et-mise-en-forme-des-données" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="importation-et-mise-en-forme-des-données"><span class="header-section-number">12.3</span> Importation et mise en forme des données</h2>
+<p>Les données brutes de cette étude sont fournies dans le fichier <a href="data/Light.csv"><code>Light.csv</code></a>. Importez ces données dans <code>RStudio</code> et examinez les données brutes grâce à la fonction <code>View()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Light</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 22 × 2
+   treatment shift
+   &lt;chr&gt;     &lt;dbl&gt;
+ 1 control    0.53
+ 2 control    0.36
+ 3 control    0.2 
+ 4 control   -0.37
+ 5 control   -0.6 
+ 6 control   -0.64
+ 7 control   -0.68
+ 8 control   -1.27
+ 9 knee       0.73
+10 knee       0.31
+# ℹ 12 more rows</code></pre>
+</div>
+</div>
+<p>Le tableau obtenu est-il au format long ou au format court/large ? Pourquoi un tableau au format suivant n’aurait-il pas de sens ?</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 3
+  control  eyes  knee
+    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1    0.53 -0.78  0.73
+2    0.36 -0.86  0.31
+3    0.2  -1.35  0.03
+4   -0.37 -1.48 -0.29
+5   -0.6  -1.52 -0.56
+6   -0.64 -2.04 -0.96
+7   -0.68 -2.83 -1.61
+8   -1.27 NA    NA   </code></pre>
+</div>
+</div>
+<p>Lorsque l’on réalise une analyse de variance, puisque les effectifs ne sont pas nécessairement identiques dans tous les groupes (c’est ce qu’on appelle un design déséquilibré, ou “unbalanced design”), présenter les tableaux au format long est indispensable. Par ailleurs, notez que les ANOVAs réalisées sur des “balanced design” (ou designs équilibrés, pour lesquels tous les groupes sont de même taille), sont beaucoup plus puissantes que les ANOVAs réalisées sur des “unbalanced designs”.</p>
+<p>Ici, le tableau de données est très simple (et de petite taille). Il n’y a pas de données manquantes et aucune création de nouvelle variable n’est nécessaire. La seule modification que nous devrions faire est de transformer la variable <code>treatment</code> en facteur :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Light <span class="ot">&lt;-</span> Light <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">factor</span>(treatment))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Comme toujours, les niveaux du facteur sont automatiquement classés par ordre alphabétique :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(Light<span class="sc">$</span>treatment)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "control" "eyes"    "knee"   </code></pre>
+</div>
+</div>
+<p>Pour les statistiques descriptives et les graphiques qui viendront après, nous souhaitons indiquer l’ordre suivant : <code>control</code>, puis <code>knee</code>, puis <code>eyes</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Light <span class="ot">&lt;-</span> Light <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">fct_relevel</span>(treatment, <span class="st">"control"</span>, <span class="st">"knee"</span>, <span class="st">"eyes"</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>Light</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 22 × 2
+   treatment shift
+   &lt;fct&gt;     &lt;dbl&gt;
+ 1 control    0.53
+ 2 control    0.36
+ 3 control    0.2 
+ 4 control   -0.37
+ 5 control   -0.6 
+ 6 control   -0.64
+ 7 control   -0.68
+ 8 control   -1.27
+ 9 knee       0.73
+10 knee       0.31
+# ℹ 12 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Light<span class="sc">$</span>treatment</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] control control control control control control control control knee   
+[10] knee    knee    knee    knee    knee    knee    eyes    eyes    eyes   
+[19] eyes    eyes    eyes    eyes   
+Levels: control knee eyes</code></pre>
+</div>
+</div>
+<p>Attention à bien respecter la casse (le respect des majuscules/minuscules est toujours aussi important dans <code>RStudio</code>).</p>
+</section>
+<section id="exploration-statistique-des-données" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="exploration-statistique-des-données"><span class="header-section-number">12.4</span> Exploration statistique des données</h2>
+<p>Comme toujours, et maintenant que nos données sont au bon format, il est nécessaire d’examiner quelques statistiques descriptives pour chaque catégorie étudiée. On peut tout d’abord commencer par examiner la taille de chaque échantillon :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(treatment)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  treatment     n
+  &lt;fct&gt;     &lt;int&gt;
+1 control       8
+2 knee          7
+3 eyes          7</code></pre>
+</div>
+</div>
+<p>Nous avons ici la confirmation que le design expérimental n’est pas équilibré, puisque le groupe <code>control</code> compte un individu de plus. Nous pouvons ensuite utiliser la fonction <code>skim</code> du package <code>skimr</code> pour obtenir un résumé des données :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(treatment) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Data Summary ────────────────────────
+                           Values    
+Name                       Piped data
+Number of rows             22        
+Number of columns          2         
+_______________________              
+Column type frequency:               
+  numeric                  1         
+________________________             
+Group variables            treatment 
+
+── Variable type: numeric ──────────────────────────────────────────────────────
+  skim_variable treatment n_missing complete_rate   mean    sd    p0   p25
+1 shift         control           0             1 -0.309 0.618 -1.27 -0.65
+2 shift         knee              0             1 -0.336 0.791 -1.61 -0.76
+3 shift         eyes              0             1 -1.55  0.706 -2.83 -1.78
+     p50   p75  p100 hist 
+1 -0.485  0.24  0.53 ▂▇▂▁▇
+2 -0.29   0.17  0.73 ▃▃▇▃▇
+3 -1.48  -1.10 -0.78 ▂▂▁▇▅</code></pre>
+</div>
+</div>
+<p>Il semble que le groupe <code>eyes</code> se comporte un peu différemment des autres groupes. En effet, pour les groupes <code>control</code> et <code>knee</code>, les valeurs des indices de position observés sont très proches :</p>
+<ul>
+<li>les moyennes et les médianes sont négatives mais proches de 0.</li>
+<li>les valeurs observées sont négatives pour certaines, et positives pour d’autres (la colonne <code>p0</code> contient les minimas et la colonne <code>p100</code> contient les maximas).</li>
+</ul>
+<p>En revanche, pour le groupe <code>eyes</code>, les décalages de phase observés sont tous négatifs (le maximum, présenté dans la colonne <code>p100</code> vaut -0.78) et la moyenne est près de 5 fois plus faible que pour les 2 autres groupes.</p>
+<p>Concernant la dispersion, les écart-types semblent en revanche très proches dans les 3 groupes (entre 0.6 et 0.8).</p>
+<p>Enfin, les histogrammes présentés pour chaque groupe semblent très éloignés d’une distribution Normale. C’est logique compte tenu des faibles effectifs dans chaque groupe. Nous verrons plus tard que cela n’a aucune importance puisque les conditions d’application de l’ANOVA portent sur les <strong>résidus de l’ANOVA</strong> (nous verrons plus loin de quoi il s’agit), et pas sur les données brutes.</p>
+<p>Il semble donc que seul le groupe <code>eyes</code> soit véritablement différent du groupe témoin. Pour le vérifier, on peut calculer les intervalles de confiance à 95% des moyennes. Nous examinerons ensuite quelques graphiques, puis nous ferons un test d’hypothèses.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_cl_normal</span>(shift), <span class="at">.by =</span> treatment)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  treatment      y   ymin   ymax
+  &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 control   -0.309 -0.825  0.208
+2 knee      -0.336 -1.07   0.396
+3 eyes      -1.55  -2.20  -0.898</code></pre>
+</div>
+</div>
+<p>Là encore, le groupe <code>eyes</code> semble assez différent des 2 autres. L’intervalle de confiance à 95% de ce groupe ([-2.20 ; -0.90]) est totalement disjoint du groupe <code>knee</code> ([-1.07 ; 0.40]) et chevauche à peine celui du groupe <code>control</code> ([-0.82 ; 0.21]). L’intervalle de confiance du groupe <code>knee</code>recouvre en revanche en totalité celui du groupe <code>control</code>. Il n’y aura donc vraisemblablement pas de différence significative entre ces 2 groupes, mais une différence significative entre le groupe <code>eyes</code> et les 2 autres. Pour visualiser un peu mieux ces résultats préliminaires, examinons quelques graphiques.</p>
+</section>
+<section id="exploration-graphique" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="exploration-graphique"><span class="header-section-number">12.5</span> Exploration graphique</h2>
+<p>Comme toujours, il est indispensable de regarder à quoi ressemblent les données brutes sur un ou des graphiques. Les statistiques descriptives ne racontent en effet pas toujours toute l’histoire. Ici, nous allons superposer les données brutes, sous forme de nuage de points, aux boites à moustaches :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> shift, <span class="at">fill =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">outlier.colour =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"traitement"</span>, <span class="at">y =</span> <span class="st">"Décalage de phase (sans unité)"</span>) <span class="sc">+</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Notch went outside hinges
+ℹ Do you want `notch = FALSE`?
+Notch went outside hinges
+ℹ Do you want `notch = FALSE`?
+Notch went outside hinges
+ℹ Do you want `notch = FALSE`?</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="12-ANOVA_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Puisqu’il y a peu de données, les intervalles de confiance à 95% sont très larges. Ils dépassent d’ailleurs presque systématiquement les quartiles, ce qui explique l’apparence bizarre des boîtes à moustaches et les messages d’avertissement affichés lors de la création du graphique. Il vaudait donc mieux représenter cette figure sans ces intervalles de confiance. Toutefois, avant de les retirer, on peut constater ici que les IC 95% se chevauchent complètement pour les séries <code>control</code> et <code>knee</code>. En revanche, il n’y a aucun chevauchement de l’IC 95% du groupe <code>eyes</code> avec les 2 autres groupes. Ces réslutats sont très légèrement différents de ceux obtenus plus haut, car on examine ici les intervalles de confiance à 95% des médianes, alors qu’on regardait les intervalles de confiance à 95% des moyennes dans la section précédente. Les conclusions sont toutefois les mêmes : on s’attend donc à trouver une différence de moyenne significative entre le groupe <code>eyes</code> d’une part, et les groupes <code>control</code> et <code>knee</code> d’autre part, mais pas de différence de moyenne entre les groupes <code>control</code> et <code>knee</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> shift, <span class="at">fill =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">outlier.colour =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"traitement"</span>, <span class="at">y =</span> <span class="st">"Décalage de phase (sans unité)"</span>) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12-ANOVA_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>On constate ici visuellement que les 3 séries ont une étendue à peu près similaire, et que le groupe <code>eyes</code> semble se distinguer des 2 autres par des valeurs plus faibles. Enfin, les boîtes contenant 50% des valeurs centrales (donc l’étendue des valeurs entre les premiers et troisièmes quartiles) recouvrent le 0 pour les 2 groupes <code>control</code> et <code>knee</code>, mais par pour <code>eyes</code>.</p>
+<p>L’examen d’un graphique de densité facetté donne les mêmes informations :</p>
+<div class="cell" data-fig.asp="1">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> shift, <span class="at">fill =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>treatment, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Décalage de phase (sans unité)"</span>, <span class="at">y =</span> <span class="st">"Densité"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12-ANOVA_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Un package utile lorsque l’on dispose d’un grand nombre de groupes que l’on souhaite comparer à l’aide de graphiques de densité est le package <code>ggridges</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> shift, <span class="at">y =</span> treatment, <span class="at">fill =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Décalage de phase (sans unité)"</span>, <span class="at">y =</span> <span class="st">"Densité"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Picking joint bandwidth of 0.366</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="12-ANOVA_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="le-test-paramétrique" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="le-test-paramétrique"><span class="header-section-number">12.6</span> Le test paramétrique</h2>
+<p>Le test paramétrique permettant de comparer la moyenne de plusieurs populations en une seule étape est l’<strong>analyse de variance à un facteur</strong>. Contrairement aux tests que nous avons vus jusqu’à maintenant, les conditions d’application de ce test ne seront vérifiées qu’<strong>après</strong> avoir réalisé l’analyse. En effet, les conditions d’application de l’ANOVA ne se vérifient pas sur les données brutes mais sur les <strong>résidus de l’ANOVA</strong>. C’est d’ailleurs ce que l’on appelle l’<strong>analyse des résidus</strong>, ou diagnostique de l’ANOVA.</p>
+<section id="réalisation-du-test" class="level3" data-number="12.6.1">
+<h3 data-number="12.6.1" class="anchored" data-anchor-id="réalisation-du-test"><span class="header-section-number">12.6.1</span> Réalisation du test</h3>
+<p>Dans <code>R</code>, l’analyse de variance se fait grâce à la fonction <code>aov()</code> (comme “Analysis Of Variance”). La syntaxe est la même que pour un certain nombre de tests déjà vus dans les chapitres précédents : il faut fournir une formule à la fonction. On place la variable numérique expliquée à gauche du <code>~</code>, et à droite, la variable qualitative explicative (le facteur).</p>
+<p>Contrairement aux autres tests réalisés jusqu’ici, les résultats du test devront être sauvegardés dans un objet. Outre les résultats du test, cet objet contiendra également tous les éléments permettant de vérifier si les conditions d’application de l’ANOVA sont réunies ou non.</p>
+<p>Les hypothèses testées sont les suivantes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : les moyennes de toutes les populations sont égales (<span class="math inline">\(\mu_{\textrm{control}} = \mu_{\textrm{knee}} = \mu_{\textrm{eyes}}\)</span>).</li>
+<li>H<span class="math inline">\(_1\)</span> : toutes les moyennes ne sont pas égales. Au moins l’une d’entre elles diffère des autres.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réalisation de l'ANOVA 1 facteur</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">aov</span>(shift <span class="sc">~</span> treatment, <span class="at">data =</span> Light)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage des résultats</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+   aov(formula = shift ~ treatment, data = Light)
+
+Terms:
+                treatment Residuals
+Sum of Squares   7.224492  9.415345
+Deg. of Freedom         2        19
+
+Residual standard error: 0.7039492
+Estimated effects may be unbalanced</code></pre>
+</div>
+</div>
+<p>L’affichage des résultats bruts ne nous apprend que peu de choses. En revanche, la fonction <code>summary()</code> donne la réponse du test :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+treatment    2  7.224   3.612   7.289 0.00447 **
+Residuals   19  9.415   0.496                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Pour le facteur étudié (<code>treatment</code>), on obtient le nombre de degrés de libertés (<code>Df</code>), la somme des carrés (<code>Sum Sq</code>), les carrés moyens (<code>Mean Sq</code>), la statistique du test (<code>F</code>) et la <span class="math inline">\(p-\)</span>value (<code>Pr(&gt;F)</code>). Ici, la <span class="math inline">\(p-\)</span>value est inférieure à <span class="math inline">\(\alpha\)</span>, donc on rejette H<span class="math inline">\(_0\)</span>. Au moins l’une des moyennes est différente des autres.</p>
+<p>Avant d’aller plus loin dans l’interprétation de ces résultats, il nous faut déterminer si nous avions bel et bien le droit de réaliser cette ANOVA, en vérifiant si les conditions d’application de l’ANOVA sont remplies.</p>
+</section>
+<section id="sec-caanova" class="level3" data-number="12.6.2">
+<h3 data-number="12.6.2" class="anchored" data-anchor-id="sec-caanova"><span class="header-section-number">12.6.2</span> Conditions d’application</h3>
+<p>L’ANOVA est un test paramétrique, et comme pour tous les tests paramétriques, des conditions d’application doivent être vérifiées pour avoir le droit d’effectuer le test. À la différence des autres tests paramétriques que nous avons réalisés jusqu’ici, les conditions d’application de l’ANOVA ne doivent pas être vérifiées <strong>avant</strong> de faire le test, mais <strong>après</strong>.</p>
+<p>Les résultats de l’ANOVA ne seront donc valides que si les conditions d’application sont vérifiées. Comme indiqué plus haut, ces conditions d’application doivent être vérifiées sur <strong>les résidus de l’ANOVA</strong>, donc nécessairement <strong>après</strong> avoir réalisé l’analyse. Les résidus de l’ANOVA représentent l’écart entre chaque observation et la moyenne de son groupe, et ils sont calculés au moment ou nous réalisons l’ANOVA.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les conditions d’application de l’ANOVA ne se vérifient pas sur les données brutes comme c’est le cas du test de Student, mais sur <strong>les résidus de l’ANOVA</strong>, qui sont calculés au moment où l’ANOVA est réalisée. Par conséquent, on ne vérifie pas les conditions d’application avant mais bien <strong>après</strong> avoir fait le test.</p>
+<p>Ça n’est que si les conditions d’application sont remplies qu’on aura le droit d’interpréter les résultats de l’ANOVA.</p>
+</div>
+</div>
+<p>Pour que l’ANOVA soit valide, les résidus doivent :</p>
+<ol type="1">
+<li>Être indépendants.</li>
+<li>Être homogènes.</li>
+<li>Être distribués normalement.</li>
+</ol>
+<section id="indépendance-des-résidus" class="level4" data-number="12.6.2.1">
+<h4 data-number="12.6.2.1" class="anchored" data-anchor-id="indépendance-des-résidus"><span class="header-section-number">12.6.2.1</span> Indépendance des résidus</h4>
+<p>L’indépendance des résidus signifie que connaître la valeur d’un résidu ne permet pas de prédire la valeur d’un autre résidu. Si les données ont été collectées correctement (échantillonnage aléatoire simple, indépendance des observations), on considère généralement que cette condition est vérifiée. Les 2 autres conditions d’application se vérifient soit graphiquement, soit avec un test d’hypothèses.</p>
+</section>
+<section id="homogénéité-des-résidus" class="level4" data-number="12.6.2.2">
+<h4 data-number="12.6.2.2" class="anchored" data-anchor-id="homogénéité-des-résidus"><span class="header-section-number">12.6.2.2</span> Homogénéité des résidus</h4>
+<p>L’homogénéité des résidus signifie que les résidus doivent avoir à peu près la même variance pour chacun des groupes comparés. On peut vérifier que cette condition d’application est vérifiée grâce à ce graphique, qui représente les résidus (<code>residuals</code>, sur l’axe des <code>y</code>) en fonction des valeurs ajustées (c’est-à-dire la moyenne de chaque groupe, <code>fitted values</code>, sur l’axe des <code>x</code>) :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12-ANOVA_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Ici, les résidus sont considérés comme homogènes car nous avons à peu près autant de résidus positifs que négatifs et que la ligne rouge est très proche du 0. L’étalement (vertical) des résidus est à peu près le même de la gauche à la droite du graphique. On pourrait donc faire entrer les résidus dans une boite rectangulaire horizontale centrée sur le 0 et ayant la même largeur d’un bout à l’autre du graphique.</p>
+<p>Ci-dessous, j’affiche quelques exemples de situations où les résidus ne sont pas homogènes afin que vous puissiez voir à quoi ressemblent les graphiques des résidus en fonction des valeurs ajustées dans ce type de situation :</p>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="12-ANOVA_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="12-ANOVA_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="12-ANOVA_files/figure-html/unnamed-chunk-18-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="12-ANOVA_files/figure-html/unnamed-chunk-18-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<p>Pour ces 4 graphiques, les résidus ne rentrent pas dans une boîte rectangulaire qui a la même hauteur d’un bout à l’autre du graphique. Les résidus de ces ANOVAs fictives ne sont donc pas homogènes et les conditions d’application de l’ANOVA ne sont donc pas réunies.</p>
+<p>Mais revenons à nos données de décalage de phase. Une autre façon de visualiser les résidus est d’utiliser le graphique suivant :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">which =</span> <span class="dv">3</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12-ANOVA_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Sur ce graphique, ce qui compte principalement, c’est la droite en rouge. Elle est ici presque horizontale, ce qui montre que les résidus de tous les groupes (un groupe à gauche et 2 à droite) ont à peu près même moyenne.</p>
+<p>Enfin, cette condition d’homogénéité des résidus entre les groupes peut également être vérifiée grâce au test de Levene. Pour ce test, les hypothèses seront les suivantes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : les résidus sont homogènes (<em>i.e.</em> identiques dans tous les groupes).</li>
+<li>H<span class="math inline">\(_1\)</span> : les résidus ne sont pas homogènes (<em>i.e.</em> au moins un groupe présente des résidus dont la variance est différente des autres).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(res<span class="sc">$</span>residuals <span class="sc">~</span> Light<span class="sc">$</span>treatment)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(&gt;F)
+group  2  0.1586 0.8545
+      19               </code></pre>
+</div>
+</div>
+<p>Ici, puisque <span class="math inline">\(p &gt; \alpha\)</span>, on ne peut pas rejeter l’hypothèse nulle. Les résidus sont donc bien homogènes.</p>
+<p>Reste à vérifier la normalité des résidus.</p>
+</section>
+<section id="normalité-des-résidus" class="level4" data-number="12.6.2.3">
+<h4 data-number="12.6.2.3" class="anchored" data-anchor-id="normalité-des-résidus"><span class="header-section-number">12.6.2.3</span> Normalité des résidus</h4>
+<p>Comme pour l’homogénéité des résidus, leur normalité peut être examinée graphiquement ou avec un test statistique :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">which =</span> <span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12-ANOVA_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Sur un graphique quantile-quantile comme celui-là, on considère que les observations sont distribuées normalement si les points sont bien alignés sur la droite. Ici, la plupart des points sont très proches de la droite, ce qui laisse penser que les résidus suivent bien la loi Normale. Mais il est souvent difficile, surtout pour les néophytes, de savoir à partir de quel écart entre les points et la droite il faut considérer que les résidus n’ont pas une distribution Normale.</p>
+<p>On peut donc confirmer (ou non !) notre première impression avec le test de Normalité de Shapiro-Wilk. Il s’agit du même test de Normalité que nous utilisions sur les données brutes pour vérifier les conditions d’application du test de Student. Ici, on applique ce test sur les résidus de l’ANOVA :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(res<span class="sc">$</span>residuals)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  res$residuals
+W = 0.95893, p-value = 0.468</code></pre>
+</div>
+</div>
+<p>Comme pour tous les tests de Shapiro-Wilk, l’hypothèse nulle est la normalité des observations. Ici, puisque <span class="math inline">\(p &gt; \alpha\)</span>, on ne peut pas rejeter H<span class="math inline">\(_0\)</span>. Les résidus suivent donc bien la loi Normale.</p>
+<p>Toutes les conditions d’application de l’ANOVA sont donc vérifiées. Nous avions donc bien le droit de la réaliser et ses résultats sont valides.</p>
+<p>Dernière chose, il est possible de produire les 3 graphiques ci-dessus (et même un quatrième que nous ne décrirons pas ici), en une seule commande :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Il faut alors presser la touche <code>Entrée</code> de votre clavier pour afficher successivement les 4 graphiques produits.</p>
+</section>
+</section>
+<section id="interprétation-des-résultats" class="level3" data-number="12.6.3">
+<h3 data-number="12.6.3" class="anchored" data-anchor-id="interprétation-des-résultats"><span class="header-section-number">12.6.3</span> Interprétation des résultats</h3>
+<p>Maintenant que nous avons la confirmation que les conditions d’application sont vérifiées, revenons aux résultats de l’ANOVA :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+treatment    2  7.224   3.612   7.289 0.00447 **
+Residuals   19  9.415   0.496                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Comme indiqué plus haut, la première ligne du tableau d’ANOVA contient toutes les informations pertinentes pour interpréter ces résultats. En particulier, la dernière valeur de la ligne correspond à la <span class="math inline">\(p-\)</span>value. Ici, elle est inférieure au seuil <span class="math inline">\(\alpha\)</span> de 0.05. On pourrait rédiger les résultats de cette analyse ainsi :</p>
+<blockquote class="blockquote">
+<p>Une analyse de variance montre que la moyenne des 3 groupes n’est pas identique (<span class="math inline">\(F = 7.289\)</span>, <span class="math inline">\(p = 0.004\)</span>). Un test de Levene a permis de vérifier la condition d’homogénéité de la variance des résidus (<span class="math inline">\(F = 0.189\)</span>, <span class="math inline">\(p = 0.855\)</span>), et un test de Shapiro-Wilk a confirmé la normalité des résidus (<span class="math inline">\(W = 0.959\)</span>, <span class="math inline">\(p = 0.468\)</span>).</p>
+</blockquote>
+<p>Ainsi, puisque <span class="math inline">\(p &lt; \alpha\)</span>, on rejette <span class="math inline">\(H_0\)</span>. ON a donc bien montré que tous les groupes n’avaient pas la même moyenne. Mais à ce stade, on ne sait pas encore si tous les groupes ont des moyennes strictement différentes les unes des autres, ou si seul un groupe (et lequel) présente une moyenne différente des 2 autres.</p>
+<p>À l’issue de cette analyse, deux questions restent donc en suspens :</p>
+<ol type="1">
+<li>Entre quels groupes les moyennes sont-elles significativement différentes ?</li>
+<li>Quelle est la magnitude de ces différences ?</li>
+</ol>
+<p>Pour répondre à ces 2 questions, il nous faut réaliser des tests <em>a posteriori</em> ou tests <em>post-hoc</em>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Les tests <em>post-hoc</em>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les tests <em>post-hoc</em> doivent être réalisés uniquement si l’hypothèse nulle de l’ANOVA est rejetée. Ils sont alors nécessaires pour déterminer entre quels groupes les moyennes sont significativement différentes. Si à l’inverse, l’ANOVA n’a pas permis de rejeter <span class="math inline">\(H_0\)</span>, alors on peut conclure à l’absence de différence de moyenne entre les groupes (<em>i.e.</em> toutes les moyennes sont égales), et les tests <em>post-hoc</em> n’ont alors aucun intérêt.</p>
+</div>
+</div>
+</section>
+<section id="tests-a-posteriori-ou-tests-post-hoc" class="level3" data-number="12.6.4">
+<h3 data-number="12.6.4" class="anchored" data-anchor-id="tests-a-posteriori-ou-tests-post-hoc"><span class="header-section-number">12.6.4</span> Tests <em>a posteriori</em> ou tests <em>post-hoc</em></h3>
+<p>Lorsqu’une ANOVA montre que tous les groupes n’ont pas la même moyenne, il faut en théorie effectuer toutes les comparaisons de moyennes deux à deux possibles. Le problème est que lorsque l’on effectue des comparaisons multiples, les erreurs <span class="math inline">\(\alpha\)</span> (probabilité de rejeter à tort H<span class="math inline">\(_0\)</span>) de tous les tests s’ajoutent. Ainsi :</p>
+<ul>
+<li>pour comparer 3 groupes 2 à 2, nous avons besoin de 3 tests.</li>
+<li>Pour comparer 4 groupes 2 à 2, nous avons besoin de 6 tests.</li>
+<li>pour comparer 5 groupes 2 à 2, nous avons besoin de 10 tests.</li>
+<li>pour comparer 6 groupes 2 à 2, nous avons besoin de 15 tests.</li>
+<li>pour comparer k groupes 2 à 2, nous avons besoin de <span class="math inline">\(\frac{k(k-1)}{2}\)</span> tests.</li>
+</ul>
+<p>Ici, puisque pour chaque test, un risque <span class="math inline">\(\alpha\)</span> de 5% de rejeter à tort l’hypothèse nulle est commis, réaliser 3 tests ferait monter le risque de s’être trompé quelque part à 15%. C’est la raison pour laquelle des tests spécifiques existent. Nous en verrons 2 : le test de comparaisons multiples de Student et le test de Tukey (ou “Honestly Significant Difference Test”). Pour ces tests, des précautions sont prises qui garantissent que le risque <span class="math inline">\(\alpha\)</span> <strong>global</strong> (à l’issue de l’ensemble des tests) est maîtrisé et qu’il reste fixé à 5%, quel que soit le nombre de comparaisons effectuées.</p>
+<section id="comparaisons-multiples-de-student" class="level4" data-number="12.6.4.1">
+<h4 data-number="12.6.4.1" class="anchored" data-anchor-id="comparaisons-multiples-de-student"><span class="header-section-number">12.6.4.1</span> Comparaisons multiples de Student</h4>
+<p>Le test de comparaisons multiples de Student est réalisé avec la fonction <code>pairwise.t.test()</code>. En réalité, ici, 3 tests de Student seront réalisés. Les <span class="math inline">\(p-\)</span>values des tests seront simplement modifiées afin que globalement, le risque <span class="math inline">\(\alpha\)</span> n’augmente pas. Pour chaque test réalisé, les hypothèses nulles et alternatives sont les mêmes que celles décrites à la <a href="11-TwoSampleTests.html#sec-student"><span>Section&nbsp;11.6.2</span></a> :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la moyenne des deux populations est égale (<span class="math inline">\(\mu_1 = \mu_2\)</span>, soit <span class="math inline">\(\mu_1 - \mu_2\)</span> = 0).</li>
+<li>H<span class="math inline">\(_1\)</span> : la moyenne des deux populations est différente (<span class="math inline">\(\mu_1 \neq \mu_2\)</span>, soit <span class="math inline">\(\mu_1 - \mu_2 \neq 0\)</span>).</li>
+</ul>
+<p>Attention, pour ce test, la syntaxe “formules”, qui utilise le tilde (<code>~</code>) n’est pas possible. Il faut obligatoirement fournir à la fonction 2 objets : la colonne contenant la variable expliquée numérique, et la colonne (facteur) contenant les catégories (ici, le facteur contenant le type de traitement appliqué à chaque individu lors de l’expérience) :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réalisation du test</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>post_hoc1 <span class="ot">&lt;-</span> <span class="fu">pairwise.t.test</span>(Light<span class="sc">$</span>shift, Light<span class="sc">$</span>treatment)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># affichage des résultats</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>post_hoc1</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pairwise comparisons using t tests with pooled SD 
+
+data:  Light$shift and Light$treatment 
+
+     control knee  
+knee 0.9418  -     
+eyes 0.0088  0.0088
+
+P value adjustment method: holm </code></pre>
+</div>
+</div>
+<p>Seules les <span class="math inline">\(p-\)</span>values de chaque test sont fournies sous la forme d’une demi-matrice. On constate ainsi qu’une seule <span class="math inline">\(p-\)</span>value est supérieure à <span class="math inline">\(\alpha = 0.05\)</span> : celle du test comparant les moyennes des groupes <code>knee</code> et <code>control</code>. Une autre façon de visualiser ces résultats consiste à utiliser la fonction <code>tidy()</code> du package <code>broom</code> que nous avons mis en mémoire un peu plus tôt. Les résultats seront les mêmes. Ils seront simplement rangés dans un <code>tibble</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(post_hoc1)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  group1 group2  p.value
+  &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;
+1 knee   control 0.942  
+2 eyes   control 0.00879
+3 eyes   knee    0.00880</code></pre>
+</div>
+</div>
+<p>Nous avons donc la confirmation que les moyennes des groupes <code>knee</code> et <code>control</code> ne sont pas significativement différentes l’une de l’autre. En revanche, la moyenne du groupe <code>eyes</code> est différente de celle des 2 autres groupes (<span class="math inline">\(p = 0.009\)</span> pour les 2 tests).</p>
+<p>Nous avons donc appris des choses nouvelles, mais nous ne savons toujours pas quelle est la magnitude de la différence détectée entre le groupe <code>eyes</code> et les 2 autres. Le test de Tukey HSD nous permet de répondre à cette question.</p>
+</section>
+<section id="test-de-tukey" class="level4" data-number="12.6.4.2">
+<h4 data-number="12.6.4.2" class="anchored" data-anchor-id="test-de-tukey"><span class="header-section-number">12.6.4.2</span> Test de Tukey</h4>
+<p>Ce test est souvent plus avantageux que le test des comparaisons multiples de Student, car outre la <span class="math inline">\(p-\)</span>value de chaque comparaison deux à deux, il renvoie des informations concernant les différences de moyennes entre chaque paire de modalités du facteur étudié, et les intervalles de confiance à 95% de ces différences de moyennes. Donc en plus de savoir quels groupes ou traitements sont significativement différents les uns des autres, ce test nous indique l’importance des différences détectées.</p>
+<p>Pour effectuer ce test, on utilise la fonction <code>TukeyHSD()</code>, à laquelle on fournit simplement l’objet contenant les résultats de l’ANOVA :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réalisation du test de Tukey HSD</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>post_hoc2 <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(res)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage des résultats</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>post_hoc2</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = shift ~ treatment, data = Light)
+
+$treatment
+                    diff        lwr        upr     p adj
+knee-control -0.02696429 -0.9525222  0.8985936 0.9969851
+eyes-control -1.24267857 -2.1682364 -0.3171207 0.0078656
+eyes-knee    -1.21571429 -2.1716263 -0.2598022 0.0116776</code></pre>
+</div>
+</div>
+<p>Nous obtenons bien à la fois la <span class="math inline">\(p-\)</span>value des comparaisons 2 à 2, ainsi que l’estimation des différences de moyennes (et de leur intervalle de confiance à 95%) entre paires de groupes. Là encore, l’utilisation de la fonction <code>tidy()</code> du package <code>broom</code> peut rendre les résultats plus lisibles (ou en tous cas, plus faciles à manipuler) :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(post_hoc2)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 7
+  term      contrast     null.value estimate conf.low conf.high adj.p.value
+  &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 treatment knee-control          0  -0.0270   -0.953     0.899     0.997  
+2 treatment eyes-control          0  -1.24     -2.17     -0.317     0.00787
+3 treatment eyes-knee             0  -1.22     -2.17     -0.260     0.0117 </code></pre>
+</div>
+</div>
+<p>La première ligne de ce tableau nous confirme une absence de différence de moyenne significative entre les groupes <code>knee</code> et <code>control</code> (<code>p = 0.997</code>). La différence de moyenne estimée pour ces deux catégories (<span class="math inline">\(\hat{\mu}_{\textrm{knee}} - \hat{\mu}_{\textrm{control}}\)</span>) vaut <span class="math inline">\(-0.027\)</span>, avec un intervalle de confiance à 95% pour cette différence qui vaut <span class="math inline">\([-0.95 ; 0.90]\)</span>. Cet intervalle, qui rassemble les valeurs les plus probables pour cette différence de moyenne, contient la valeur 0, ce qui confirme qu’il n’y a aucune raison de penser qu’une différence réelle existe entre ces 2 catégories. Le faible écart de moyennes observé entre ces 2 groupes est donc très vraisemblablement le fruit du hasard. L’éclairage du creux poplité donne les mêmes résultats que quand les patients sont maintenus dans le noir.</p>
+<p>En revanche, les lignes 2 et 3 de ce tableau montrent des différences significatives (<span class="math inline">\(p = 0.008\)</span> et <span class="math inline">\(p = 0.012\)</span> pour les comparaisons <code>eyes</code>/<code>control</code> et <code>eyes</code>/<code>knee</code> respectivement). Les différences sont négatives, de l’ordre de -1.2 pour les 2 comparaisons, ce qui traduit des valeurs plus faibles pour <code>eyes</code> que pour les 2 autres groupes. Pour ces 2 comparaisons, les intervalles de confiance à 95% des différences ne contiennent pas le 0, mais exclusivement des valeurs négatives. Cela traduit donc bien une resynchronisation plus rapide chez les sujets dont les yeux sont exposés à la lumière que chez les sujets des 2 autres groupes.</p>
+<p>En utilisant le tableau ci-dessus, nous pouvons synthétiser graphiquement ces résultats :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(post_hoc2) <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> contrast, <span class="at">y =</span> estimate)) <span class="sc">+</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high)) <span class="sc">+</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comparaison"</span>,</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Différence de moyennes (et IC 95%)"</span>) <span class="sc">+</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12-ANOVA_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Notez ici l’utilisation de <code>geom_linerange</code>, pour afficher les intervalles de confiance à 95% des différences de moyennes. Il s’agit d’une alternative à <code>geom_errorbar()</code> dont nous avons déjà parlé <a href="https://besibo.github.io/BiometrieS4/03-graphiques.html#visualiser-lincertitude-les-barres-derreur">dans ce chapitre</a> du livre en ligne du semestre 4. La fonction <code>geom_hline()</code> permet de faire apparaître des lignes horizontales sur un graphique. Ici, avec <code>y = 0</code>, cette fonction fait apparaître un axe horizontal (axe des abscisses). Enfin, la fonction <code>coord_flip()</code> permet d’inverser les axes du graphique : l’axe des <code>x</code> bascule à la verticale, et l’axe des <code>y</code> à l’horizontale. Cela permet d’obtenir un graphique dont l’apparence est typique de ce genre de graphique produit avec les résultats du test de Tukey HSD.</p>
+<p>Ce graphique montre bien que pour la comparaison <code>knee - control</code>, le zéro est compris dans l’intervalle de confiance à 95% de la différence de moyennes, ce qui confirme l’absence de différence significative de décalage de phase entre ces 2 groupes. À l’inverse, pour les 2 autres comparaisons (<code>eyes - knee</code> d’une part, et <code>eyes - control</code> d’autre part), les intervalles de confiance à 95% des différences de moyennes ne coupent pas le zéro. Cela indique une différence de moyenne significative : dans la population générale, le zéro ne fait pas partie des valeurs les plus probables pour la différence de décalage de phase entre ces groupes.</p>
+<p>Nous avons donc bien montré ici que la re-synchronisation de l’horloge interne n’est possible que par le biais de l’exposition des yeux à la lumière, et non du creux poplité.</p>
+</section>
+</section>
+</section>
+<section id="lalternative-non-paramétrique" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="lalternative-non-paramétrique"><span class="header-section-number">12.7</span> L’alternative non paramétrique</h2>
+<section id="la-robustesse-de-lanova" class="level3" data-number="12.7.1">
+<h3 data-number="12.7.1" class="anchored" data-anchor-id="la-robustesse-de-lanova"><span class="header-section-number">12.7.1</span> La robustesse de l’ANOVA</h3>
+<p>Dans la suite de cette section, nous faisons l’hypothèse, bien que ça ne soit pas le cas, que les conditions d’application de l’ANOVA ne sont pas vérifiées pour notre jeu de données. Si les conditions d’application de l’ANOVA ne sont pas remplies, alors, les résultats de l’ANOVA ne peuvent pas être examinés car ils ne sont pas valides. Il nous faut alors recourir à un test non-paramétrique afin de comparer la moyenne de plus de deux groupes à la fois.</p>
+<p>La particularité de l’ANOVA est sa grande <strong>robustesse</strong> vis-à-vis d’un non respect modéré de ses conditions d’application (voir définition de la robustesse dans la <a href="11-TwoSampleTests.html#sec-robust"><span>Section&nbsp;11.6.1</span></a>). L’ANOVA étant particulièrement robuste, ses résultats resteront valides dans les situations suivantes :</p>
+<ul>
+<li>Non normalité modérée des résidus. Si les résidus ne suivent pas parfaitement une loi Normale mais qu’ils sont néanmoins grossièrement distribués selon une courbe en cloche, les résultats de l’ANOVA resteront vrais, surtout si les effectifs sont importants.</li>
+<li>Non homogénéité des résidus. Si les résidus ne sont pas homogènes dans tous les groupes, les résultats de l’ANOVA resteront vrais tant que les échantillons seront grands, approximativement de la même taille dans tous les groupes, et à condition que les écarts de variances entre les groupes ne dépassent pas un facteur 10.</li>
+</ul>
+<p>Dans tous les autres cas de non respect des conditions de l’ANOVA, par exemple, si la variance des résidus n’est pas homogène et que les groupes sont de petite taille ou de taille différente, ou si les variances diffèrent de plus d’un facteur 10, ou si les résidus s’écartent fortement de la normalité, ou <strong>si les deux conditions d’application ne sont pas respectées (même modérément) en même temps</strong>, il faudra alors faire un test non paramétrique.</p>
+<p>L’alternative non paramétrique à l’ANOVA à un facteur est le test de la somme des rangs de <strong>Kruskal-Wallis</strong></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Paramétrique ou non ?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour comparer la moyenne de plus de 2 groupes :</p>
+<ul>
+<li>lorsque les conditions permettant de réaliser un test paramétrique sont réunies (voir <a href="#sec-caanova"><span>Section&nbsp;12.6.2</span></a>), on effectuera une <strong>ANOVA</strong>, qui n’est qu’une extension du test de <strong>Student</strong>. Si (et seulement si) on en rejette l’hypothèse nulle, on fera ensuite un test <em>post-hoc</em> <strong>paramétrique</strong> : le test de <strong>comparaisons multiples de Student</strong> et/ou le test de <strong>Tukey HSD</strong>.</li>
+<li>lorsque les conditions permettant de réaliser un test paramétrique ne sont pas réunies, on effectuera un test de <strong>Kruskal-Wallis</strong>, qui est une extension du test de <strong>Wilcoxon</strong>. Si (et seulement si) on en rejette l’hypothèse nulle, on fera ensuite un test <em>post-hoc</em> <strong>non paramétrique</strong> : le test de <strong>comparaisons multiples de Wilcoxon</strong> et/ou le test de <strong>Dunn</strong>.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="réalisation-du-tests-et-interprétation" class="level3" data-number="12.7.2">
+<h3 data-number="12.7.2" class="anchored" data-anchor-id="réalisation-du-tests-et-interprétation"><span class="header-section-number">12.7.2</span> Réalisation du tests et interprétation</h3>
+<p>Les hypothèses nulle et alternative du test de Kruskal-Wallis sont les suivante. Comme toujours, l’hypothèse nulle concerne l’absence d’effet du facteur étudié :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : le type de traitement appliqué n’a pas d’effet sur le décalage de phase. Les médianes sont égales dans tous les groupes (<span class="math inline">\(\textrm{med}_\textrm{control} = \textrm{med}_\textrm{knee} = \textrm{med}_\textrm{eyes}\)</span>).</li>
+<li>H<span class="math inline">\(_1\)</span> : le type de traitement appliqué a un effet sur le décalage de phase. Les médianes ne sont pas toutes égales, au moins l’une d’entre elles diffère des autres.</li>
+</ul>
+<p>La syntaxe du test est similaire à celle de l’ANOVA. On utilise la notation formule en plaçant la variable numérique expliquée à gauche du <code>~</code>, et le facteur (variable explicative) à droite du <code>~</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(shift <span class="sc">~</span> treatment, <span class="at">data =</span> Light)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Kruskal-Wallis rank sum test
+
+data:  shift by treatment
+Kruskal-Wallis chi-squared = 9.4231, df = 2, p-value = 0.008991</code></pre>
+</div>
+</div>
+<p>Ici, la <span class="math inline">\(p-\)</span>value est inférieure à <span class="math inline">\(\alpha\)</span>, on rejette donc H<span class="math inline">\(_0\)</span> : toutes les médianes ne sont pas égales. Comme avec l’ANOVA, il nous faut maintenant déterminer quelles médianes sont différentes les unes des autres, et quelles sont les magnitudes de ces différences. Pour cela, nous devons réaliser des tests <em>post-hoc</em> de comparaisons multiples.</p>
+</section>
+<section id="tests-a-posteriori-ou-tests-post-hoc-1" class="level3" data-number="12.7.3">
+<h3 data-number="12.7.3" class="anchored" data-anchor-id="tests-a-posteriori-ou-tests-post-hoc-1"><span class="header-section-number">12.7.3</span> Tests <em>a posteriori</em> ou tests <em>post-hoc</em></h3>
+<p>Comme pour les tests <em>post-hoc</em> de l’ANOVA, nous allons voir ici 2 tests de comparaisons multiples non paramétriques.</p>
+<section id="comparaisons-multiples-de-wilcoxon" class="level4" data-number="12.7.3.1">
+<h4 data-number="12.7.3.1" class="anchored" data-anchor-id="comparaisons-multiples-de-wilcoxon"><span class="header-section-number">12.7.3.1</span> Comparaisons multiples de Wilcoxon</h4>
+<p>Le premier test est l’équivalent non paramétrique du test de comparaisons multiples de Student : le <strong>test de comparaisons multiples de la somme des rangs de Wilcoxon</strong>. Le principe est absolument le même que pour le test de comparaisons multiples de Student : toutes les comparaisons 2 à 2 sont effectuées au moyen d’un test de la somme des rangs de Wilcoxon. Les <span class="math inline">\(p-\)</span>values de ces tests sont corrigées afin de garantir que le risque d’erreur <span class="math inline">\(\alpha\)</span> global soit maintenu constant en dépit de l’augmentation du nombre de tests réalisés. Pour chaque comparaison, les hypothèses sont les suivantes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la médiane des deux populations est égale.</li>
+<li>H<span class="math inline">\(_1\)</span> : la médiane des deux populations est différente.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réalisation du test</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>post_hoc3 <span class="ot">&lt;-</span> <span class="fu">pairwise.wilcox.test</span>(Light<span class="sc">$</span>shift, Light<span class="sc">$</span>treatment)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage des résultats</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>post_hoc3</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pairwise comparisons using Wilcoxon rank sum exact test 
+
+data:  Light$shift and Light$treatment 
+
+     control knee  
+knee 0.9551  -     
+eyes 0.0037  0.0524
+
+P value adjustment method: holm </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Utilisation de la fonction `tidy` pour afficher les résultats dans un tibble</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(post_hoc3)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  group1 group2  p.value
+  &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;
+1 knee   control 0.955  
+2 eyes   control 0.00373
+3 eyes   knee    0.0524 </code></pre>
+</div>
+</div>
+<p>Ici, la <span class="math inline">\(p-\)</span>value du premier test est supérieure à <span class="math inline">\(\alpha = 0.05\)</span>. Il n’y a donc pas de différence entre les médianes du groupe <code>control</code> et du groupe <code>knee</code>. Le traitement lumineux appliqué dans le creux poplité n’a donc aucun effet sur le décalage de phase.</p>
+<p>La <span class="math inline">\(p-\)</span>value du second test est en revanche inférieure à <span class="math inline">\(\alpha\)</span>. On rejette l’hypothèse nulle pour ce test ce qui confirme que le traitement lumineux appliqué au niveau des yeux a un effet sur le décalage de phase. Reste toutefois à quantifier l’importance de ce décalage de phase par rapport au groupe <code>control</code>.</p>
+<p>Enfin, la <span class="math inline">\(p-\)</span>value du troisième test est supérieure (tout juste !) à <span class="math inline">\(\alpha\)</span>. La conclusion logique est donc qu’il n’y a pas de différence significative entre les médianes des groupes <code>knee</code> et <code>eyes</code>. On sait que ce n’est pas le cas puisque nous avons montré plus haut (avec les tests paramétriques), que la différence de moyennes entre ces deux populations était significative. Nous avons ici l’illustration parfaite de la faible puissance des tests non paramétriques : leur capacité à détecter un effet lorsqu’il y en a réellement un est plus faible que celle des tests paramétriques. En outre, les procédures de comparaisons multiples sont très conservatives, et font mécaniquement baisser la puissance des tests pour maintenir constante l’erreur <span class="math inline">\(\alpha\)</span>. Je ne peux donc que vous inciter à la prudence lorsque vous interprétez les résultats d’un test de comparaions multiples (<em>a fortiori</em> un test non paramétrique) pour lequel la <span class="math inline">\(p-\)</span>value obtenue est très proche du seuil <span class="math inline">\(\alpha\)</span>.</p>
+<p>Comme pour son homologue paramétrique, le test de comparaisons multiples de Wilcoxon nous permet de prendre une décision par rapport à H<span class="math inline">\(_0\)</span>, mais il ne nous dit rien de la magnitude des effets mesurés. Pour les connaître, il nous faut réaliser un autre test.</p>
+</section>
+<section id="le-test-de-dunn" class="level4" data-number="12.7.3.2">
+<h4 data-number="12.7.3.2" class="anchored" data-anchor-id="le-test-de-dunn"><span class="header-section-number">12.7.3.2</span> Le test de Dunn</h4>
+<p>Le <strong>test de Dunn</strong> est au test de Kruskal-Wallis ce que le test de Tukey HSD est à l’ANOVA : un test post-hoc permettant de déterminer la magnitude des effets observés. Pour pouvoir le réaliser, le package <code>DescTools</code> doit être chargé. Sa syntaxe est la même que pour le test de Kruskal-Wallis ou l’ANOVA :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réalisation du test</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>post_hoc4 <span class="ot">&lt;-</span> <span class="fu">DunnTest</span>(shift <span class="sc">~</span> treatment, <span class="at">data =</span> Light)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage des résultats</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>post_hoc4</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Dunn's test of multiple comparisons using rank sums : holm  
+
+             mean.rank.diff   pval    
+knee-control     -0.4821429 0.8859    
+eyes-control     -9.3392857 0.0164 *  
+eyes-knee        -8.8571429 0.0214 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Avec ces résultats on progresse un peu, car outre les <span class="math inline">\(p-\)</span>values pour chaque comparaison, le test nous fournit une estimation de la différence des rangs moyens. Malheureusement, ces estimations sont souvent difficiles à interpréter (par exemple, quelle est l’unité utilisée ?) et aucun intervalle de confiance n’est fourni. On constate néanmoins que le test de Dunn donne ici des résultats comparables à ceux fournis par les tests paramétriques : le groupe <code>eyes</code> est significativement différent des deux autres. Pour obtenir les intervalles de confiance dont nous avons besoin, nous n’avons pas d’autre choix que des les calculer à l’aide du test de Wilcoxon classique, en réalisant manuellement les tests dont nous avons besoin. Ici, le test à proprement parler ne nous intéresse pas, d’ailleurs, sa <span class="math inline">\(p-\)</span>value ne doit surtout pas être prise en compte car elle ignore totalement les comparaisons multiples et conduirait donc à augmenter l’erreur de type I. La seule chose pertinente est ici <strong>la différence de (pseudo-)médiane estimée et son intervalle de confiance</strong> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparaisons entre les groupes `knee` et `eyes` (dans cet ordre)</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(treatment <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"knee"</span>, <span class="st">"eyes"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wilcox.test</span>(shift <span class="sc">~</span> treatment, <span class="at">data =</span> ., <span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  estimate statistic p.value conf.low conf.high method               alternative
+     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                &lt;chr&gt;      
+1     1.19        42  0.0262      0.3      2.21 Wilcoxon rank sum e… two.sided  </code></pre>
+</div>
+</div>
+<p>Pour le décalage de phase de ces 2 groupes, la différence de médiane estimée vaut donc 1.19, avec un intervalle de confiance à 95% de <span class="math inline">\([0.3 ; 2.21]\)</span>. Toutes les valeurs comprises dans cet intervalle de confiance sont strictement positives. Il y a donc très peu de chances pour que la différence de médiane entre ces deux groupes soit nulle. Le test de Dunn ci-dessus, qui montre une différence significative entre ces groupes, est donc confirmé.</p>
+</section>
+</section>
+</section>
+<section id="exercices-dapplication" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="exercices-dapplication"><span class="header-section-number">12.8</span> Exercices d’application</h2>
+<section id="cardamine-pensylvanica" class="level3" data-number="12.8.1">
+<h3 data-number="12.8.1" class="anchored" data-anchor-id="cardamine-pensylvanica"><span class="header-section-number">12.8.1</span> <em>Cardamine pensylvanica</em></h3>
+<p>En biologie de la conservation, la question de l’existence d’un lien entre la capacité de dispersion des organismes et le maintien durable des populations dans le temps est étudié de près, notamment en raison de l’anthropisation des milieux qui conduit très souvent à la fragmentation des habitats. Cette question a été étudiée par 2 chercheurs <span class="citation" data-cites="Molofsky2005">(<a href="references.html#ref-Molofsky2005" role="doc-biblioref">Molofsky et Ferdy 2005</a>)</span> chez <em>Cardamine pensylvanica</em>, une <a href="https://en.wikipedia.org/wiki/Cardamine_pensylvanica">plante annuelle d’Amérique du Nord</a> qui produit des graines qui sont dispersées de façon explosive. Quatre traitements ont été utilisés pour modifier expérimentalement la dispersion des graines. La distance entre populations contigües a été définie comme suit :</p>
+<ul>
+<li>Traitement 1 : <code>continu</code>. Les plants sont conservés au contact les uns des autres.</li>
+<li>Traitement 2 : <code>medium</code>. Les plants sont séparés de 23.2 centimètres.</li>
+<li>Tratiement 3 : <code>long</code>. Les plants sont séparés de 49.5 centimètres.</li>
+<li>Traitement 4 : <code>isole</code>. Les plants sont séparés par des panneaux de bois empêchant la dispersion des graines.</li>
+</ul>
+<p>Ces traitements ont été assignés au hasard à des populations de plantes, et 4 réplicats ont été faits pour chacun d’entre eux. Les résultats de l’expérience sont présentés ci-dessous. Il s’agit du nombre de générations durant lesquelles les plantes ont persisté :</p>
+<ul>
+<li><code>continu</code> : 9, 13, 13, 16</li>
+<li><code>medium</code> : 14, 12, 16, 16</li>
+<li><code>long</code> : 13, 9, 10, 11</li>
+<li><code>isole</code> : 13, 8, 8, 8</li>
+</ul>
+<p>Saisissez ces données dans <code>RStudio</code> et faites-en l’analyse. Vous tenterez de déterminer si l’éloignement entre les populations de plantes a un impact sur leur capacité de survie. Comme toujours, avant de vous lancer dans les tests, vous prendrez le temps de décrire les données avec des statistiques descriptives et des représentations graphiques.</p>
+</section>
+<section id="insecticides" class="level3" data-number="12.8.2">
+<h3 data-number="12.8.2" class="anchored" data-anchor-id="insecticides"><span class="header-section-number">12.8.2</span> Insecticides</h3>
+<p>L’efficacité de 6 insecticides nommés A, B, C, D, E et F a été testée sur 6 parcelles agricoles. Chaque insecticide de cette liste a été appliqué sur une parcelle agricole choisie au hasard. Deux semaines plus tard, 12 plants ont été collectés dans chaque parcelle agricole et le nombre d’insectes toujours vivants sur chacun d’entre eux a été compté. Les résultats sont présentés dans le fichier <a href="data/Insectes.csv"><code>Insectes.csv</code></a>. Importez ces données dans <code>RStudio</code> et faites-en l’analyse. Tous les insecticides ont-ils la même efficacité ? Si la réponse est non, quels sont les insecticides les plus (ou les moins) efficaces.</p>
+</section>
+<section id="la-longueur-des-nageoires-des-manchots-femelles" class="level3" data-number="12.8.3">
+<h3 data-number="12.8.3" class="anchored" data-anchor-id="la-longueur-des-nageoires-des-manchots-femelles"><span class="header-section-number">12.8.3</span> La longueur des nageoires des manchots femelles</h3>
+<p>Avec le jeu de données <code>penguins</code> du package <code>palmerpenguins</code>, comparez la longueur des nageoires des femelles des 3 espèces de manchots. Les femelles des 3 espèces ont-elles toutes des nageoires de longueur différentes, et quelle est la magnitude de ces éventuelles différences ?</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Campbell1998" class="csl-entry" role="listitem">
+Campbell, Scott S., et Patricia J. Murphy. 1998. <span>«&nbsp;Extraocular Circadian Phototransduction in Humans&nbsp;»</span>. <em>Science</em> 279 (5349): 396‑99. <a href="https://doi.org/10.1126/science.279.5349.396">https://doi.org/10.1126/science.279.5349.396</a>.
+</div>
+<div id="ref-R-car" class="csl-entry" role="listitem">
+Fox, John, Sanford Weisberg, et Brad Price. 2023. <em>car: Companion to Applied Regression</em>. <a href="https://CRAN.R-project.org/package=car">https://CRAN.R-project.org/package=car</a>.
+</div>
+<div id="ref-R-palmerpenguins" class="csl-entry" role="listitem">
+Horst, Allison, Alison Hill, et Kristen Gorman. 2022. <em>palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://CRAN.R-project.org/package=palmerpenguins">https://CRAN.R-project.org/package=palmerpenguins</a>.
+</div>
+<div id="ref-Molofsky2005" class="csl-entry" role="listitem">
+Molofsky, Jane, et Jean-Baptiste Ferdy. 2005. <span>«&nbsp;Extinction dynamics in experimental metapopulations&nbsp;»</span>. <em>Proceedings of the National Academy of Sciences</em> 102 (10): 3726‑31. <a href="https://doi.org/10.1073/pnas.0404576102">https://doi.org/10.1073/pnas.0404576102</a>.
+</div>
+<div id="ref-R-broom" class="csl-entry" role="listitem">
+Robinson, David, Alex Hayes, et Simon Couch. 2023. <em>broom: Convert Statistical Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom">https://CRAN.R-project.org/package=broom</a>.
+</div>
+<div id="ref-R-DescTools" class="csl-entry" role="listitem">
+Signorell, Andri. 2023. <em>DescTools: Tools for Descriptive Statistics</em>. <a href="https://CRAN.R-project.org/package=DescTools">https://CRAN.R-project.org/package=DescTools</a>.
+</div>
+<div id="ref-R-skimr" class="csl-entry" role="listitem">
+Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, et Shannon Ellis. 2022. <em>skimr: Compact and Flexible Summaries of Data</em>. <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>.
+</div>
+<div id="ref-R-tidyverse" class="csl-entry" role="listitem">
+Wickham, Hadley. 2023. <em>tidyverse: Easily Install and Load the Tidyverse</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.
+</div>
+<div id="ref-R-readxl" class="csl-entry" role="listitem">
+Wickham, Hadley, et Jennifer Bryan. 2023. <em>readxl: Read Excel Files</em>. <a href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.
+</div>
+<div id="ref-R-ggplot2" class="csl-entry" role="listitem">
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, et Dewey Dunnington. 2023. <em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
+</div>
+<div id="ref-R-dplyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, et Davis Vaughan. 2023. <em>dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+<div id="ref-R-readr" class="csl-entry" role="listitem">
+Wickham, Hadley, Jim Hester, et Jennifer Bryan. 2023. <em>readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.
+</div>
+<div id="ref-Wright2002" class="csl-entry" role="listitem">
+Wright, Kenneth P., et Charles A. Czeisler. 2002. <span>«&nbsp;Absence of Circadian Phase Resetting in Response to Bright Light Behind the Knees&nbsp;»</span>. <em>Science</em> 297 (5581): 571‑71. <a href="https://doi.org/10.1126/science.1071697">https://doi.org/10.1126/science.1071697</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./11-TwoSampleTests.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./13-Correlation.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

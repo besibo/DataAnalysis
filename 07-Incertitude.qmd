@@ -57,15 +57,15 @@ Par exemple, reprenons les données de température (tableau `weather` du packag
 1. Je vais commencer par transformer les températures (fournies en degrés Fahrenheit) en degrés Celsius :
 
 ```{r}
-weather %>% 
+weather |> 
   mutate(temp_celsius = (temp - 32) / 1.8)
 ```
 
 2. Ensuite, je détermine, pour chaque jour de chaque mois de l'année, et pour chaque aéroport, quelle est la température maximale atteinte, et je stocke ces valeurs dans un nouvel objet pour pouvoir le ré-utiliser :
 
 ```{r}
-temp_jour <- weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
+temp_jour <- weather |> 
+  mutate(temp_celsius = (temp - 32) / 1.8) |> 
   summarise(temperature_max = max(temp_celsius, na.rm = TRUE),
             .by = c(origin, month, day))
 
@@ -75,7 +75,7 @@ temp_jour
 3. Je peux maintenant calculer la température moyenne mensuelle pour chaque aéroport :
 
 ```{r}
-temp_jour %>% 
+temp_jour |> 
   summarise(moyenne = mean(temperature_max, na.rm = TRUE),
             .by = c(origin, month))
 ```
@@ -83,7 +83,7 @@ temp_jour %>%
 Pour pouvoir réutiliser ce tableau, je lui donne un nom : 
 
 ```{r}
-temp_moyennes <- temp_jour %>% 
+temp_moyennes <- temp_jour |> 
   summarise(moyenne = mean(temperature_max, na.rm = TRUE),
             .by = c(origin, month))
 ```
@@ -93,7 +93,7 @@ Au final, je peux faire un graphique de l'évolution de ces températures :
 ```{r}
 #| fig-asp: 1
 
-temp_moyennes %>% 
+temp_moyennes |> 
   ggplot(aes(x = factor(month), y = moyenne)) +
   geom_line(aes(group = 1)) +
   geom_point() +
@@ -111,7 +111,7 @@ Vous remarquerez que :
 Pour les 3 aéroports, les profils de températures sont très proches. C'est tout à fait logique puisqu'ils sont situés dans un rayon de quelques kilomètres seulement. Le problème de ce graphique est que chaque point a été obtenu en calculant une moyenne. En janvier, nous avons fait la moyenne de 31 valeurs de températures quotidiennes pour chaque aéroport. En février, nous avons fait la moyenne de 28 valeurs de températures quotidiennes pour chaque aéroport. Et ainsi de suite pour tous les mois de l'année 2013. Puisque nous présentons des valeurs de moyennes, il nous faut présenter également **l'incertitude associée à ces calculs de moyennes**. Pour cela, nous devons calculer l'erreur standard des moyennes :
 
 ```{r}
-temp_jour %>% 
+temp_jour |> 
   summarise(moyenne = mean(temperature_max, na.rm = TRUE),
             N_obs = n(),
             erreur_standard = sd(temperature_max, na.rm = TRUE) / sqrt(N_obs),
@@ -123,7 +123,7 @@ Notre tableau de statistiques descriptives possède maintenant 2 colonnes suppl�
 Une fois de plus, je donne un nom à ce tableau de données pour pouvoir le réutiliser plus tard :
 
 ```{r}
-temperatures_se <- temp_jour %>% 
+temperatures_se <- temp_jour |> 
   summarise(moyenne = mean(temperature_max, na.rm = TRUE),
             N_obs = n(),
             erreur_standard = sd(temperature_max, na.rm = TRUE) / sqrt(N_obs),
@@ -133,7 +133,7 @@ temperatures_se <- temp_jour %>%
 Notez que le package `ggplot2` contient une fonction permettant de calculer à la fois la moyenne et erreur standard de la moyenne d'un échantillon : `mean_se()`. Puisque cette fonction renvoie 3 valeurs ($\bar{x}$, $\bar{x} - se$ et $\bar{x} + se$), on utilise `reframe()` :
 
 ```{r}
-temp_jour %>% 
+temp_jour |> 
   reframe(mean_se(temperature_max), 
           .by = c(origin, month))
 ```
@@ -157,7 +157,7 @@ $$\bar{x} - 1.96 \cdot \frac{s}{\sqrt{n}} < \mu < \bar{x} + 1.96 \cdot \frac{s}{
 Autrement dit, la vraie moyenne $\mu$ d'une population a de bonnes chances de se trouver dans un intervalle de plus ou moins 1.96 fois l'erreur standard de la moyenne. En première approximation, l'intervalle de confiance est donc la moyenne de l'échantillon $\bar{x}$ plus ou moins 2 fois l'erreur standard (que nous avons appris à calculer à la main un peu plus tôt). On peut donc calculer à la main les bornes inférieures et supérieures de l'intervalle de confiance ainsi :
 
 ```{r}
-temp_jour %>% 
+temp_jour |> 
   reframe(mean_se(temperature_max, mult = 1.96),
           .by = c(origin, month))
 ```
@@ -170,7 +170,7 @@ Ici, grâce à l'argument `mult = 1.96` de la fonction `mean_se()` :
 Dans la pratique, puisque cette méthode reste approximative et dépend de la nature des données dont on dispose, on utilisera plutôt des fonctions spécifiques qui calculeront pour nous les intervalles de confiance à 95% de nos estimateurs. C'est ce que permet en particulier la fonction `mean_cl_normal()` du package `ggplot2`. Il est toutefois important de bien comprendre qu'il y a un lien étroit entre l'erreur standard (l'incertitude associées à l'estimation d'un paramètre d'une population à partir des données d'un échantillon), et l'intervalle de confiance à 95% de ce paramètre.
 
 ```{r}
-temp_jour %>% 
+temp_jour |> 
   reframe(mean_cl_normal(temperature_max),
             .by = c(origin, month))
 ```
@@ -192,9 +192,9 @@ temperatures_se
 Ensuite, nous avons produit un tableau presque équivalent que nous allons nommer `temperature_se_bornes` et pour lequel nous allons modifier le nom des colonnes `y`, `ymin` et `ymax` :
 
 ```{r}
-temperature_se_bornes <- temp_jour %>% 
+temperature_se_bornes <- temp_jour |> 
   reframe(mean_se(temperature_max),
-            .by = c(origin, month)) %>% 
+            .by = c(origin, month)) |> 
   rename(moyenne = y,
          moyenne_moins_se = ymin,
          moyenne_plus_se = ymax)
@@ -205,9 +205,9 @@ temperature_se_bornes
 Nous avons ensuite calculé manuellement des intervalles de confiance approximatifs, avec la fonction `mean_se()` et son argument `mult = 1.96`. Là encore, nous allons stocker cet objet dans un tableau nommé `temperatures_ci_approx`, et nous allons modifier le nom des colonnes `y`, `ymin`, et `ymax` :
 
 ```{r}
-temperature_ci_approx <- temp_jour %>% 
+temperature_ci_approx <- temp_jour |> 
   reframe(mean_se(temperature_max, mult = 1.96),
-          .by = c(origin, month)) %>% 
+          .by = c(origin, month)) |> 
   rename(moyenne = y,
          ci_borne_inf = ymin,
          ci_borne_sup = ymax)
@@ -218,9 +218,9 @@ temperature_ci_approx
 Enfin, nous avons calculé les intervalles de confiance avec une fonction spécialement dédiée à cette tâche : la fonction `mean_cl_normal()`. Nous allons stocker cet objet dans un tableau nommé `temperatures_ci`, et nous allons modifier le nom des colonnes `y`, `ymin`, et `ymax` :
 
 ```{r}
-temperature_ci <- temp_jour %>% 
+temperature_ci <- temp_jour |> 
   reframe(mean_cl_normal(temperature_max),
-          .by = c(origin, month)) %>% 
+          .by = c(origin, month)) |> 
   rename(moyenne = y,
          ci_borne_inf = ymin,
          ci_borne_sup = ymax)

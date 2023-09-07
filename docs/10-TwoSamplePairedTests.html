@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Analyse de Données - 10&nbsp; Comparaison de moyennes : deux échantillons appariés</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./11-TwoSampleTests.html" rel="next">
+<link href="./09-OneSampleTests.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-TwoSamplePairedTests.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title"><span id="sec-moy2" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></span></h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analyse de Données</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/besibo/DataAnalysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Analyse-de-Données.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-R-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R et RStudio : les bases</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Dataset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Explorez votre premier jeu de données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-Visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualiser des données avec <code>ggplot2</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-Tidy-Data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-DataWrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler des tableaux avec <code>dplyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-EDA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploration statistique des données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Incertitude.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dispersion et incertitude</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ErrorBars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Visualiser l’incertitude et la dispersion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-OneSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Comparaison de la moyenne d’une population à une valeur théorique</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-TwoSamplePairedTests.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-TwoSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-ANOVA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-Correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Régression linéaire</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-PropTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Comparaison de proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#sec-packages2" id="toc-sec-packages2" class="nav-link active" data-scroll-target="#sec-packages2"><span class="header-section-number">10.1</span> Pré-requis</a></li>
+  <li><a href="#contexte" id="toc-contexte" class="nav-link" data-scroll-target="#contexte"><span class="header-section-number">10.2</span> Contexte</a></li>
+  <li><a href="#importation-et-mise-en-forme-des-données" id="toc-importation-et-mise-en-forme-des-données" class="nav-link" data-scroll-target="#importation-et-mise-en-forme-des-données"><span class="header-section-number">10.3</span> Importation et mise en forme des données</a></li>
+  <li><a href="#exploration-statistique-des-données" id="toc-exploration-statistique-des-données" class="nav-link" data-scroll-target="#exploration-statistique-des-données"><span class="header-section-number">10.4</span> Exploration statistique des données</a></li>
+  <li><a href="#exploration-graphique-des-données" id="toc-exploration-graphique-des-données" class="nav-link" data-scroll-target="#exploration-graphique-des-données"><span class="header-section-number">10.5</span> Exploration graphique des données</a>
+  <ul class="collapse">
+  <li><a href="#avec-un-stripchart" id="toc-avec-un-stripchart" class="nav-link" data-scroll-target="#avec-un-stripchart"><span class="header-section-number">10.5.1</span> Avec un stripchart</a></li>
+  <li><a href="#avec-des-histogrammes-facettés" id="toc-avec-des-histogrammes-facettés" class="nav-link" data-scroll-target="#avec-des-histogrammes-facettés"><span class="header-section-number">10.5.2</span> Avec des histogrammes facettés</a></li>
+  <li><a href="#avec-des-diagrammes-de-densité-facettés" id="toc-avec-des-diagrammes-de-densité-facettés" class="nav-link" data-scroll-target="#avec-des-diagrammes-de-densité-facettés"><span class="header-section-number">10.5.3</span> Avec des diagrammes de densité facettés</a></li>
+  <li><a href="#avec-des-boîtes-à-moustaches" id="toc-avec-des-boîtes-à-moustaches" class="nav-link" data-scroll-target="#avec-des-boîtes-à-moustaches"><span class="header-section-number">10.5.4</span> Avec des boîtes à moustaches</a></li>
+  <li><a href="#avec-un-nuage-de-points-appariés" id="toc-avec-un-nuage-de-points-appariés" class="nav-link" data-scroll-target="#avec-un-nuage-de-points-appariés"><span class="header-section-number">10.5.5</span> Avec un nuage de points appariés</a></li>
+  </ul></li>
+  <li><a href="#le-test-paramétrique" id="toc-le-test-paramétrique" class="nav-link" data-scroll-target="#le-test-paramétrique"><span class="header-section-number">10.6</span> Le test paramétrique</a>
+  <ul class="collapse">
+  <li><a href="#procédure" id="toc-procédure" class="nav-link" data-scroll-target="#procédure"><span class="header-section-number">10.6.1</span> Procédure</a></li>
+  <li><a href="#conditions-dapplication" id="toc-conditions-dapplication" class="nav-link" data-scroll-target="#conditions-dapplication"><span class="header-section-number">10.6.2</span> Conditions d’application</a></li>
+  <li><a href="#réalisation-du-test-et-interprétation" id="toc-réalisation-du-test-et-interprétation" class="nav-link" data-scroll-target="#réalisation-du-test-et-interprétation"><span class="header-section-number">10.6.3</span> Réalisation du test et interprétation</a></li>
+  </ul></li>
+  <li><a href="#lalternative-non-paramétrique" id="toc-lalternative-non-paramétrique" class="nav-link" data-scroll-target="#lalternative-non-paramétrique"><span class="header-section-number">10.7</span> L’alternative non paramétrique</a></li>
+  <li><a href="#exercice-dapplication" id="toc-exercice-dapplication" class="nav-link" data-scroll-target="#exercice-dapplication"><span class="header-section-number">10.8</span> Exercice d’application</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="sec-packages2" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="sec-packages2"><span class="header-section-number">10.1</span> Pré-requis</h2>
+<p>Pour ce nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu <code>Session &gt; Restart R</code>). Inutile en revanche de créer un nouveau <code>Rproject</code> : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même <code>Rproject</code>. Comme toujours, consultez <a href="https://besibo.github.io/BiometrieS3/01-R-basics.html#sec-code">le livre en ligne du semestre 3</a> si vous ne savez plus comment faire.</p>
+<p>Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé <code>RStudio</code>), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d’utiliser les mêmes packages que précédemment :</p>
+<ul>
+<li>le <code>tidyverse</code> <span class="citation" data-cites="R-tidyverse">(<a href="references.html#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span>, qui comprend notamment le package <code>readr</code> <span class="citation" data-cites="R-readr">(<a href="references.html#ref-R-readr" role="doc-biblioref">Wickham, Hester, et Bryan 2023</a>)</span>, pour importer facilement des fichiers <code>.csv</code> au format <code>tibble</code>, le package <code>dplyr</code> <span class="citation" data-cites="R-dplyr">(<a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al. 2023</a>)</span>, pour manipuler des tableaux, et le package <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al. 2023</a>)</span> pour les représentations graphiques. <!-- - `readxl` [@R-readxl], pour importer facilement des fichiers Excel au format `tibble`. --></li>
+<li><code>skimr</code> <span class="citation" data-cites="R-skimr">(<a href="references.html#ref-R-skimr" role="doc-biblioref">Waring et al. 2022</a>)</span>, qui permet de calculer des résumés de données très informatifs. <!-- - `car` [@R-car], qui permet d'effectuer le test de comparaison des variances de Levene. --> <!-- - les packages `palmerpenguins` [@R-palmerpenguins] et `nycflights13` [@R-nycflights13], pour accéder à plusieurs jeux de données que nous utiliserons en guise d'exemples ou pour les exercices (`penguins`, `flights`, `weather`...). --></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Vous aurez également besoin des jeux de données suivants que vous pouvez dès maintenant télécharger dans votre répertoire de travail :</p>
+<ul>
+<li><a href="data/Autruches.csv"><code>Autruches.csv</code></a></li>
+<li><a href="data/Testosterone.csv"><code>Testosterone.csv</code></a> <!-- - [`HommesFemmes.xls`](data/HommesFemmes.xls) --> <!-- - [`HornedLizards.csv`](data/HornedLizards.csv) --></li>
+</ul>
+<p>Enfin, je spécifie ici une fois pour toutes le thème que j’utiliserai pour tous les graphiques de ce chapitre. Libre à vous de choisir un thème différent ou de vous contenter du thème proposé par défaut :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="contexte" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="contexte"><span class="header-section-number">10.2</span> Contexte</h2>
+<p>On s’intéresse ici à la comparaison de 2 séries de données dont les observations sont liées 2 à 2. C’est par exemple le cas lorsque l’on fait subir un traitement à différents sujets et que l’on souhaite comparer les mesures obtenues avant et après le traitement.</p>
+<p>Autrement dit, dans les plans d’expériences appariés, <strong>les deux traitements</strong> ou modalités <strong>sont appliqués à chaque unité d’échantillonnage</strong> : chaque sujet ou unité d’échantillonnage fournit plusieurs valeurs. Ça n’était pas le cas du chapitre précédent (@#sec-moy1) où chaque adulte n’avait fourni qu’une unique valeur de température.</p>
+<p>Voici quelques exemples de situations qui devraient être traitées avec des tests sur données appariées :</p>
+<ul>
+<li>Comparaison de la masse de patients avant et après une hospitalisation.</li>
+<li>Comparaison de la diversité de peuplements de poissons dans des lacs avant et après contamination par des métaux lourds.</li>
+<li>Test des effets d’une crème solaire appliquée sur un bras de chaque volontaire alors que l’autre bras ne reçoit qu’un placébo.</li>
+<li>Test des effets du tabagisme dans un échantillon de fumeurs, dont chaque membre est comparé à un non fumeur choisi pour qu’il lui ressemble le plus possible en terme d’âge, de masse, d’origine ethnique et sociale, etc.</li>
+<li>Test des effets que les conditions socio-économiques ont sur les préférences alimentaires en comparant des vrais jumeaux élevés dans des familles adoptives séparées qui diffèrent en termes de conditions socio-économiques.</li>
+</ul>
+<p>Les 2 derniers exemples montrent que même des individus séparés peuvent constituer une “paire statistique” s’ils partagent un certain nombre de caractéristiques (physiques, environnementales, génétiques, comportementales, etc.) pertinentes pour l’étude.</p>
+<p>Ici, nous allons nous intéresser au lien qui pourrait exister entre la production de testostérone et l’immunité chez une espèce d’oiseau vivant en Amérique du Nord, <a href="https://fr.wikipedia.org/wiki/Carouge_à_épaulettes">le carouge à épaulettes</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Blackbirds.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Le carouge à épaulettes</figcaption>
+</figure>
+</div>
+<p>Chez de nombreuses espèces, les mâles ont plus de chances d’attirer des femelles s’ils produisent des niveaux de testostérone élevés. Est-ce que la forte production de testostérone de certains mâles a un coût, notamment en terme d’immunocompétence ? Autrement dit, est-ce que produire beaucoup de testostérone au moment de la reproduction (ce qui fournit un avantage sélectif) se traduit par une immunité plus faible par la suite, et donc une plus forte susceptibilité de contracter des maladies (ce qui constitue donc un désavantage sélectif) ? Ce type de question est central pour comprendre comment l’allocation des ressources affecte à la fois la survie et la fécondité des individus.</p>
+<p>Pour étudier cette question, une équipe de chercheurs <span class="citation" data-cites="Hasselquist1999">(<a href="references.html#ref-Hasselquist1999" role="doc-biblioref">Hasselquist et al. 1999</a>)</span> a mis en place le dispositif expérimental suivant. Les niveaux de testostérone de 13 carouges à épaulettes mâles ont été artificiellement augmentés par l’implantation chirurgicale d’un microtube perméable contenant de la testostérone. L’immunocompétence a été mesurée pour chaque oiseau avant et après l’opération chirurgicale. La variable mesurée est la production d’anticorps suite à l’exposition des oiseaux avec un antigène non pathogène mais censé déclencher une réponse immunitaire. Les taux de production d’anticorps sont exprimés en logarithmes de densité optique par minute <span class="math inline">\(\left(\ln\frac{mOD}{min}\right)\)</span>. Si la production de testostérone influence l’immunocompétence, on s’attend à observer des différence de production d’anticorps avant et après l’intervention chirurgicale.</p>
+</section>
+<section id="importation-et-mise-en-forme-des-données" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="importation-et-mise-en-forme-des-données"><span class="header-section-number">10.3</span> Importation et mise en forme des données</h2>
+<p>Les données se trouvent dans le fichier <a href="data/Testosterone.csv"><code>Testosterone.csv</code></a>. Importez ces données dans un objet nommé <code>Testo</code> et affichez son contenu.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Testo</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 5
+   blackbird beforeImplant afterImplant logBeforeImplant logAfterImplant
+       &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
+ 1         1           105           85             4.65            4.44
+ 2         2            50           74             3.91            4.3 
+ 3         3           136          145             4.91            4.98
+ 4         4            90           86             4.5             4.45
+ 5         5           122          148             4.8             5   
+ 6         6           132          148             4.88            5   
+ 7         7           131          150             4.88            5.01
+ 8         8           119          142             4.78            4.96
+ 9         9           145          151             4.98            5.02
+10        10           130          113             4.87            4.73
+11        11           116          118             4.75            4.77
+12        12           110           99             4.7             4.6 
+13        13           138          150             4.93            5.01</code></pre>
+</div>
+</div>
+<p>Visiblement, il n’y a pas de données manquantes mais certaines variables sont inutiles. En effet, nous aurons besoin des variables transformées en logarithmes, mais pas des 2 colonnes <code>beforeImplant</code> et <code>afterImplant</code>. Nous allons donc les retirer avec la fonction <code>select()</code>. Par ailleurs, la variable <code>blackbird</code> est importante puisque chaque individu a fourni 2 valeurs de production d’anticorps : 1 avant et 1 après l’opération chirurgicale. Il sera donc important de conserver cet identifiant individuel. Toutefois, il apparaît ici sous la forme d’une variable numérique alors qu’il s’agit d’un identifiant, d’un code. Il faut donc le transformer en facteur car cela n’aurait pas de sens calculer une moyenne des identifiants par exemple. Pour cela, nous utiliserons la fonction <code>factor()</code> à l’intérieur de <code>mutate()</code>. Enfin, nous renommerons les colonnes avec <code>rename()</code> pour avoir des noms plus courts et plus faciles à utiliser. Si vous ne vous rappelez plus comment utilisez ces fonctions, consulter ces chapitres du livre en ligne de biométrie du semestre 3 : <a href="https://besibo.github.io/BiometrieS3/04-DataWrangling.html#sélectionner-des-variables-avec-select"><code>select()</code> et <code>rename()</code></a>, <a href="https://besibo.github.io/BiometrieS3/04-DataWrangling.html#mutate"><code>mutate()</code> et <code>factor()</code></a>. Enfin, nous donnerons le nom <code>Testo_large</code> au tableau modifié :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Testo_large <span class="ot">&lt;-</span> Testo <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>beforeImplant, <span class="sc">-</span>afterImplant) <span class="sc">%&gt;%</span>  <span class="co"># Suppression des colonnes inutiles</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">blackbird =</span> <span class="fu">factor</span>(blackbird)) <span class="sc">%&gt;%</span>  <span class="co"># Transformation en facteur </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ID =</span> blackbird,                     <span class="co"># Changement des noms de variables</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">Before =</span> logBeforeImplant,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">After =</span> logAfterImplant)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Testo_large</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 3
+   ID    Before After
+   &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;
+ 1 1       4.65  4.44
+ 2 2       3.91  4.3 
+ 3 3       4.91  4.98
+ 4 4       4.5   4.45
+ 5 5       4.8   5   
+ 6 6       4.88  5   
+ 7 7       4.88  5.01
+ 8 8       4.78  4.96
+ 9 9       4.98  5.02
+10 10      4.87  4.73
+11 11      4.75  4.77
+12 12      4.7   4.6 
+13 13      4.93  5.01</code></pre>
+</div>
+</div>
+<p>Le tableau <code>Testo_large</code> dont nous disposons maintenant n’est pas dans un format qui nous permettra de réaliser toutes les opérations dont nous aurons besoin. En réalité, il ne s’agit pas d’un “tableau rangé” au sens du tidyverse. Un tableau rangé est un tableau dans lequel chaque ligne correspond à une unique observation et chaque colonne correspond à une unique variable. Ici, nous devrions avoir les 3 variables suivantes :</p>
+<ol type="1">
+<li>L’identifiant des individus. La colonne <code>ID</code> correspond à cette variable.</li>
+<li>Le moment auquel chaque mesure a été effectuée, avant ou après l’opération chirurgicale. Cette information est pour l’instant stockée dans l’en-tête des colonnes 2 et 3 du tableau <code>Testo_large</code></li>
+<li>La mesure de réponse immunitaire (en logarithme de la densité optique par minute). Cette information est pour l’instant stockée sous forme de valeurs numériques dans les colonnes 2 et 3 du tableau <code>Testo_large</code></li>
+</ol>
+<p>Pour obtenir un tableau rangé, il nous faut donc réorganiser les colonnes 2 et 3 du tableau <code>Testo_large</code> :</p>
+<ul>
+<li>l’entête de ces 2 colonnes devrait constituer une nouvelle variable que nous nommerons <code>Moment</code></li>
+<li>le contenu de ces 2 colonnes (les valeurs numériques) devrait constituer une nouvelle variable que nous nommerons <code>DO</code> (pour densité optique).</li>
+</ul>
+<p>Pour effectuer cette transformation, nous utiliserons la fonction <code>pivot_longer()</code> du package <code>tidyr</code> (il est déjà chargé en mémoire si vous avez chargé le <code>tidyverse</code>). Comme son nom l’indique, cette fonction produira un tableau plus “long” (qui aura plus de lignes) que le tableau de départ. Nous l’appellerons donc <code>Testo_long</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Testo_long <span class="ot">&lt;-</span> Testo_large <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(Before, After),   <span class="co"># Les colonnes qu'on veut réorganiser</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Moment"</span>,   <span class="co"># Quel nom donner à la variable qui contiendra les noms des anciennes colonnes</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"DO"</span>) <span class="sc">%&gt;%</span>      <span class="co"># Quel nom donner à la variable qui contiendra le contenu des anciennes colonnes</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Moment =</span> <span class="fu">factor</span>(Moment, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Before"</span>, <span class="st">"After"</span>)))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>Testo_long</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 26 × 3
+   ID    Moment    DO
+   &lt;fct&gt; &lt;fct&gt;  &lt;dbl&gt;
+ 1 1     Before  4.65
+ 2 1     After   4.44
+ 3 2     Before  3.91
+ 4 2     After   4.3 
+ 5 3     Before  4.91
+ 6 3     After   4.98
+ 7 4     Before  4.5 
+ 8 4     After   4.45
+ 9 5     Before  4.8 
+10 5     After   5   
+# ℹ 16 more rows</code></pre>
+</div>
+</div>
+<p>Ce nouvel objet contient les mêmes données que précédemment, mais sous un format différent (il contient maintenant 26 lignes et non plus 13) : il s’agit d’un tableau rangé.</p>
+<p>La plupart du temps, on a besoin de ces 2 formats de tableaux quand nous traitons des données. Le tableau au format long est à privilégier pour les représentations graphiques et les tests statistiques, et le format court sert souvent à présenter des résultats sous une forme synthétique. Mais parfois (et c’est justement le cas quand on dispose de données appariées comme pour notre exemple de lien entre testostérone et immunocompétence), le tableau au format large permettra de faire certains graphiques, certains tests ou certaines manipulations plus facilement que le tableau rangé au format long.<br>
+Si on ne dispose que d’un tableau au format large, on peut passer au format long, comme nous venons de le faire, grâce à la fonction <code>pivot_longer()</code>. Et si on ne dispose que d’un tableau au format long, on peut passer au format large grâce à la fonction <code>pivot_wider()</code>. Nous avons déjà d’ailleurs évoqué cette fonction dans le livre en ligne de biométrie du semestre 4 pour mettre en forme des résultats obtenus avec <code>summarise()</code> (<a href="https://besibo.github.io/BiometrieS4/01-dispersion.html#grouper-par-plus-dune-variable">par exemple ici</a>) ou <code>reframe()</code> (<a href="https://besibo.github.io/BiometrieS4/01-dispersion.html#créer-des-résumés-avec-la-fonction-reframe">ou là</a>), et je vous encourage à y jeter un œil à nouveau pour vous remémorer la syntaxe. Car il est important que vous maîtrisiez ces 2 fonctions dont vous aurez très souvent besoin.</p>
+<p>Maintenant que nous disposons de ces 2 tableaux, <code>Testo_large</code> et <code>Testo_long</code>, nous pouvons commencer à décrire nos données.</p>
+</section>
+<section id="exploration-statistique-des-données" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="exploration-statistique-des-données"><span class="header-section-number">10.4</span> Exploration statistique des données</h2>
+<p>Pour décrire simplement les données, nous nous en tiendront ici à l’utilisation des fonctions <code>summary()</code> et <code>skim()</code>.</p>
+<p>Pour la fonction <code>summary()</code>, le plus simple est toujours d’utiliser le tableau au format large :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Testo_large)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       ID        Before          After     
+ 1      :1   Min.   :3.910   Min.   :4.30  
+ 2      :1   1st Qu.:4.700   1st Qu.:4.60  
+ 3      :1   Median :4.800   Median :4.96  
+ 4      :1   Mean   :4.734   Mean   :4.79  
+ 5      :1   3rd Qu.:4.880   3rd Qu.:5.00  
+ 6      :1   Max.   :4.980   Max.   :5.02  
+ (Other):7                                 </code></pre>
+</div>
+</div>
+<p>On constate ici que pour les 2 traitements, les valeurs des différents indices sont très proches entre les 2 séries de données, avec des valeurs de densité optiques (DO) légèrement supérieures après l’opération chirurgicale (sauf pour le premier quartile).</p>
+<p>Pour la fonction <code>skim()</code> le plus simple est là aussi d’utiliser le tableau large :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(Testo_large)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Data Summary ────────────────────────
+                           Values     
+Name                       Testo_large
+Number of rows             13         
+Number of columns          3          
+_______________________               
+Column type frequency:                
+  factor                   1          
+  numeric                  2          
+________________________              
+Group variables            None       
+
+── Variable type: factor ───────────────────────────────────────────────────────
+  skim_variable n_missing complete_rate ordered n_unique top_counts            
+1 ID                    0             1 FALSE         13 1: 1, 2: 1, 3: 1, 4: 1
+
+── Variable type: numeric ──────────────────────────────────────────────────────
+  skim_variable n_missing complete_rate mean    sd   p0 p25  p50  p75 p100 hist 
+1 Before                0             1 4.73 0.280 3.91 4.7 4.8  4.88 4.98 ▁▁▁▃▇
+2 After                 0             1 4.79 0.262 4.3  4.6 4.96 5    5.02 ▂▁▂▁▇</code></pre>
+</div>
+</div>
+<p>On arrive toutefois aux mêmes résultats avec le tableau long, à condition de grouper les données par traitement (variable <code>Traitement</code>) avec <code>group_by()</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Testo_long <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Moment) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>(DO)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Data Summary ────────────────────────
+                           Values    
+Name                       Piped data
+Number of rows             26        
+Number of columns          3         
+_______________________              
+Column type frequency:               
+  numeric                  1         
+________________________             
+Group variables            Moment    
+
+── Variable type: numeric ──────────────────────────────────────────────────────
+  skim_variable Moment n_missing complete_rate mean    sd   p0 p25  p50  p75
+1 DO            Before         0             1 4.73 0.280 3.91 4.7 4.8  4.88
+2 DO            After          0             1 4.79 0.262 4.3  4.6 4.96 5   
+  p100 hist 
+1 4.98 ▁▁▁▃▇
+2 5.02 ▂▁▂▁▇</code></pre>
+</div>
+</div>
+<p>Cela revient à demander à la fonction <code>skim()</code> de produire un résumé des données de densité optique (variable <code>DO</code>), pour chaque catégorie de la variable <code>Moment</code>, soit un résumé pour la catégorie <code>Before</code> (avant l’intervention chirurgicale), et un résumé pour la catégorie <code>After</code> (après l’intervention chirurgicale).</p>
+<p>Par rapport aux résultats fournis par la fonction <code>summary()</code>, la fonction <code>skim()</code> nous permet de confirmer que les valeurs de DO sont très légèrement supérieures après l’opération (sauf pour le premier quartile). Elle nous permet également de constater que l’écart-type est du même ordre de grandeur pour les 2 catégories, bien qu’il soit légèrement plus faible après l’opération. Enfin, les petits histogrammes laissent entrevoir une distribution très asymétrique des données dans chacun des 2 groupes de mesures.</p>
+</section>
+<section id="exploration-graphique-des-données" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="exploration-graphique-des-données"><span class="header-section-number">10.5</span> Exploration graphique des données</h2>
+<p>Ici, c’est le tableau rangé au format long qui sera le plus adapté. Lorsque nous avions une unique série de données, nous avons utilisé 2 types de représentations graphiques très similaires pour visualiser les données (les histogrammes et les graphiques de densités). Ici, nous allons utiliser ces mêmes types de graphiques mais “facettés”. Les graphiques facettés ont été abordés dans <a href="https://besibo.github.io/BiometrieS3/03-visualization.html#diagrammes-bâtons-facettés">le livre en ligne de biométrie du semestre 3</a>. Ils permettent de faire des sous-graphiques pour chaque catégorie d’un facteur. Ici, le facteur <code>Moment</code> contient 2 catégories. Les facets nous permettrons donc de comparer les 2 distributions de densités optiques.</p>
+<p>Outre ces graphiques, nous utiliserons aussi les stripcharts et les boites à moustaches pour comparer les 2 catégories. Ces 2 types de graphiques sont particulièrement adaptés pour ce genre de tâche, et seront aussi très utiles pour l’ANOVA lorsque nous aurons plus de 2 catégories à comparer.</p>
+<p>D’une façon générale, nous disposons :</p>
+<ul>
+<li>d’une variable numérique, <code>DO</code> : la mesure de densité optique qui rend compte de l’immunocompétence des carouges à épaulettes</li>
+<li>d’une variable catégorielle, le facteur <code>Moment</code> : indique si les valeurs d’immunocompétences ont été mesurées avant ou après l’opération chirurgicale d’implantation de la capsule de testostérone.</li>
+</ul>
+<p>Tous les graphiques présentés dans <a href="https://besibo.github.io/BiometrieS3/03-visualization.html#une-variable-de-chaque-type">le chapitre consacré à cette situation précise</a> dans le livre en ligne de biométrie du semestre 3, peuvent être réalisés. N’hésitez pas à le relire, en particulier la section expliquant comment faire apparaître et interpréter les encoches d’incertitudes sur des boiites à moustaches.</p>
+<section id="avec-un-stripchart" class="level3" data-number="10.5.1">
+<h3 data-number="10.5.1" class="anchored" data-anchor-id="avec-un-stripchart"><span class="header-section-number">10.5.1</span> Avec un stripchart</h3>
+<div class="cell" data-layout-align="center" data-fig.asp="1.5">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Testo_long <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Moment, <span class="at">y =</span> DO)) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"immunocompétence (log DO / minute)"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"immunocompétence</span><span class="sc">\n</span><span class="st">avant et après l'opération"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"n = 13 carouges à épaulettes"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="10-TwoSamplePairedTests_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="avec-des-histogrammes-facettés" class="level3" data-number="10.5.2">
+<h3 data-number="10.5.2" class="anchored" data-anchor-id="avec-des-histogrammes-facettés"><span class="header-section-number">10.5.2</span> Avec des histogrammes facettés</h3>
+<p>Nous allons faire un histogramme pour chaque série de données en utilisant des facettes :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Testo_long <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DO)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>, <span class="at">fill =</span> <span class="st">"firebrick2"</span>, <span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Moment, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"immunocompétence (log DO / minute)"</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Fréquence"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Comparaison de l'immunocompétence avant et après l'opération chirurgicale"</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"n = 13 carouges à épaulettes"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="10-TwoSamplePairedTests_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="avec-des-diagrammes-de-densité-facettés" class="level3" data-number="10.5.3">
+<h3 data-number="10.5.3" class="anchored" data-anchor-id="avec-des-diagrammes-de-densité-facettés"><span class="header-section-number">10.5.3</span> Avec des diagrammes de densité facettés</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Testo_long <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DO)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"firebrick2"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Moment, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"immunocompétence (log DO / minute)"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Densité"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Comparaison de l'immunocompétence avant et après l'opération chirurgicale"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"n = 13 carouges à épaulettes"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="10-TwoSamplePairedTests_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="avec-des-boîtes-à-moustaches" class="level3" data-number="10.5.4">
+<h3 data-number="10.5.4" class="anchored" data-anchor-id="avec-des-boîtes-à-moustaches"><span class="header-section-number">10.5.4</span> Avec des boîtes à moustaches</h3>
+<div class="cell" data-layout-align="center" data-fig.asp="1.5">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Testo_long <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Moment, <span class="at">y =</span> DO)) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="fl">5.2</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"immunocompétence (log DO / minute)"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Comparaison de l'immunocompétence avant et après opération chirurgicale"</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"n = 13 carouges à épaulettes"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Notch went outside hinges
+ℹ Do you want `notch = FALSE`?</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="10-TwoSamplePairedTests_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Du point de vue de la <strong>position</strong> des données, ces différents graphiques montrent tous que la seconde série de données (catégorie <code>After</code> : après l’opération chirurgicale) présente en moyenne des valeurs très légèrement plus élevées que la première (catégorie <code>Before</code> avant l’opération). En terme de <strong>dispersion</strong>, si l’on met de côté la valeur minimale de la série <code>Before</code> qui semble atypique (un individu outlier qui présente une immunocompétence très faible avant l’opération), la dispersion des données autour de la tendance centrale semble globalement plus importante pour la série <code>After</code>. Enfin, pour ce qui concerne l’<strong>incertitude</strong>, les intervalles de confiance à 95% des médianes (qui apparaissent sous la forme d’encoches sur les boîtes à moustaches) se chevauche assez largement, ce qui nous permet d’anticiper les résultats des tests que nous ferons ensuite : puisque les encoches se chevauchent, il y a fort à parier que le test de comparaison de moyenne ne montrera aucune différence significative. On note également que l’encoche de la série <code>After</code> est particulièrement large : la limite supérieure de l’intervalle de confiance à 95% de la médiane est supérieure à la valeur maximale observée dans l’échantillon. Cela traduit le fait que compte de la grande variabilité des données dans cette série, un échantillon de taille n = 13 n’est probablement pas suffisant pour avoir une estimation précise de la médiane.</p>
+</section>
+<section id="avec-un-nuage-de-points-appariés" class="level3" data-number="10.5.5">
+<h3 data-number="10.5.5" class="anchored" data-anchor-id="avec-un-nuage-de-points-appariés"><span class="header-section-number">10.5.5</span> Avec un nuage de points appariés</h3>
+<p>Toutes ces représentations graphiques sont certes utiles, mais elles masquent un élément crucial : ce sont les mêmes individus qui sont étudiés avant et après l’opération. Il s’agit de données appariées ! Les graphiques que nous avons faits jusque là ne permettent pas de visualiser ce lien entre les deux séries de données. Pour avoir une bonne vision de ce qui se passe, il nous faut faire apparaître ce lien entre les 2 séries de données :</p>
+<div class="cell" data-layout-align="center" data-fig.asp="1.5">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Testo_long <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Moment, <span class="at">y =</span> DO, <span class="at">group =</span> ID, <span class="at">color =</span> ID)) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"immunocompétence (log DO / minute)"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Comparaison de l'immunocompétence avant et après opération chirurgicale"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"n = 13 carouges à épaulettes"</span>, </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Individu"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="10-TwoSamplePairedTests_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ce graphique nous donne une image très différente de la réalité des données. On constate ici que l’immunocompétence de certains individus augmente après l’opération (parfois fortement), alors que pour d’autres, elle diminue.</p>
+<p>Une façon d’estimer si les changements d’immunocompétence sont majoritairement orientés dans un sens ou non est de calculer l’intervalle de confiance à 95% de la différence d’immunocompétence entre avant et après l’opération. Pour cela, on peut calculer, grâce au tableau large <code>Testo_large</code>, les différences d’immunocompétences (DO après opération moins DO avant opération), pour chacun des 13 individus. puis, grâce à la fonction <code>mean_cl_normal()</code> déjà utilisée à plusieurs reprises, on calcul l’intervalle de confiance à 95% de la moyenne de cette différence :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcul de la différence de DO (After - Before)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Testo_large <span class="ot">&lt;-</span> Testo_large <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Difference =</span> After <span class="sc">-</span> Before)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage du tableau</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>Testo_large</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 4
+   ID    Before After Difference
+   &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1 1       4.65  4.44    -0.21  
+ 2 2       3.91  4.3      0.390 
+ 3 3       4.91  4.98     0.0700
+ 4 4       4.5   4.45    -0.0500
+ 5 5       4.8   5        0.200 
+ 6 6       4.88  5        0.120 
+ 7 7       4.88  5.01     0.130 
+ 8 8       4.78  4.96     0.180 
+ 9 9       4.98  5.02     0.0400
+10 10      4.87  4.73    -0.140 
+11 11      4.75  4.77     0.0200
+12 12      4.7   4.6     -0.100 
+13 13      4.93  5.01     0.0800</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcul de la moyenne des différences et de son IC95%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Testo_large <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_cl_normal</span>(Difference))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+       y    ymin  ymax
+   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 0.0562 -0.0401 0.152</code></pre>
+</div>
+</div>
+<p>On constate ici que la moyenne des différences de densité optique vaut 0.06, soit une valeur positive, qui montre que l’immunocompétence augmente après l’opération (ce qui semble aller à l’opposé de l’hypothèse des chercheurs). Cette moyenne reste néanmoins très proche de 0. D’ailleurs, l’intervalle de confiance de cette moyenne comprend les valeurs situées entre -0.04 et +0.15. La valeur 0 est donc comprise dans cet intervalle. Le zéro fait donc partie des valeurs les plus probables pour la moyenne de ces différences dans la populations générale. C’est là encore un résultat qui nous permet d’anticiper sur les résultats du tests statistique que nous ferons ensuite.</p>
+</section>
+</section>
+<section id="le-test-paramétrique" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="le-test-paramétrique"><span class="header-section-number">10.6</span> Le test paramétrique</h2>
+<section id="procédure" class="level3" data-number="10.6.1">
+<h3 data-number="10.6.1" class="anchored" data-anchor-id="procédure"><span class="header-section-number">10.6.1</span> Procédure</h3>
+<p>Le test paramétrique permettant de comparer la moyenne sur des séries appariées est là encore un test de Student : le <strong>test de Student sur données appariées</strong> (étonnant non ?…). En réalité, ce test de Student n’est pas un test de comparaison de moyennes entre 2 séries de données. La procédure est la suivante :</p>
+<ol type="1">
+<li>Pour chaque individu, calculer la différence d’immunocompétence entre les deux temps de l’expérience (DO après - DO avant opération). C’est ce que nous avons fait plus haut en ajoutant la colonne <code>Difference</code> au tableau <code>Testo_large</code>.</li>
+<li>Puisque nous avons 13 individus, nous aurons 13 valeurs de différences. La moyenne de cette différence sera comparée à la valeur théorique 0. Autrement dit, si cette moyenne vaut 0, l’immunocompétence sera la même avant et après l’opération. Si la moyenne des différence n’est pas égale 0, alors nous aurons prouvé qu’il existe une différence d’immunocompétence entre les 2 groupes, nous aurons prouvé que la procédure chirurgicale d’implantation de la capsule de testostérone a un impact sur l’immunocompétence des carouges à épaulettes</li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Attention
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans un test sur données appariées, on s’intéresse à <strong>la moyenne des différences</strong> entre les données des 2 séries. Cette moyenne est alors comparée à la valeur théorique <span class="math inline">\(\mu\)</span> = 0. Ce test est donc équivalent au test vu dans le <a href="09-OneSampleTests.html"><span>Chapitre&nbsp;9</span></a> sur la comparaison de la moyenne d’une population à une valeur théorique.</p>
+<p>Notez également que <strong>la moyenne des différences</strong> n’est pas équivalente à <strong>la différence des moyennes</strong>. La différence des moyennes est une grandeur qui nous sera utile dans le chapitre suivant (<a href="11-TwoSampleTests.html"><span>Chapitre&nbsp;11</span></a>) sur la comparaison de la moyenne de deux populations lorsque les données sont indépendantes.</p>
+</div>
+</div>
+</section>
+<section id="conditions-dapplication" class="level3" data-number="10.6.2">
+<h3 data-number="10.6.2" class="anchored" data-anchor-id="conditions-dapplication"><span class="header-section-number">10.6.2</span> Conditions d’application</h3>
+<p>Les conditions d’application de ce test paramétrique sont presque les mêmes que pour le test de Student à un échantillon :</p>
+<ol type="1">
+<li>Les individus sur lesquels portent la comparaison doivent être issus d’un échantillonnage aléatoire. Comme toujours, en l’absence d’indication contraire, on considère que cette condition est vérifiée.</li>
+<li>Les différences par paires entre les 2 modalités du traitement doivent suivre une distribution Normale. Attention, ce n’est donc pas les données brutes de chaque série qui doivent suivre une loi Normale, mais bien la différence “après” - “avant” calculée pour chaque individu. Nous avons déjà calculé ces différences plus haut :</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># On s'intéresse aux 13 différences calculées sur les 13 individus</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>Testo_large </span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 4
+   ID    Before After Difference
+   &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1 1       4.65  4.44    -0.21  
+ 2 2       3.91  4.3      0.390 
+ 3 3       4.91  4.98     0.0700
+ 4 4       4.5   4.45    -0.0500
+ 5 5       4.8   5        0.200 
+ 6 6       4.88  5        0.120 
+ 7 7       4.88  5.01     0.130 
+ 8 8       4.78  4.96     0.180 
+ 9 9       4.98  5.02     0.0400
+10 10      4.87  4.73    -0.140 
+11 11      4.75  4.77     0.0200
+12 12      4.7   4.6     -0.100 
+13 13      4.93  5.01     0.0800</code></pre>
+</div>
+</div>
+<p>Il nous faut donc tester la Normalité de la nouvelle variable <code>Difference</code>. Commençons par en faire un graphique :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>Testo_large <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Difference)) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"firebrick2"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Différence d'immunocompétence 'Après - Avant' l'opération (log DO / minute)"</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Densité"</span>,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Distribution de la différence d'immunocompétence entre après et avant l'opération chirurgicale"</span>,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"n = 13 carouges à épaulettes"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="10-TwoSamplePairedTests_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Compte tenu du faible nombre d’individus (n = 13), la forme de cette courbe de densité n’est pas si éloignée que ça d’une courbe en cloche (notez que ce n’était pas du tout le cas pour les données brutes de chaque série de départ qui ont toutes les deux des distributions très éloignées de la distribution Normale). On le vérifie avec un test de normalité de Shapiro-Wilk :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la différence d’immunocompétence des individus suit une distribution Normale.</li>
+<li>H<span class="math inline">\(_1\)</span> : la différence d’immunocompétence des individus ne suit pas une distribution Normale.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>Testo_large <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Difference) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro.test</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  .
+W = 0.97949, p-value = 0.977</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Au seuil <span class="math inline">\(\alpha = 0.05\)</span>, on ne peut pas rejeter l’hypothèse nulle de normalité pour la différence d’immunocompétence entre après et avant l’intervention chirurgicale (test de Shapiro-Wilk, <span class="math inline">\(W = 0.98\)</span>, <span class="math inline">\(p = 0.977\)</span>).</p>
+</blockquote>
+<p>Les conditions d’application du test paramétrique sont donc réunies.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Attention !
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour ce test, la Normalité doit bien être verifiée sur la différence entre les 2 groupes de valeurs, et non sur chaque groupe de valeur pris séparément. C’est une source d’erreur fréquente. Ici, les données de départ (DO avant et DO après) ne suivaient pas du tout une distribution Normale. Pourtant, la différence de DO suit bel et bien la distribution Normale, nous permettant de faire le test paramétrique.</p>
+</div>
+</div>
+</section>
+<section id="réalisation-du-test-et-interprétation" class="level3" data-number="10.6.3">
+<h3 data-number="10.6.3" class="anchored" data-anchor-id="réalisation-du-test-et-interprétation"><span class="header-section-number">10.6.3</span> Réalisation du test et interprétation</h3>
+<p>Le test de Student sur données appariées peut se faire de 3 façons distinctes. Les 3 méthodes fournissent exactement les mêmes résultats, seule la syntaxe utilisée change. Quelle que soit la méthode utilisée, les hypothèses nulles et alternatives sont toujours les mêmes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : le changement moyen de production d’anticorps après la pose chirurgicale de l’implant de testostérone est nul (<span class="math inline">\(\mu_{Diff} = 0\)</span>). La procédure chirurgicale n’a pas d’effet sur l’immunocompétence. Les variations observées ne sont que le fruit du hasard de l’échantillonnage.</li>
+<li>H<span class="math inline">\(_1\)</span> : le changement moyen de production d’anticorps après la pose chirurgicale de l’implant de testostérone n’est pas nul (<span class="math inline">\(\mu_{Diff} \neq 0\)</span>). La procédure chirurgicale a effet significatif sur l’immunocompétence. Les variations observées ne sont pas uniquement dues à la fluctuation d’échantillonnage.</li>
+</ul>
+<section id="première-syntaxe" class="level4" data-number="10.6.3.1">
+<h4 data-number="10.6.3.1" class="anchored" data-anchor-id="première-syntaxe"><span class="header-section-number">10.6.3.1</span> Première syntaxe</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Méthode nº1 : avec une formule et le tableau au format long</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(DO <span class="sc">~</span> Moment, <span class="at">data =</span> Testo_long, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  DO by Moment
+t = -1.2714, df = 12, p-value = 0.2277
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -0.15238464  0.04007695
+sample estimates:
+mean difference 
+    -0.05615385 </code></pre>
+</div>
+</div>
+<p>Plusieurs remarques concernant cette première syntaxe :</p>
+<ol type="1">
+<li>On utilise le symbole “<code>~</code>” pour indiquer une formule. On cherche à regarder l’effet du <code>Moment</code> sur la <code>DO</code> qui traduit l’immunocompétence. Le “<code>~</code>” se lit : “en fonction de”.</li>
+<li>Avec la syntaxe utilisant les formules, on doit spécifier l’argument <code>data = Testo_long</code> pour indiquer à <code>RStudio</code> que les variables <code>DO</code> et <code>Moment</code> sont des colonnes de ce tableau.</li>
+<li>Enfin, il est important d’indiquer <code>paired = TRUE</code> puisque nous réalisons un test de Student sur données appariées. Si on ne mets pas cet argument, on réalise un test de Student sur échantillons indépendants, ce qui peut grandement fausser les résultats.</li>
+</ol>
+<p>Ici, voilà la conclusion de ce test :</p>
+<blockquote class="blockquote">
+<p>Le test de Student sur données appariées ne permet pas de montrer de changement d’immunocompétence suite à l’intégration de l’implant chirurgical de testostérone. On ne peut pas rejeter l’hypothèse nulle au seuil <span class="math inline">\(\alpha = 0.05\)</span> (<span class="math inline">\(t = -1.27\)</span>, <span class="math inline">\(ddl = 12\)</span>, <span class="math inline">\(p = 0.223\)</span>). La moyenne des différences de densités optiques observées entre avant et après l’intervention chirurgicale vaut -0.056 (intervalle de confiance à 95% de cette différence : [-0.152 ; 0.040])</p>
+</blockquote>
+<p>Donc visiblement, une forte production de testostérone n’est pas significativement associée à une baisse de l’immunocompétence.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Point de vigilance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Avec cette première syntaxe, la différence qui est calculée n’est pas <code>After - Before</code> comme nous l’avons fait manuellement dans le tableau <code>Testo_large</code>, mais <code>Before - After</code>. En effet, dans le facteur <code>Moment</code> du tableau <code>Testo-Long</code>, la première modalité est <code>Before</code>, et la seconde modalité est <code>After</code>. Par défaut, le test de Student calcule toujours la différence dans le même sens : première modalité moins seconde modalité.</p>
+<p>Cela explique pourquoi la différence calculée ici vaut -0.056, alors qu’elle valait +0.056 quand nous l’avions calculée manuellement plus haut. C’est important d’en prendre conscience pour ne pas interpréter à l’envers les résultats du test statistique.</p>
+<p>Pour la même raison, les signes et l’ordre des bornes de l’intervalle de confiance à 95% de la moyenne des différences est également inversé. Manuellement, nous avions calculé un intervalle de confiance de [-0.04 ; +0.15], ici, il vaut [-0.15 ; +0.04].</p>
+</div>
+</div>
+</section>
+<section id="deuxième-syntaxe" class="level4" data-number="10.6.3.2">
+<h4 data-number="10.6.3.2" class="anchored" data-anchor-id="deuxième-syntaxe"><span class="header-section-number">10.6.3.2</span> Deuxième syntaxe</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Méthode nº2 : avec les 2 séries de données et le tableau au format large</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Testo_large<span class="sc">$</span>Before, Testo_large<span class="sc">$</span>After, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  Testo_large$Before and Testo_large$After
+t = -1.2714, df = 12, p-value = 0.2277
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -0.15238464  0.04007695
+sample estimates:
+mean difference 
+    -0.05615385 </code></pre>
+</div>
+</div>
+<p>Cette deuxième syntaxe est différente de la première puisque nous n’utilisons plus le format <code>formule</code>. Ici, on indique le nom des 2 colonnes du tableau <code>Testo_large</code> qui contiennent les 2 séries de données. Puisque nous n’utilisons plus de formule, l’argument “<code>data = ...</code>” n’existe plus. C’est pourquoi il nous faut taper spécifiquement “<code>Testo_large$Before</code>” et “<code>Testo_large$After</code>”, et non pas simplement le nom des colonnes. En revanche, comme pour le test précédent, il est indispensable d’indiquer “<code>paired = TRUE</code>” pour faire un test de Student sur données appariées.</p>
+<p>Les résultats fournis et leur interprétation sont identiques à ceux de la syntaxe précédente. Vous notez aussi que les résultats et leurs interprétation dépendent de l’ordre dans lequel les 2 séries de données sont indiquées dans la fonction <code>t.test()</code>. Pour vous en convaincre, regardez ce que donne cette commande :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Testo_large<span class="sc">$</span>After, Testo_large<span class="sc">$</span>Before, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Qu’est-ce qui change ? Et qu’est-ce qui reste inchangé ?</p>
+</section>
+<section id="troisième-syntaxe" class="level4" data-number="10.6.3.3">
+<h4 data-number="10.6.3.3" class="anchored" data-anchor-id="troisième-syntaxe"><span class="header-section-number">10.6.3.3</span> Troisième syntaxe</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Méthode nº3 : avec la variable Diff, mu = 0, et le tableau au format large</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Testo_large<span class="sc">$</span>Difference, <span class="at">mu =</span> <span class="dv">0</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  Testo_large$Difference
+t = 1.2714, df = 12, p-value = 0.2277
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ -0.04007695  0.15238464
+sample estimates:
+ mean of x 
+0.05615385 </code></pre>
+</div>
+</div>
+<p>Enfin, comme expliqué plus haut, le test de Student sur données appariées est strictement équivalent à un test de Student à un échantillon pour lequel on compare la moyenne des différences individuelles à 0. Là encore, les résultats produits et leur interprétation sont identiques aux deux tests précédents. La seule différence concerne les signes puisque les deux premiers tests regardaient la différence “Before - After” alors que ce troisième test regarde la différence “After - Before” (que nous avons calculée manuellement).</p>
+<p>À vous donc de choisir la syntaxe qui vous paraît la plus parlante ou celle que vous avez le plus de facilité à retenir et à interpréter.</p>
+</section>
+</section>
+</section>
+<section id="lalternative-non-paramétrique" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="lalternative-non-paramétrique"><span class="header-section-number">10.7</span> L’alternative non paramétrique</h2>
+<p>Comme pour le test de Student à un échantillon, lorsque les conditions d’application du test de Student sur données appariées ne sont pas vérifiées (c’est à dire lorsque la différence entre les données appariées des deux séries ne suit pas une loi Normale), il faut utiliser un test non paramétrique équivalent.</p>
+<p>Il s’agit là encore du <strong>test de Wilcoxon des rangs signés</strong> qui s’intéresse aux médianes. Les hypothèses nulles et alternatives sont les suivantes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : le changement <strong>médian</strong> de production d’anticorps après la pose chirurgicale de l’implant de testostérone est nul (<span class="math inline">\(med_{Diff} = 0\)</span>).</li>
+<li>H<span class="math inline">\(_1\)</span> : le changement <strong>médian</strong> de production d’anticorps après la pose chirurgicale de l’implant de testostérone n’est pas nul (<span class="math inline">\(med_{Diff} \neq 0\)</span>).</li>
+</ul>
+<p>Comme pour le test de Student, 3 syntaxes sont possibles et strictement équivalentes. Il est important de ne pas oublier l’argument <code>paired = TRUE</code> pour les 2 premières syntaxes afin de s’assurer que l’on réalise bien un test sur données appariées. Enfin, l’argument <code>conf.int = TRUE</code> doit être ajouté pour les 3 syntaxes afin que la (pseudo-) médiane et son intervalle de confiance à 95% soient calculés et affichés.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(DO <span class="sc">~</span> Moment, <span class="at">data =</span> Testo_long, <span class="at">paired =</span> <span class="cn">TRUE</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon signed rank exact test
+
+data:  DO by Moment
+V = 30, p-value = 0.3054
+alternative hypothesis: true location shift is not equal to 0
+95 percent confidence interval:
+ -0.145  0.040
+sample estimates:
+(pseudo)median 
+        -0.055 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(Testo_large<span class="sc">$</span>Before, Testo_large<span class="sc">$</span>After, <span class="at">paired =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon signed rank exact test
+
+data:  Testo_large$Before and Testo_large$After
+V = 30, p-value = 0.3054
+alternative hypothesis: true location shift is not equal to 0
+95 percent confidence interval:
+ -0.145  0.040
+sample estimates:
+(pseudo)median 
+        -0.055 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(Testo_large<span class="sc">$</span>Difference, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon signed rank exact test
+
+data:  Testo_large$Difference
+V = 61, p-value = 0.3054
+alternative hypothesis: true location is not equal to 0
+95 percent confidence interval:
+ -0.040  0.145
+sample estimates:
+(pseudo)median 
+         0.055 </code></pre>
+</div>
+</div>
+<p>Ici, la conclusion de ce test est :</p>
+<blockquote class="blockquote">
+<p>Le test de Wilcoxon des rangs signés n’a pas permis de montrer de changement d’immunocompétence suite à l’intégration de l’implant chirurgical de testostérone. On ne peut pas rejeter l’hypothèse nulle au seuil <span class="math inline">\(\alpha = 0.05\)</span> (<span class="math inline">\(V = 61\)</span>, <span class="math inline">\(p = 0.305\)</span>). La médiane des différences de densités optiques observées entre après et avant l’intervention chirurgicale vaut 0.055 (intervalle de confiance à 95% de cette différence : [-0.040 ; 0.145]).</p>
+</blockquote>
+</section>
+<section id="exercice-dapplication" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="exercice-dapplication"><span class="header-section-number">10.8</span> Exercice d’application</h2>
+<p>Les autruches vivent dans des environnements chauds et elles sont donc fréquemment exposées au soleil durant de longues périodes. Dans des environnements similaires, les mammifères ont des mécanismes physiologiques leur permettant de réduire la température de leur cerveau par rapport à celle de leur corps. Une équipe de chercheurs <span class="citation" data-cites="Fuller2003">(<a href="references.html#ref-Fuller2003" role="doc-biblioref">Fuller et al. 2003</a>)</span> a testé si les autruches pouvaient faire de même. La température du corps et du cerveau de 37 autruches a été enregistrée par une journée chaude typique. Les résultats, exprimés en degrés Celsius, figurent dans <a href="data/Autruches.csv">le fichier <code>Autruches.csv</code></a>.</p>
+<p>Importez ces données et faites-en l’analyse pour savoir s’il existe une différence de température moyenne entre le corps et le cerveau des autruches. Vos observations chez les autruches sont-elles conformes à ce qui est observé chez les mammifères dans un environnement similaire ? Comme toujours, vous commencerez par faire une analyse descriptive des données, sous forme numérique et graphique, avant de vous lancer dans les tests d’hypothèses.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Fuller2003" class="csl-entry" role="listitem">
+Fuller, Andrea, Peter R. Kamerman, Shane K. Maloney, Graham Mitchell, et Duncan Mitchell. 2003. <span>«&nbsp;Variability in brain and arterial blood temperatures in free-ranging ostriches in their natural habitat&nbsp;»</span>. <em>Journal of Experimental Biology</em> 206 (7): 1171‑81. <a href="https://doi.org/10.1242/jeb.00230">https://doi.org/10.1242/jeb.00230</a>.
+</div>
+<div id="ref-Hasselquist1999" class="csl-entry" role="listitem">
+Hasselquist, Dennis, James A. Marsh, Paul W. Sherman, et John C. Wingfield. 1999. <span>«&nbsp;Is avian humoral immunocompetence suppressed by testosterone?&nbsp;»</span> <em>Behavioral Ecology and Sociobiology</em> 45 (3): 167‑75. <a href="https://doi.org/10.1007/s002650050550">https://doi.org/10.1007/s002650050550</a>.
+</div>
+<div id="ref-R-skimr" class="csl-entry" role="listitem">
+Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, et Shannon Ellis. 2022. <em>skimr: Compact and Flexible Summaries of Data</em>. <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>.
+</div>
+<div id="ref-R-tidyverse" class="csl-entry" role="listitem">
+Wickham, Hadley. 2023. <em>tidyverse: Easily Install and Load the Tidyverse</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.
+</div>
+<div id="ref-R-ggplot2" class="csl-entry" role="listitem">
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, et Dewey Dunnington. 2023. <em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
+</div>
+<div id="ref-R-dplyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, et Davis Vaughan. 2023. <em>dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+<div id="ref-R-readr" class="csl-entry" role="listitem">
+Wickham, Hadley, Jim Hester, et Jennifer Bryan. 2023. <em>readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./09-OneSampleTests.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Comparaison de la moyenne d’une population à une valeur théorique</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./11-TwoSampleTests.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

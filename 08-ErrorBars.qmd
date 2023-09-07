@@ -19,34 +19,34 @@ Pensez à les charger en mémoire si ce n'est pas déjà fait ou si vous venez d
 ```{r}
 #| include: false
 
-temp_jour <- weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
+temp_jour <- weather |> 
+  mutate(temp_celsius = (temp - 32) / 1.8) |> 
   summarise(temperature_max = max(temp_celsius, na.rm = TRUE),
             .by = c(origin, month, day))
 
-temperatures_se <- temp_jour %>% 
+temperatures_se <- temp_jour |> 
   summarise(moyenne = mean(temperature_max, na.rm = TRUE),
             N_obs = n(),
             erreur_standard = sd(temperature_max, na.rm = TRUE) / sqrt(N_obs),
             .by = c(origin, month))
 
-temperature_se_bornes <- temp_jour %>% 
+temperature_se_bornes <- temp_jour |> 
   reframe(mean_se(temperature_max),
-            .by = c(origin, month)) %>% 
+            .by = c(origin, month)) |> 
   rename(moyenne = y,
          moyenne_moins_se = ymin,
          moyenne_plus_se = ymax)
 
-temperature_ci_approx <- temp_jour %>% 
+temperature_ci_approx <- temp_jour |> 
   reframe(mean_se(temperature_max, mult = 1.96),
-          .by = c(origin, month)) %>% 
+          .by = c(origin, month)) |> 
   rename(moyenne = y,
          ci_borne_inf = ymin,
          ci_borne_sup = ymax)
 
-temperature_ci <- temp_jour %>% 
+temperature_ci <- temp_jour |> 
   reframe(mean_cl_normal(temperature_max),
-          .by = c(origin, month)) %>% 
+          .by = c(origin, month)) |> 
   rename(moyenne = y,
          ci_borne_inf = ymin,
          ci_borne_sup = ymax)
@@ -66,8 +66,8 @@ Les histogrammes permettent de déterminer à la fois où se trouvent les valeur
 ```{r}
 #| fig-asp: 1.4
 
-weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
+weather |> 
+  mutate(temp_celsius = (temp - 32) / 1.8) |> 
   ggplot(aes(x = temp_celsius, fill = factor(month))) +
   geom_histogram(bins = 20, color = "grey20", show.legend = FALSE) +
   facet_grid(factor(month) ~ origin, scales = "free_y") +
@@ -88,8 +88,8 @@ Une autre façon de visualiser à la fois les tendances centrales et les dispers
 ```{r}
 #| fig-asp: 1.4
 
-weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
+weather |> 
+  mutate(temp_celsius = (temp - 32) / 1.8) |> 
   ggplot(aes(x = factor(month), y = temp_celsius, fill = factor(month))) +
   geom_jitter(shape = 21, color = "grey20", show.legend = FALSE,
               width = 0.15, height = 0,
@@ -108,8 +108,8 @@ La dernière façon classique de visualiser à la fois les tendances centrales e
 ```{r}
 #| fig-asp: 1.4
 
-weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
+weather |> 
+  mutate(temp_celsius = (temp - 32) / 1.8) |> 
   ggplot(aes(x = factor(month), y = temp_celsius, fill = factor(month))) +
   geom_boxplot(show.legend = FALSE, alpha = 0.5) +
   facet_wrap(~ origin, ncol = 1) +
@@ -146,7 +146,7 @@ Puisque deux choix sont possibles, il sera important de préciser systématiquem
 #| fig-cap: "Températures moyennes mensuelles observées en 2013 dans les 3 aéroports de New York. Les barres d'erreur sont les erreurs standard"
 #| label: fig-errorbar-se
 
-temperatures_se %>% 
+temperatures_se |> 
   ggplot(aes(x = factor(month), y = moyenne)) +
   geom_line(aes(group = 1)) +
   geom_point() +
@@ -174,7 +174,7 @@ Ici, bien que moins lisible, on peut aussi faire apparaître les trois courbes s
 #| fig-cap: "Températures moyennes mensuelles observées en 2013 dans les 3 aéroports de New York. Les barres d'erreur sont les erreurs standard."
 #| label: fig-errorbar-se_all
 
-temperatures_se %>% 
+temperatures_se |> 
   ggplot(aes(x = factor(month), y = moyenne, color = origin, group = origin)) +
   geom_line() +
   geom_point() +
@@ -193,7 +193,7 @@ Nous pouvons arriver au même résultats en utilisant le tableau `temperature_se
 #| fig-cap: "Températures moyennes mensuelles observées en 2013 dans les 3 aéroports de New York. Les barres d'erreur sont les erreurs standard."
 #| label: fig-errorbar-se_all2
 
-temperature_se_bornes %>% 
+temperature_se_bornes |> 
   ggplot(aes(x = factor(month), y = moyenne, color = origin, group = origin)) +
   geom_line() +
   geom_point() +
@@ -213,7 +213,7 @@ De la même façon, nous pouvons parfaitement faire apparaître, au lieu des err
 #| fig-cap: "Températures moyennes mensuelles observées en 2013 dans les 3 aéroports de New York. Les barres d'erreur sont les intervalels de confiance à 95% des moyenes mensuelles."
 #| label: fig-errorbar-ci
 
-temperature_ci %>% 
+temperature_ci |> 
   ggplot(aes(x = factor(month), y = moyenne, group = 1)) +
   geom_line() +
   geom_point() +
@@ -234,8 +234,8 @@ Outre les informations de position et de dispersion, les boîtes à moustaches p
 ```{r}
 #| fig-asp: 1.4
 
-weather %>% 
-  mutate(temp_celsius = (temp - 32) / 1.8) %>% 
+weather |> 
+  mutate(temp_celsius = (temp - 32) / 1.8) |> 
   ggplot(aes(x = factor(month), y = temp_celsius, fill = factor(month))) +
   geom_boxplot(show.legend = FALSE, alpha = 0.5, notch = TRUE) +
   facet_wrap(~ origin, ncol = 1) +
@@ -268,9 +268,9 @@ Attention : pensez à retirer les individus dont le sexe est inconnu.
 #| warning: false
 
 
-resum_peng <- penguins %>% 
-  filter(!is.na(sex)) %>% 
-  group_by(species, sex) %>% 
+resum_peng <- penguins |> 
+  filter(!is.na(sex)) |> 
+  group_by(species, sex) |> 
   summarise(moy_nag = mean(flipper_length_mm, na.rm = TRUE),
             var_nag = var(flipper_length_mm, na.rm = TRUE),
             sd_nag = sd(flipper_length_mm, na.rm = TRUE),
@@ -280,7 +280,7 @@ resum_peng <- penguins %>%
             sd_mas = sd(body_mass_g, na.rm = TRUE),
             se_mas = sd_mas / sqrt(n()))
 
-resum_peng %>% 
+resum_peng |> 
   ggplot(aes(x = sex, y = moy_nag)) +
   geom_point() +
   geom_errorbar(aes(ymin = moy_nag - se_nag,

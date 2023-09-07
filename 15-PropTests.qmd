@@ -1,0 +1,3 @@
+# Comparaison de proportions {#sec-prop}
+
+Ne sera finalement pas traité cette année faute de temps... 

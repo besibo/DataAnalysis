@@ -28,7 +28,7 @@ knitr::write_bib(c(.packages(), 'bookdown', 'knitr', 'rmarkdown',
                    'quarto', 'tidyverse', 'ggplot2', 'gridExtra', 'skimr', 
                    'bindrcpp', 'tidyr', 'dplyr', 'readr', "car", "readxl",
                    "broom", "DescTools", "patchwork", "fontawesome", "scales",
-                   "palmerpenguins", "confintr", "ggmosaic", "mixdist", "nycflights13"), 'packages.bib')
+                   "palmerpenguins", "confintr", "ggmosaic", "mixdist", "nycflights13", "datasauRus"), 'packages.bib')
 
 system("cat book.bib packages.bib > all.bib")
 ```

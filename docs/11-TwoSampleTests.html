@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Analyse de Données - 11&nbsp; Comparaison de moyennes : deux échantillons indépendants</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./12-ANOVA.html" rel="next">
+<link href="./10-TwoSamplePairedTests.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./11-TwoSampleTests.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title"><span id="sec-moy3" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></span></h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analyse de Données</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/besibo/DataAnalysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Analyse-de-Données.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-R-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R et RStudio : les bases</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Dataset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Explorez votre premier jeu de données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-Visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualiser des données avec <code>ggplot2</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-Tidy-Data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-DataWrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler des tableaux avec <code>dplyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-EDA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploration statistique des données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Incertitude.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dispersion et incertitude</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ErrorBars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Visualiser l’incertitude et la dispersion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-OneSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Comparaison de la moyenne d’une population à une valeur théorique</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-TwoSamplePairedTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-TwoSampleTests.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-ANOVA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-Correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Régression linéaire</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-PropTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Comparaison de proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#sec-packages3" id="toc-sec-packages3" class="nav-link active" data-scroll-target="#sec-packages3"><span class="header-section-number">11.1</span> Pré-requis</a></li>
+  <li><a href="#contexte" id="toc-contexte" class="nav-link" data-scroll-target="#contexte"><span class="header-section-number">11.2</span> Contexte</a></li>
+  <li><a href="#importation-et-mise-en-forme-des-données" id="toc-importation-et-mise-en-forme-des-données" class="nav-link" data-scroll-target="#importation-et-mise-en-forme-des-données"><span class="header-section-number">11.3</span> Importation et mise en forme des données</a></li>
+  <li><a href="#exploration-statistique-des-données" id="toc-exploration-statistique-des-données" class="nav-link" data-scroll-target="#exploration-statistique-des-données"><span class="header-section-number">11.4</span> Exploration statistique des données</a></li>
+  <li><a href="#exploration-graphique-des-données" id="toc-exploration-graphique-des-données" class="nav-link" data-scroll-target="#exploration-graphique-des-données"><span class="header-section-number">11.5</span> Exploration graphique des données</a>
+  <ul class="collapse">
+  <li><a href="#avec-un-stripchart" id="toc-avec-un-stripchart" class="nav-link" data-scroll-target="#avec-un-stripchart"><span class="header-section-number">11.5.1</span> Avec un stripchart</a></li>
+  <li><a href="#sec-histofacet" id="toc-sec-histofacet" class="nav-link" data-scroll-target="#sec-histofacet"><span class="header-section-number">11.5.2</span> Avec des histogrammes facettés</a></li>
+  <li><a href="#sec-densfacet" id="toc-sec-densfacet" class="nav-link" data-scroll-target="#sec-densfacet"><span class="header-section-number">11.5.3</span> Avec des diagrammes de densité facettés</a></li>
+  <li><a href="#avec-des-boites-à-moustaches" id="toc-avec-des-boites-à-moustaches" class="nav-link" data-scroll-target="#avec-des-boites-à-moustaches"><span class="header-section-number">11.5.4</span> Avec des boites à moustaches</a></li>
+  </ul></li>
+  <li><a href="#le-test-paramétrique" id="toc-le-test-paramétrique" class="nav-link" data-scroll-target="#le-test-paramétrique"><span class="header-section-number">11.6</span> Le test paramétrique</a>
+  <ul class="collapse">
+  <li><a href="#sec-robust" id="toc-sec-robust" class="nav-link" data-scroll-target="#sec-robust"><span class="header-section-number">11.6.1</span> Conditions d’application</a></li>
+  <li><a href="#sec-student" id="toc-sec-student" class="nav-link" data-scroll-target="#sec-student"><span class="header-section-number">11.6.2</span> Réalisation du test et interprétation</a></li>
+  </ul></li>
+  <li><a href="#lalternative-non-paramétrique" id="toc-lalternative-non-paramétrique" class="nav-link" data-scroll-target="#lalternative-non-paramétrique"><span class="header-section-number">11.7</span> L’alternative non paramétrique</a></li>
+  <li><a href="#lautre-alternative-non-paramétrique" id="toc-lautre-alternative-non-paramétrique" class="nav-link" data-scroll-target="#lautre-alternative-non-paramétrique"><span class="header-section-number">11.8</span> L’autre alternative non paramétrique</a></li>
+  <li><a href="#exercices-dapplication" id="toc-exercices-dapplication" class="nav-link" data-scroll-target="#exercices-dapplication"><span class="header-section-number">11.9</span> Exercices d’application</a>
+  <ul class="collapse">
+  <li><a href="#la-taille-des-hommes-et-des-femmes" id="toc-la-taille-des-hommes-et-des-femmes" class="nav-link" data-scroll-target="#la-taille-des-hommes-et-des-femmes"><span class="header-section-number">11.9.1</span> La taille des hommes et des femmes</a></li>
+  <li><a href="#la-longueur-du-bec-des-manchots-adélie" id="toc-la-longueur-du-bec-des-manchots-adélie" class="nav-link" data-scroll-target="#la-longueur-du-bec-des-manchots-adélie"><span class="header-section-number">11.9.2</span> La longueur du bec des manchots Adélie</a></li>
+  </ul></li>
+  <li><a href="#sec-bilat" id="toc-sec-bilat" class="nav-link" data-scroll-target="#sec-bilat"><span class="header-section-number">11.10</span> Tests bilatéraux et unilatéraux</a>
+  <ul class="collapse">
+  <li><a href="#principe" id="toc-principe" class="nav-link" data-scroll-target="#principe"><span class="header-section-number">11.10.1</span> Principe</a></li>
+  <li><a href="#un-exemple-pas-à-pas" id="toc-un-exemple-pas-à-pas" class="nav-link" data-scroll-target="#un-exemple-pas-à-pas"><span class="header-section-number">11.10.2</span> Un exemple pas à pas</a></li>
+  <li><a href="#exercice-dapplication" id="toc-exercice-dapplication" class="nav-link" data-scroll-target="#exercice-dapplication"><span class="header-section-number">11.10.3</span> Exercice d’application</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="sec-packages3" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="sec-packages3"><span class="header-section-number">11.1</span> Pré-requis</h2>
+<p>Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu <code>Session &gt; Restart R</code>). Inutile en revanche de créer un nouveau <code>Rproject</code> : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même <code>Rproject</code>. Comme toujours, consultez <a href="https://besibo.github.io/BiometrieS3/01-R-basics.html#sec-code">le livre en ligne du semestre 3</a> si vous ne savez plus comment faire.</p>
+<p>Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé <code>RStudio</code>), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d’utiliser :</p>
+<ul>
+<li>le <code>tidyverse</code> <span class="citation" data-cites="R-tidyverse">(<a href="references.html#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span>, qui comprend notamment le package <code>readr</code> <span class="citation" data-cites="R-readr">(<a href="references.html#ref-R-readr" role="doc-biblioref">Wickham, Hester, et Bryan 2023</a>)</span>, pour importer facilement des fichiers <code>.csv</code> au format <code>tibble</code>, le package <code>dplyr</code> <span class="citation" data-cites="R-dplyr">(<a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al. 2023</a>)</span>, pour manipuler des tableaux, et le package <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al. 2023</a>)</span> pour les représentations graphiques.</li>
+<li><code>readxl</code> <span class="citation" data-cites="R-readxl">(<a href="references.html#ref-R-readxl" role="doc-biblioref">Wickham et Bryan 2023</a>)</span>, pour importer facilement des fichiers Excel au format <code>tibble</code>.</li>
+<li><code>skimr</code> <span class="citation" data-cites="R-skimr">(<a href="references.html#ref-R-skimr" role="doc-biblioref">Waring et al. 2022</a>)</span>, qui permet de calculer des résumés de données très informatifs.</li>
+<li><code>car</code> <span class="citation" data-cites="R-car">(<a href="references.html#ref-R-car" role="doc-biblioref">Fox, Weisberg, et Price 2023</a>)</span>, qui permet d’effectuer le test de comparaison des variances de Levene.</li>
+<li>le package <code>palmerpenguins</code> <span class="citation" data-cites="R-palmerpenguins">(<a href="references.html#ref-R-palmerpenguins" role="doc-biblioref">Horst, Hill, et Gorman 2022</a>)</span> pour accéder au jeu de données <code>penguins</code> que nous utiliserons pour les exercices d’application.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Vous aurez également besoin des jeux de données suivants que vous pouvez dès maintenant télécharger dans votre répertoire de travail :</p>
+<ul>
+<li><a href="data/HommesFemmes.xls"><code>HommesFemmes.xls</code></a></li>
+<li><a href="data/HornedLizards.csv"><code>HornedLizards.csv</code></a></li>
+</ul>
+<p>Enfin, je spécifie ici une fois pour toutes le thème que j’utiliserai pour tous les graphiques de ce chapitre. Libre à vous de choisir un thème différent ou de vous contenter du thème proposé par défaut :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="contexte" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="contexte"><span class="header-section-number">11.2</span> Contexte</h2>
+<p>On s’intéresse maintenant aux méthodes permettant de comparer la moyenne de deux groupes ou de deux traitements dans la cas d’échantillons indépendants. Au contraire de la situation décrite dans le <a href="10-TwoSamplePairedTests.html"><span>Chapitre&nbsp;10</span></a>, dans ce type de design expérimentaux, les deux traitements sont appliqués à des échantillons indépendants issus de 2 groupes ou populations distincts. Chaque individu collecté, ou chaque unité expérimentale observée, ne fournit qu’une seule valeur, indépendante de toutes les autres.</p>
+<p>Cette situation est extrêmement classique dans le domaine de l’écologie au sens large. Ainsi, par exemple, lorsque l’on souhaite comparer 2 sites, on réalise des prélèvements dans chacun des 2 sites. Chaque prélèvement ne fournit qu’une valeur pour l’un des 2 sites.</p>
+<p>Ici, nous allons examiner une espèce intéressante, <a href="https://fr.wikipedia.org/wiki/Phrynosoma_mcallii">le lézard cornu</a> <em>Phrynosoma mcallii</em>, qui possède une frange de piquants autour de la tête. Une équipe d’herpétologues <span class="citation" data-cites="Young2004">(<a href="references.html#ref-Young2004" role="doc-biblioref">Young, Brodie, et Brodie 2004</a>)</span> a étudié la question suivante : des piquants plus longs autour de la tête protègent-ils le lézard cornu de son prédateur naturel, <a href="https://fr.wikipedia.org/wiki/Pie-grièche_migratrice">la pie grièche migratrice</a> <em>Lanius ludovicianus</em> ? Ce prédateur a en effet une particularité : il accroche ses proies mortes à des barbelés ou des branches pour les consommer plus tard. Les chercheurs ont donc mesuré la longueur des cornes de 30 lézards retrouvés morts et accrochés dans des arbres par la pie grièche migratrice. Et en parallèle, ils ont mesuré les cornes de 154 individus vivants et en bonne santé choisis au hasard dans la population.</p>
+<div id="fig-HornedLizards" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-alive" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/HornAlive.png" class="img-fluid figure-img" data-ref-parent="fig-HornedLizards"></p>
+<figcaption class="figure-caption">(a) Lézard cornu vivant</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-dead" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/HornDead.png" class="img-fluid figure-img" data-ref-parent="fig-HornedLizards"></p>
+<figcaption class="figure-caption">(b) Lézard cornu mort</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-predator" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/HornPredator.png" class="img-fluid figure-img" data-ref-parent="fig-HornedLizards"></p>
+<figcaption class="figure-caption">(c) Pie grièche</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;11.1: Le lézard cornu et son prédateur</figcaption><p></p>
+</figure>
+</div>
+<p>Nous disposons donc de 2 groupes indépendants : chaque lézard n’a fourni qu’une valeur de longueur de cornes, et chaque lézard n’appartient qu’à un groupe, vivant ou mort. Nous sommes donc dans la situation typique de la comparaison de moyennes de 2 populations avec des données indépendantes. Avant de procéder aux tests, et comme toujours, nous allons commencer par importer et mettre en forme les données (si besoin), puis nous devrons explorer les données, à l’aide d’une part d’indices statistiques de position, de dispersion et d’incertitude et d’autre part de représentations graphiques pertinentes. Enfin, nous vérifierons les conditions d’application du test paramétrique de Student avant de réaliser ce test si les conditions d’application sont remplies, ou son équivalent non paramétrique si elles ne le sont pas.</p>
+</section>
+<section id="importation-et-mise-en-forme-des-données" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="importation-et-mise-en-forme-des-données"><span class="header-section-number">11.3</span> Importation et mise en forme des données</h2>
+<p>Les données de cette étude sont stockées dans <a href="data/HornedLizards.csv">le fichier <code>HornedLizards.csv</code></a>. Importez ces données dans un objet nommé <code>Lizard_raw</code> et examinez le tableau obtenu.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Lizard_raw</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 185 × 2
+   squamosalHornLength Survival
+                 &lt;dbl&gt; &lt;chr&gt;   
+ 1                25.2 living  
+ 2                26.9 living  
+ 3                26.6 living  
+ 4                25.6 living  
+ 5                25.7 living  
+ 6                25.9 living  
+ 7                27.3 living  
+ 8                25.1 living  
+ 9                30.3 living  
+10                25.6 living  
+# ℹ 175 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(Lizard_raw)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On constate ici 3 choses :</p>
+<ol type="1">
+<li>la variable <code>Survival</code> devrait être un facteur.</li>
+<li>le nom de la première colonne (<code>squamosalHornLength</code>), qui contient les mesures des longueurs de cornes, est bien trop long.</li>
+<li>pour l’un des lézards vivants, la mesure de longueur des cornes est manquante. Nous allons donc retirer cet individu pour éviter les messages d’erreurs par la suite.</li>
+</ol>
+<p>Nous pouvons facilement réaliser les 3 modifications d’un coup, et stokcer le résultat dans un nouveau tableau <code>Lizard</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="ot">&lt;-</span> Lizard_raw <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Survival =</span> <span class="fu">factor</span>(Survival)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Horn_len =</span> squamosalHornLength) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Horn_len))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>Lizard</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 184 × 2
+   Horn_len Survival
+      &lt;dbl&gt; &lt;fct&gt;   
+ 1     25.2 living  
+ 2     26.9 living  
+ 3     26.6 living  
+ 4     25.6 living  
+ 5     25.7 living  
+ 6     25.9 living  
+ 7     27.3 living  
+ 8     25.1 living  
+ 9     30.3 living  
+10     25.6 living  
+# ℹ 174 more rows</code></pre>
+</div>
+</div>
+<p>Ce tableau est bien un tableau rangé, au format long : chaque colonne contient une unique variable (<code>Horn_len</code> : longueur des cornes, <code>Survival</code> : groupe de l’individu mesuré, vivant ou mort), et chaque ligne contient les informations d’un unique individu.</p>
+<p>Ici, il ne serait pas correct de présenter les données au format large. il nous faudrait en effet une colonne pour chaque groupe, lézard vivant et lézard mort, mais puisque les données de ces 2 groupes sont indépendantes, nous aurions 2 problèmes :</p>
+<ol type="1">
+<li>si le nombre d’individu n’est pas le même dans les 2 groupes, les deux colonnes n’auraient pas la même longueur. C’est impossible dans <code>RStudio</code>, et le logiciel remplierait donc la colonne la plus courte de NAs pour y remédier.</li>
+<li>les lignes de cet hypothétique tableau large ne correspondraient plus à des observations uniques. Chaque ligne renseignerait en effet sur les mesures de 2 individus distincts, un vivant et un mort.</li>
+</ol>
+<p>Lorsque vous disposez de données appartenant à des groupes indépendants, il faut donc toujours travailler avec un tableau rangé, nécessairement au format long.</p>
+</section>
+<section id="exploration-statistique-des-données" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="exploration-statistique-des-données"><span class="header-section-number">11.4</span> Exploration statistique des données</h2>
+<p>Comme dans le <a href="10-TwoSamplePairedTests.html"><span>Chapitre&nbsp;10</span></a> sur les données appariées, les statistiques descriptives doivent ici être réalisées pour chaque groupe d’individus, et non tous groupes confondus. Ici, le plus simple est d’utiliser la fonction <code>skim()</code> sur les données groupées par niveau du facteur <code>Survival</code> (avec la fonction <code>group_by()</code>) :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Survival) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Data Summary ────────────────────────
+                           Values    
+Name                       Piped data
+Number of rows             184       
+Number of columns          2         
+_______________________              
+Column type frequency:               
+  numeric                  1         
+________________________             
+Group variables            Survival  
+
+── Variable type: numeric ──────────────────────────────────────────────────────
+  skim_variable Survival n_missing complete_rate mean   sd   p0  p25  p50  p75
+1 Horn_len      killed           0             1 22.0 2.71 15.2 21.1 22.2 23.8
+2 Horn_len      living           0             1 24.3 2.63 13.1 23   24.6 26  
+  p100 hist 
+1 26.7 ▂▂▇▇▃
+2 30.3 ▁▁▅▇▂</code></pre>
+</div>
+</div>
+<p>On constate ici qu’il n’y a pas de données manquantes (<code>n_missing</code> = 0 dans les deux groupes). La moyenne des longueurs de cornes est plus grande chez les lézards vivants (<span class="math inline">\(\bar{x}_{living} = 24.3\)</span> mm) que chez les lézards retrouvés morts (<span class="math inline">\(\bar{x}_{killed} = 22.0\)</span>), de plus de 2 millimètres. On retrouve cette tendance pour les médianes, ainsi que pour les premiers et troisièmes quartiles. En revanche, les écarts-types des 2 groupes sont proches, et celui du groupe <code>living</code> est très légèrement plus faible (0.08 mm) que celui du groupe <code>killed</code>.</p>
+<p>Enfin, les histogrammes très simplifiés fournis laissent penser que les données de chaque groupe ne s’écartent pas trop fortement d’une courbe en cloche.</p>
+<p>Outre ces informations sur les ordres de grandeurs observés dans chaque groupe de lézards pour les indices de <strong>position</strong> (moyennes, médianes et quartiles), et de <strong>dispersion</strong> (écarts-types et histogrammes), la fonction <code>skim()</code> ne fournit pas les effectifs observés dans chaque groupe. On sait qu’il y a en tout 184 individus, mais on ne sait pas comment ils se répartissent dans les 2 groupes de lézards. Pour le déterminer, on peut utiliser une fonction décrite plus tôt, la fonction <code>count()</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Survival)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  Survival     n
+  &lt;fct&gt;    &lt;int&gt;
+1 killed      30
+2 living     154</code></pre>
+</div>
+</div>
+<p>On peut obtenir la même information avec la fonction <code>summarise()</code> et son argument <code>.by</code>, et la fonction <code>n()</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Effectif =</span> <span class="fu">n</span>(), <span class="at">.by =</span> Survival)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  Survival Effectif
+  &lt;fct&gt;       &lt;int&gt;
+1 living        154
+2 killed         30</code></pre>
+</div>
+</div>
+<p>On constate ici que les tailles d’échantillons sont très différentes. C’est normal compte tenu de la difficulté de repérer des individus morts dans la nature, et ce n’est pas gênant pour nos analyses puisque la taille des deux échantillons reste élevée.</p>
+<p>Enfin, on peut calculer des indices d’incertitude. C’est d’autant plus important qu’il est difficile de se faire une idée de la signification d’une différence moyenne de longueur de cornes de 2 millimètres. Est-ce important ou négligeable ? Est-ce que ces estimations sont précises ou non ? Comme dans les chapitres précédents, nous allons calculer les intervalles de confiance à 95% de la moyenne de chaque groupe :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_cl_normal</span>(Horn_len), <span class="at">.by =</span> Survival)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  Survival     y  ymin  ymax
+  &lt;fct&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 living    24.3  23.9  24.7
+2 killed    22.0  21.0  23.0</code></pre>
+</div>
+</div>
+<p>La colonne <code>y</code> nous présente à nouveau la moyenne de chaque groupe, la colonne <code>ymin</code> contient les bornes inférieures des intervalles de confiance à 95%, et la colonne <code>ymax</code> les bornes supérieures. On constate ici que les intervalles de confiance à 95% des longueurs de cornes des 2 groupes ne se chevauchent pas du tout : la borne inférieure du groupe <code>living</code> est au-dessus de la borne supérieure du groupe <code>killed</code>. Autrement dit, dans la population générale, la longueur moyenne des cornes chez les lézards vivants a de bonnes chances de se trouver dans l’intervalle [23.9 ; 24.7] millimètres, alors qu’elle a de bonnes chances de se trouver dans l’intervalle [21 ; 23] millimètres chez les lézards morts. La différence de moyennes entre ces 2 groupes vaut donc probablement entre 0.9 millimètres au moins, et 3.7 millimètres au plus. Le test statistique que nous ferons ensuite devrait donc confirmer que ces différences sont significatives, autrement dit, qu’elles ne sont pas liées au simple hasard de l’échantillonnage.</p>
+</section>
+<section id="exploration-graphique-des-données" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="exploration-graphique-des-données"><span class="header-section-number">11.5</span> Exploration graphique des données</h2>
+<p>Comme toujours, nous pouvons réaliser plusieurs types de graphiques pour en apprendre plus sur <strong>la distribution des données</strong> dans les deux groupes. Si nous faisons un nuage de points, il est évidemment impossible ici de relier les points deux à deux. Non seulement cela n’aurait aucun sens puisque les échantillons sont indépendants, mais en outre, nous ne disposons pas du même nombre d’individus dans les 2 échantillons. Nous nous contenterons donc da faire un stripchart.</p>
+<section id="avec-un-stripchart" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="avec-un-stripchart"><span class="header-section-number">11.5.1</span> Avec un stripchart</h3>
+<div class="cell" data-layout-align="center" data-fig.asp="1.5">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Survival, <span class="at">y =</span> Horn_len)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Groupe de lézards"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Longueur des cornes (mm)"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Visualisation des longueurs</span><span class="sc">\n</span><span class="st">de cornes du lézard cornu"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="11-TwoSampleTests_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ce premier graphique permet de visualiser très clairement les différences de tailles d’échantillons entre les deux groupes. Il permet également de voir que l’étendue des longueurs de cornes est plus importante dans le groupe des individus vivants que dans celui des individus morts. En outre, le nuage de points des vivants semble être plus haut sur l’axe des <code>y</code> que celui des morts, confirmant les statistiques descriptives qui montraient des tailles de cornes en moyenne plus importantes dans le groupe des vivants.</p>
+</section>
+<section id="sec-histofacet" class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="sec-histofacet"><span class="header-section-number">11.5.2</span> Avec des histogrammes facettés</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Horn_len)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>, <span class="at">fill =</span> <span class="st">"firebrick2"</span>, <span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Survival, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Longueur des cornes (mm)"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Fréquence"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Distribution de la longueur des cornes dans 2 groupes de lézards cornus"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"nb morts : 30, nb vivants : 154"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="11-TwoSampleTests_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Notez ici l’utilisation de l’argument <code>scales = "free_y"</code> dans la fonction <code>facet_wrap()</code>. Cet argument permet de ne pas imposer la même échelle pour l’axe des ordonnées des 2 graphiques. Ce choix est ici pertinent puisque les effectifs des 2 groupes sont très différents. Faîtes un essai sans cet argument pour voir la différence. Il est en revanche important de conserver le même axe des <code>x</code> afin de faciliter la comparaison des 2 groupes.</p>
+<p>Cette visualisation nous montre que les données doivent suivre à peu près une distribution Normale dans les 2 groupes, et que globalement la longueur des cornes semble légèrement plus élevée dans le groupe des vivants (avec un mode autour de 25-26 mm) que dans le groupes des morts (avec un mode autour de 23-24 mm). L’étendue des données semble légèrement plus grande dans le groupe des vivants, mais cela n’est peut-être dû qu’à la différence marquée des tailles d’échantillons.</p>
+</section>
+<section id="sec-densfacet" class="level3" data-number="11.5.3">
+<h3 data-number="11.5.3" class="anchored" data-anchor-id="sec-densfacet"><span class="header-section-number">11.5.3</span> Avec des diagrammes de densité facettés</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Horn_len)) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"firebrick2"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Survival, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Longueur des cornes (mm)"</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Densité"</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Distribution de la longueur des cornes dans 2 groupes de lézards cornus"</span>,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"nb morts : 30, nb vivants : 154"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="11-TwoSampleTests_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Les diagrammes de densité ressemblent ici beaucoup aux histogrammes. C’est normal car la taille des échantillons est importante (30 et 154 pour les groupes <code>killed</code> et <code>living</code> respectivement). C’était moins vrais dans les chapitres précédents car les tailles d’échantillons étaient plus faibles, et la forme des histogrammes dépendait alors beaucoup du nombre de classes que l’on choisissait de représenter. Avec des échantillons de grande taille (n ≥ 30), c’est moins problématique.</p>
+<p>En général, il est donc inutile de faire à la fois les histogrammes et les diagrammes de densité. Choisissez l’un ou l’autre selon vos préférences et la situation.</p>
+</section>
+<section id="avec-des-boites-à-moustaches" class="level3" data-number="11.5.4">
+<h3 data-number="11.5.4" class="anchored" data-anchor-id="avec-des-boites-à-moustaches"><span class="header-section-number">11.5.4</span> Avec des boites à moustaches</h3>
+<div class="cell" data-layout-align="center" data-fig.asp="1.5">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Survival, <span class="at">y =</span> Horn_len)) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Groupe de lézards"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Longueur des cornes (mm)"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Comparaison de 2 groupes</span><span class="sc">\n</span><span class="st">de lézards cornus"</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"nb morts : 30, nb vivants : 154"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="11-TwoSampleTests_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Nous visualisons ici encore plus clairement que sur les histogrammes le fait que les longueurs de cornes des individus vivants sont légèrement plus longues que celles des individus morts. D’ailleurs, puisque les intervalles de confiance à 95% des médianes des 2 groupes (les encoches) ne se chevauchent pas, un test de comparaison des moyennes devrait logiquement conclure à une différence significative en faveur des individus vivants. On peut également noter que la largeur de l’encoche pour les individus morts est plus importante que celle des vivants. Cela traduit une incertitude plus grande autour de la médiane estimée dans le groupe des individus morts. C’est tout à fait logique compte tenu des effectifs plus faibles dans ce groupe.</p>
+<p>Enfin, il est tout à fait possible de représenter sur le même graphique les boîtes à moustaches et les données brutes sous forme de stripchart. On a ainsi à la fois (i) une visualisation simplifiée de la position et de la dispersion des données avec les boîtes à moustache, et (ii) accès à l’ensemble des données brutes, ce qui permet parfois de voir des structures invisibles sur les boîtes à moustaches (regroupement de points par exemples). Afin de ne pas dupliquer les valeurs les plus extrêmes du jeu de données, nous indiquerons à <code>geom_boxplot()</code> de ne pas afficher les outliers sur le graphique : tous les points seront en effet déjà affichés par <code>geom_jitter()</code> :</p>
+<div class="cell" data-layout-align="center" data-fig.asp="1.5">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Survival, <span class="at">y =</span> Horn_len, <span class="at">fill =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">outlier.color =</span> <span class="cn">NA</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">shape =</span> <span class="dv">21</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Groupe de lézards"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Longueur des cornes (mm)"</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Comparaison de 2 groupes</span><span class="sc">\n</span><span class="st">de lézards cornus"</span>,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"nb morts : 30, nb vivants : 154"</span>) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"purple3"</span>, <span class="st">"royalblue2"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="11-TwoSampleTests_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="le-test-paramétrique" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="le-test-paramétrique"><span class="header-section-number">11.6</span> Le test paramétrique</h2>
+<p>Le test paramétrique le plus puissant que nous puissions faire pour comparer la moyenne de 2 populations est le test de Student. Ce test étant paramétrique, nous devons nous assurer que ses conditions d’application sont vérifiées avant de pouvoir le réaliser.</p>
+<section id="sec-robust" class="level3" data-number="11.6.1">
+<h3 data-number="11.6.1" class="anchored" data-anchor-id="sec-robust"><span class="header-section-number">11.6.1</span> Conditions d’application</h3>
+<p>Les conditions d’application de ce test sont au nombre de 3 :</p>
+<ol type="1">
+<li>Chacun des deux échantillons est issu d’un échantillonnage aléatoire de la population générale. Comme toujours, en l’absence d’indication contraire, on considère que cette condition est toujours vérifiée.</li>
+<li>La variable numérique étudiée est distribuée normalement dans les deux populations. Il nous faudra donc faire deux tests de Shapiro-Wilk, un pour chaque échantillon.</li>
+<li>La variance de la variable numérique étudiée est la même dans les deux populations. C’est ce que l’on appelle l’homoscédasticité.</li>
+</ol>
+<p>En réalité, le test du <span class="math inline">\(t\)</span> de Student sur deux échantillons indépendants est assez robuste face au non respect de cette troisième condition d’application. Cela signifie que si cette troisième condition d’application n’est pas strictement vérifiée, les résultats du tests peuvent malgré tout rester valides. Lorsque les 2 échantillons comparés ont des tailles supérieures ou égales à 30, ce test fonctionne bien même si l’écart-type d’un groupe est jusqu’à 3 fois supérieur ou inférieur à l’écart-type du second groupe, à condition que la taille des 2 échantillons soit proche (ce qui n’est pas le cas ici !). En revanche, si les écart-types diffèrent de plus d’un facteur 3, ou si les tailles d’échantillons sont très différentes, le test du <span class="math inline">\(t\)</span> de Student ne devrait pas être utilisé. De même, si la taille des échantillons est inférieure à 30 et que les variances ne sont pas homogènes, ce test ne devrait pas être réalisé. En conclusion, les résultats du test du <span class="math inline">\(t\)</span> de Student à deux échantillons indépendants peuvent rester valides si la troisième condition d’homoscédasticité n’est pas respectée, mais dans certains cas seulement.</p>
+<p>Le test du <span class="math inline">\(t\)</span> de Student sur deux échantillons indépendants est également assez robuste face à des écarts mineurs à la distribution Normale, tant que la forme des deux distributions comparées reste similaire et unimodale. En outre, la robustesse de ce test augmente avec la taille des échantillons.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Robustesse
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La robustesse d’un tests statistique est sa capacité à rester valide même lorsque certaines de ses conditions d’application ne sont pas parfaitement respectées. Plus un test est robuste, plus il est capable de supporter des “entorses” importantes à ses conditions d’application.}</p>
+</div>
+</div>
+<p>Au final, avec un peu d’habitude, même lorsque les conditions d’application ne sont pas toutes vérifiées, on peut parfois passer outre. Mais à ce stade, on préfère s’en tenir à des choses plus simples et claires.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+La procédure à suivre
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Faites un test de Normalité pour chacune des deux séries de données. Si elles suivent la loi Normale toutes les deux, passez au point 2. Sinon, rendez-vous au point 4.</li>
+<li>Faites un test d’homoscédasticité (homogénéité des variances). Si les variances sont homogènes, passez au point 3. Sinon,rendez-vous au point 5.</li>
+<li>Faite un test de comparaison des moyennes paramétrique : le test de Student. Examinez la <span class="math inline">\(p-\)</span>value pour conclure, et rendez-vous au point 6.</li>
+<li>Faite un test de comparaison des moyennes non paramétrique : le test de Wilcoxon de la somme des rangs. Examinez la <span class="math inline">\(p-\)</span>value pour conclure, et rendez-vous au point 6.</li>
+<li>Faite un test de comparaison des moyennes non paramétrique : le test <span class="math inline">\(t\)</span> de Welch. Examinez la <span class="math inline">\(p-\)</span>value pour conclure, et rendez-vous au point 6.</li>
+<li>Si la <span class="math inline">\(p-\)</span>value est supérieure à <span class="math inline">\(\alpha\)</span>, on ne peut pas rejeter l’hypothèse nulle et on conclut alors à une absence de différence significative entre les 2 populations. À l’inverse, si la <span class="math inline">\(p-\)</span>value est inférieure ou égale à <span class="math inline">\(\alpha\)</span>, on rejette l’hypothèse nulle et on valide l’hypothèse alternative. Les deux populations ont des moyennes significativement différentes, et pour savoir laquelle est supérieure ou inférieure à l’autre, on revient aux estimations des moyennes et des intervalles de confiances à 95%, calculés dans la partie consacrée aux statistiques descriptives.</li>
+</ol>
+</div>
+</div>
+<section id="normalité-des-données" class="level4" data-number="11.6.1.1">
+<h4 data-number="11.6.1.1" class="anchored" data-anchor-id="normalité-des-données"><span class="header-section-number">11.6.1.1</span> Normalité des données</h4>
+<p>Nous commençons donc par tester la Normalité des 2 populations dont sont issus les échantillons, c’est le point 1 de la procédure détaillée ci-dessus. Pour les individus morts, les hypothèses sont les suivantes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la taille des cornes suit une distribution Normale dans la population des lézards cornus morts.</li>
+<li>H<span class="math inline">\(_1\)</span> : la taille des cornes ne suit pas une distribution Normale dans la population des lézards cornus morts.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Survival <span class="sc">==</span> <span class="st">"killed"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Horn_len) <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro.test</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  .
+W = 0.93452, p-value = 0.06482</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>La <span class="math inline">\(p\)</span>-value est supérieure à <span class="math inline">\(\alpha = 0.05\)</span>, donc on ne peut pas rejeter l’hypothèse nulle de normalité pour la taille des cornes de la population des lézards cornus morts (test de Shapiro-Wilk, <span class="math inline">\(W = 0.93\)</span>, <span class="math inline">\(p = 0.065\)</span>).</p>
+</blockquote>
+<p>Pour les individus vivants :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la taille des cornes suit une distribution Normale dans la population des lézards cornus vivants.</li>
+<li>H<span class="math inline">\(_1\)</span> : la taille des cornes ne suit pas une distribution Normale dans la population des lézards cornus vivants.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Survival <span class="sc">==</span> <span class="st">"living"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Horn_len) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro.test</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  .
+W = 0.96055, p-value = 0.0002234</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>La <span class="math inline">\(p\)</span>-value est inférieure à <span class="math inline">\(\alpha = 0.05\)</span>, donc on rejette l’hypothèse nulle de normalité pour la taille des cornes de la population des lézards cornus vivants (test de Shapiro-Wilk, <span class="math inline">\(W = 0.96\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>).</p>
+</blockquote>
+<p>L’une des 2 séries de données ne suit pas la loi Normale, nous sommes donc censés passer directement au point 4 de la procédure.</p>
+<p>Toutefois, si l’on examine les histogrammes (<a href="#sec-histofacet"><span>Section&nbsp;11.5.2</span></a>) ou les diagrammes de densité (<a href="#sec-densfacet"><span>Section&nbsp;11.5.3</span></a>) des 2 échantillons, on constate que la forme des distributions des 2 séries de données est très proche. Pour les 2 échantillons, la distribution est en effet uni-modale, avec une asymétrie gauche assez marquée (une longue queue de distribution du côté gauche). La forme des distributions étant similaire (on parle bien de la forme des histogrammes et non de la position du pic), et les histogrammes étant proches de la forme typique d’une courbe en cloche, le test de Student devrait rester valide car il est robuste dans cette situation. Ici, pour l’exemple, on va donc passer au point 2 de la procédure. Notez toutefois que passer directement au point 4 de la procédure serait tout à fait correct : on ne pourrait rien vous reprocher si vous passez directement au test non paramétrique de comparaison des moyennes lorsque vous constatez que l’une des 2 séries de données ne suit pas la distribution Normale.</p>
+</section>
+<section id="homogénéité-des-variances" class="level4" data-number="11.6.1.2">
+<h4 data-number="11.6.1.2" class="anchored" data-anchor-id="homogénéité-des-variances"><span class="header-section-number">11.6.1.2</span> Homogénéité des variances</h4>
+<p>Le test le plus simple pour comparer la variance de 2 populations est le test <span class="math inline">\(F\)</span> :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la variance des 2 populations est égale, leur ratio vaut 1 <span class="math inline">\(\left(\frac{\sigma^2_{killed}}{\sigma^2_{living}} = 1\right)\)</span>.</li>
+<li>H<span class="math inline">\(_1\)</span> : la variance des 2 populations est différente, leur ratio ne vaut pas 1 <span class="math inline">\(\left(\frac{\sigma^2_{killed}}{\sigma^2_{living}} \neq 1\right)\)</span>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(Horn_len <span class="sc">~</span> Survival, <span class="at">data =</span> Lizard)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    F test to compare two variances
+
+data:  Horn_len by Survival
+F = 1.0607, num df = 29, denom df = 153, p-value = 0.7859
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 0.6339331 1.9831398
+sample estimates:
+ratio of variances 
+          1.060711 </code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Ici, le ratio des variances (la variance des individus morts divisée par la variance des individus vivants) est très proche de 1 (<span class="math inline">\(F = 1.06\)</span>, IC 95% : [0.63 ; 1.98]). Le test <span class="math inline">\(F\)</span> nous montre qu’il est impossible de rejeter H<span class="math inline">\(_0\)</span> : au seuil <span class="math inline">\(\alpha = 0.05\)</span>, le ratio des variances n’est pas significativement différent de 1 (ddl = 29 et 153, <span class="math inline">\(p = 0.79\)</span>), les variances sont homogènes.</p>
+</blockquote>
+<p>Le test de Bartlett est un autre test qui permet de comparer la variance de plusieurs populations (2 ou plus). Lorsque le nombre de populations est égal à 2 (comme ici), ce test est absolument équivalent au test <span class="math inline">\(F\)</span> ci-dessus.</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : toutes les populations ont même variance (<span class="math inline">\(\sigma^2_A = \sigma^2_B = \sigma^2_C = \cdots = \sigma^2_N\)</span>).</li>
+<li>H<span class="math inline">\(_1\)</span> : au moins une population a une variance différente des autres.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(Horn_len <span class="sc">~</span> Survival, <span class="at">data =</span> Lizard)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Bartlett test of homogeneity of variances
+
+data:  Horn_len by Survival
+Bartlett's K-squared = 0.042411, df = 1, p-value = 0.8368</code></pre>
+</div>
+</div>
+<p>Enfin, le test de Levene (attention, le package <code>car</code> doit être chargé) devrait être préféré la plupart du temps. Comme le test de Bartlett, il permet de comparer la variance de plusieurs populations, mais il est plus robuste vis à vis de la non-normalité des données.</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : toutes les populations ont même variance (<span class="math inline">\(\sigma^2_A = \sigma^2_B = \sigma^2_C = \cdots = \sigma^2_N\)</span>).</li>
+<li>H<span class="math inline">\(_1\)</span> : au moins une population a une variance différente des autres.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Le test de Levene fait partie du package car. Il doit être chargé en mémoire</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(car)</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(Horn_len <span class="sc">~</span> Survival, <span class="at">data =</span> Lizard)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+       Df F value Pr(&gt;F)
+group   1  0.0035  0.953
+      182               </code></pre>
+</div>
+</div>
+<p>Ici encore, les conclusions sont les mêmes :</p>
+<blockquote class="blockquote">
+<p>Il est impossible de rejeter l’hypothèse nulle d’homogénéité des variances au seuil <span class="math inline">\(\alpha = 0.05\)</span> (test de Levene, <span class="math inline">\(F\)</span> = 0.004, ddl = 1, <span class="math inline">\(p = 0.953\)</span>).</p>
+</blockquote>
+<p>À vous de choisir lequel de ces 3 tests vous souhaitez réaliser : il est évident qu’on ne fait jamais les 3 !</p>
+<p>Ici, puisque l’homoscédasticité est vérifiée, on passe au point 3 de la procédure.</p>
+</section>
+</section>
+<section id="sec-student" class="level3" data-number="11.6.2">
+<h3 data-number="11.6.2" class="anchored" data-anchor-id="sec-student"><span class="header-section-number">11.6.2</span> Réalisation du test et interprétation</h3>
+<p>Puisque la taille des cornes du lézard cornu suit approximativement la même distribution “presque Normale” dans les 2 populations (lézards morts et vivants) et que ces 2 populations ont des variances homogènes, on peut réaliser le test du <span class="math inline">\(t\)</span> de Student sur deux échantillons indépendants.</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la moyenne des 2 populations est égale, leur différence vaut 0 (<span class="math inline">\(\mu_{killed}-\mu_{living} = 0\)</span>).</li>
+<li>H<span class="math inline">\(_1\)</span> : la moyenne des 2 populations est différente, leur différence ne vaut pas 0 (<span class="math inline">\(\mu_{killed}-\mu_{living} \neq 0\)</span>).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Horn_len <span class="sc">~</span> Survival, <span class="at">data =</span> Lizard, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  Horn_len by Survival
+t = -4.3494, df = 182, p-value = 2.27e-05
+alternative hypothesis: true difference in means between group killed and group living is not equal to 0
+95 percent confidence interval:
+ -3.335402 -1.253602
+sample estimates:
+mean in group killed mean in group living 
+            21.98667             24.28117 </code></pre>
+</div>
+</div>
+<p>Notez bien la syntaxe :</p>
+<ul>
+<li>Nous utilisons ici la syntaxe du type “formule” faisant appel au symbole “<code>~</code>” (Longueur des cornes en fonction de la Survie) et à l’argument “<code>data =</code>”.</li>
+<li>L’argument “<code>paired = TRUE</code>” a disparu puisque nous avons ici deux échantillons indépendants</li>
+<li>L’argument “<code>var.equal = TRUE</code>” doit obligatoirement être spécifié : nous nous sommes assuré que l’homogénéité des variances était vérifiée. Il faut donc l’indiquer afin que le test de Student classique soit réalisé. Si on omet de le spécifier, c’est un autre test qui est réalisé (voir plus bas).</li>
+</ul>
+<blockquote class="blockquote">
+<p>Au seuil <span class="math inline">\(\alpha\)</span> de 5%, on rejette l’hypothèse nulle d’égalité des moyennes de la longueur des cornes entre lézards vivants et morts (test <span class="math inline">\(t\)</span> de Student sur deux échantillons indépendant, <span class="math inline">\(t = -4.35\)</span>, ddl = 182, <span class="math inline">\(p &lt; 0.001\)</span>). Les lézards morts ont en moyenne des cornes plus courtes (<span class="math inline">\(\hat{\mu}_{killed} = 21.99\)</span> millimètres) que les lézards vivants (<span class="math inline">\(\hat{\mu}_{living} = 24.28\)</span> millimètres). La gamme des valeurs les plus probables pour la différence de moyenne entre les deux populations est fournie par l’intervalle de confiance à 95% de la différence de moyennes : [-3.34 ; -1.25].</p>
+</blockquote>
+<p>Ce test confirme donc bien l’impression des chercheurs : les lézards principalement pris pour cibles par les pies grièches migratrices ont des cornes en moyenne plus courtes (probablement entre 1.25 et 3.34 millimètres de moins) que les lézards de la population générale. Avoir des cornes plus longues semble donc protéger les lézards de la prédation, du moins dans une certaine mesure.</p>
+<p>Notez bien que l’intervalle de confiance à 95% qui est fourni avec les résultats du test est l’intervalle de confiance à 95% de la différence de moyenne entre les 2 groupes. Cet intervalle nous donne donc une idée de la <strong>magnitude de l’effet</strong>, de son ampleur. En effet, dire que les lézards morts ont des cornes en moyenne plus courtes est intéressant, mais cela n’aura pas la même portée si leurs cornes sont plus courtes de 0.02 millimètres ou si elles sont plus courtes de 5 millimètres. Un test statistique permet de rejeter ou non une hypothèse nulle, mais c’est bien l’estimation (la moyenne de chaque groupe et l’intervalle de confiance à 95% de la différence) qui nous dit ce qu’on doit penser des résultats, et de leur pertinence (écologique, biologique, physiologie, comportementale, etc.).</p>
+</section>
+</section>
+<section id="lalternative-non-paramétrique" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="lalternative-non-paramétrique"><span class="header-section-number">11.7</span> L’alternative non paramétrique</h2>
+<p>Si les conditions d’application du test de Student ne sont pas vérifiées (c’est bien le cas ici puisque la longueur des cornes ne suit pas une distribution Normale dans la population des lézards vivants), notre procédure nous conduit à l’étape 4 : nous devons utiliser un équivalent non paramétrique au test de Student. C’est le cas du <strong>test de Wilcoxon sur la somme des rangs</strong> (également appelé test de Mann-Whitney). Comme pour tous les tests de Wilcoxon, la comparaison porte alors non plus sur les moyennes mais sur les médianes.</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la médiane des 2 populations est égale, leur différence vaut 0 (<span class="math inline">\(med_{killed}-med_{living} = 0\)</span>).</li>
+<li>H<span class="math inline">\(_1\)</span> : la médiane des 2 populations est différente, leur différence ne vaut pas 0 (<span class="math inline">\(med_{killed}-med_{living}\neq 0\)</span>).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(Horn_len <span class="sc">~</span> Survival, <span class="at">data =</span> Lizard, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon rank sum test with continuity correction
+
+data:  Horn_len by Survival
+W = 1181.5, p-value = 2.366e-05
+alternative hypothesis: true location shift is not equal to 0
+95 percent confidence interval:
+ -3.200076 -1.300067
+sample estimates:
+difference in location 
+             -2.200031 </code></pre>
+</div>
+</div>
+<p>L’argument <code>var.equal = TRUE</code> n’existe pas pour ce test, puisque c’est justement un test non paramétrique qui ne requiert pas l’homogénéité des variances. En revanche, comme pour tous les autres tests de Wilcoxon que nous avons réalisés jusqu’ici, l’argument <code>conf.int = TRUE</code> permet d’afficher les estimateurs pertinents, ici, la différence de médiane entre les 2 populations et l’intervalle de confiance à 95% de cette différence de médiane.</p>
+<p>La conclusion est ici la même que pour le test de Student : puisque la <span class="math inline">\(p\)</span>-value est très inférieure à <span class="math inline">\(\alpha\)</span>, on rejette l’hypothèse nulle : les médianes sont bel et bien différentes.</p>
+</section>
+<section id="lautre-alternative-non-paramétrique" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="lautre-alternative-non-paramétrique"><span class="header-section-number">11.8</span> L’autre alternative non paramétrique</h2>
+<p>Enfin, dans le cas où la variable étudiée suit la loi Normale dans les deux populations mais qu’elle n’a pas la même variance dans les deux populations (donc si vous arrivez au point 5 de la procédure décrite plus haut), il est toujours possible de réaliser un test de Wilcoxon, il est préférable de réaliser un test de Student modifié : le <strong>test approché du <span class="math inline">\(t\)</span> de Welch</strong>. Ce test est moins puissant que le test de Student classique, mais il reste plus puissant que le test de Wilcoxon, et surtout, il permet de comparer les moyennes et non les médianes.</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la moyenne des 2 populations est égale, leur différence vaut 0 (<span class="math inline">\(\mu_{killed}-\mu_{living} = 0\)</span>).</li>
+<li>H<span class="math inline">\(_1\)</span> : la moyenne des 2 populations est différente, leur différence ne vaut pas 0 (<span class="math inline">\(\mu_{killed}-\mu_{living} \neq 0\)</span>).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Horn_len <span class="sc">~</span> Survival, <span class="at">data =</span> Lizard)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  Horn_len by Survival
+t = -4.2634, df = 40.372, p-value = 0.0001178
+alternative hypothesis: true difference in means between group killed and group living is not equal to 0
+95 percent confidence interval:
+ -3.381912 -1.207092
+sample estimates:
+mean in group killed mean in group living 
+            21.98667             24.28117 </code></pre>
+</div>
+</div>
+<p>La seule différence par rapport à la syntaxe du test <span class="math inline">\(t\)</span> de Student paramétrique est la suppression de l’argument <code>var.equal = TRUE</code>. Attention donc, à bien utiliser la syntaxe correcte. Le test du <span class="math inline">\(t\)</span> de Welch ne devrait être réalisé que lorsque la Normalité est vérifiée pour les 2 populations, mais pas l’homoscédasticité. Par rapport au test de Student classique, on constate que le nombre de degrés de libertés est très différent, et donc la <span class="math inline">\(p\)</span>-value également. Les bornes de l’intervalle de confiance à 95% de la différence de moyenne sont différentes également puisque leur calcul a été fait en supposant que les 2 populations n’avaient pas même variance.</p>
+</section>
+<section id="exercices-dapplication" class="level2" data-number="11.9">
+<h2 data-number="11.9" class="anchored" data-anchor-id="exercices-dapplication"><span class="header-section-number">11.9</span> Exercices d’application</h2>
+<section id="la-taille-des-hommes-et-des-femmes" class="level3" data-number="11.9.1">
+<h3 data-number="11.9.1" class="anchored" data-anchor-id="la-taille-des-hommes-et-des-femmes"><span class="header-section-number">11.9.1</span> La taille des hommes et des femmes</h3>
+<p>On s’intéresse à la différence de taille supposée entre hommes et femmes. <a href="data/HommesFemmes.xls">Le fichier <code>HommesFemmes.xls</code></a> contient les tailles en centimètres de 38 hommes et 43 femmes choisis au hasard parmi les étudiants de première année à La Rochelle Université. Importez, mettez en forme et analysez ces données. Vous prendrez soin de retirer les éventuelles valeurs manquantes, vous prendrez le temps d’examiner les données à l’aide de statistiques descriptives et de représentations graphiques adaptées, puis vous tenterez de répondre à la question suivante : les hommes et les femmes inscrits en première année à La Rochelle Université ont-il la même taille ? Si non, caractérisez cette différence de taille.</p>
+</section>
+<section id="la-longueur-du-bec-des-manchots-adélie" class="level3" data-number="11.9.2">
+<h3 data-number="11.9.2" class="anchored" data-anchor-id="la-longueur-du-bec-des-manchots-adélie"><span class="header-section-number">11.9.2</span> La longueur du bec des manchots Adélie</h3>
+<p>Dans le jeu de données <code>penguins</code> du package <code>palmerpenguins</code>, récupérez les lignes du tableau qui correspondent aux manchots Adélie, et comparez la longueur des becs entre mâles et femelles. Comme toujours, avant de vous lancer dans les tests, vous prendrez soin de retirer les éventuelles valeurs manquantes, et vous prendrez le temps d’examiner les données à l’aide de statistiques descriptives et de représentations graphiques adaptées. Faites l’effort d’expliquer votre démarche, de préciser les hypothèses nulles et alternatives de chaque test, et de rédiger l’interprétation que vous faites de chaque résultat.</p>
+</section>
+</section>
+<section id="sec-bilat" class="level2" data-number="11.10">
+<h2 data-number="11.10" class="anchored" data-anchor-id="sec-bilat"><span class="header-section-number">11.10</span> Tests bilatéraux et unilatéraux</h2>
+<section id="principe" class="level3" data-number="11.10.1">
+<h3 data-number="11.10.1" class="anchored" data-anchor-id="principe"><span class="header-section-number">11.10.1</span> Principe</h3>
+<p>Jusqu’à maintenant, tous les tests que nous avons réalisés sont des <strong>tests bilatéraux</strong>. Pour chaque test, l’hypothèse nulle est imposée. En revanche, pour certains tests, l’hypothèse alternative est à choisir (et à spécifier) par l’utilisateur parmi 3 possibilités :</p>
+<ul>
+<li>Une hypothèse bilatérale. C’est celle qui est utilisée par défaut si l’utilisateur ne précise rien.</li>
+<li>Deux hypothèses unilatérales possibles, qui doivent être spécifiées explicitement par l’utilisateur.</li>
+</ul>
+<p>Les tests unilatéraux peuvent concerner tous les tests pour lesquels les hypothèses sont de la forme suivante :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la valeur d’un paramètre de la population est égale à <span class="math inline">\(k\)</span> (<span class="math inline">\(k\)</span> peut être une valeur fixe, arbitraire, choisie par l’utilisateur, ou la valeur d’un paramètre d’une autre populations).</li>
+<li>H<span class="math inline">\(_1\)</span> : la valeur d’un paramètre de la population <strong>n’est pas égale à</strong> <span class="math inline">\(k\)</span>.</li>
+</ul>
+<p>En réalité, si nous remplaçons l’hypothèse H<span class="math inline">\(_1\)</span> par :</p>
+<ul>
+<li>H<span class="math inline">\(_1\)</span> : la valeur d’un paramètre de la population <strong>est supérieure à</strong> <span class="math inline">\(k\)</span>.</li>
+</ul>
+<p>ou par :</p>
+<ul>
+<li>H<span class="math inline">\(_1\)</span> : la valeur d’un paramètre de la population <strong>est inférieure à</strong> <span class="math inline">\(k\)</span>.</li>
+</ul>
+<p>nous réalisons un test unilatéral.</p>
+<p>Dans <code>RStudio</code>, la syntaxe permettant de spécifier l’hypothèse alternative que nous souhaitons utiliser est toujours la même. Il faut préciser, au moment de faire le test l’argument suivant :</p>
+<ul>
+<li><code>alternative = "two.sided"</code> : pour faire un test bilatéral. Si on ne le fait pas explicitement, c’est de toutes façons cette valeur qui est utilisée par défaut.</li>
+<li><code>alternative = "greater"</code> : pour choisir l’hypothèse unilatérale “<code>&gt;</code>”.</li>
+<li><code>alternative = "less"</code> : pour choisir l’hypothèse unilatérale “<code>&lt;</code>”.</li>
+</ul>
+<p>Attention : le choix d’utiliser “greater” ou “less” dépend donc de l’ordre dans lequel les échantillons sont spécifiés. Cette syntaxe est valable pour tous les tests de Student vus jusqu’ici (un échantillon, deux échantillons appariés, deux échantillons indépendants) et pour leurs alternatives non paramétriques (test de Wilcoxon des rangs signés, test de Wilcoxon de la somme des rangs, test du <span class="math inline">\(t\)</span> de Welch).</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Attention
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’utilisation de tests unilatéraux doit être réservée exclusivement aux situations pour lesquelles le choix de l’hypothèse unilatérale est possible à justifier par un mécanisme quelconque (biologique, physiologique, comportemental, écologique, génétique, évolutif, biochimique, etc.). Observer que l’un des échantillons a une moyenne plus grande ou plus faible qu’un autre lors de la phase des statistiques descriptives des données <strong>n’est pas du tout une raison suffisante</strong>. Il faut pouvoir justifier le choix de l’hypothèse alternative par une explication valable. D’ailleurs, si on veut être rigoureux, il faudrait toujours formuler les hypothèses que l’on souhaite tester <strong>avant</strong> de mettre en place le protocole expérimental et <strong>avant</strong> d’acquérir les données.</p>
+</div>
+</div>
+<p>Pour s’embêter avec les tests unilatéraux puisqu’il est si rare qu’on ait le droit de les faire ? Tout simplement parce que toutes choses étant égales par ailleurs, un test unilatéral est toujours plus puissant (parfois, beaucoup plus puissant) qu’un test bilatéral. Or, la puissance est quelque chose qu’on cherche à maximiser (voir sec-puiss). Lorsqu’il est pertinent de réaliser un test unilatéral, on doit donc toujours le faire.</p>
+<p>Reprenons l’un des exemples examinés précédemment pour mieux comprendre comment tout cela fonctionne.</p>
+</section>
+<section id="un-exemple-pas-à-pas" class="level3" data-number="11.10.2">
+<h3 data-number="11.10.2" class="anchored" data-anchor-id="un-exemple-pas-à-pas"><span class="header-section-number">11.10.2</span> Un exemple pas à pas</h3>
+<p>Reprenons l’exemple des lézards cornus. L’étude a été réalisée parce que les chercheurs supposaient que la longueur des cornes des lézards était susceptible de leur fournir une protection face à la prédation. Autrement dit, les chercheurs supposaient que des cornes <em>plus longues</em> devaient fournir une meilleure protection vis à vis de la prédation. Ainsi, les lézards morts devaient avoir des cornes moins longues en moyenne que les les lézards vivants, simplement parce que porter des cornes courtes expose plus fortement les individus à la prédation. Nous avons donc une bonne raison “écologique/évolutive” de considérer un test unilatéral (la susceptibilité face à la prédation qui a entraîné une pression de sélection sur la longueur des cornes des lézards), avant même de collecter les données.</p>
+<p>Lorsque nous avons examiné cette question, nous avons fait le test du <span class="math inline">\(t\)</span> de Student sur échantillons indépendants de la façon suivante :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Horn_len <span class="sc">~</span> Survival, <span class="at">data =</span> Lizard, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  Horn_len by Survival
+t = -4.3494, df = 182, p-value = 2.27e-05
+alternative hypothesis: true difference in means between group killed and group living is not equal to 0
+95 percent confidence interval:
+ -3.335402 -1.253602
+sample estimates:
+mean in group killed mean in group living 
+            21.98667             24.28117 </code></pre>
+</div>
+</div>
+<p>Comme l’indiquent les résultats fournis, l’hypothèse alternative utilisée pour faire le test est : “La vraie différence de moyenne n’est pas égale à 0”. Autrement dit, nous avons fait un test bilatéral avec les hypothèses suivantes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la moyenne des 2 populations est égale, leur différence vaut 0 (<span class="math inline">\(\mu_{killed}-\mu_{living} = 0\)</span>).</li>
+<li>H<span class="math inline">\(_1\)</span> : la moyenne des 2 populations est différente, leur différence ne vaut pas 0 (<span class="math inline">\(\mu_{killed}-\mu_{living} \neq 0\)</span>).</li>
+</ul>
+<p>Ce test est donc rigoureusement équivalent à celui-ci :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Horn_len <span class="sc">~</span> Survival, <span class="at">data =</span> Lizard, <span class="at">var.equal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  Horn_len by Survival
+t = -4.3494, df = 182, p-value = 2.27e-05
+alternative hypothesis: true difference in means between group killed and group living is not equal to 0
+95 percent confidence interval:
+ -3.335402 -1.253602
+sample estimates:
+mean in group killed mean in group living 
+            21.98667             24.28117 </code></pre>
+</div>
+</div>
+<p>Ici, nous souhaitons en fait réaliser un <strong>test unilatéral</strong> avec les hypothèses suivantes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la moyenne de longueur des cornes de la population des lézards morts est égale à celle des lézards vivants. Leur différence vaut 0 (<span class="math inline">\(\mu_{killed}-\mu_{living} = 0\)</span>).</li>
+<li>H<span class="math inline">\(_1\)</span> : la moyenne de longueur des cornes de la population des lézards morts est <strong>inférieure</strong> à celle des lézards vivants. Leur différence est inférieure à 0 (<span class="math inline">\(\mu_{killed}-\mu_{living} &lt; 0\)</span>).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Horn_len <span class="sc">~</span> Survival, <span class="at">data =</span> Lizard, <span class="at">var.equal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  Horn_len by Survival
+t = -4.3494, df = 182, p-value = 1.135e-05
+alternative hypothesis: true difference in means between group killed and group living is less than 0
+95 percent confidence interval:
+      -Inf -1.422321
+sample estimates:
+mean in group killed mean in group living 
+            21.98667             24.28117 </code></pre>
+</div>
+</div>
+<p>Puisque la <span class="math inline">\(p\)</span>-value de ce test est inférieure à <span class="math inline">\(\alpha = 0.05\)</span>, on rejette l’hypothèse nulle de l’égalité des moyennes. On valide donc l’hypothèse alternative : les lézards cornus morts ont en moyenne des cornes plus courtes que les lézards vivants. Cette différence de longueur de cornes est en faveur des lézards vivants et vaut très probablement au moins <span class="math inline">\(1.4\)</span> millimètres (c’est l’intervalle de confiance à 95% de la différence de moyennes qui nous le dit).</p>
+<p>Dernière chose importante : il ne faut pas se tromper dans le choix de l’hypothèse alternative. En effet, nous aurions pu tenter de tester exactement la même chose en formulant les hypothèses suivantes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la moyenne de longueur des cornes de la population des lézards <strong>vivants</strong> est égale à celle des lézards <strong>morts</strong>. Leur différence vaut 0 (<span class="math inline">\(\mu_{living}-\mu_{killed} = 0\)</span>).</li>
+<li>H<span class="math inline">\(_1\)</span> : la moyenne de longueur des cornes de la population des lézards <strong>vivants</strong> est <strong>supérieure</strong> à celle des lézards <strong>morts</strong>. Leur différence est <strong>supérieure</strong> à 0 (<span class="math inline">\(\mu_{living}-\mu_{killed} &gt; 0\)</span>).</li>
+</ul>
+<p>Ce test est normalement exactement le même que précédemment. Toutefois, si on essaie de le réaliser, on rencontre un problème :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Horn_len <span class="sc">~</span> Survival, <span class="at">data =</span> Lizard, <span class="at">var.equal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  Horn_len by Survival
+t = -4.3494, df = 182, p-value = 1
+alternative hypothesis: true difference in means between group killed and group living is greater than 0
+95 percent confidence interval:
+ -3.166684       Inf
+sample estimates:
+mean in group killed mean in group living 
+            21.98667             24.28117 </code></pre>
+</div>
+</div>
+<p>Ici, la <span class="math inline">\(p\)</span>-value est très supérieure à <span class="math inline">\(\alpha\)</span> puisqu’elle vaut 1. Une <span class="math inline">\(p\)</span>-value de 1 devrait toujours attirer votre attention. La conclusion devrait donc être que l’on ne peut pas rejeter H<span class="math inline">\(_0\)</span> : les lézards morts et vivants ont en moyenne des cornes de même longueur. Nous savons pourtant que c’est faux.</p>
+<p>Le problème est ici liè à l’ordre des catégories “vivant” ou “mort” dans le facteur <code>Survival</code> du tableau <code>Lizard</code>. Les dernières lignes des tests que nous venons de faire indiquent la moyenne de chaque groupe, mais le groupe “killed” apparaît toujours avant le groupe “living”. C’est l’ordre des niveaux dans le facteur <code>Survival</code> qui doit dicter la syntaxe appropriée :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>Lizard<span class="sc">$</span>Survival</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] living living living living living living living living living living
+ [11] living living living living living living living living living living
+ [21] living living living living living living living living living living
+ [31] living living living living living living living living living living
+ [41] living living living living living living living living living living
+ [51] living living living living living living living living living living
+ [61] living living living living living living living living living living
+ [71] living living living living living living living living living living
+ [81] living living living living living living living living living living
+ [91] living living living living living living living living living living
+[101] living living living living living living living living living living
+[111] living living living living living living living living living living
+[121] living living living living living living living living living living
+[131] living living living living living living living living living living
+[141] living living living living living living living living living living
+[151] living living living living killed killed killed killed killed killed
+[161] killed killed killed killed killed killed killed killed killed killed
+[171] killed killed killed killed killed killed killed killed killed killed
+[181] killed killed killed killed
+Levels: killed living</code></pre>
+</div>
+</div>
+<p>Par défaut, dans <code>RStudio</code>, les niveaux d’un facteur sont classés par ordre alphabétique sauf si on spécifie manuellement un ordre différent. Ici, le niveau “killed” est donc le premier niveau du facteur, et “living” le second. Attention, on parle bien ici des niveaux, ou modalités, et non des données elles-mêmes. Ici, le premier lézard mesuré appartient à la catégorie <code>living</code>. Ça n’est pas ça qui est important : c’est bien l’ordre des niveaux qui compte, et on peut le vour tout en bas, après <code>Levels: ...</code>. Lorsque l’on réalise un test de Student avec ces données (ou un test de Wilcoxon d’ailleurs), la différence de moyenne qui est examinée par le test est donc “moyenne des <code>killed</code> - moyenne des <code>living</code>”. Lorsque nous avons tapé ceci :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Horn_len <span class="sc">~</span> Survival, <span class="at">data =</span> Lizard, <span class="at">var.equal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>nous avons donc en réalité posé les hypothèses suivantes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la moyenne de longueur des cornes de la population des lézards <strong>morts</strong> est égale à celle des lézards <strong>vivants</strong>. Leur différence vaut 0 (<span class="math inline">\(\mu_{killed}-\mu_{living} = 0\)</span>).</li>
+<li>H<span class="math inline">\(_1\)</span> : la moyenne de longueur des cornes de la population des lézards <strong>morts</strong> est <strong>supérieure</strong> à celle des lézards <strong>vivants</strong>. Leur différence est <strong>supérieure</strong> à 0 (<span class="math inline">\(\mu_{killed}-\mu_{living} &gt; 0\)</span>).</li>
+</ul>
+<p>Ce test est donc erroné, ce qui explique qu’il nous renvoie un résultat faux et une <span class="math inline">\(p\)</span>-value de 1. Ici, puisque l’ordre des catégories est “killed” d’abord et “living” ensuite, la seule façon correcte de faire un test unilatéral qui a du sens est donc celle que nous avons réalisée en premier :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Horn_len <span class="sc">~</span> Survival, <span class="at">data =</span> Lizard, <span class="at">var.equal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Faites donc toujours attention à l’ordre des catégories de vos facteurs pour ne pas vous tromper. Une façon simple de vérifier cet ordre et d’observer vos graphiques (par exemple, les boîtes à moustaches). L’ordre dans lequel les catégories apparaissent sur l’axe des <code>x</code> reflète l’ordre des catégorie du facteur porté par cet axe :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>Lizard <span class="sc">%&gt;%</span> </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Survival, <span class="at">y =</span> Horn_len)) <span class="sc">+</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="11-TwoSampleTests_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="exercice-dapplication" class="level3" data-number="11.10.3">
+<h3 data-number="11.10.3" class="anchored" data-anchor-id="exercice-dapplication"><span class="header-section-number">11.10.3</span> Exercice d’application</h3>
+<p>Reprenez chaque exemple et exercice traité depuis le premier chapitre et identifiez les situations où un test unilatéral aurait du sens. Si vous en trouvez, faites ce test et assurez-vous que les hypothèses choisies sont bien celles qui sont utilisées lors du test.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-R-car" class="csl-entry" role="listitem">
+Fox, John, Sanford Weisberg, et Brad Price. 2023. <em>car: Companion to Applied Regression</em>. <a href="https://CRAN.R-project.org/package=car">https://CRAN.R-project.org/package=car</a>.
+</div>
+<div id="ref-R-palmerpenguins" class="csl-entry" role="listitem">
+Horst, Allison, Alison Hill, et Kristen Gorman. 2022. <em>palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://CRAN.R-project.org/package=palmerpenguins">https://CRAN.R-project.org/package=palmerpenguins</a>.
+</div>
+<div id="ref-R-skimr" class="csl-entry" role="listitem">
+Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, et Shannon Ellis. 2022. <em>skimr: Compact and Flexible Summaries of Data</em>. <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>.
+</div>
+<div id="ref-R-tidyverse" class="csl-entry" role="listitem">
+Wickham, Hadley. 2023. <em>tidyverse: Easily Install and Load the Tidyverse</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.
+</div>
+<div id="ref-R-readxl" class="csl-entry" role="listitem">
+Wickham, Hadley, et Jennifer Bryan. 2023. <em>readxl: Read Excel Files</em>. <a href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.
+</div>
+<div id="ref-R-ggplot2" class="csl-entry" role="listitem">
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, et Dewey Dunnington. 2023. <em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
+</div>
+<div id="ref-R-dplyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, et Davis Vaughan. 2023. <em>dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+<div id="ref-R-readr" class="csl-entry" role="listitem">
+Wickham, Hadley, Jim Hester, et Jennifer Bryan. 2023. <em>readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.
+</div>
+<div id="ref-Young2004" class="csl-entry" role="listitem">
+Young, Kevin V., Edmund D. Brodie, et Edmund D. Brodie. 2004. <span>«&nbsp;How the Horned Lizard Got Its Horns&nbsp;»</span>. <em>Science</em> 304 (5667): 65‑65. <a href="https://doi.org/10.1126/science.1094790">https://doi.org/10.1126/science.1094790</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./10-TwoSamplePairedTests.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./12-ANOVA.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,588 @@
+# Comparaison de moyennes : plus de 2 groupes {#sec-anova}
+
+## Pré-requis {#sec-packages4}
+
+Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez [le livre en ligne du semestre 3](https://besibo.github.io/BiometrieS3/01-R-basics.html#sec-code) si vous ne savez plus comment faire.
+
+Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser :
+
+- le `tidyverse` [@R-tidyverse], qui comprend notamment le package `readr` [@R-readr], pour importer facilement des fichiers `.csv` au format `tibble`, le package `dplyr` [@R-dplyr], pour manipuler des tableaux, et le package `ggplot2` [@R-ggplot2] pour les représentations graphiques.
+- `readxl` [@R-readxl], pour importer facilement des fichiers Excel au format `tibble`.
+- `skimr` [@R-skimr], qui permet de calculer des résumés de données très informatifs.
+- `car` [@R-car], qui permet d'effectuer le test de comparaison des variances de Levene.
+- `broom` [@R-broom], qui fait partie du `tidyverse` mais qu'il faut charger explicitement. La fonction `tidy()` de ce package nous permettra de "ranger" correctement les résultats de tests dans un `tibble`.
+- `DescTools` [@R-DescTools], afin de réaliser un test spécifique de comparaisons multiples. N'oubliez pas de l'installer si nécessaire, avant de le charger en mémoire.
+- le package `palmerpenguins` [@R-palmerpenguins] pour accéder au jeu de données `penguins` que nous utiliserons pour les exercices d'application.
+
+```{r}
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(readxl)
+library(skimr)
+library(car)
+library(broom)
+library(DescTools)
+library(palmerpenguins)
+```
+
+Vous aurez également besoin des jeux de données suivants que vous pouvez dès maintenant télécharger dans votre répertoire de travail :
+
+- [`Light.csv`](data/Light.csv)
+- [`Insectes.csv`](data/Insectes.csv)
+
+Enfin, je spécifie ici une fois pour toutes le thème que j'utiliserai pour tous les graphiques de ce chapitre. Libre à vous de choisir un thème différent ou de vous contenter du thème proposé par défaut :
+
+```{r}
+theme_set(theme_bw())
+```
+
+## Contexte
+
+<!-- ## L'analyse de variance à un facteur -->
+
+<!-- ### Exploration préalable des données -->
+
+Voyager dans un pays éloigné peut faire souffrir de décalage horaire. Habituellement, la resynchronisation de l'horloge interne circadienne dans le nouveau fuseau horaire est réalisée grâce à la perception de la lumière par les yeux. Ce changement progressif du rythme de notre horloge interne est appelé "décalage de phase". Ce phénomène a été étudié par 2 chercheurs en 1998 [@Campbell1998], qui ont montré que ce décalage de phase pouvait également être obtenu en exposant des sujets à la lumière, non pas au niveau de leurs yeux, mais au niveau de leur [fosse (ou creux) poplitée](https://fr.wikipedia.org/wiki/Fosse_poplitée), c'est-à-dire, derrière les genoux.  
+Cette découverte a été vivement critiquée par certains, et saluée comme une découverte majeure par d'autres. Toutefois, certains aspects du design expérimental de l'étude de 1998 ont été mis en doute en 2002 : il semble en effet que lors de l'exposition du creux poplité, les yeux de certains patients ont été également exposés à de faibles intensités lumineuses. Pour vérifier les trouvailles de Campbell et Murphy, Wright et Czeisler [@Wright2002] ont ré-examiné ce phénomène. La nouvelle expérience a évalué les rythmes circadiens en mesurant les cycles quotidiens de production de mélatonine chez 22 participants placés au hasard dans 3 groupes. Les patients étaient réveillés en pleine nuit et exposés :
+
+1. Soit à 3 heures de lumière appliquée exclusivement derrière leurs genoux (groupe `knee`).
+2. Soit à 3 heures de lumière appliquée exclusivement à leurs yeux (groupe `eyes`).
+3. Soit à 3 heures d'obscurité totale (groupe `control`).
+
+Le décalage de phase du cycle de production de mélatonine était mesuré 48h plus tard. Des chiffres négatifs indiquent un retard de production de mélatonine. C'est l'effet théorique attendu du traitement lumineux administré. Un décalage de phase positif indique une production de mélatonine plus précoce. Une absence de changement se traduit par un décalage de phase de 0.
+
+
+## Importation et mise en forme des données
+
+Les données brutes de cette étude sont fournies dans le fichier [`Light.csv`](data/Light.csv). Importez ces données dans `RStudio` et examinez les données brutes grâce à la fonction `View()`.
+
+```{r, echo = -1, message = FALSE}
+Light <- read_csv("data/Light.csv")
+Light
+```
+
+Le tableau obtenu est-il au format long ou au format court/large ? Pourquoi un tableau au format suivant n'aurait-il pas de sens ?
+
+```{r}
+#| echo: false
+Light %>%
+  mutate(ID = factor(c(1:8, 1:7, 1:7))) %>%
+  spread(treatment, shift) %>%
+  select(-ID)
+```
+
+Lorsque l'on réalise une analyse de variance, puisque les effectifs ne sont pas nécessairement identiques dans tous les groupes (c'est ce qu'on appelle un design déséquilibré, ou "unbalanced design"), présenter les tableaux au format long est indispensable. Par ailleurs, notez que les ANOVAs  réalisées sur des "balanced design" (ou designs équilibrés, pour lesquels tous les groupes sont de même taille), sont beaucoup plus puissantes que les ANOVAs réalisées sur des "unbalanced designs".
+
+Ici, le tableau de données est très simple (et de petite taille). Il n'y a pas de données manquantes et aucune création de nouvelle variable n'est nécessaire. La seule modification que nous devrions faire est de transformer la variable `treatment` en facteur :
+
+```{r}
+Light <- Light %>%
+  mutate(treatment = factor(treatment))
+```
+
+Comme toujours, les niveaux du facteur sont automatiquement classés par ordre alphabétique :
+
+```{r}
+levels(Light$treatment)
+```
+
+Pour les statistiques descriptives et les graphiques qui viendront après, nous souhaitons indiquer l'ordre suivant : `control`, puis `knee`, puis `eyes` :
+
+```{r}
+Light <- Light %>%
+  mutate(treatment = fct_relevel(treatment, "control", "knee", "eyes"))
+
+Light
+Light$treatment
+```
+
+Attention à bien respecter la casse (le respect des majuscules/minuscules est toujours aussi important dans `RStudio`).
+
+
+
+## Exploration statistique des données
+
+Comme toujours, et maintenant que nos données sont au bon format, il est nécessaire d'examiner quelques statistiques descriptives pour chaque catégorie étudiée. On peut tout d'abord commencer par examiner la taille de chaque échantillon :
+
+```{r}
+Light %>%
+  count(treatment)
+```
+
+Nous avons ici la confirmation que le design expérimental n'est pas équilibré, puisque le groupe `control` compte un individu de plus. Nous pouvons ensuite utiliser la fonction `skim` du package `skimr` pour obtenir un résumé des données :
+
+```{r, render = knitr::normal_print, size = 'small'}
+Light %>%
+  group_by(treatment) %>%
+  skim()
+```
+
+Il semble que le groupe `eyes` se comporte un peu différemment des autres groupes. En effet, pour les groupes `control` et `knee`, les valeurs des indices de position observés sont très proches :
+
+- les moyennes et les médianes sont négatives mais proches de 0.
+- les valeurs observées sont négatives pour certaines, et positives pour d'autres (la colonne `p0` contient les minimas et la colonne `p100` contient les maximas).
+
+En revanche, pour le groupe `eyes`, les décalages de phase observés sont tous négatifs (le maximum, présenté dans la colonne `p100` vaut -0.78) et la moyenne est près de 5 fois plus faible que pour les 2 autres groupes.
+
+Concernant la dispersion, les écart-types semblent en revanche très proches dans les 3 groupes (entre 0.6 et 0.8).
+
+Enfin, les histogrammes présentés pour chaque groupe semblent très éloignés d'une distribution Normale. C'est logique compte tenu des faibles effectifs dans chaque groupe. Nous verrons plus tard que cela n'a aucune importance puisque les conditions d'application de l'ANOVA portent sur les **résidus de l'ANOVA** (nous verrons plus loin de quoi il s'agit), et pas sur les données brutes.
+
+Il semble donc que seul le groupe `eyes` soit véritablement différent du groupe témoin. Pour le vérifier, on peut calculer les intervalles de confiance à 95% des moyennes. Nous examinerons ensuite quelques  graphiques, puis nous ferons un test d'hypothèses.
+
+```{r}
+Light %>% 
+  reframe(mean_cl_normal(shift), .by = treatment)
+```
+
+Là encore, le groupe `eyes` semble assez différent des 2 autres. L'intervalle de confiance à 95% de ce groupe ([-2.20 ; -0.90]) est totalement disjoint du groupe `knee` ([-1.07 ; 0.40]) et chevauche à peine celui du groupe  `control` ([-0.82 ; 0.21]). L'intervalle de confiance du groupe `knee`recouvre en revanche en totalité celui du groupe `control`. Il n'y aura donc vraisemblablement pas de différence significative entre ces 2 groupes, mais une différence significative entre le groupe `eyes` et les 2 autres. Pour visualiser un peu mieux ces résultats préliminaires, examinons quelques graphiques.
+
+## Exploration graphique
+
+Comme toujours, il est indispensable de regarder à quoi ressemblent les données brutes sur un ou des graphiques. Les statistiques descriptives ne racontent en effet pas toujours toute l'histoire. Ici, nous allons superposer les données brutes, sous forme de nuage de points, aux boites à moustaches :
+
+```{r}
+Light %>%
+  ggplot(aes(x = treatment, y = shift, fill = treatment)) +
+  geom_boxplot(notch = TRUE, show.legend = FALSE, 
+               alpha = 0.3, outlier.colour = NA) +
+  geom_jitter(width = 0.2, shape = 21, show.legend = FALSE) +
+  labs(x = "traitement", y = "Décalage de phase (sans unité)") +
+  scale_fill_brewer(palette = "Accent")
+```
+
+Puisqu'il y a peu de données, les intervalles de confiance à 95% sont très larges. Ils dépassent d'ailleurs presque systématiquement les quartiles, ce qui explique l'apparence bizarre des boîtes à moustaches et les messages d'avertissement affichés lors de la création du graphique. Il vaudait donc mieux représenter cette figure sans ces intervalles de confiance. Toutefois, avant de les retirer, on peut constater ici que les IC 95% se chevauchent complètement pour les séries `control` et `knee`. En revanche, il n'y a aucun chevauchement de l'IC 95% du groupe `eyes` avec les 2 autres groupes. Ces réslutats sont très légèrement différents de ceux obtenus plus haut, car on examine ici les intervalles de confiance à 95% des médianes, alors qu'on regardait les intervalles de confiance à 95% des moyennes dans la section précédente. Les conclusions sont toutefois les mêmes : on s'attend donc à trouver une différence de moyenne significative entre le groupe `eyes` d'une part, et les groupes `control` et `knee` d'autre part, mais pas de différence de moyenne entre les groupes `control` et `knee`.
+
+```{r}
+Light %>%
+  ggplot(aes(x = treatment, y = shift, fill = treatment)) +
+  geom_boxplot(show.legend = FALSE, 
+               alpha = 0.3, outlier.colour = NA) +
+  geom_jitter(width = 0.2, shape = 21, show.legend = FALSE) +
+  labs(x = "traitement", y = "Décalage de phase (sans unité)") +
+  scale_fill_brewer(palette = "Accent")
+```
+
+On constate ici visuellement que les 3 séries ont une étendue à peu près similaire, et que le groupe `eyes` semble se distinguer des 2 autres par des valeurs plus faibles. Enfin, les boîtes contenant 50% des valeurs centrales (donc l'étendue des valeurs entre les premiers et troisièmes quartiles) recouvrent le 0 pour les 2 groupes `control` et `knee`, mais par pour `eyes`.
+
+L'examen d'un graphique de densité facetté donne les mêmes informations :
+
+```{r}
+#| fig-asp: 1
+
+Light %>% 
+  ggplot(aes(x = shift, fill = treatment)) +
+  geom_density(show.legend = FALSE, alpha = 0.5) +
+  geom_rug() +
+  facet_wrap(~treatment, ncol = 1) +
+  scale_fill_brewer(palette = "Accent") +
+  labs(x = "Décalage de phase (sans unité)", y = "Densité")
+```
+
+Un package utile lorsque l'on dispose d'un grand nombre de groupes que l'on souhaite comparer à l'aide de graphiques de densité est le package `ggridges` :
+
+```{r}
+library(ggridges)
+Light %>% 
+  ggplot(aes(x = shift, y = treatment, fill = treatment)) +
+  geom_density_ridges(show.legend = FALSE, alpha = 0.5) +
+  scale_fill_brewer(palette = "Accent") +
+  labs(x = "Décalage de phase (sans unité)", y = "Densité")
+```
+
+
+## Le test paramétrique
+
+Le test paramétrique permettant de comparer la moyenne de plusieurs populations en une seule étape est l'**analyse de variance à un facteur**. Contrairement aux tests que nous avons vus jusqu'à maintenant, les conditions d'application de ce test ne seront vérifiées qu'**après** avoir réalisé l'analyse. En effet, les conditions d'application de l'ANOVA ne se vérifient pas sur les données brutes mais sur les **résidus de l'ANOVA**. C'est d'ailleurs ce que l'on appelle l'**analyse des résidus**, ou diagnostique de l'ANOVA.
+
+
+### Réalisation du test
+
+Dans `R`, l'analyse de variance se fait grâce à la fonction `aov()` (comme "Analysis Of Variance"). La syntaxe est la même que pour un certain nombre de tests déjà vus dans les chapitres précédents : il faut fournir une formule à la fonction. On place la variable numérique expliquée à gauche du `~`, et à droite, la variable qualitative explicative (le facteur).
+
+Contrairement aux autres tests réalisés jusqu'ici, les résultats du test devront être sauvegardés dans un objet. Outre les résultats du test, cet objet contiendra également tous les éléments permettant de vérifier si les conditions d'application de l'ANOVA sont réunies ou non.
+
+Les hypothèses testées sont les suivantes :
+
+- H$_0$ : les moyennes de toutes les populations sont égales ($\mu_{\textrm{control}} = \mu_{\textrm{knee}} = \mu_{\textrm{eyes}}$).
+- H$_1$ : toutes les moyennes ne sont pas égales. Au moins l'une d'entre elles diffère des autres.
+
+```{r}
+# Réalisation de l'ANOVA 1 facteur
+res <- aov(shift ~ treatment, data = Light)
+
+# Affichage des résultats
+res
+```
+
+L'affichage des résultats bruts ne nous apprend que peu de choses. En revanche, la fonction `summary()` donne la réponse du test :
+
+```{r, message = FALSE}
+summary(res)
+```
+
+Pour le facteur étudié (`treatment`), on obtient le nombre de degrés de libertés (`Df`), la somme des carrés (`Sum Sq`), les carrés moyens (`Mean Sq`), la statistique du test (`F`) et la $p-$value (`Pr(>F)`). Ici, la $p-$value est inférieure à $\alpha$, donc on rejette H$_0$. Au moins l'une des moyennes est différente des autres.
+
+Avant d'aller plus loin dans l'interprétation de ces résultats, il nous faut déterminer si nous avions bel et bien le droit de réaliser cette ANOVA, en vérifiant si les conditions d'application de l'ANOVA sont remplies.
+
+### Conditions d'application {#sec-caanova}
+
+L'ANOVA est un test paramétrique, et comme pour tous les tests paramétriques, des conditions d'application doivent être vérifiées pour avoir le droit d'effectuer le test. À la différence des autres tests paramétriques que nous avons réalisés jusqu'ici, les conditions d'application de l'ANOVA ne doivent pas être vérifiées **avant** de faire le test, mais **après**.
+
+Les résultats de l'ANOVA ne seront donc valides que si les conditions d'application sont vérifiées. Comme indiqué plus haut, ces conditions d'application doivent être vérifiées sur **les résidus de l'ANOVA**, donc nécessairement **après** avoir réalisé l'analyse. Les résidus de l'ANOVA représentent l'écart entre chaque observation et la moyenne de son groupe, et ils sont calculés au moment ou nous réalisons l'ANOVA.
+
+:::{.callout-important}
+## Important
+
+Les conditions d'application de l'ANOVA ne se vérifient pas sur les données brutes comme c'est le cas du test de Student, mais sur **les résidus de l'ANOVA**, qui sont calculés au moment où l'ANOVA est réalisée. Par conséquent, on ne vérifie pas les conditions d'application avant mais bien **après** avoir fait le test. 
+
+Ça n'est que si les conditions d'application sont remplies qu'on aura le droit d'interpréter les résultats de l'ANOVA.
+:::
+
+Pour que l'ANOVA soit valide, les résidus doivent :
+
+1. Être indépendants.
+2. Être homogènes.
+3. Être distribués normalement.
+
+#### Indépendance des résidus
+
+L'indépendance des résidus signifie que connaître la valeur d'un résidu ne permet pas de prédire la valeur d'un autre résidu. Si les données ont été collectées correctement (échantillonnage aléatoire simple, indépendance des observations), on considère généralement que cette condition est vérifiée. Les 2 autres conditions d'application se vérifient soit graphiquement, soit avec un test d'hypothèses.
+
+#### Homogénéité des résidus
+
+L'homogénéité des résidus signifie que les résidus doivent avoir à peu près la même variance pour chacun des groupes comparés. On peut vérifier que cette condition d'application est vérifiée grâce à ce graphique, qui représente les résidus (`residuals`, sur l'axe des `y`) en fonction des valeurs ajustées (c'est-à-dire la moyenne de chaque groupe, `fitted values`, sur l'axe des `x`) :
+
+```{r}
+plot(res, which = 1)
+```
+
+Ici, les résidus sont considérés comme homogènes car nous avons à peu près autant de résidus positifs que négatifs et que la ligne rouge est très proche du 0. L'étalement (vertical) des résidus est à peu près le même de la gauche à la droite du graphique. On pourrait donc faire entrer les résidus dans une boite rectangulaire horizontale centrée sur le 0 et ayant la même largeur d'un bout à l'autre du graphique. 
+
+Ci-dessous, j'affiche quelques exemples de situations où les résidus ne sont pas homogènes afin que vous puissiez voir à quoi ressemblent les graphiques des résidus en fonction des valeurs ajustées dans ce type de situation :
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+set.seed(1654)
+dat <- tibble(num = c(rnorm(8, 8, 2), rnorm(8, 12, 6), 
+                      rnorm(8, 16, 10), rnorm(8, 19, 14)),
+              fac = rep(letters[1:4], each = 8))
+out <- lm(num ~fac, data = dat)
+
+dat2 <- tibble(num = c(rnorm(8, 8, 14), rnorm(8, 12, 9), 
+                       rnorm(8, 16, 6), rnorm(8, 19, 1)),
+              fac = rep(letters[1:4], each = 8))
+out2 <- lm(num ~fac, data = dat2)
+
+
+dat3 <- tibble(num = c(rnorm(8, 8, 20), rnorm(8, 12, 5), 
+                       rnorm(8, 16, 5), rnorm(8, 19, 20)),
+              fac = rep(letters[1:4], each = 8))
+out3 <- lm(num ~fac, data = dat3)
+
+dat4 <- tibble(num = c(rnorm(8, 8, 3), rnorm(8, 12, 3), 
+                       rnorm(8, 16, 3) + 15, rnorm(8, 19, 3)),
+              fac = rep(1:4, each = 8))
+out4 <- lm(num ~fac, data = dat4)
+
+plot(out, which = 1)
+plot(out2, which = 1)
+plot(out3, which = 1)
+plot(out4, which = 1)
+```
+
+Pour ces 4 graphiques, les résidus ne rentrent pas dans une boîte rectangulaire qui a la même hauteur d'un bout à l'autre du graphique. Les résidus de ces ANOVAs fictives ne sont donc pas homogènes et les conditions d'application de l'ANOVA ne sont donc pas réunies.
+
+
+Mais revenons à nos données de décalage de phase. Une autre façon de visualiser les résidus est d'utiliser le graphique suivant :
+
+```{r}
+plot(res, which = 3)
+```
+
+Sur ce graphique, ce qui compte principalement, c'est la droite en rouge. Elle est ici presque horizontale, ce qui montre que les résidus de tous les groupes (un groupe à gauche et 2 à droite) ont à peu près même moyenne.
+
+Enfin, cette condition d'homogénéité des résidus entre les groupes peut également être vérifiée grâce au test de Levene. Pour ce test, les hypothèses seront les suivantes :
+
+- H$_0$ : les résidus sont homogènes (*i.e.* identiques dans tous les groupes).
+- H$_1$ : les résidus ne sont pas homogènes (*i.e.* au moins un groupe présente des résidus dont la variance est différente des autres).
+
+```{r}
+leveneTest(res$residuals ~ Light$treatment)
+```
+
+Ici, puisque $p > \alpha$, on ne peut pas rejeter l'hypothèse nulle. Les résidus sont donc bien homogènes.
+
+Reste à vérifier la normalité des résidus. 
+
+#### Normalité des résidus
+
+Comme pour l'homogénéité des résidus, leur normalité peut être examinée graphiquement ou avec un test statistique :
+
+```{r}
+plot(res, which = 2)
+```
+
+Sur un graphique quantile-quantile comme celui-là, on considère que les observations sont distribuées normalement si les points sont bien alignés sur la droite. Ici, la plupart des points sont très proches de la droite, ce qui laisse penser que les résidus suivent bien la loi Normale. Mais il est souvent difficile, surtout pour les néophytes, de savoir à partir de quel écart entre les points et la droite il faut considérer que les résidus n'ont pas une distribution Normale.
+
+On peut donc confirmer (ou non !) notre première impression avec le test de Normalité de Shapiro-Wilk. Il s'agit du même test de Normalité que nous utilisions sur les données brutes pour vérifier les conditions d'application du test de Student. Ici, on applique ce test sur les résidus de l'ANOVA :
+
+```{r}
+shapiro.test(res$residuals)
+```
+
+Comme pour tous les tests de Shapiro-Wilk, l'hypothèse nulle est la normalité des observations. Ici, puisque $p > \alpha$, on ne peut pas rejeter H$_0$. Les résidus suivent donc bien la loi Normale.
+
+Toutes les conditions d'application de l'ANOVA sont donc vérifiées. Nous avions donc bien le droit de la réaliser et ses résultats sont valides. 
+
+Dernière chose, il est possible de produire les 3 graphiques ci-dessus (et même un quatrième que nous ne décrirons pas ici), en une seule commande :
+
+```{r eval=FALSE}
+plot(res)
+```
+
+Il faut alors presser la touche `Entrée` de votre clavier pour afficher successivement les 4 graphiques produits.
+
+
+### Interprétation des résultats
+
+Maintenant que nous avons la confirmation que les conditions d'application sont vérifiées, revenons aux résultats de l'ANOVA :
+
+```{r}
+summary(res)
+```
+
+Comme indiqué plus haut, la première ligne du tableau d'ANOVA contient toutes les informations pertinentes pour interpréter ces résultats. En particulier, la dernière valeur de la ligne correspond à la $p-$value. Ici, elle est inférieure au seuil $\alpha$ de 0.05. On pourrait rédiger les résultats de cette analyse ainsi :
+
+> Une analyse de variance montre que la moyenne des 3 groupes n'est pas identique ($F = 7.289$, $p = 0.004$). Un test de Levene a permis de vérifier la condition d'homogénéité de la variance des résidus ($F = 0.189$, $p = 0.855$), et un test de Shapiro-Wilk a confirmé la normalité des résidus ($W = 0.959$, $p = 0.468$).
+
+Ainsi, puisque $p < \alpha$, on rejette $H_0$. ON a donc bien montré que tous les groupes n'avaient pas la même moyenne. Mais à ce stade, on ne sait pas encore si tous les groupes ont des moyennes strictement différentes les unes des autres, ou si seul un groupe (et lequel) présente une moyenne différente des 2 autres. 
+
+À l'issue de cette analyse, deux questions restent donc en suspens :
+
+1. Entre quels groupes les moyennes sont-elles significativement différentes ?
+2. Quelle est la magnitude de ces différences ?
+
+Pour répondre à ces 2 questions, il nous faut réaliser des tests *a posteriori* ou tests *post-hoc*. 
+
+:::{.callout-warning}
+## Les tests *post-hoc*
+
+Les tests *post-hoc* doivent être réalisés uniquement si l'hypothèse nulle de l'ANOVA est rejetée. Ils sont alors nécessaires pour déterminer entre quels groupes les moyennes sont significativement différentes. Si à l'inverse, l'ANOVA n'a pas permis de rejeter $H_0$, alors on peut conclure à l'absence de différence de moyenne entre les groupes (*i.e.* toutes les moyennes sont égales), et les tests *post-hoc* n'ont alors aucun intérêt.
+:::
+
+
+### Tests *a posteriori* ou tests *post-hoc*
+
+Lorsqu'une ANOVA montre que tous les groupes n'ont pas la même moyenne, il faut en théorie effectuer toutes les comparaisons de moyennes deux à deux possibles. Le problème est que lorsque l'on effectue des comparaisons multiples, les erreurs $\alpha$ (probabilité de rejeter à tort H$_0$) de tous les tests s'ajoutent. Ainsi :
+
+- pour comparer 3 groupes 2 à 2, nous avons besoin de 3 tests.
+- Pour comparer 4 groupes 2 à 2, nous avons besoin de 6 tests.
+- pour comparer 5 groupes 2 à 2, nous avons besoin de 10 tests.
+- pour comparer 6 groupes 2 à 2, nous avons besoin de 15 tests.
+- pour comparer k groupes 2 à 2, nous avons besoin de $\frac{k(k-1)}{2}$ tests.
+
+Ici, puisque pour chaque test, un risque $\alpha$ de 5% de rejeter à tort l'hypothèse nulle est commis, réaliser 3 tests ferait monter le risque de s'être trompé quelque part à 15%. C'est la raison pour laquelle des tests spécifiques existent. Nous en verrons 2 : le test de comparaisons multiples de Student et le test de Tukey (ou "Honestly Significant Difference Test"). Pour ces tests, des précautions sont prises qui garantissent que le risque $\alpha$ **global** (à l'issue de l'ensemble des tests) est maîtrisé et qu'il reste fixé à 5%, quel que soit le nombre de comparaisons effectuées.
+
+#### Comparaisons multiples de Student
+
+Le test de comparaisons multiples de Student est réalisé avec la fonction `pairwise.t.test()`. En réalité, ici, 3 tests de Student seront réalisés. Les $p-$values des tests seront simplement modifiées afin que globalement, le risque $\alpha$ n'augmente pas. Pour chaque test réalisé, les hypothèses nulles et alternatives sont les mêmes que celles décrites à la @sec-student :
+
+- H$_0$ : la moyenne des deux populations est égale ($\mu_1 = \mu_2$, soit $\mu_1 - \mu_2$ = 0).
+- H$_1$ : la moyenne des deux populations est différente ($\mu_1 \neq \mu_2$, soit $\mu_1 - \mu_2 \neq 0$).
+
+Attention, pour ce test, la syntaxe "formules", qui utilise le tilde (`~`) n'est pas possible. Il faut obligatoirement fournir à la fonction 2 objets : la colonne contenant la variable expliquée numérique, et la colonne (facteur) contenant les catégories (ici, le facteur contenant le type de traitement appliqué à chaque individu lors de l'expérience) :
+
+```{r}
+# Réalisation du test
+post_hoc1 <- pairwise.t.test(Light$shift, Light$treatment)
+
+# affichage des résultats
+post_hoc1
+```
+
+Seules les $p-$values de chaque test sont fournies sous la forme d'une demi-matrice. On constate ainsi qu'une seule $p-$value est supérieure à $\alpha = 0.05$ : celle du test comparant les moyennes des groupes `knee` et `control`. Une autre façon de visualiser ces résultats consiste à utiliser la fonction `tidy()` du package `broom` que nous avons mis en mémoire un peu plus tôt. Les résultats seront les mêmes. Ils seront simplement rangés dans un `tibble` :
+
+```{r}
+tidy(post_hoc1)
+```
+
+Nous avons donc la confirmation que les moyennes des groupes `knee` et `control` ne sont pas significativement différentes l'une de l'autre. En revanche, la moyenne du groupe `eyes` est différente de celle des 2 autres groupes ($p = 0.009$ pour les 2 tests).
+
+Nous avons donc appris des choses nouvelles, mais nous ne savons toujours pas quelle est la magnitude de la différence détectée entre le groupe `eyes` et les 2 autres. Le test de Tukey HSD nous permet de répondre à cette question.
+
+#### Test de Tukey
+
+Ce test est souvent plus avantageux que le test des comparaisons multiples de Student, car outre la $p-$value de chaque comparaison deux à deux, il renvoie des informations concernant les différences de moyennes entre chaque paire de modalités du facteur étudié, et les intervalles de confiance à 95% de ces différences de moyennes. Donc en plus de savoir quels groupes ou traitements sont significativement différents les uns des autres, ce test nous indique l'importance des différences détectées.
+
+Pour effectuer ce test, on utilise la fonction `TukeyHSD()`, à laquelle on fournit simplement l'objet contenant les résultats de l'ANOVA :
+
+```{r}
+# Réalisation du test de Tukey HSD
+post_hoc2 <- TukeyHSD(res)
+
+# Affichage des résultats
+post_hoc2
+```
+
+Nous obtenons bien à la fois la $p-$value des comparaisons 2 à 2, ainsi que l'estimation des différences de moyennes (et de leur intervalle de confiance à 95%) entre paires de groupes. Là encore, l'utilisation de la fonction `tidy()` du package `broom` peut rendre les résultats plus lisibles (ou en tous cas, plus faciles à manipuler) :
+
+```{r}
+tidy(post_hoc2)
+```
+
+La première ligne de ce tableau nous confirme une absence de différence de moyenne significative entre les groupes `knee` et `control` (`p = 0.997`). La différence de moyenne estimée pour ces deux catégories ($\hat{\mu}_{\textrm{knee}} - \hat{\mu}_{\textrm{control}}$) vaut $-0.027$, avec un intervalle de confiance à 95% pour cette différence qui vaut $[-0.95 ; 0.90]$. Cet intervalle, qui rassemble les valeurs les plus probables pour cette différence de moyenne, contient la valeur 0, ce qui confirme qu'il n'y a aucune raison de penser qu'une différence réelle existe entre ces 2 catégories. Le faible écart de moyennes observé entre ces 2 groupes est donc très vraisemblablement le fruit du hasard. L'éclairage du creux poplité donne les mêmes résultats que quand les patients sont maintenus dans le noir.
+
+En revanche, les lignes 2 et 3 de ce tableau montrent des différences significatives ($p = 0.008$ et $p = 0.012$ pour les comparaisons `eyes`/` control` et `eyes`/`knee` respectivement). Les différences sont négatives, de l'ordre de -1.2 pour les 2 comparaisons, ce qui traduit des valeurs plus faibles pour `eyes` que pour les 2 autres groupes. Pour ces 2 comparaisons, les intervalles de confiance à 95% des différences ne contiennent pas le 0, mais exclusivement des valeurs négatives. Cela traduit donc bien une resynchronisation plus rapide chez les sujets dont les yeux sont exposés à la lumière que chez les sujets des 2 autres groupes.
+
+En utilisant le tableau ci-dessus, nous pouvons synthétiser graphiquement ces résultats :
+
+```{r}
+tidy(post_hoc2) %>%
+  ggplot(aes(x = contrast, y = estimate)) +
+  geom_point() +
+  geom_linerange(aes(ymin = conf.low, ymax = conf.high)) +
+  geom_hline(yintercept = 0, linetype = 2) +
+  labs(x = "Comparaison",
+       y = "Différence de moyennes (et IC 95%)") +
+  coord_flip() +
+  theme_bw()
+```
+
+Notez ici l'utilisation de `geom_linerange`, pour afficher les intervalles de confiance à 95% des différences de moyennes. Il s'agit d'une alternative à `geom_errorbar()` dont nous avons déjà parlé [dans ce chapitre](https://besibo.github.io/BiometrieS4/03-graphiques.html#visualiser-lincertitude-les-barres-derreur) du livre en ligne du semestre 4. La fonction `geom_hline()` permet de faire apparaître des lignes horizontales sur un graphique. Ici, avec `y = 0`, cette fonction fait apparaître un axe horizontal (axe des abscisses). Enfin, la fonction `coord_flip()` permet d'inverser les axes du graphique : l'axe des `x` bascule à la verticale, et l'axe des `y` à l'horizontale. Cela permet d'obtenir un graphique dont l'apparence est typique de ce genre de graphique produit avec les résultats du test de Tukey HSD.
+
+Ce graphique montre bien que pour la comparaison `knee - control`, le zéro est compris dans l'intervalle de confiance à 95% de la différence de moyennes, ce qui confirme l'absence de différence significative de décalage de phase entre ces 2 groupes. À l'inverse, pour les 2 autres comparaisons (`eyes - knee` d'une part, et `eyes - control` d'autre part), les intervalles de confiance à 95% des différences de moyennes ne coupent pas le zéro. Cela indique une différence de moyenne significative : dans la population générale, le zéro ne fait pas partie des valeurs les plus probables pour la différence de décalage de phase entre ces groupes.
+
+Nous avons donc bien montré ici que la re-synchronisation de l'horloge interne n'est possible que par le biais de l'exposition des yeux à la lumière, et non du creux poplité.
+
+
+## L'alternative non paramétrique
+
+### La robustesse de l'ANOVA
+
+Dans la suite de cette section, nous faisons l'hypothèse, bien que ça ne soit pas le cas, que les conditions d'application de l'ANOVA ne sont pas vérifiées pour notre jeu de données. Si les conditions d'application de l'ANOVA ne sont pas remplies, alors, les résultats de l'ANOVA ne peuvent pas être examinés car ils ne sont pas valides. Il nous faut alors recourir à un test non-paramétrique afin de comparer la moyenne de plus de deux groupes à la fois. 
+
+La particularité de l'ANOVA est sa grande **robustesse** vis-à-vis d'un non respect modéré de ses conditions d'application (voir définition de la robustesse dans la @sec-robust). L'ANOVA étant particulièrement robuste, ses résultats resteront valides dans les situations suivantes :
+
+- Non normalité modérée des résidus. Si les résidus ne suivent pas parfaitement une loi Normale mais qu'ils sont néanmoins grossièrement distribués selon une courbe en cloche, les résultats de l'ANOVA resteront vrais, surtout si les effectifs sont importants.
+- Non homogénéité des résidus. Si les résidus ne sont pas homogènes dans tous les groupes, les résultats de l'ANOVA resteront vrais tant que les échantillons seront grands, approximativement de la même taille dans tous les groupes, et à condition que les écarts de variances entre les groupes ne dépassent pas un facteur 10.
+
+Dans tous les autres cas de non respect des conditions de l'ANOVA, par exemple, si la variance des résidus n'est pas homogène et que les groupes sont de petite taille ou de taille différente, ou si les variances diffèrent de plus d'un facteur 10, ou si les résidus s'écartent fortement de la normalité, ou **si les deux conditions d'application ne sont pas respectées (même modérément) en même temps**, il faudra alors faire un test non paramétrique.
+
+L'alternative non paramétrique à l'ANOVA à un facteur est le test de la somme des rangs de **Kruskal-Wallis**
+
+:::{.callout-important}
+## Paramétrique ou non ?
+
+Pour comparer la moyenne de plus de 2 groupes :
+
+- lorsque les conditions permettant de réaliser un test paramétrique sont réunies (voir @sec-caanova), on effectuera une **ANOVA**, qui n'est qu'une extension du test de **Student**. Si (et seulement si) on en rejette l'hypothèse nulle, on fera ensuite un test *post-hoc* **paramétrique** : le test de **comparaisons multiples de Student** et/ou le test de **Tukey HSD**.
+- lorsque les conditions permettant de réaliser un test paramétrique ne sont pas réunies, on effectuera un test de **Kruskal-Wallis**, qui est une extension du test de **Wilcoxon**. Si (et seulement si) on en rejette l'hypothèse nulle, on fera ensuite un test *post-hoc* **non paramétrique** : le test de **comparaisons multiples de Wilcoxon** et/ou le test de **Dunn**.
+:::
+
+
+### Réalisation du tests et interprétation
+
+Les hypothèses nulle et alternative du test de Kruskal-Wallis sont les suivante. Comme toujours, l'hypothèse nulle concerne l'absence d'effet du facteur étudié :
+
+- H$_0$ : le type de traitement appliqué n'a pas d'effet sur le décalage de phase. Les médianes sont égales dans tous les groupes ($\textrm{med}_\textrm{control} = \textrm{med}_\textrm{knee} = \textrm{med}_\textrm{eyes}$).
+- H$_1$ : le type de traitement appliqué a un effet sur le décalage de phase. Les médianes ne sont pas toutes égales, au moins l'une d'entre elles diffère des autres.
+
+La syntaxe du test est similaire à celle de l'ANOVA. On utilise la notation formule en plaçant la variable numérique expliquée à gauche du `~`, et le facteur (variable explicative) à droite du `~` : 
+
+```{r}
+kruskal.test(shift ~ treatment, data = Light)
+```
+
+Ici, la $p-$value est inférieure à $\alpha$, on rejette donc H$_0$ : toutes les médianes ne sont pas égales. Comme avec l'ANOVA, il nous faut maintenant déterminer quelles médianes sont différentes les unes des autres, et quelles sont les magnitudes de ces différences. Pour cela, nous devons réaliser des tests *post-hoc* de comparaisons multiples.
+
+### Tests *a posteriori* ou tests *post-hoc*
+
+Comme pour les tests *post-hoc* de l'ANOVA, nous allons voir ici 2 tests de comparaisons multiples non paramétriques. 
+
+#### Comparaisons multiples de Wilcoxon
+
+Le premier test est l'équivalent non paramétrique du test de comparaisons multiples de Student : le **test de comparaisons multiples de la somme des rangs de Wilcoxon**. Le principe est absolument le même que pour le test de comparaisons multiples de Student : toutes les comparaisons 2 à 2 sont effectuées au moyen d'un test de la somme des rangs de Wilcoxon. Les $p-$values de ces tests sont corrigées afin de garantir que le risque d'erreur $\alpha$ global soit maintenu constant en dépit de l'augmentation du nombre de tests réalisés. Pour chaque comparaison, les hypothèses sont les suivantes :
+
+- H$_0$ : la médiane des deux populations est égale.
+- H$_1$ : la médiane des deux populations est différente.
+
+```{r}
+# Réalisation du test
+post_hoc3 <- pairwise.wilcox.test(Light$shift, Light$treatment)
+
+# Affichage des résultats
+post_hoc3
+
+# Utilisation de la fonction `tidy` pour afficher les résultats dans un tibble
+tidy(post_hoc3)
+```
+
+Ici, la $p-$value du premier test est supérieure à $\alpha = 0.05$. Il n'y a donc pas de différence entre les médianes du groupe `control` et du groupe `knee`. Le traitement lumineux appliqué dans le creux poplité n'a donc aucun effet sur le décalage de phase.
+
+La $p-$value du second test est en revanche inférieure à $\alpha$. On rejette l'hypothèse nulle pour ce test ce qui confirme que le traitement lumineux appliqué au niveau des yeux a un effet sur le décalage de phase. Reste toutefois à quantifier l'importance de ce décalage de phase par rapport au groupe `control`.
+
+Enfin, la $p-$value du troisième test est supérieure (tout juste !) à $\alpha$. La conclusion logique est donc qu'il n'y a pas de différence significative entre les médianes des groupes `knee` et `eyes`. On sait que ce n'est pas le cas puisque nous avons montré plus haut (avec les tests paramétriques), que la différence de moyennes entre ces deux populations était significative. Nous avons ici l'illustration parfaite de la faible puissance des tests non paramétriques : leur capacité à détecter un effet lorsqu'il y en a réellement un est plus faible que celle des tests paramétriques. En outre, les procédures de comparaisons multiples sont très conservatives, et font mécaniquement baisser la puissance des tests pour maintenir constante l'erreur $\alpha$. Je ne peux donc que vous inciter à la prudence lorsque vous interprétez les résultats d'un test de comparaions multiples (*a fortiori* un test non paramétrique) pour lequel la $p-$value obtenue est très proche du seuil $\alpha$.
+
+Comme pour son homologue paramétrique, le test de comparaisons multiples de Wilcoxon nous permet de prendre une décision par rapport à H$_0$, mais il ne nous dit rien de la magnitude des effets mesurés. Pour les connaître, il nous faut réaliser un autre test. 
+
+
+#### Le test de Dunn
+
+Le **test de Dunn** est au test de Kruskal-Wallis ce que le test de Tukey HSD est à l'ANOVA : un test post-hoc permettant de déterminer la magnitude des effets observés.  Pour pouvoir le réaliser, le package `DescTools` doit être chargé. Sa syntaxe est la même que pour le test de Kruskal-Wallis ou l'ANOVA :
+
+```{r}
+# Réalisation du test
+post_hoc4 <- DunnTest(shift ~ treatment, data = Light)
+
+# Affichage des résultats
+post_hoc4
+```
+
+Avec ces résultats on progresse un peu, car outre les $p-$values pour chaque comparaison, le test nous fournit une estimation de la différence des rangs moyens. Malheureusement, ces estimations sont souvent difficiles à interpréter (par exemple, quelle est l'unité utilisée ?) et aucun intervalle de confiance n'est fourni. On constate néanmoins que le test de Dunn donne ici des résultats comparables à ceux fournis par les tests paramétriques : le groupe `eyes` est significativement différent des deux autres. Pour obtenir les intervalles de confiance dont nous avons besoin, nous n'avons pas d'autre choix que des les calculer à l'aide du test de Wilcoxon classique, en réalisant manuellement les tests dont nous avons besoin. Ici, le test à proprement parler ne nous intéresse pas, d'ailleurs, sa $p-$value ne doit surtout pas être prise en compte car elle ignore totalement les comparaisons multiples et conduirait donc à augmenter l'erreur de type I. La seule chose pertinente est ici **la différence de (pseudo-)médiane estimée et son intervalle de confiance** :
+
+```{r}
+# Comparaisons entre les groupes `knee` et `eyes` (dans cet ordre)
+Light %>%
+  filter(treatment %in% c("knee", "eyes")) %>%
+  wilcox.test(shift ~ treatment, data = ., conf.int = TRUE) %>%
+  tidy()
+```
+
+
+Pour le décalage de phase de ces 2 groupes, la différence de médiane estimée vaut donc 1.19, avec un intervalle de confiance à 95% de $[0.3 ; 2.21]$. Toutes les valeurs comprises dans cet intervalle de confiance sont strictement positives. Il y a donc très peu de chances pour que la différence de médiane entre ces deux groupes soit nulle. Le test de Dunn ci-dessus, qui montre une différence significative entre ces groupes, est donc confirmé.
+
+
+## Exercices d'application
+
+### *Cardamine pensylvanica*
+
+En biologie de la conservation, la question de l'existence d'un lien entre la capacité de dispersion des organismes et le maintien durable des populations dans le temps est étudié de près, notamment en raison de l'anthropisation des milieux qui conduit très souvent à la fragmentation des habitats. Cette question a été étudiée par 2 chercheurs [@Molofsky2005] chez *Cardamine pensylvanica*, une [plante annuelle d'Amérique du Nord](https://en.wikipedia.org/wiki/Cardamine_pensylvanica) qui produit des graines qui sont dispersées de façon explosive. Quatre traitements ont été utilisés pour modifier expérimentalement la dispersion des graines. La distance entre populations contigües a été définie comme suit :
+
+- Traitement 1 : `continu`. Les plants sont conservés au contact les uns des autres.
+- Traitement 2 : `medium`. Les plants sont séparés de 23.2 centimètres.
+- Tratiement 3 : `long`. Les plants sont séparés de 49.5 centimètres.
+- Traitement 4 : `isole`. Les plants sont séparés par des panneaux de bois empêchant la dispersion des graines.
+
+Ces traitements ont été assignés au hasard à des populations de plantes, et 4 réplicats ont été faits pour chacun d'entre eux. Les résultats de l'expérience sont présentés ci-dessous. Il s'agit du nombre de générations durant lesquelles les plantes ont persisté :
+
+- `continu` : 9, 13, 13, 16
+- `medium` : 14, 12, 16, 16
+- `long` : 13, 9, 10, 11
+- `isole` : 13, 8, 8, 8
+
+Saisissez ces données dans `RStudio` et faites-en l'analyse. Vous tenterez de déterminer si l'éloignement entre les populations de plantes a un impact sur leur capacité de survie. Comme toujours, avant de vous lancer dans les tests, vous prendrez le temps de décrire les données avec des statistiques descriptives et des représentations graphiques.
+
+
+### Insecticides
+
+L'efficacité de 6 insecticides nommés A, B, C, D, E et F a été testée sur 6 parcelles agricoles. Chaque insecticide de cette liste a été appliqué sur une parcelle agricole choisie au hasard. Deux semaines plus tard, 12 plants ont été collectés dans chaque parcelle agricole et le nombre d'insectes toujours vivants sur chacun d'entre eux a été compté. Les résultats sont présentés dans le fichier [`Insectes.csv`](data/Insectes.csv). Importez ces données dans `RStudio` et faites-en l'analyse. Tous les insecticides ont-ils la même efficacité ? Si la réponse est non, quels sont les insecticides les plus (ou les moins) efficaces.
+
+
+### La longueur des nageoires des manchots femelles
+
+Avec le jeu de données `penguins` du package `palmerpenguins`, comparez la longueur des nageoires des femelles des 3 espèces de manchots. Les femelles des 3 espèces ont-elles toutes des nageoires de longueur différentes, et quelle est la magnitude de ces éventuelles différences ?
+

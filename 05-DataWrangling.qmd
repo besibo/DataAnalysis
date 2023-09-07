@@ -1075,7 +1075,7 @@ sort(unique(weather$wind_speed)) / 1.151
 
 Outre la fonction `summarise()`, de nombreuses autres fonctions du `tidyverse` possèdent un argument `.by`. C'est par exemple le cas des fonctions `filter()` et `mutate()` décrites plus haut, ou de la fonction `reframe()` que nous découvrirons dans la @sec-reframe. 
 
-### Un exemple avec `filter()`
+### Un exemple avec `filter()` {#sec-filterby}
 
 Pour vous montrer à quel point cet argument peut-être utile dans d'autres contextes que celui du calcul de résumés statistiques, prenons un premier exemple. Imaginez que nous souhaitions identifier, dans le tableau `penguins`, les 10% des individus les plus lourds pour chaque espèce. Une première façon de faire serait de procéder espèce par espèce, en tapant ceci :
 

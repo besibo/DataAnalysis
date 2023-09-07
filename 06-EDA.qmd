@@ -4,11 +4,11 @@
 
 La première étape de toute analyse de données est l'**exploration**. Avant de se lancer dans des tests statistiques et des procédures complexes, et à supposer que les données dont vous disposez sont déjà dans un format approprié, il est toujours très utile :
 
-1. d'explorer visuellement les données dont on dispose en faisant des graphiques nombreux et variés, afin de comprendre, notamment quelle est la distribution des variables numériques, quelles sont les catégories les plus représentées pour les variables qualitatives (ou facteurs), quelles sont les relations les plus marquantes entre variables numériques et/ou catégorielles, etc. Vous avez appris au @sec-viz comment produire toutes sortes de graphiques avec le package `ggplot2`. Il va maintenant falloir vous poser la question du choix des graphiques à produire du point de vue de l'exploration statistique de données inconnues.
+1. d'explorer visuellement les données dont on dispose en faisant des graphiques nombreux et variés, afin de comprendre, notamment quelle est la distribution des variables numériques, quelles sont les catégories les plus représentées pour les variables qualitatives (facteurs), quelles sont les relations les plus marquantes entre variables numériques et/ou catégorielles, etc. Vous avez appris au @sec-viz comment produire toutes sortes de graphiques avec le package `ggplot2`. Il va maintenant falloir vous poser la question du choix des graphiques à produire du point de vue de l'exploration statistique de données inconnues.
 
-2. d'explorer les données en calculant des indices de statistiques descriptives. Ces indices relèvent en général de 2 catégories : les indices de position (e.g. moyennes, médianes, quartiles...) et les indices de dispersion (e.g. variance, écart-type, intervalle inter-quartiles...). Nous avons déjà vu comment utiliser la fonction `summarise()` et son argument `.by` pour calculer des moyennes ou des effectifs pour plusieurs sous-groupes de nos jeux de données. Dans ce chapitre, nous allons aller plus loin, et nous découvrirons d'une part comment obtenir d'autres indices statistiques pertinents, et d'autres fonctions encore plus utiles que `summarise()`.
+2. d'explorer les données en calculant des indices de statistiques descriptives. Ces indices relèvent en général de 2 catégories : les indices de position (e.g. moyennes, médianes, quartiles...) et les indices de dispersion (e.g. variance, écart-type, intervalle inter-quartiles...). Nous avons déjà vu comment utiliser la fonction `summarise()` et son argument `.by` pour calculer des moyennes ou des effectifs pour plusieurs sous-groupes de nos jeux de données (@sec-summarise). Dans ce chapitre, nous irons plus loin, et nous découvrirons d'une part comment calculer d'autres indices statistiques pertinents, et comment utiliser d'autres fonctions encore plus utiles que `summarise()`.
 
-Nous verrons dans le @sec-disp comment calculer des indices d'incertitude (@sec-errstd et @sec-confint). Attention, il ne faudra pas confondre indices de dispersion et indices d'incertitude. Et enfin, avant de passer aux tests statistiques, nous verrons comment visualiser dispersion et incertitude au @sec-vizincert.
+Nous verrons ensuite dans le @sec-disp comment calculer des indices d'incertitude (@sec-errstd et @sec-confint). Attention, il ne faudra pas confondre indices de dispersion et indices d'incertitude. Et enfin, avant de passer aux tests statistiques, nous verrons comment visualiser dispersion et incertitude au @sec-vizincert.
 
 Afin d'explorer ces questions, nous aurons besoin des packages suivants :
 
@@ -27,7 +27,7 @@ Comme vous le savez maintenant, les packages du `tidyverse` [@R-tidyverse] perme
 :::{.callout-warning}
 ## Important 
 
-Si vous avez déjà installé le `tidyverse` ou `dplyr` avant le printemps 2023, ré-installez `dplyr` avec `install.packages("dplyr")`. Ce package a en effet été mis à jour tout récemment, et nous aurons besoin de sa toute dernière version (v1.1.0) pour utiliser certaines fonctions. Chargez-le ensuite en mémoire avec `library(dplyr)`.
+Si vous avez installé le `tidyverse` ou `dplyr` avant le printemps 2023, ré-installez `dplyr` avec `install.packages("dplyr")`. Ce package a en effet été mis à jour récemment, et nous aurons besoin de sa toute dernière version (v1.1.0) pour utiliser certaines fonctions. Chargez-le ensuite en mémoire avec `library(dplyr)`.
 :::  
 
 :::{.callout-important}
@@ -41,13 +41,13 @@ Pour travailler dans de bonnes conditions, et puisque nous abordons maintenant l
 
 ## Créer des résumés avec la fonction `reframe()` {#sec-reframe}
 
-Dans la @sec-summarise, nous avons vu comment utiliser la fonction `summarise()` et éventuellement son argument `.by` pour calculer des statistiques descriptives variées. N'hésitez pas à relire cette section si vous n'êtes pas sûr d'avoir tout retenu. Les calculs que nous pouvons faire grâce à la fonction `summarise()` impliquent des fonctions statistiques qui ne renvoient qu'une valeur à la fois lorsqu'on leur fournit une série de valeurs. Par exemple, si on dispose d'un vecteur numérique (les entiers compris entre 1 et 100 pour l'exemple) :
+Dans la @sec-summarise, nous avons vu comment utiliser la fonction `summarise()` et éventuellement son argument `.by` pour calculer des statistiques descriptives variées. N'hésitez pas à relire cette section si vous n'êtes pas sûr d'avoir tout compris ou tout retenu. Les calculs que nous pouvons faire grâce à la fonction `summarise()` impliquent des fonctions statistiques qui ne renvoient qu'une valeur à la fois lorsqu'on leur fournit une série de valeurs. Par exemple, si on dispose d'un vecteur numérique (les entiers compris entre 1 et 100 pour l'exemple) :
 
 ```{r}
 1:100
 ```
 
-la fonction `mean()` ne renvoie qu'une valeur, la moyenne des 100 valeurs contenues dans le vecteur :
+la fonction `mean()` ne renvoie qu'une valeur, la moyenne des 100 nombres contenus dans le vecteur :
 
 ```{r}
 mean(1:100)
@@ -60,12 +60,12 @@ sd(1:100)
 median(1:100)
 ```
 
-Il existe toutefois des fonctions qui renvoient plus d'une valeur à la fois. Par exemple, la fonction `quantile()`, renvoie par défaut 5 éléments :
+Il existe toutefois des fonctions qui renvoient plus d'une valeur à la fois. Par exemple, la fonction `quantile()` (que nous avons utilisée dans un autre contexte à la @sec-filterby), renvoie par défaut 5 éléments :
 
 1. la valeur minimale contenue dans le vecteur (ou quantile 0%) : c'est la valeur la plus faible contenue dans la série de données
-2. le premier quartile du vecteur (Q1 ou quantile 25%) : c'est la valeur coupant l'échantillon en deux telle que 25% des observations du vecteur y sont inférieures
-3. la médiane du vecteur (Q2 ou quantile 50%) : c'est la valeur coupant l'échantillon en deux telle que 50% des observations du vecteur sont inférieures à cette valeur et 50% y sont supérieures
-4. le troisième quartile du vecteur (Q3 ou quantile 75%) : c'est la valeur coupant l'échantillon en deux telle que 75% des observations du vecteur y sont inférieures
+2. le premier quartile du vecteur (Q1 ou quantile 25%) est la valeur coupant l'échantillon en deux : 25% des observations du vecteur y sont inférieures et 75% y sont supérieures
+3. la médiane du vecteur (Q2 ou quantile 50%) est la valeur coupant l'échantillon en deux : 50% des observations du vecteur sont inférieures à cette valeur et 50% y sont supérieures
+4. le troisième quartile du vecteur (Q3 ou quantile 75%) est la valeur coupant l'échantillon en deux : 75% des observations du vecteur y sont inférieures et 25% y sont supérieures
 5. la valeur maximale contenue dans le vecteur (ou quantile 100%) : c'est la valeur la plus élevée contenue dans la série de données.
 
 Par exemple, toujours avec le vecteur des entiers contenus entre 1 et 100 :
@@ -80,11 +80,11 @@ L'objet obtenu est un vecteur dont chaque élément porte un nom. Pour transform
 enframe(quantile(1:100))
 ```
 
-Il peut être très utile de calculer ces différentes valeurs pour plusieurs variables à la fois, ou pour plusieurs sous-groupes d'un jeu de données. Le problème est que nous ne pouvons pas utiliser `summarise()` car la fonction `quantile()` ne renvoie pas qu'une unique valeur. par exemple, pour calculer les quantiles des longueurs de becs pour chaque espèce de manchots, on pourrait être tenté de taper ceci :
+Il peut être très utile de calculer ces différentes valeurs pour plusieurs variables à la fois, ou pour plusieurs sous-groupes d'un jeu de données. Le problème est que nous ne pouvons pas utiliser `summarise()` car la fonction `quantile()` ne renvoie pas qu'une unique valeur. Par exemple, pour calculer les quantiles des longueurs de becs pour chaque espèce de manchots, on pourrait être tenté de taper ceci :
 
 ```{r}
 #| error: true
-penguins %>% 
+penguins |> 
   summarise(Indices = quantile(bill_length_mm, na.rm = TRUE), 
             .by = species)
 ```
@@ -92,7 +92,7 @@ penguins %>%
 C'est dans ces situations que la fonction `reframe()` est utile. Elle joue le même rôle que `summarise()`, mais dans les situation où les fonctions statistiques renvoient plus d'une valeur à la fois :
 
 ```{r}
-penguins %>% 
+penguins |> 
   reframe(Indices = quantile(bill_length_mm, na.rm = TRUE), 
           .by = species)
 ```
@@ -100,25 +100,25 @@ penguins %>%
 Au contraire de `summarise()`, `reframe()` ne renvoie pas de message d'avertissement dans cette situation. Dans cet exemple, on ne sait malheureusement pas à quoi correspondent les chiffres renvoyés puisque l'information des quartiles a disparu (quelles valeurs correspondent aux médianes ou aux premiers quartiles par exemple). Pour y remédier, on doit transformer le vecteur renvoyé par `quantile()` en tibble. Nous avons déjà vu comment le faire grâce à la fonction `enframe()`. Par ailleurs, puisque la fonction va maintenant renvoyer un tableau, on n'a pas besoin de lui fournir de nom de colonnes (je retire donc `Indices = ` de mon code) :
 
 ```{r}
-penguins %>% 
+penguins |> 
   reframe(enframe(quantile(bill_length_mm, na.rm = TRUE)), 
           .by = species)
 ```
 
-Enfin, comme précédemment, il est possible de modifier la forme de ce tableau (avec `pivot_wider()`) pour le lire plus facilement et éventuellement l'intégrer dans un rapport ou compte-rendu :
+Enfin, comme décrit à la @sec-spread, il est possible de modifier la forme de ce tableau avec `pivot_wider()`, pour le lire plus facilement et éventuellement l'intégrer dans un rapport ou compte-rendu :
 
 ```{r}
-penguins %>%
+penguins |>
   reframe(enframe(quantile(bill_length_mm, na.rm = TRUE)), 
-          .by = species) %>% 
+          .by = species) |> 
   pivot_wider(names_from = species,
               values_from = value)
 ```
 
-Ces statistiques nous permettent de constater que les manchots de l'espèce Adélie semblent avoir des becs plus courts que les 2 autres espèces (les 5 quantiles le confirment). Les manchots Gentoo et Chinstrap ont en revanche des becs de longueur à peu près similaires, ben que ceux des Chinstrap soient peut-être très légèrement plus longs (Q1, médiane et Q3 supérieurs à ceux des Gentoo). On peut vérifier tout ça graphiquement avec des boîtes à moustaches :
+Ces statistiques nous permettent de constater que les manchots de l'espèce Adélie semblent avoir des becs plus courts que les 2 autres espèces (les 5 quantiles le confirment). Les manchots Gentoo et Chinstrap ont en revanche des becs de longueur à peu près similaires, bien que ceux des Chinstrap soient peut-être très légèrement plus longs (Q1, médiane et Q3 supérieurs à ceux des Gentoo). On peut vérifier tout ça graphiquement avec des boîtes à moustaches, puisque les 5 valeurs de quantiles sont justement celles qui sont utilisées pour tracer les boîtes à moustaches :
 
 ```{r}
-penguins %>% 
+penguins |> 
   ggplot(aes(x = species, y = bill_length_mm)) +
   geom_boxplot() +
   labs(x = "Espèce", y = "Longueur du bec (mm)") +
@@ -128,7 +128,7 @@ penguins %>%
 Ou avec un graphique de densité :
 
 ```{r}
-penguins %>% 
+penguins |> 
   ggplot(aes(x = bill_length_mm, fill = species)) +
   geom_density(alpha = 0.5, show.legend = FALSE) +
   geom_rug() +
@@ -138,7 +138,7 @@ penguins %>%
   theme_bw()
 ```
 
-À ce stade, vous devriez être capables de créer (et d'interpréter !) ce type de graphiques. Si ce n'est pas le cas, consultez d'urgence [le chapitre 3 du livre en ligne de Biométrie du semestre 3](https://besibo.github.io/BiometrieS3/03-visualization.html).
+À ce stade, vous devriez être capables de créer (et d'interpréter !) ce type de graphiques. Si ce n'est pas le cas, relisez d'urgence les [sections @sec-density] et [-@sec-boxplot].
 
 :::{.callout-tip}
 ## À retenir
@@ -147,19 +147,18 @@ penguins %>%
 - la fonction `reframe()` s'utilise avec des fonctions statistiques qui renvoient plusieurs valeurs (par exemple `quantile()`, `range()`...)
 :::  
 
-## Créer des résumés de données avec des fonctions spécifiques
 
-Les fonctions `summarise()` et `reframe()`, avec leur argument `.by()` (ou la fonction `group_by()`) permettent donc de calculer n'importe quel indice de statistique descriptive sur un tableau de données entier ou sur des modalités ou combinaisons de modalités de facteurs. Il existe par ailleurs de nombreuses fonctions, disponibles de base dans `R` ou dans certains packages spécifiques, qui permettent de fournir des résumés plus ou moins automatiques de tout ou partie des variables d'un jeu de données. Nous allons en décrire 2 ici, mais il en existe beaucoup d'autres : à vous d'explorer les possibilités et d'utiliser les fonctions qui vous paraissent les plus pertinentes, les plus simples à utiliser, les plus visuelles ou les plus complètes.
+Les fonctions `summarise()` et `reframe()`, avec leur argument `.by()` (ou la fonction `group_by()`) permettent donc de calculer n'importe quel indice de statistique descriptive sur un tableau de données entier ou sur des modalités ou combinaisons de modalités de facteurs. Il existe par ailleurs de nombreuses fonctions, disponibles de base dans `R` ou dans certains packages spécifiques, qui permettent de fournir des résumés plus ou moins automatiques de tout ou partie des variables d'un jeu de données. Nous allons maintenant en décrire 2, mais il en existe beaucoup d'autres : à vous d'explorer les possibilités et d'utiliser les fonctions qui vous paraissent les plus pertinentes, les plus simples à utiliser, les plus visuelles ou les plus complètes.
 
-### La fonction `summary()`
+## Créer des résumés de données avec la fonction `summary()`
 
-La fonction `summary()` (à ne pas confondre avec `summarise()`) permet d'obtenir des résumés de données pour tous types d'objets dans `R`. Selon la classe des objets que l'on transmets à `summary()`, la nature des résultats obtenus changera. Nous verrons ainsi au semestre 6 que cette fonction peut être utilisée pour examiner les résultats de modèles de régressions linéaires ou d'analyses de variances. Pour l'instant, nous nous intéressons à 3 situations :
+La fonction `summary()` (à ne pas confondre avec `summarise()`) permet d'obtenir des résumés de données pour tous types d'objets dans `R`. Selon la classe des objets que l'on transmets à `summary()`, la nature des résultats obtenus changera. Nous verrons ainsi aux [chapitres @sec-anova] et [-@sec-regression] que cette fonction peut être utilisée pour examiner les résultats d'analyses de variances ou de modèles de régressions linéaires. Pour l'instant, nous nous intéressons à 3 situations :
 
-- ce que renvoie la fonction quand on lui fournit un vecteur
-- ce que renvoie la fonction quand on lui fournit un facteur
-- ce que renvoie la fonction quand on lui fournit un tableau
+1. ce que renvoie la fonction quand on lui fournit un vecteur
+2. ce que renvoie la fonction quand on lui fournit un facteur
+3. ce que renvoie la fonction quand on lui fournit un tableau
 
-#### Variable continue : vecteur numérique
+### Variable continue : vecteur numérique
 
 Commençons par fournir un vecteur numérique à la fonction `summary()`. Nous allons pour cela extraire les données de masses corporelles des manchots du tableau `penguins` :
 
@@ -172,23 +171,23 @@ Nous avons donc `r length(penguins$body_mass_g)` valeurs de masses en grammes qu
 summary(penguins$body_mass_g)
 ```
 
-Nous obtenons ici 7 valeurs, qui correspondent respectivement à :
+Nous obtenons ici 7 valeurs, qui correspondent aux cinq valeurs renvoyées par la fonction `quantile()` (voir @sec-reframe), ainsi que la moyenne et le nombre de valeurs manquantes. Dans l'ordre, on a donc :
 
 - la valeur minimale observée dans le vecteur. Ici, le manchot le plus léger de l'échantillon pèse donc 2700 grammes.
-- la valeur du premier quartile du vecteur. Le premier quartile est la valeur qui coupe l'échantillon en 2 groupes : 25% des observations du vecteur sont inférieures au premier quartile, et 75% des observations du vecteur sont supérieures au premier quartile. Ici, 25% des manchots de l'échantillon (soit 86 individus) ont une masse inférieure à 3550 grammes, et 75% des individus de l'échantillon (soit 258 individus) ont une masse supérieure à 3550 grammes.
-- la valeur de médiane du vecteur. La médiane est la valeur qui coupe l'échantillon en 2 groupes : 50% des observations du vecteur sont inférieures à la médiane, et 50% des observations du vecteur sont supérieures à la médiane. Ici, 50% des manchots de l'échantillon (soit 172 individus) ont une masse inférieure à 4050 grammes, et 50% des individus de l'échantillon (soit 172 individus) ont une masse supérieure à 4050 grammes.
+- la valeur du premier quartile du vecteur. Ici, 25% des manchots de l'échantillon (soit 86 individus) ont une masse inférieure à 3550 grammes, et 75% des individus de l'échantillon (soit 258 individus) ont une masse supérieure à 3550 grammes.
+- la valeur de médiane du vecteur. La médiane est le deuxième quartile. Ici, 50% des manchots de l'échantillon (soit 172 individus) ont une masse inférieure à 4050 grammes, et 50% des individus de l'échantillon (soit 172 individus) ont une masse supérieure à 4050 grammes.
 - la moyenne du vecteur. Ici, les manchots des 3 espèces du jeu de données ont en moyenne une masse 4202 grammes.
-- la valeur du troisième quartile du vecteur. Le troisième quartile est la valeur qui coupe l'échantillon en 2 groupes : 75% des observations du vecteur sont inférieures au troisième quartile, et 25% des observations du vecteur sont supérieures au troisième quartile. Ici, 75% des manchots de l'échantillon (soit 258 individus) ont une masse inférieure à 4700 grammes, et 25% des individus de l'échantillon (soit 86 individus) ont une masse supérieure à 4750 grammes.
+- la valeur du troisième quartile du vecteur. Ici, 75% des manchots de l'échantillon (soit 258 individus) ont une masse inférieure à 4700 grammes, et 25% des individus de l'échantillon (soit 86 individus) ont une masse supérieure à 4750 grammes.
 - la valeur maximale observée dans le vecteur. Ici, le manchot le plus lourd de l'échantillon pèse donc 6300 grammes.
 - le nombre de données manquantes. Ici, 2 manchots n'ont pas été pesés et présentent donc la mention `NA` (comme **N**ot **A**vailable) pour la variable `body_mass_g`.
 
-Cette fonction fournit donc 2 indices de plus que la fonction `quantile()` (la moyenne et le nombre de valeurs manquantes) :
+Utiliser la fonction `quantile()` fournit donc presque les mêmes informations :
 
 ```{r}
 quantile(penguins$body_mass_g, na.rm = TRUE)
 ```
 
-Mais contrairement à ce que nous avons vu plus haut, la fonction `summary()` ne possède pas d'argument `.by()` et il n'est pas possible de l'utiliser avec la fonction `group_by()`. Par conséquent, il n'est pas possible de se servir de cette fonction pour avoir des valeurs pour chaque modalités d'un facteur (pour chaque espèce par exemple).
+Attention, contrairement à ce que nous avons vu plus haut, la fonction `summary()` ne possède pas d'argument `.by()` et il n'est pas possible de l'utiliser avec la fonction `group_by()`. Par conséquent, il n'est pas possible de se servir de cette fonction pour avoir des valeurs pour chaque modalités d'un facteur (pour chaque espèce par exemple).
 
 Les différents indices statistiques fournis nous renseignent à la fois sur la position de la distribution et sur la dispersion des données. 
 
@@ -201,7 +200,7 @@ Les différents indices statistiques fournis nous renseignent à la fois sur la 
 #| fig-align: center
 #| label: fig-distri-masses
 
-penguins %>% 
+penguins |> 
   ggplot(aes(body_mass_g)) +
   geom_histogram(bins = 25, fill = "steelblue", color = "grey20", alpha = 0.7) +
   geom_vline(xintercept = mean(penguins$body_mass_g, na.rm = TRUE), 
@@ -211,11 +210,11 @@ penguins %>%
   labs(x = "Masse (g)", y = "Nombre") +
   theme_bw()
 ```
-L'histogramme de la @fig-distri-masses montre la distribution de la taille des manchots (toutes espèces confondues). Cette distribution présente une asymétrie à droite. Cela signifie que la distribution n'est pas symétrique et que la "queue de distribution" est plus longue à droite qu'à gauche. La plupart des individus ont une masse comprise entre 3500 et 3700 grammes, au niveau du pic principal du graphique. La médiane, en orange et qui vaut 4050 grammes est plus proche du pic que la moyenne, en rouge, qui vaut 4202 grammes. Ici, la différence entre moyenne et médiane n'est pas énorme, mais elle peut le devenir si la distribution est vraiment très asymétrique, par exemple, si quelques individus seulement avaient une masse supérieure à 7000 grammes, la moyenne serait tirée vers la droite du graphique alors que la médiane ne serait presque pas affectée. la moyenne représenterait alors encore moins fidèlement la tendance centrale.
+L'histogramme de la @fig-distri-masses montre la distribution de la taille des manchots (toutes espèces confondues). Cette distribution présente une asymétrie à droite. Cela signifie que la distribution n'est pas symétrique et que la "queue de distribution" est plus longue à droite qu'à gauche. La plupart des individus ont une masse comprise entre 3500 et 3700 grammes, au niveau du pic principal du graphique. La médiane, en orange et qui vaut 4050 grammes est plus proche du pic que la moyenne, en rouge, qui vaut 4202 grammes. Ici, la différence entre moyenne et médiane n'est pas énorme, mais elle peut le devenir si la distribution est vraiment très asymétrique, par exemple, si quelques individus seulement avaient une masse supérieure à 7000 grammes, la moyenne serait tirée vers la droite du graphique alors que la médiane ne serait presque pas affectée. La moyenne représenterait alors encore moins fidèlement la tendance centrale.
 
 Si l'on revient à la fonction `summary()`, observer des valeurs proches pour la moyenne et la médiane nous indique donc le degré de symétrie de la distribution.
 
-- La *dispersion* des données nous renseigne sur la dispersion des points autour des indices de position. Les quartiles et les valeurs minimales et maximales renvoyées par la fonction `summary()` nous renseignent sur l'étalement des points. Les valeurs situées entre le premier et le troisième quartile correspondent aux 50% des valeurs de l'échantillon les plus centrales. Plus l'étendue entre ces quartiles (notée IQR pour "intervalle interquartile") sera grande, plus la dispersion sera importante. D'ailleurs, lorsque la dispersion est très importante, les moyennes et médianes ne renseignent que très moyennement sur le tendance centrale. Les indices de position sont surtout pertinents lorsque la dispersion des points autour de cette tendance centrale n'est pas trop large. Par exemple, si la distribution des données ressemblait à ceci (@fig-distri-masses2), la moyenne et la médiane seraient fort peu utiles car très éloignées de la plupart des observations :
+- La *dispersion* des données nous renseigne sur la dispersion des points autour des indices de position. Les quartiles et les valeurs minimales et maximales renvoyées par la fonction `summary()` nous renseignent sur l'étalement des points. Les valeurs situées entre le premier et le troisième quartile correspondent aux 50% des valeurs de l'échantillon les plus centrales. Plus l'étendue entre ces quartiles (notée IQR pour "intervalle interquartile") sera grande, plus la dispersion sera importante. D'ailleurs, lorsque la dispersion est très importante, les moyennes et médianes ne renseignent que très moyennement sur la tendance centrale. Les indices de position sont surtout pertinents lorsque la dispersion des points autour de cette tendance centrale n'est pas trop large. Par exemple, si la distribution des données ressemblait à ceci (@fig-distri-masses2), la moyenne et la médiane seraient fort peu utiles car très éloignées de la plupart des observations :
 
 ```{r}
 #| echo: false
@@ -227,7 +226,7 @@ Si l'on revient à la fonction `summary()`, observer des valeurs proches pour la
 set.seed(54)
 tmp <- tibble(a = c(rnorm(150, 3500, 300), rnorm(150, 5000, 300))) 
 
-tmp %>% 
+tmp |> 
   ggplot(aes(a)) +
   geom_histogram(bins = 25, fill = "steelblue", color = "grey20", alpha = 0.7) +
   geom_vline(xintercept = mean(tmp$a, na.rm = TRUE), 
@@ -238,10 +237,10 @@ tmp %>%
   theme_bw()
 ```
 
-On comprend donc l'importance de considérer les indices de dispersion en plus des indices de position pour caractériser et comprendre une série de données numériques. L'intervalle interquartile est toujours utile pour connaître l'étendue des données qui correspond aux 50% des observations les plus centrales. Les autres indices de dispersion très fréquemment utilisés, mais qui ne sont pas proposés par défaut par la fonction `summary()`, sont la variance et l'écart-type. Il est possible de calculer tous les indices renvoyés par la fonction `summary()` et ceux qui nous manquent grâce à la fonction `summarise()` :
+On comprend donc l'importance de considérer les indices de dispersion en plus des indices de position pour caractériser et comprendre une série de données numériques. L'intervalle interquartile est toujours utile pour connaître l'étendue des données qui correspondent aux 50% des observations les plus centrales. Les autres indices de dispersion très fréquemment utilisés, mais qui ne sont pas proposés par défaut par la fonction `summary()`, sont la variance et l'écart-type. Il est possible de calculer tous les indices renvoyés par la fonction `summary()` et ceux qui nous manquent grâce à la fonction `summarise()` :
 
 ```{r}
-penguins %>% 
+penguins |> 
   summarise(min = min(body_mass_g, na.rm = TRUE),
             Q1 = quantile(body_mass_g, 0.25, na.rm = TRUE),
             med = median(body_mass_g, na.rm = TRUE),
@@ -252,7 +251,7 @@ penguins %>%
             et = sd(body_mass_g, na.rm = TRUE))
 ```
 
-Vous notez que le code est beaucoup plus long, et qu'utiliser `summary()` peut donc faire gagner beaucoup de temps, même si cette fonction ne nous fournit ni la variance ni l'écart-type. Mais comme souvent dans `R`, il est possible de calculer à la main toutes ces valeurs si besoin. Comme indiqué plus haut, les fonctions suivantes peuvent être utilisées :
+Vous notez que le code est beaucoup plus long, et qu'utiliser `summary()` peut donc faire gagner beaucoup de temps, même si cette fonction ne nous fournit ni la variance ni l'écart-type. Mais comme souvent dans `R`, il est possible de calculer à la main toutes ces valeurs si besoin. N'oubliez pas non plus qu'avec `summarise()`, on pourrait utiliser l'argument `.by` ou la fonction `group_by()` pour calculer très rapidement ces indices pour chaque espèce de manchot, ou pour chaque espèce et chaque sexe. Comme indiqué plus haut, les fonctions suivantes peuvent être utilisées :
 
 - `mean()` permet de calculer la moyenne.
 - `median()` permet de calculer la médiane.
@@ -270,9 +269,9 @@ IQR(penguins$body_mass_g, na.rm = TRUE)
 Ici, les 50% des valeurs les plus centrales de l'échantillon sont situées dans un intervalle de `r IQR(penguins$body_mass_g, na.rm = TRUE)` grammes autour de la médiane.
 
 
-#### Variable quantitative : facteur
+### Variable quantitative : facteur
 
-Si l'on fournit une variable catégorielle ou facteur à `summary()`, le résultat obtenu sera naturellement différent : calculer des moyennes, médianes ou quartiles n'aurait en effet pas de sens lorsque la variable fournie ne contient que des catégories :
+Si l'on fournit une variable catégorielle à `summary()`, le résultat obtenu sera naturellement différent : calculer des moyennes, médianes ou quartiles n'aurait en effet pas de sens lorsque la variable fournie ne contient que des catégories :
 
 ```{r}
 summary(penguins$species)
@@ -289,13 +288,13 @@ summary(penguins$sex)
 Pour les facteurs, la fonction `summary()` est donc tout à fait équivalente à la fonction `count()` :
 
 ```{r}
-penguins %>% 
+penguins |> 
   count(species)
 ```
 
 L'avantage de la fonction `count()` est qu'il est possible d'utiliser plusieurs facteurs pour compter le nombre d'observations de toutes les combinaisons de modalités (par exemple, combien d'individus de chaque sexe pour chaque espèce), ce qui n'est pas possible avec la fonction `summary()`.
 
-#### Les tableaux : `data.frame` ou `tibble`
+### Les tableaux : `data.frame` ou `tibble`
 
 L'avantage de la fonction `summary()` par rapport à la fonction `count()` apparaît lorsque l'on souhaite obtenir des informations sur toutes les variables d'un tableau à la fois :
 
@@ -308,18 +307,19 @@ Ici, on obtient un résumé pour chaque colonne du tableau. Les colonnes numéri
 On constate au passage que la variable `year` est considérée ici comme une variable numérique, alors qu'elle devrait plutôt être considérée comme un facteur, ce qui nous permettrait de savoir combien d'individus ont été échantillonnés chaque année :
 
 ```{r}
-penguins %>% 
-  mutate(year = factor(year)) %>% 
+penguins |> 
+  mutate(year = factor(year)) |> 
   summary()
 ```
 
 Au final, la fonction `summary()` est très utile dans certaines situations, notamment pour avoir rapidement accès à des statistiques descriptives simples sur toutes les colonnes d'un tableau. Elle reste cependant limitée car d'une part, elle ne fournit pas les variances ou les écarts-types pour les variables numériques, et il est impossible d'avoir des résumés plus fins, pour chaque modalité d'un facteur par exemple. Ici, il serait en effet intéressant d'avoir des informations synthétiques concernant les mesures biométriques des manchots, espèce par espèce, plutôt que toutes espèces confondues. C'est là que la fonction `skim()` intervient.
 
-### La fonction `skim()`  {#sec-skim}
+
+## Créer des résumés de données avec la fonction `skim()`  {#sec-skim}
 
 La fonction `skim()` fait partie du package `skimr`. Avant de pouvoir l'utiliser, pensez donc à l'installer et à le charger en mémoire si ce n'est pas déjà fait. Comme pour la fonction `summary()`, on peut utiliser la fonction `skim()` sur plusieurs types d'objets. Nous nous contenterons d'examiner ici le cas le plus fréquent : celui des tableaux, groupés avec `group_by()` ou non.
 
-#### Tableau non groupé
+### Tableau non groupé
 
 Commençons par examiner le résultat avec le tableau `penguins` non groupé :
 
@@ -333,14 +333,14 @@ Les résultats obtenus grâce à cette fonction sont nombreux. La première sect
 - la nature des variables qu'il contient (ici 3 facteurs et 5 variables numériques)
 - la présence de variables utilisées pour faire des regroupements (il n'y en a pas encore à ce stade)
 
-Ensuite, un bloc apporte des information sur chaque facteur présent dans le tableau :
+Ensuite, un bloc apporte des informations sur chaque facteur présent dans le tableau :
 
 - le nom de la variable catégorielle (`skim_variable`)
 - le nombre de données manquantes (`n_missing`) et le taux de "données complètes" (`complete_rate`)
 - des informations sur le nombre de modalités (`n_unique`)
 - le nombre d'observations pour les modalités les plus représentées (`top_counts`)
 
-En un coup d'œil, on sait donc que 3 espèces sont présentes (et on connait leurs effectifs), on sait que les manchots ont été échantillonnées sur 3 îles, et on sait que le sexe de 11 individu (sur 344) est inconnu. Pour le reste, il y a presque autant de femelles que de mâles.
+En un coup d'œil, on sait donc que 3 espèces sont présentes (et on connait leurs effectifs), on sait que les manchots ont été échantillonnées sur 3 îles, et on sait que le sexe de 11 individus sur 344 (soit 3%) est inconnu. Pour le reste, il y a presque autant de femelles que de mâles.
 
 Le dernier bloc renseigne sur les variables numériques. Pour chaque d'elle, on a :
 
@@ -348,56 +348,56 @@ Le dernier bloc renseigne sur les variables numériques. Pour chaque d'elle, on 
 - le nombre de données manquantes (`n_missing`) et le taux de "données complètes" (`complete_rate`)
 - la moyenne (`mean`) et l'écart-type (`sd`), ce qui est une nouveauté par rapport à la fonction `summary()`
 - les valeurs minimales (`p0`), de premier quartile (`p25`), de second quartile (`p50`, c'est la médiane !), de troisième quartile (`p75`) et la valeur maximale (`p100`)
-- un histogramme très simple qui donne un premier aperçu grossier de la forme de la distribution
+- un histogramme très simple (`hist`) qui donne un premier aperçu grossier de la forme de la distribution
 
 Là encore, en un coup d'œil, on dispose donc de toutes les informations pertinentes pour juger de la distribution, de la position et de la dispersion de chaque variable numérique du jeu de données.
 
-#### Tableau groupé
+### Tableau groupé
 
 La fonction `skim()`, déjà très pratique, le devient encore plus lorsque l'on choisit de lui fournir seulement certaines variables, et qu'on fait certains regroupements. Par exemple, on peut sélectionner les variables relatives aux dimensions du bec (`bill_length_mm` et `bill_depth_mm`) avec la fonction `select()` que nous connaissons déjà, et demander un résumé des données pour chaque espèce grâce à la fonction `group_by()` que nous connaissons également :
 
 ```{r}
-penguins %>%                     # Avec le tableau penguins...
+penguins |>                     # Avec le tableau penguins...
   select(species, 
          bill_length_mm,
-         bill_depth_mm) %>%      # Je sélectionne les variables d'intérêt...
-  group_by(species) %>%          # Je regroupe par espèce...
-  skim()                         # Et je produis un résumé des données
+         bill_depth_mm) |>      # Je sélectionne les variables d'intérêt...
+  group_by(species) |>          # Je regroupe par espèce...
+  skim()                        # Et je produis un résumé des données
 ```
 
 On constate ici que pour chaque variable numérique sélectionnée, des statistiques descriptives détaillées nous sont fournies pour chacune des 3 espèces. Ce premier examen semble montrer que :
 
 - L'espèce Adélie est celle qui possède le bec le plus court (ses valeurs de moyennes, médianes et quartiles sont plus faibles que celles des 2 autres espèces).
 - L'espèce Gentoo est celle qui possède le bec le plus fin, ou le moins épais (ses valeurs de moyennes, médianes et quartiles sont plus faibles que celles des 2 autres espèces)
-- Il ne semble pas y avoir de fortes différences d'écarts-types (donc des dispersions des points autour des moyennes) entre les 3 espèces : pour chacune des 2 variables numériques, des valeurs d'écarts-types comparables sont en effet observées pour les 3 espèces
+- Il ne semble pas y avoir de fortes différences d'écarts-types (donc, une dispersion comparable des points autour de leur moyenne respective) entre les 3 espèces : pour chacune des 2 variables numériques, des valeurs d'écarts-types comparables sont en effet observées pour les 3 espèces
 - La distribution des 2 variables numériques semble approximativement suivre une distribution symétrique pour les 3 espèces, avec une forme de courbe en cloche. Les distributions devraient donc suivre à peu une distribution normale
 
 :::{.callout-note}
 
-Vous comprenez j'espère l'importance d'examiner ce genre de résumé des données avant de vous lancer dans des tests statistiques. Ils sont un complément indispensable aux explorations graphiques que vous devez également prendre l'habitude de réaliser pour mieux appréhender et comprendre la nature de vos données. Puisque chaque jeu de données est unique, vous devrez vous adapter à la situation et aux questions scientifiques qui vous sont posées (ou que vous vous posez !) : les choix qui seront pertinents pour une situation ne le seront pas nécessairement pour une autre. Mais dans tous les cas, pour savoir où vous allez et pour ne pas faire de bêtise au moment des tests statistiques et de leur interprétation, **vous devrez toujours explorer vos données, avec des graphiques exploratoires et des statistiques descriptives**(.
+Vous comprenez j'espère l'importance d'examiner ce genre de résumé des données avant de vous lancer dans des tests statistiques. Ils sont un complément indispensable aux explorations graphiques que vous devez également prendre l'habitude de réaliser pour mieux appréhender et comprendre la nature de vos données. Puisque chaque jeu de données est unique, vous devrez vous adapter à la situation et aux questions scientifiques qui vous seront posées (ou que vous vous poserez !) : les choix qui seront pertinents pour une situation ne le seront pas nécessairement pour une autre. Mais dans tous les cas, pour savoir où vous allez et pour ne pas faire de bêtise au moment des tests statistiques et de leur interprétation, **vous devrez toujours explorer vos données, avec des graphiques exploratoires et des statistiques descriptives**(.
 
 :::
 
 
-### Exercice {#sec-exo20}
+## Exercice {#sec-exo20}
 
 En utilisant les fonctions de résumé abordées jusqu'ici et le tableau `weather`, répondez aux questions suivante :
 
 ```{r}
 #| include: false
-weather %>% 
-  filter(wind_speed < 500) %>% 
-  select(origin, precip, wind_speed, wind_gust) %>% 
-  group_by(origin) %>% 
+weather |> 
+  filter(wind_speed < 500) |> 
+  select(origin, precip, wind_speed, wind_gust) |> 
+  group_by(origin) |> 
   skim()
 ```
 
 ```{r}
 #| include: false
-weather %>% 
-  filter(wind_speed < 500) %>% 
-  select(temp, month) %>% 
-  group_by(month) %>% 
+weather |> 
+  filter(wind_speed < 500) |> 
+  select(temp, month) |> 
+  group_by(month) |> 
   skim()
 ```
 

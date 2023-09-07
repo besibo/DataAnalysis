@@ -233,6 +233,48 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./09-OneSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Comparaison de la moyenne d’une population à une valeur théorique</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-TwoSamplePairedTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-TwoSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-ANOVA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-Correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Régression linéaire</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-PropTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Comparaison de proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -249,12 +291,18 @@ div.csl-indent {
   <ul>
   <li><a href="#pré-requis" id="toc-pré-requis" class="nav-link active" data-scroll-target="#pré-requis"><span class="header-section-number">6.1</span> Pré-requis</a></li>
   <li><a href="#sec-reframe" id="toc-sec-reframe" class="nav-link" data-scroll-target="#sec-reframe"><span class="header-section-number">6.2</span> Créer des résumés avec la fonction <code>reframe()</code></a></li>
-  <li><a href="#créer-des-résumés-de-données-avec-des-fonctions-spécifiques" id="toc-créer-des-résumés-de-données-avec-des-fonctions-spécifiques" class="nav-link" data-scroll-target="#créer-des-résumés-de-données-avec-des-fonctions-spécifiques"><span class="header-section-number">6.3</span> Créer des résumés de données avec des fonctions spécifiques</a>
+  <li><a href="#créer-des-résumés-de-données-avec-la-fonction-summary" id="toc-créer-des-résumés-de-données-avec-la-fonction-summary" class="nav-link" data-scroll-target="#créer-des-résumés-de-données-avec-la-fonction-summary"><span class="header-section-number">6.3</span> Créer des résumés de données avec la fonction <code>summary()</code></a>
   <ul class="collapse">
-  <li><a href="#la-fonction-summary" id="toc-la-fonction-summary" class="nav-link" data-scroll-target="#la-fonction-summary"><span class="header-section-number">6.3.1</span> La fonction <code>summary()</code></a></li>
-  <li><a href="#sec-skim" id="toc-sec-skim" class="nav-link" data-scroll-target="#sec-skim"><span class="header-section-number">6.3.2</span> La fonction <code>skim()</code></a></li>
-  <li><a href="#sec-exo20" id="toc-sec-exo20" class="nav-link" data-scroll-target="#sec-exo20"><span class="header-section-number">6.3.3</span> Exercice</a></li>
+  <li><a href="#variable-continue-vecteur-numérique" id="toc-variable-continue-vecteur-numérique" class="nav-link" data-scroll-target="#variable-continue-vecteur-numérique"><span class="header-section-number">6.3.1</span> Variable continue : vecteur numérique</a></li>
+  <li><a href="#variable-quantitative-facteur" id="toc-variable-quantitative-facteur" class="nav-link" data-scroll-target="#variable-quantitative-facteur"><span class="header-section-number">6.3.2</span> Variable quantitative : facteur</a></li>
+  <li><a href="#les-tableaux-data.frame-ou-tibble" id="toc-les-tableaux-data.frame-ou-tibble" class="nav-link" data-scroll-target="#les-tableaux-data.frame-ou-tibble"><span class="header-section-number">6.3.3</span> Les tableaux : <code>data.frame</code> ou <code>tibble</code></a></li>
   </ul></li>
+  <li><a href="#sec-skim" id="toc-sec-skim" class="nav-link" data-scroll-target="#sec-skim"><span class="header-section-number">6.4</span> Créer des résumés de données avec la fonction <code>skim()</code></a>
+  <ul class="collapse">
+  <li><a href="#tableau-non-groupé" id="toc-tableau-non-groupé" class="nav-link" data-scroll-target="#tableau-non-groupé"><span class="header-section-number">6.4.1</span> Tableau non groupé</a></li>
+  <li><a href="#tableau-groupé" id="toc-tableau-groupé" class="nav-link" data-scroll-target="#tableau-groupé"><span class="header-section-number">6.4.2</span> Tableau groupé</a></li>
+  </ul></li>
+  <li><a href="#sec-exo20" id="toc-sec-exo20" class="nav-link" data-scroll-target="#sec-exo20"><span class="header-section-number">6.5</span> Exercice</a></li>
   </ul>
 </nav>
     </div>
@@ -268,10 +316,10 @@ div.csl-indent {
 <h2 data-number="6.1" class="anchored" data-anchor-id="pré-requis"><span class="header-section-number">6.1</span> Pré-requis</h2>
 <p>La première étape de toute analyse de données est l’<strong>exploration</strong>. Avant de se lancer dans des tests statistiques et des procédures complexes, et à supposer que les données dont vous disposez sont déjà dans un format approprié, il est toujours très utile :</p>
 <ol type="1">
-<li><p>d’explorer visuellement les données dont on dispose en faisant des graphiques nombreux et variés, afin de comprendre, notamment quelle est la distribution des variables numériques, quelles sont les catégories les plus représentées pour les variables qualitatives (ou facteurs), quelles sont les relations les plus marquantes entre variables numériques et/ou catégorielles, etc. Vous avez appris au <a href="03-Visualization.html"><span>Chapitre&nbsp;3</span></a> comment produire toutes sortes de graphiques avec le package <code>ggplot2</code>. Il va maintenant falloir vous poser la question du choix des graphiques à produire du point de vue de l’exploration statistique de données inconnues.</p></li>
-<li><p>d’explorer les données en calculant des indices de statistiques descriptives. Ces indices relèvent en général de 2 catégories : les indices de position (e.g.&nbsp;moyennes, médianes, quartiles…) et les indices de dispersion (e.g.&nbsp;variance, écart-type, intervalle inter-quartiles…). Nous avons déjà vu comment utiliser la fonction <code>summarise()</code> et son argument <code>.by</code> pour calculer des moyennes ou des effectifs pour plusieurs sous-groupes de nos jeux de données. Dans ce chapitre, nous allons aller plus loin, et nous découvrirons d’une part comment obtenir d’autres indices statistiques pertinents, et d’autres fonctions encore plus utiles que <code>summarise()</code>.</p></li>
+<li><p>d’explorer visuellement les données dont on dispose en faisant des graphiques nombreux et variés, afin de comprendre, notamment quelle est la distribution des variables numériques, quelles sont les catégories les plus représentées pour les variables qualitatives (facteurs), quelles sont les relations les plus marquantes entre variables numériques et/ou catégorielles, etc. Vous avez appris au <a href="03-Visualization.html"><span>Chapitre&nbsp;3</span></a> comment produire toutes sortes de graphiques avec le package <code>ggplot2</code>. Il va maintenant falloir vous poser la question du choix des graphiques à produire du point de vue de l’exploration statistique de données inconnues.</p></li>
+<li><p>d’explorer les données en calculant des indices de statistiques descriptives. Ces indices relèvent en général de 2 catégories : les indices de position (e.g.&nbsp;moyennes, médianes, quartiles…) et les indices de dispersion (e.g.&nbsp;variance, écart-type, intervalle inter-quartiles…). Nous avons déjà vu comment utiliser la fonction <code>summarise()</code> et son argument <code>.by</code> pour calculer des moyennes ou des effectifs pour plusieurs sous-groupes de nos jeux de données (<a href="05-DataWrangling.html#sec-summarise"><span>Section&nbsp;5.8</span></a>). Dans ce chapitre, nous irons plus loin, et nous découvrirons d’une part comment calculer d’autres indices statistiques pertinents, et comment utiliser d’autres fonctions encore plus utiles que <code>summarise()</code>.</p></li>
 </ol>
-<p>Nous verrons dans le <a href="07-Incertitude.html"><span>Chapitre&nbsp;7</span></a> comment calculer des indices d’incertitude (<a href="07-Incertitude.html#sec-errstd"><span>Section&nbsp;7.4</span></a> et <a href="07-Incertitude.html#sec-confint"><span>Section&nbsp;7.5</span></a>). Attention, il ne faudra pas confondre indices de dispersion et indices d’incertitude. Et enfin, avant de passer aux tests statistiques, nous verrons comment visualiser dispersion et incertitude au <a href="08-ErrorBars.html"><span>Chapitre&nbsp;8</span></a>.</p>
+<p>Nous verrons ensuite dans le <a href="07-Incertitude.html"><span>Chapitre&nbsp;7</span></a> comment calculer des indices d’incertitude (<a href="07-Incertitude.html#sec-errstd"><span>Section&nbsp;7.4</span></a> et <a href="07-Incertitude.html#sec-confint"><span>Section&nbsp;7.5</span></a>). Attention, il ne faudra pas confondre indices de dispersion et indices d’incertitude. Et enfin, avant de passer aux tests statistiques, nous verrons comment visualiser dispersion et incertitude au <a href="08-ErrorBars.html"><span>Chapitre&nbsp;8</span></a>.</p>
 <p>Afin d’explorer ces questions, nous aurons besoin des packages suivants :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -290,7 +338,7 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Si vous avez déjà installé le <code>tidyverse</code> ou <code>dplyr</code> avant le printemps 2023, ré-installez <code>dplyr</code> avec <code>install.packages("dplyr")</code>. Ce package a en effet été mis à jour tout récemment, et nous aurons besoin de sa toute dernière version (v1.1.0) pour utiliser certaines fonctions. Chargez-le ensuite en mémoire avec <code>library(dplyr)</code>.</p>
+<p>Si vous avez installé le <code>tidyverse</code> ou <code>dplyr</code> avant le printemps 2023, ré-installez <code>dplyr</code> avec <code>install.packages("dplyr")</code>. Ce package a en effet été mis à jour récemment, et nous aurons besoin de sa toute dernière version (v1.1.0) pour utiliser certaines fonctions. Chargez-le ensuite en mémoire avec <code>library(dplyr)</code>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -310,7 +358,7 @@ Attention
 </section>
 <section id="sec-reframe" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="sec-reframe"><span class="header-section-number">6.2</span> Créer des résumés avec la fonction <code>reframe()</code></h2>
-<p>Dans la <a href="05-DataWrangling.html#sec-summarise"><span>Section&nbsp;5.8</span></a>, nous avons vu comment utiliser la fonction <code>summarise()</code> et éventuellement son argument <code>.by</code> pour calculer des statistiques descriptives variées. N’hésitez pas à relire cette section si vous n’êtes pas sûr d’avoir tout retenu. Les calculs que nous pouvons faire grâce à la fonction <code>summarise()</code> impliquent des fonctions statistiques qui ne renvoient qu’une valeur à la fois lorsqu’on leur fournit une série de valeurs. Par exemple, si on dispose d’un vecteur numérique (les entiers compris entre 1 et 100 pour l’exemple) :</p>
+<p>Dans la <a href="05-DataWrangling.html#sec-summarise"><span>Section&nbsp;5.8</span></a>, nous avons vu comment utiliser la fonction <code>summarise()</code> et éventuellement son argument <code>.by</code> pour calculer des statistiques descriptives variées. N’hésitez pas à relire cette section si vous n’êtes pas sûr d’avoir tout compris ou tout retenu. Les calculs que nous pouvons faire grâce à la fonction <code>summarise()</code> impliquent des fonctions statistiques qui ne renvoient qu’une valeur à la fois lorsqu’on leur fournit une série de valeurs. Par exemple, si on dispose d’un vecteur numérique (les entiers compris entre 1 et 100 pour l’exemple) :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -322,7 +370,7 @@ Attention
  [91]  91  92  93  94  95  96  97  98  99 100</code></pre>
 </div>
 </div>
-<p>la fonction <code>mean()</code> ne renvoie qu’une valeur, la moyenne des 100 valeurs contenues dans le vecteur :</p>
+<p>la fonction <code>mean()</code> ne renvoie qu’une valeur, la moyenne des 100 nombres contenus dans le vecteur :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -340,12 +388,12 @@ Attention
 <pre><code>[1] 50.5</code></pre>
 </div>
 </div>
-<p>Il existe toutefois des fonctions qui renvoient plus d’une valeur à la fois. Par exemple, la fonction <code>quantile()</code>, renvoie par défaut 5 éléments :</p>
+<p>Il existe toutefois des fonctions qui renvoient plus d’une valeur à la fois. Par exemple, la fonction <code>quantile()</code> (que nous avons utilisée dans un autre contexte à la <a href="05-DataWrangling.html#sec-filterby"><span>Section&nbsp;5.9.1</span></a>), renvoie par défaut 5 éléments :</p>
 <ol type="1">
 <li>la valeur minimale contenue dans le vecteur (ou quantile 0%) : c’est la valeur la plus faible contenue dans la série de données</li>
-<li>le premier quartile du vecteur (Q1 ou quantile 25%) : c’est la valeur coupant l’échantillon en deux telle que 25% des observations du vecteur y sont inférieures</li>
-<li>la médiane du vecteur (Q2 ou quantile 50%) : c’est la valeur coupant l’échantillon en deux telle que 50% des observations du vecteur sont inférieures à cette valeur et 50% y sont supérieures</li>
-<li>le troisième quartile du vecteur (Q3 ou quantile 75%) : c’est la valeur coupant l’échantillon en deux telle que 75% des observations du vecteur y sont inférieures</li>
+<li>le premier quartile du vecteur (Q1 ou quantile 25%) est la valeur coupant l’échantillon en deux : 25% des observations du vecteur y sont inférieures et 75% y sont supérieures</li>
+<li>la médiane du vecteur (Q2 ou quantile 50%) est la valeur coupant l’échantillon en deux : 50% des observations du vecteur sont inférieures à cette valeur et 50% y sont supérieures</li>
+<li>le troisième quartile du vecteur (Q3 ou quantile 75%) est la valeur coupant l’échantillon en deux : 75% des observations du vecteur y sont inférieures et 25% y sont supérieures</li>
 <li>la valeur maximale contenue dans le vecteur (ou quantile 100%) : c’est la valeur la plus élevée contenue dans la série de données.</li>
 </ol>
 <p>Par exemple, toujours avec le vecteur des entiers contenus entre 1 et 100 :</p>
@@ -370,9 +418,9 @@ Attention
 5 100%  100  </code></pre>
 </div>
 </div>
-<p>Il peut être très utile de calculer ces différentes valeurs pour plusieurs variables à la fois, ou pour plusieurs sous-groupes d’un jeu de données. Le problème est que nous ne pouvons pas utiliser <code>summarise()</code> car la fonction <code>quantile()</code> ne renvoie pas qu’une unique valeur. par exemple, pour calculer les quantiles des longueurs de becs pour chaque espèce de manchots, on pourrait être tenté de taper ceci :</p>
+<p>Il peut être très utile de calculer ces différentes valeurs pour plusieurs variables à la fois, ou pour plusieurs sous-groupes d’un jeu de données. Le problème est que nous ne pouvons pas utiliser <code>summarise()</code> car la fonction <code>quantile()</code> ne renvoie pas qu’une unique valeur. Par exemple, pour calculer les quantiles des longueurs de becs pour chaque espèce de manchots, on pourrait être tenté de taper ceci :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Indices =</span> <span class="fu">quantile</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> species)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -405,7 +453,7 @@ dplyr 1.1.0.
 </div>
 <p>C’est dans ces situations que la fonction <code>reframe()</code> est utile. Elle joue le même rôle que <code>summarise()</code>, mais dans les situation où les fonctions statistiques renvoient plus d’une valeur à la fois :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">Indices =</span> <span class="fu">quantile</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> species)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -431,7 +479,7 @@ dplyr 1.1.0.
 </div>
 <p>Au contraire de <code>summarise()</code>, <code>reframe()</code> ne renvoie pas de message d’avertissement dans cette situation. Dans cet exemple, on ne sait malheureusement pas à quoi correspondent les chiffres renvoyés puisque l’information des quartiles a disparu (quelles valeurs correspondent aux médianes ou aux premiers quartiles par exemple). Pour y remédier, on doit transformer le vecteur renvoyé par <code>quantile()</code> en tibble. Nous avons déjà vu comment le faire grâce à la fonction <code>enframe()</code>. Par ailleurs, puisque la fonction va maintenant renvoyer un tableau, on n’a pas besoin de lui fournir de nom de colonnes (je retire donc <code>Indices =</code> de mon code) :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">enframe</span>(<span class="fu">quantile</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> species)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -455,11 +503,11 @@ dplyr 1.1.0.
 15 Chinstrap 100%   58  </code></pre>
 </div>
 </div>
-<p>Enfin, comme précédemment, il est possible de modifier la forme de ce tableau (avec <code>pivot_wider()</code>) pour le lire plus facilement et éventuellement l’intégrer dans un rapport ou compte-rendu :</p>
+<p>Enfin, comme décrit à la <a href="04-Tidy-Data.html#sec-spread"><span>Section&nbsp;4.3.2</span></a>, il est possible de modifier la forme de ce tableau avec <code>pivot_wider()</code>, pour le lire plus facilement et éventuellement l’intégrer dans un rapport ou compte-rendu :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">enframe</span>(<span class="fu">quantile</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> species) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> species) <span class="sc">|&gt;</span> </span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> species,</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> value)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -473,9 +521,9 @@ dplyr 1.1.0.
 5 100%    46     59.6      58  </code></pre>
 </div>
 </div>
-<p>Ces statistiques nous permettent de constater que les manchots de l’espèce Adélie semblent avoir des becs plus courts que les 2 autres espèces (les 5 quantiles le confirment). Les manchots Gentoo et Chinstrap ont en revanche des becs de longueur à peu près similaires, ben que ceux des Chinstrap soient peut-être très légèrement plus longs (Q1, médiane et Q3 supérieurs à ceux des Gentoo). On peut vérifier tout ça graphiquement avec des boîtes à moustaches :</p>
+<p>Ces statistiques nous permettent de constater que les manchots de l’espèce Adélie semblent avoir des becs plus courts que les 2 autres espèces (les 5 quantiles le confirment). Les manchots Gentoo et Chinstrap ont en revanche des becs de longueur à peu près similaires, bien que ceux des Chinstrap soient peut-être très légèrement plus longs (Q1, médiane et Q3 supérieurs à ceux des Gentoo). On peut vérifier tout ça graphiquement avec des boîtes à moustaches, puisque les 5 valeurs de quantiles sont justement celles qui sont utilisées pour tracer les boîtes à moustaches :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> bill_length_mm)) <span class="sc">+</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Espèce"</span>, <span class="at">y =</span> <span class="st">"Longueur du bec (mm)"</span>) <span class="sc">+</span></span>
@@ -489,7 +537,7 @@ dplyr 1.1.0.
 </div>
 <p>Ou avec un graphique de densité :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
@@ -504,7 +552,7 @@ dplyr 1.1.0.
 <p><img src="06-EDA_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>À ce stade, vous devriez être capables de créer (et d’interpréter !) ce type de graphiques. Si ce n’est pas le cas, consultez d’urgence <a href="https://besibo.github.io/BiometrieS3/03-visualization.html">le chapitre 3 du livre en ligne de Biométrie du semestre 3</a>.</p>
+<p>À ce stade, vous devriez être capables de créer (et d’interpréter !) ce type de graphiques. Si ce n’est pas le cas, relisez d’urgence les <a href="03-Visualization.html#sec-density">sections&nbsp;<span>3.5.1.5</span></a> et <a href="03-Visualization.html#sec-boxplot"><span>3.9.3</span></a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -521,20 +569,18 @@ dplyr 1.1.0.
 </ul>
 </div>
 </div>
+<p>Les fonctions <code>summarise()</code> et <code>reframe()</code>, avec leur argument <code>.by()</code> (ou la fonction <code>group_by()</code>) permettent donc de calculer n’importe quel indice de statistique descriptive sur un tableau de données entier ou sur des modalités ou combinaisons de modalités de facteurs. Il existe par ailleurs de nombreuses fonctions, disponibles de base dans <code>R</code> ou dans certains packages spécifiques, qui permettent de fournir des résumés plus ou moins automatiques de tout ou partie des variables d’un jeu de données. Nous allons maintenant en décrire 2, mais il en existe beaucoup d’autres : à vous d’explorer les possibilités et d’utiliser les fonctions qui vous paraissent les plus pertinentes, les plus simples à utiliser, les plus visuelles ou les plus complètes.</p>
 </section>
-<section id="créer-des-résumés-de-données-avec-des-fonctions-spécifiques" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="créer-des-résumés-de-données-avec-des-fonctions-spécifiques"><span class="header-section-number">6.3</span> Créer des résumés de données avec des fonctions spécifiques</h2>
-<p>Les fonctions <code>summarise()</code> et <code>reframe()</code>, avec leur argument <code>.by()</code> (ou la fonction <code>group_by()</code>) permettent donc de calculer n’importe quel indice de statistique descriptive sur un tableau de données entier ou sur des modalités ou combinaisons de modalités de facteurs. Il existe par ailleurs de nombreuses fonctions, disponibles de base dans <code>R</code> ou dans certains packages spécifiques, qui permettent de fournir des résumés plus ou moins automatiques de tout ou partie des variables d’un jeu de données. Nous allons en décrire 2 ici, mais il en existe beaucoup d’autres : à vous d’explorer les possibilités et d’utiliser les fonctions qui vous paraissent les plus pertinentes, les plus simples à utiliser, les plus visuelles ou les plus complètes.</p>
-<section id="la-fonction-summary" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="la-fonction-summary"><span class="header-section-number">6.3.1</span> La fonction <code>summary()</code></h3>
-<p>La fonction <code>summary()</code> (à ne pas confondre avec <code>summarise()</code>) permet d’obtenir des résumés de données pour tous types d’objets dans <code>R</code>. Selon la classe des objets que l’on transmets à <code>summary()</code>, la nature des résultats obtenus changera. Nous verrons ainsi au semestre 6 que cette fonction peut être utilisée pour examiner les résultats de modèles de régressions linéaires ou d’analyses de variances. Pour l’instant, nous nous intéressons à 3 situations :</p>
-<ul>
+<section id="créer-des-résumés-de-données-avec-la-fonction-summary" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="créer-des-résumés-de-données-avec-la-fonction-summary"><span class="header-section-number">6.3</span> Créer des résumés de données avec la fonction <code>summary()</code></h2>
+<p>La fonction <code>summary()</code> (à ne pas confondre avec <code>summarise()</code>) permet d’obtenir des résumés de données pour tous types d’objets dans <code>R</code>. Selon la classe des objets que l’on transmets à <code>summary()</code>, la nature des résultats obtenus changera. Nous verrons ainsi aux <a href="12-ANOVA.html">chapitres&nbsp;<span>12</span></a> et <a href="14-Regression.html"><span>14</span></a> que cette fonction peut être utilisée pour examiner les résultats d’analyses de variances ou de modèles de régressions linéaires. Pour l’instant, nous nous intéressons à 3 situations :</p>
+<ol type="1">
 <li>ce que renvoie la fonction quand on lui fournit un vecteur</li>
 <li>ce que renvoie la fonction quand on lui fournit un facteur</li>
 <li>ce que renvoie la fonction quand on lui fournit un tableau</li>
-</ul>
-<section id="variable-continue-vecteur-numérique" class="level4" data-number="6.3.1.1">
-<h4 data-number="6.3.1.1" class="anchored" data-anchor-id="variable-continue-vecteur-numérique"><span class="header-section-number">6.3.1.1</span> Variable continue : vecteur numérique</h4>
+</ol>
+<section id="variable-continue-vecteur-numérique" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="variable-continue-vecteur-numérique"><span class="header-section-number">6.3.1</span> Variable continue : vecteur numérique</h3>
 <p>Commençons par fournir un vecteur numérique à la fonction <code>summary()</code>. Nous allons pour cela extraire les données de masses corporelles des manchots du tableau <code>penguins</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="sc">$</span>body_mass_g</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -572,17 +618,17 @@ dplyr 1.1.0.
    2700    3550    4050    4202    4750    6300       2 </code></pre>
 </div>
 </div>
-<p>Nous obtenons ici 7 valeurs, qui correspondent respectivement à :</p>
+<p>Nous obtenons ici 7 valeurs, qui correspondent aux cinq valeurs renvoyées par la fonction <code>quantile()</code> (voir <a href="#sec-reframe"><span>Section&nbsp;6.2</span></a>), ainsi que la moyenne et le nombre de valeurs manquantes. Dans l’ordre, on a donc :</p>
 <ul>
 <li>la valeur minimale observée dans le vecteur. Ici, le manchot le plus léger de l’échantillon pèse donc 2700 grammes.</li>
-<li>la valeur du premier quartile du vecteur. Le premier quartile est la valeur qui coupe l’échantillon en 2 groupes : 25% des observations du vecteur sont inférieures au premier quartile, et 75% des observations du vecteur sont supérieures au premier quartile. Ici, 25% des manchots de l’échantillon (soit 86 individus) ont une masse inférieure à 3550 grammes, et 75% des individus de l’échantillon (soit 258 individus) ont une masse supérieure à 3550 grammes.</li>
-<li>la valeur de médiane du vecteur. La médiane est la valeur qui coupe l’échantillon en 2 groupes : 50% des observations du vecteur sont inférieures à la médiane, et 50% des observations du vecteur sont supérieures à la médiane. Ici, 50% des manchots de l’échantillon (soit 172 individus) ont une masse inférieure à 4050 grammes, et 50% des individus de l’échantillon (soit 172 individus) ont une masse supérieure à 4050 grammes.</li>
+<li>la valeur du premier quartile du vecteur. Ici, 25% des manchots de l’échantillon (soit 86 individus) ont une masse inférieure à 3550 grammes, et 75% des individus de l’échantillon (soit 258 individus) ont une masse supérieure à 3550 grammes.</li>
+<li>la valeur de médiane du vecteur. La médiane est le deuxième quartile. Ici, 50% des manchots de l’échantillon (soit 172 individus) ont une masse inférieure à 4050 grammes, et 50% des individus de l’échantillon (soit 172 individus) ont une masse supérieure à 4050 grammes.</li>
 <li>la moyenne du vecteur. Ici, les manchots des 3 espèces du jeu de données ont en moyenne une masse 4202 grammes.</li>
-<li>la valeur du troisième quartile du vecteur. Le troisième quartile est la valeur qui coupe l’échantillon en 2 groupes : 75% des observations du vecteur sont inférieures au troisième quartile, et 25% des observations du vecteur sont supérieures au troisième quartile. Ici, 75% des manchots de l’échantillon (soit 258 individus) ont une masse inférieure à 4700 grammes, et 25% des individus de l’échantillon (soit 86 individus) ont une masse supérieure à 4750 grammes.</li>
+<li>la valeur du troisième quartile du vecteur. Ici, 75% des manchots de l’échantillon (soit 258 individus) ont une masse inférieure à 4700 grammes, et 25% des individus de l’échantillon (soit 86 individus) ont une masse supérieure à 4750 grammes.</li>
 <li>la valeur maximale observée dans le vecteur. Ici, le manchot le plus lourd de l’échantillon pèse donc 6300 grammes.</li>
 <li>le nombre de données manquantes. Ici, 2 manchots n’ont pas été pesés et présentent donc la mention <code>NA</code> (comme <strong>N</strong>ot <strong>A</strong>vailable) pour la variable <code>body_mass_g</code>.</li>
 </ul>
-<p>Cette fonction fournit donc 2 indices de plus que la fonction <code>quantile()</code> (la moyenne et le nombre de valeurs manquantes) :</p>
+<p>Utiliser la fonction <code>quantile()</code> fournit donc presque les mêmes informations :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -590,7 +636,7 @@ dplyr 1.1.0.
 2700 3550 4050 4750 6300 </code></pre>
 </div>
 </div>
-<p>Mais contrairement à ce que nous avons vu plus haut, la fonction <code>summary()</code> ne possède pas d’argument <code>.by()</code> et il n’est pas possible de l’utiliser avec la fonction <code>group_by()</code>. Par conséquent, il n’est pas possible de se servir de cette fonction pour avoir des valeurs pour chaque modalités d’un facteur (pour chaque espèce par exemple).</p>
+<p>Attention, contrairement à ce que nous avons vu plus haut, la fonction <code>summary()</code> ne possède pas d’argument <code>.by()</code> et il n’est pas possible de l’utiliser avec la fonction <code>group_by()</code>. Par conséquent, il n’est pas possible de se servir de cette fonction pour avoir des valeurs pour chaque modalités d’un facteur (pour chaque espèce par exemple).</p>
 <p>Les différents indices statistiques fournis nous renseignent à la fois sur la position de la distribution et sur la dispersion des données.</p>
 <ul>
 <li>La <em>position</em> correspond à la tendance centrale et indique quelles sont les valeurs qui caractérisent le plus grand nombre d’individus. La moyenne et la médiane sont les deux indices de position les plus fréquemment utilisés. Lorsqu’une variable a une distribution parfaitement symétrique, la moyenne et la médiane sont strictement égales. Mais lorsqu’une distribution est asymétrique, la moyenne et la médiane diffèrent. En particulier, la moyenne est beaucoup plus sensible aux valeurs extrêmes que la médiane. Cela signifie que quand une distribution est très asymétrique, la médiane est souvent une meilleure indication des valeurs les plus fréquemment observées.</li>
@@ -605,10 +651,10 @@ dplyr 1.1.0.
 </div>
 </div>
 </div>
-<p>L’histogramme de la <a href="#fig-distri-masses">Figure&nbsp;<span>6.1</span></a> montre la distribution de la taille des manchots (toutes espèces confondues). Cette distribution présente une asymétrie à droite. Cela signifie que la distribution n’est pas symétrique et que la “queue de distribution” est plus longue à droite qu’à gauche. La plupart des individus ont une masse comprise entre 3500 et 3700 grammes, au niveau du pic principal du graphique. La médiane, en orange et qui vaut 4050 grammes est plus proche du pic que la moyenne, en rouge, qui vaut 4202 grammes. Ici, la différence entre moyenne et médiane n’est pas énorme, mais elle peut le devenir si la distribution est vraiment très asymétrique, par exemple, si quelques individus seulement avaient une masse supérieure à 7000 grammes, la moyenne serait tirée vers la droite du graphique alors que la médiane ne serait presque pas affectée. la moyenne représenterait alors encore moins fidèlement la tendance centrale.</p>
+<p>L’histogramme de la <a href="#fig-distri-masses">Figure&nbsp;<span>6.1</span></a> montre la distribution de la taille des manchots (toutes espèces confondues). Cette distribution présente une asymétrie à droite. Cela signifie que la distribution n’est pas symétrique et que la “queue de distribution” est plus longue à droite qu’à gauche. La plupart des individus ont une masse comprise entre 3500 et 3700 grammes, au niveau du pic principal du graphique. La médiane, en orange et qui vaut 4050 grammes est plus proche du pic que la moyenne, en rouge, qui vaut 4202 grammes. Ici, la différence entre moyenne et médiane n’est pas énorme, mais elle peut le devenir si la distribution est vraiment très asymétrique, par exemple, si quelques individus seulement avaient une masse supérieure à 7000 grammes, la moyenne serait tirée vers la droite du graphique alors que la médiane ne serait presque pas affectée. La moyenne représenterait alors encore moins fidèlement la tendance centrale.</p>
 <p>Si l’on revient à la fonction <code>summary()</code>, observer des valeurs proches pour la moyenne et la médiane nous indique donc le degré de symétrie de la distribution.</p>
 <ul>
-<li>La <em>dispersion</em> des données nous renseigne sur la dispersion des points autour des indices de position. Les quartiles et les valeurs minimales et maximales renvoyées par la fonction <code>summary()</code> nous renseignent sur l’étalement des points. Les valeurs situées entre le premier et le troisième quartile correspondent aux 50% des valeurs de l’échantillon les plus centrales. Plus l’étendue entre ces quartiles (notée IQR pour “intervalle interquartile”) sera grande, plus la dispersion sera importante. D’ailleurs, lorsque la dispersion est très importante, les moyennes et médianes ne renseignent que très moyennement sur le tendance centrale. Les indices de position sont surtout pertinents lorsque la dispersion des points autour de cette tendance centrale n’est pas trop large. Par exemple, si la distribution des données ressemblait à ceci (<a href="#fig-distri-masses2">Figure&nbsp;<span>6.2</span></a>), la moyenne et la médiane seraient fort peu utiles car très éloignées de la plupart des observations :</li>
+<li>La <em>dispersion</em> des données nous renseigne sur la dispersion des points autour des indices de position. Les quartiles et les valeurs minimales et maximales renvoyées par la fonction <code>summary()</code> nous renseignent sur l’étalement des points. Les valeurs situées entre le premier et le troisième quartile correspondent aux 50% des valeurs de l’échantillon les plus centrales. Plus l’étendue entre ces quartiles (notée IQR pour “intervalle interquartile”) sera grande, plus la dispersion sera importante. D’ailleurs, lorsque la dispersion est très importante, les moyennes et médianes ne renseignent que très moyennement sur la tendance centrale. Les indices de position sont surtout pertinents lorsque la dispersion des points autour de cette tendance centrale n’est pas trop large. Par exemple, si la distribution des données ressemblait à ceci (<a href="#fig-distri-masses2">Figure&nbsp;<span>6.2</span></a>), la moyenne et la médiane seraient fort peu utiles car très éloignées de la plupart des observations :</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -620,9 +666,9 @@ dplyr 1.1.0.
 </div>
 </div>
 </div>
-<p>On comprend donc l’importance de considérer les indices de dispersion en plus des indices de position pour caractériser et comprendre une série de données numériques. L’intervalle interquartile est toujours utile pour connaître l’étendue des données qui correspond aux 50% des observations les plus centrales. Les autres indices de dispersion très fréquemment utilisés, mais qui ne sont pas proposés par défaut par la fonction <code>summary()</code>, sont la variance et l’écart-type. Il est possible de calculer tous les indices renvoyés par la fonction <code>summary()</code> et ceux qui nous manquent grâce à la fonction <code>summarise()</code> :</p>
+<p>On comprend donc l’importance de considérer les indices de dispersion en plus des indices de position pour caractériser et comprendre une série de données numériques. L’intervalle interquartile est toujours utile pour connaître l’étendue des données qui correspondent aux 50% des observations les plus centrales. Les autres indices de dispersion très fréquemment utilisés, mais qui ne sont pas proposés par défaut par la fonction <code>summary()</code>, sont la variance et l’écart-type. Il est possible de calculer tous les indices renvoyés par la fonction <code>summary()</code> et ceux qui nous manquent grâce à la fonction <code>summarise()</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min =</span> <span class="fu">min</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">Q1 =</span> <span class="fu">quantile</span>(body_mass_g, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">med =</span> <span class="fu">median</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -638,7 +684,7 @@ dplyr 1.1.0.
 1  2700  3550  4050 4202.  4750  6300 643131.  802.</code></pre>
 </div>
 </div>
-<p>Vous notez que le code est beaucoup plus long, et qu’utiliser <code>summary()</code> peut donc faire gagner beaucoup de temps, même si cette fonction ne nous fournit ni la variance ni l’écart-type. Mais comme souvent dans <code>R</code>, il est possible de calculer à la main toutes ces valeurs si besoin. Comme indiqué plus haut, les fonctions suivantes peuvent être utilisées :</p>
+<p>Vous notez que le code est beaucoup plus long, et qu’utiliser <code>summary()</code> peut donc faire gagner beaucoup de temps, même si cette fonction ne nous fournit ni la variance ni l’écart-type. Mais comme souvent dans <code>R</code>, il est possible de calculer à la main toutes ces valeurs si besoin. N’oubliez pas non plus qu’avec <code>summarise()</code>, on pourrait utiliser l’argument <code>.by</code> ou la fonction <code>group_by()</code> pour calculer très rapidement ces indices pour chaque espèce de manchot, ou pour chaque espèce et chaque sexe. Comme indiqué plus haut, les fonctions suivantes peuvent être utilisées :</p>
 <ul>
 <li><code>mean()</code> permet de calculer la moyenne.</li>
 <li><code>median()</code> permet de calculer la médiane.</li>
@@ -656,9 +702,9 @@ dplyr 1.1.0.
 </div>
 <p>Ici, les 50% des valeurs les plus centrales de l’échantillon sont situées dans un intervalle de 1200 grammes autour de la médiane.</p>
 </section>
-<section id="variable-quantitative-facteur" class="level4" data-number="6.3.1.2">
-<h4 data-number="6.3.1.2" class="anchored" data-anchor-id="variable-quantitative-facteur"><span class="header-section-number">6.3.1.2</span> Variable quantitative : facteur</h4>
-<p>Si l’on fournit une variable catégorielle ou facteur à <code>summary()</code>, le résultat obtenu sera naturellement différent : calculer des moyennes, médianes ou quartiles n’aurait en effet pas de sens lorsque la variable fournie ne contient que des catégories :</p>
+<section id="variable-quantitative-facteur" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="variable-quantitative-facteur"><span class="header-section-number">6.3.2</span> Variable quantitative : facteur</h3>
+<p>Si l’on fournit une variable catégorielle à <code>summary()</code>, le résultat obtenu sera naturellement différent : calculer des moyennes, médianes ou quartiles n’aurait en effet pas de sens lorsque la variable fournie ne contient que des catégories :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins<span class="sc">$</span>species)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -677,7 +723,7 @@ dplyr 1.1.0.
 </div>
 <p>Pour les facteurs, la fonction <code>summary()</code> est donc tout à fait équivalente à la fonction <code>count()</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
@@ -690,8 +736,8 @@ dplyr 1.1.0.
 </div>
 <p>L’avantage de la fonction <code>count()</code> est qu’il est possible d’utiliser plusieurs facteurs pour compter le nombre d’observations de toutes les combinaisons de modalités (par exemple, combien d’individus de chaque sexe pour chaque espèce), ce qui n’est pas possible avec la fonction <code>summary()</code>.</p>
 </section>
-<section id="les-tableaux-data.frame-ou-tibble" class="level4" data-number="6.3.1.3">
-<h4 data-number="6.3.1.3" class="anchored" data-anchor-id="les-tableaux-data.frame-ou-tibble"><span class="header-section-number">6.3.1.3</span> Les tableaux : <code>data.frame</code> ou <code>tibble</code></h4>
+<section id="les-tableaux-data.frame-ou-tibble" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="les-tableaux-data.frame-ou-tibble"><span class="header-section-number">6.3.3</span> Les tableaux : <code>data.frame</code> ou <code>tibble</code></h3>
 <p>L’avantage de la fonction <code>summary()</code> par rapport à la fonction <code>count()</code> apparaît lorsque l’on souhaite obtenir des informations sur toutes les variables d’un tableau à la fois :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -717,8 +763,8 @@ dplyr 1.1.0.
 <p>Ici, on obtient un résumé pour chaque colonne du tableau. Les colonnes numériques sont traitées comme les vecteurs numériques (on obtient alors les minimas et maximas, les quartiles, les moyennes et médianes) et les colonnes contenant des variables catégorielles sont traitées comme des facteurs (et on obtient alors le nombre d’observations pour chaque modalité).</p>
 <p>On constate au passage que la variable <code>year</code> est considérée ici comme une variable numérique, alors qu’elle devrait plutôt être considérée comme un facteur, ce qui nous permettrait de savoir combien d’individus ont été échantillonnés chaque année :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">factor</span>(year)) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">factor</span>(year)) <span class="sc">|&gt;</span> </span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      species          island    bill_length_mm  bill_depth_mm  
@@ -742,11 +788,11 @@ dplyr 1.1.0.
 <p>Au final, la fonction <code>summary()</code> est très utile dans certaines situations, notamment pour avoir rapidement accès à des statistiques descriptives simples sur toutes les colonnes d’un tableau. Elle reste cependant limitée car d’une part, elle ne fournit pas les variances ou les écarts-types pour les variables numériques, et il est impossible d’avoir des résumés plus fins, pour chaque modalité d’un facteur par exemple. Ici, il serait en effet intéressant d’avoir des informations synthétiques concernant les mesures biométriques des manchots, espèce par espèce, plutôt que toutes espèces confondues. C’est là que la fonction <code>skim()</code> intervient.</p>
 </section>
 </section>
-<section id="sec-skim" class="level3" data-number="6.3.2">
-<h3 data-number="6.3.2" class="anchored" data-anchor-id="sec-skim"><span class="header-section-number">6.3.2</span> La fonction <code>skim()</code></h3>
+<section id="sec-skim" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sec-skim"><span class="header-section-number">6.4</span> Créer des résumés de données avec la fonction <code>skim()</code></h2>
 <p>La fonction <code>skim()</code> fait partie du package <code>skimr</code>. Avant de pouvoir l’utiliser, pensez donc à l’installer et à le charger en mémoire si ce n’est pas déjà fait. Comme pour la fonction <code>summary()</code>, on peut utiliser la fonction <code>skim()</code> sur plusieurs types d’objets. Nous nous contenterons d’examiner ici le cas le plus fréquent : celui des tableaux, groupés avec <code>group_by()</code> ou non.</p>
-<section id="tableau-non-groupé" class="level4" data-number="6.3.2.1">
-<h4 data-number="6.3.2.1" class="anchored" data-anchor-id="tableau-non-groupé"><span class="header-section-number">6.3.2.1</span> Tableau non groupé</h4>
+<section id="tableau-non-groupé" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="tableau-non-groupé"><span class="header-section-number">6.4.1</span> Tableau non groupé</h3>
 <p>Commençons par examiner le résultat avec le tableau <code>penguins</code> non groupé :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(penguins)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -945,41 +991,41 @@ dplyr 1.1.0.
 <li>la nature des variables qu’il contient (ici 3 facteurs et 5 variables numériques)</li>
 <li>la présence de variables utilisées pour faire des regroupements (il n’y en a pas encore à ce stade)</li>
 </ul>
-<p>Ensuite, un bloc apporte des information sur chaque facteur présent dans le tableau :</p>
+<p>Ensuite, un bloc apporte des informations sur chaque facteur présent dans le tableau :</p>
 <ul>
 <li>le nom de la variable catégorielle (<code>skim_variable</code>)</li>
 <li>le nombre de données manquantes (<code>n_missing</code>) et le taux de “données complètes” (<code>complete_rate</code>)</li>
 <li>des informations sur le nombre de modalités (<code>n_unique</code>)</li>
 <li>le nombre d’observations pour les modalités les plus représentées (<code>top_counts</code>)</li>
 </ul>
-<p>En un coup d’œil, on sait donc que 3 espèces sont présentes (et on connait leurs effectifs), on sait que les manchots ont été échantillonnées sur 3 îles, et on sait que le sexe de 11 individu (sur 344) est inconnu. Pour le reste, il y a presque autant de femelles que de mâles.</p>
+<p>En un coup d’œil, on sait donc que 3 espèces sont présentes (et on connait leurs effectifs), on sait que les manchots ont été échantillonnées sur 3 îles, et on sait que le sexe de 11 individus sur 344 (soit 3%) est inconnu. Pour le reste, il y a presque autant de femelles que de mâles.</p>
 <p>Le dernier bloc renseigne sur les variables numériques. Pour chaque d’elle, on a :</p>
 <ul>
 <li>le nom de la variable numérique (<code>skim_variable</code>)</li>
 <li>le nombre de données manquantes (<code>n_missing</code>) et le taux de “données complètes” (<code>complete_rate</code>)</li>
 <li>la moyenne (<code>mean</code>) et l’écart-type (<code>sd</code>), ce qui est une nouveauté par rapport à la fonction <code>summary()</code></li>
 <li>les valeurs minimales (<code>p0</code>), de premier quartile (<code>p25</code>), de second quartile (<code>p50</code>, c’est la médiane !), de troisième quartile (<code>p75</code>) et la valeur maximale (<code>p100</code>)</li>
-<li>un histogramme très simple qui donne un premier aperçu grossier de la forme de la distribution</li>
+<li>un histogramme très simple (<code>hist</code>) qui donne un premier aperçu grossier de la forme de la distribution</li>
 </ul>
 <p>Là encore, en un coup d’œil, on dispose donc de toutes les informations pertinentes pour juger de la distribution, de la position et de la dispersion de chaque variable numérique du jeu de données.</p>
 </section>
-<section id="tableau-groupé" class="level4" data-number="6.3.2.2">
-<h4 data-number="6.3.2.2" class="anchored" data-anchor-id="tableau-groupé"><span class="header-section-number">6.3.2.2</span> Tableau groupé</h4>
+<section id="tableau-groupé" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="tableau-groupé"><span class="header-section-number">6.4.2</span> Tableau groupé</h3>
 <p>La fonction <code>skim()</code>, déjà très pratique, le devient encore plus lorsque l’on choisit de lui fournir seulement certaines variables, et qu’on fait certains regroupements. Par exemple, on peut sélectionner les variables relatives aux dimensions du bec (<code>bill_length_mm</code> et <code>bill_depth_mm</code>) avec la fonction <code>select()</code> que nous connaissons déjà, et demander un résumé des données pour chaque espèce grâce à la fonction <code>group_by()</code> que nous connaissons également :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span>                     <span class="co"># Avec le tableau penguins...</span></span>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span>                     <span class="co"># Avec le tableau penguins...</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, </span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>         bill_length_mm,</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>         bill_depth_mm) <span class="sc">%&gt;%</span>      <span class="co"># Je sélectionne les variables d'intérêt...</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span>          <span class="co"># Je regroupe par espèce...</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()                         <span class="co"># Et je produis un résumé des données</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>         bill_depth_mm) <span class="sc">|&gt;</span>      <span class="co"># Je sélectionne les variables d'intérêt...</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span>          <span class="co"># Je regroupe par espèce...</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()                        <span class="co"># Et je produis un résumé des données</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Data summary</caption>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Name</td>
-<td style="text-align: left;">Piped data</td>
+<td style="text-align: left;">group_by(…)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Number of rows</td>
@@ -1136,7 +1182,7 @@ dplyr 1.1.0.
 <ul>
 <li>L’espèce Adélie est celle qui possède le bec le plus court (ses valeurs de moyennes, médianes et quartiles sont plus faibles que celles des 2 autres espèces).</li>
 <li>L’espèce Gentoo est celle qui possède le bec le plus fin, ou le moins épais (ses valeurs de moyennes, médianes et quartiles sont plus faibles que celles des 2 autres espèces)</li>
-<li>Il ne semble pas y avoir de fortes différences d’écarts-types (donc des dispersions des points autour des moyennes) entre les 3 espèces : pour chacune des 2 variables numériques, des valeurs d’écarts-types comparables sont en effet observées pour les 3 espèces</li>
+<li>Il ne semble pas y avoir de fortes différences d’écarts-types (donc, une dispersion comparable des points autour de leur moyenne respective) entre les 3 espèces : pour chacune des 2 variables numériques, des valeurs d’écarts-types comparables sont en effet observées pour les 3 espèces</li>
 <li>La distribution des 2 variables numériques semble approximativement suivre une distribution symétrique pour les 3 espèces, avec une forme de courbe en cloche. Les distributions devraient donc suivre à peu une distribution normale</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1149,13 +1195,13 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Vous comprenez j’espère l’importance d’examiner ce genre de résumé des données avant de vous lancer dans des tests statistiques. Ils sont un complément indispensable aux explorations graphiques que vous devez également prendre l’habitude de réaliser pour mieux appréhender et comprendre la nature de vos données. Puisque chaque jeu de données est unique, vous devrez vous adapter à la situation et aux questions scientifiques qui vous sont posées (ou que vous vous posez !) : les choix qui seront pertinents pour une situation ne le seront pas nécessairement pour une autre. Mais dans tous les cas, pour savoir où vous allez et pour ne pas faire de bêtise au moment des tests statistiques et de leur interprétation, <strong>vous devrez toujours explorer vos données, avec des graphiques exploratoires et des statistiques descriptives</strong>(.</p>
+<p>Vous comprenez j’espère l’importance d’examiner ce genre de résumé des données avant de vous lancer dans des tests statistiques. Ils sont un complément indispensable aux explorations graphiques que vous devez également prendre l’habitude de réaliser pour mieux appréhender et comprendre la nature de vos données. Puisque chaque jeu de données est unique, vous devrez vous adapter à la situation et aux questions scientifiques qui vous seront posées (ou que vous vous poserez !) : les choix qui seront pertinents pour une situation ne le seront pas nécessairement pour une autre. Mais dans tous les cas, pour savoir où vous allez et pour ne pas faire de bêtise au moment des tests statistiques et de leur interprétation, <strong>vous devrez toujours explorer vos données, avec des graphiques exploratoires et des statistiques descriptives</strong>(.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="sec-exo20" class="level3" data-number="6.3.3">
-<h3 data-number="6.3.3" class="anchored" data-anchor-id="sec-exo20"><span class="header-section-number">6.3.3</span> Exercice</h3>
+<section id="sec-exo20" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="sec-exo20"><span class="header-section-number">6.5</span> Exercice</h2>
 <p>En utilisant les fonctions de résumé abordées jusqu’ici et le tableau <code>weather</code>, répondez aux questions suivante :</p>
 <ol type="1">
 <li>Dans quel aéroport de New York les précipitations moyennes ont-elle été les plus fortes en 2013 ?</li>
@@ -1193,7 +1239,6 @@ Wickham, Hadley, Jim Hester, et Jennifer Bryan. 2023. <em>readr: Read Rectangula
 Wickham, Hadley, Davis Vaughan, et Maximilian Girlich. 2023. <em>tidyr: Tidy Messy Data</em>. <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a>.
 </div>
 </div>
-</section>
 </section>
 
 </main> <!-- /main -->

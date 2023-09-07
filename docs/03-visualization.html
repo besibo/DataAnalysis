@@ -235,6 +235,48 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./09-OneSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Comparaison de la moyenne d’une population à une valeur théorique</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-TwoSamplePairedTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-TwoSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-ANOVA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-Correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Régression linéaire</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-PropTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Comparaison de proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -263,7 +305,7 @@ div.csl-indent {
   <li><a href="#quel-graphique-dans-quelle-situation" id="toc-quel-graphique-dans-quelle-situation" class="nav-link" data-scroll-target="#quel-graphique-dans-quelle-situation"><span class="header-section-number">3.4</span> Quel graphique dans quelle situation ?</a></li>
   <li><a href="#une-seule-variable-numérique" id="toc-une-seule-variable-numérique" class="nav-link" data-scroll-target="#une-seule-variable-numérique"><span class="header-section-number">3.5</span> Une seule variable numérique</a>
   <ul class="collapse">
-  <li><a href="#les-histogrammes" id="toc-les-histogrammes" class="nav-link" data-scroll-target="#les-histogrammes"><span class="header-section-number">3.5.1</span> Les histogrammes</a></li>
+  <li><a href="#sec-histo" id="toc-sec-histo" class="nav-link" data-scroll-target="#sec-histo"><span class="header-section-number">3.5.1</span> Les histogrammes</a></li>
   <li><a href="#sec-cloud" id="toc-sec-cloud" class="nav-link" data-scroll-target="#sec-cloud"><span class="header-section-number">3.5.2</span> Les nuages de points et stripcharts</a></li>
   <li><a href="#sec-exo-4" id="toc-sec-exo-4" class="nav-link" data-scroll-target="#sec-exo-4"><span class="header-section-number">3.5.3</span> Exercices</a></li>
   </ul></li>
@@ -289,7 +331,7 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#sec-factorhisto" id="toc-sec-factorhisto" class="nav-link" data-scroll-target="#sec-factorhisto"><span class="header-section-number">3.9.1</span> Histogrammes “facettés”</a></li>
   <li><a href="#les-stripcharts" id="toc-les-stripcharts" class="nav-link" data-scroll-target="#les-stripcharts"><span class="header-section-number">3.9.2</span> Les stripcharts</a></li>
-  <li><a href="#les-boîtes-à-moustaches-ou-boxplots" id="toc-les-boîtes-à-moustaches-ou-boxplots" class="nav-link" data-scroll-target="#les-boîtes-à-moustaches-ou-boxplots"><span class="header-section-number">3.9.3</span> Les boîtes à moustaches ou boxplots</a></li>
+  <li><a href="#sec-boxplot" id="toc-sec-boxplot" class="nav-link" data-scroll-target="#sec-boxplot"><span class="header-section-number">3.9.3</span> Les boîtes à moustaches ou boxplots</a></li>
   </ul></li>
   <li><a href="#trois-variables-et-plus" id="toc-trois-variables-et-plus" class="nav-link" data-scroll-target="#trois-variables-et-plus"><span class="header-section-number">3.10</span> Trois variables (et plus !)</a>
   <ul class="collapse">
@@ -645,8 +687,8 @@ Objectifs
 <li>les nuages de points : la variable d’intérêt est placée sur l’axe des <code>y</code>. L’axe des <code>x</code> porte soit un simple numéro d’indice pour chaque observation, soit une unique valeur sans importance, la même pour toutes les observations.</li>
 </ol>
 <p>Les syntaxes et options pour ces 2 types de graphiques sont présentées ci-dessous.</p>
-<section id="les-histogrammes" class="level3" data-number="3.5.1">
-<h3 data-number="3.5.1" class="anchored" data-anchor-id="les-histogrammes"><span class="header-section-number">3.5.1</span> Les histogrammes</h3>
+<section id="sec-histo" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="sec-histo"><span class="header-section-number">3.5.1</span> Les histogrammes</h3>
 <section id="syntaxe-élémentaire" class="level4" data-number="3.5.1.1">
 <h4 data-number="3.5.1.1" class="anchored" data-anchor-id="syntaxe-élémentaire"><span class="header-section-number">3.5.1.1</span> Syntaxe élémentaire</h4>
 <p>Imaginons que l’on s’intéresse à la variable <code>body_mass_g</code> du jeu de données <code>penguins</code>.</p>
@@ -849,8 +891,8 @@ Important
 </div>
 <p>On voit ici que les masses varient de 2700 à 6300 grammes. Les classes que nous avons définies couvrent une plage de masses plus large (de 2500 à 6500). Toutes les données sont donc bien intégrées à l’histogramme.</p>
 </section>
-<section id="geom_rug-et-geom_density" class="level4" data-number="3.5.1.5">
-<h4 data-number="3.5.1.5" class="anchored" data-anchor-id="geom_rug-et-geom_density"><span class="header-section-number">3.5.1.5</span> <code>geom_rug</code> et <code>geom_density</code></h4>
+<section id="sec-density" class="level4" data-number="3.5.1.5">
+<h4 data-number="3.5.1.5" class="anchored" data-anchor-id="sec-density"><span class="header-section-number">3.5.1.5</span> <code>geom_rug</code> et <code>geom_density</code></h4>
 <p>La fonction <code>geom_histogram()</code> n’est pas la seule qui permette de visualiser la distribution des données. Il est en effet possible d’utiliser d’autres objets géométriques, en plus ou à la place de <code>geom_histogram()</code> pour ajouter de l’information sur le graphique, ou pour visualiser différemment la distribution des mêmes données.</p>
 <p>La fonction <code>geom_rug()</code> permet d’ajouter les données réelles sous forme de segments, sous un histogramme. Cela prend souvent l’aspect d’une sorte de tapis, d’où le nom de la fonction (“rug” signifie “tapis” en anglais). Pour ajouter une couche supplémentaire au graphique, on ajoute simplement un <code>+</code> à la fin de la dernière ligne, et sur la ligne suivante, on ajoute un objet géométrique supplémentaire :</p>
 <div class="cell">
@@ -1750,8 +1792,8 @@ Important
 </div>
 </div>
 </section>
-<section id="les-boîtes-à-moustaches-ou-boxplots" class="level3" data-number="3.9.3">
-<h3 data-number="3.9.3" class="anchored" data-anchor-id="les-boîtes-à-moustaches-ou-boxplots"><span class="header-section-number">3.9.3</span> Les boîtes à moustaches ou boxplots</h3>
+<section id="sec-boxplot" class="level3" data-number="3.9.3">
+<h3 data-number="3.9.3" class="anchored" data-anchor-id="sec-boxplot"><span class="header-section-number">3.9.3</span> Les boîtes à moustaches ou boxplots</h3>
 <p>Voilà à quoi ressemble un graphique de ce type pour les données qui nous intéressent (épaisseur des becs selon l’espèce) :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>

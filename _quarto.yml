@@ -20,6 +20,13 @@ book:
     - 06-EDA.qmd
     - 07-Incertitude.qmd
     - 08-ErrorBars.qmd
+    - 09-OneSampleTests.qmd
+    - 10-TwoSamplePairedTests.qmd
+    - 11-TwoSampleTests.qmd
+    - 12-ANOVA.qmd
+    - 13-Correlation.qmd
+    - 14-Regression.qmd
+    - 15-PropTests.qmd
     - references.qmd
 
 bibliography: all.bib

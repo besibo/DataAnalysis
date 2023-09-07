@@ -216,6 +216,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./09-OneSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Comparaison de la moyenne d’une population à une valeur théorique</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-TwoSamplePairedTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-TwoSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-ANOVA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-Correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Régression linéaire</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-PropTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Comparaison de proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -257,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#utiliser-.by-avec-dautres-fonctions" id="toc-utiliser-.by-avec-dautres-fonctions" class="nav-link" data-scroll-target="#utiliser-.by-avec-dautres-fonctions"><span class="header-section-number">5.9</span> Utiliser <code>.by</code> avec d’autres fonctions</a>
   <ul class="collapse">
-  <li><a href="#un-exemple-avec-filter" id="toc-un-exemple-avec-filter" class="nav-link" data-scroll-target="#un-exemple-avec-filter"><span class="header-section-number">5.9.1</span> Un exemple avec <code>filter()</code></a></li>
+  <li><a href="#sec-filterby" id="toc-sec-filterby" class="nav-link" data-scroll-target="#sec-filterby"><span class="header-section-number">5.9.1</span> Un exemple avec <code>filter()</code></a></li>
   <li><a href="#un-exemple-avec-mutate" id="toc-un-exemple-avec-mutate" class="nav-link" data-scroll-target="#un-exemple-avec-mutate"><span class="header-section-number">5.9.2</span> Un exemple avec <code>mutate()</code></a></li>
   </ul></li>
   <li><a href="#associer-plusieurs-tableaux-avec-left_join-et-inner_join" id="toc-associer-plusieurs-tableaux-avec-left_join-et-inner_join" class="nav-link" data-scroll-target="#associer-plusieurs-tableaux-avec-left_join-et-inner_join"><span class="header-section-number">5.10</span> Associer plusieurs tableaux avec <code>left_join()</code> et <code>inner_join()</code></a>
@@ -1679,9 +1721,9 @@ Lien avec les statistiques descriptives
 <section id="utiliser-.by-avec-dautres-fonctions" class="level2" data-number="5.9">
 <h2 data-number="5.9" class="anchored" data-anchor-id="utiliser-.by-avec-dautres-fonctions"><span class="header-section-number">5.9</span> Utiliser <code>.by</code> avec d’autres fonctions</h2>
 <p>Outre la fonction <code>summarise()</code>, de nombreuses autres fonctions du <code>tidyverse</code> possèdent un argument <code>.by</code>. C’est par exemple le cas des fonctions <code>filter()</code> et <code>mutate()</code> décrites plus haut, ou de la fonction <code>reframe()</code> que nous découvrirons dans la <a href="06-EDA.html#sec-reframe"><span>Section&nbsp;6.2</span></a>.</p>
-<section id="un-exemple-avec-filter" class="level3" data-number="5.9.1">
-<h3 data-number="5.9.1" class="anchored" data-anchor-id="un-exemple-avec-filter"><span class="header-section-number">5.9.1</span> Un exemple avec <code>filter()</code></h3>
-<p>Pour vous montrer à quel point cet argument peut-être utile dans d’autre contexte que celui du calcul de résumés statistiques, prenons un premier exemple. Imaginez que nous souhaitions identifier, dans le tableau <code>penguins</code>, les 10% des individus les plus lourds pour chaque espèce. Une première façon de faire serait de procéder espèce par espèce, en tapant ceci :</p>
+<section id="sec-filterby" class="level3" data-number="5.9.1">
+<h3 data-number="5.9.1" class="anchored" data-anchor-id="sec-filterby"><span class="header-section-number">5.9.1</span> Un exemple avec <code>filter()</code></h3>
+<p>Pour vous montrer à quel point cet argument peut-être utile dans d’autres contextes que celui du calcul de résumés statistiques, prenons un premier exemple. Imaginez que nous souhaitions identifier, dans le tableau <code>penguins</code>, les 10% des individus les plus lourds pour chaque espèce. Une première façon de faire serait de procéder espèce par espèce, en tapant ceci :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour l'espèce Adélie</span></span>
 <span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>adelie <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
@@ -2410,20 +2452,20 @@ Lien avec les statistiques descriptives
 <div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
-      r      s
-  &lt;int&gt;  &lt;dbl&gt;
-1    10 -0.680
-2     9 -0.218
-3     8  0.806</code></pre>
+      r       s
+  &lt;int&gt;   &lt;dbl&gt;
+1    10 -0.0586
+2     9 -0.118 
+3     8  1.82  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
-      x     y z         r      s
-  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;  &lt;dbl&gt;
-1     1     2 TRUE     10 -0.680
-2     2     4 FALSE     9 -0.218
-3     3     6 FALSE     8  0.806</code></pre>
+      x     y z         r       s
+  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;   &lt;dbl&gt;
+1     1     2 TRUE     10 -0.0586
+2     2     4 FALSE     9 -0.118 
+3     3     6 FALSE     8  1.82  </code></pre>
 </div>
 </div>
 <p>Ici, puisque <code>a</code> et <code>b</code> ont le même nombre de lignes, il est possible de les accoler. Cela n’a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.</p>

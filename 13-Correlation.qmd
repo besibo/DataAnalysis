@@ -1,0 +1,517 @@
+# Corrélation {#sec-correlation}
+
+
+## Pré-requis {#sec-packages5}
+
+Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez [le livre en ligne du semestre 3](https://besibo.github.io/BiometrieS3/01-R-basics.html#sec-code) si vous ne savez plus comment faire.
+
+Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser :
+
+- le `tidyverse` [@R-tidyverse], qui comprend notamment le package `readr` [@R-readr], pour importer facilement des fichiers `.csv` au format `tibble`, le package `dplyr` [@R-dplyr], pour manipuler des tableaux, et le package `ggplot2` [@R-ggplot2] pour les représentations graphiques.
+- `skimr` [@R-skimr], qui permet de calculer des résumés de données très informatifs.
+
+```{r}
+#| message: false
+#| warning: false
+#| results: false
+
+library(tidyverse)
+library(skimr)
+```
+
+Vous aurez également besoin des jeux de données suivants, qu'il vous faut donc télécharger dans votre répertoire de travail :
+
+- [`birds.csv`](data/birds.csv)
+- [`loups.csv`](data/loups.csv)
+- [`ropetrick.csv`](data/ropetrick.csv)
+
+
+```{r}
+theme_set(theme_bw())
+```
+
+## Principe
+
+Lorsque des variables numériques sont associées ont dit qu'elles sont **corrélées**. Par exemple, la taille du cerveau et la taille du corps sont corrélées positivement parmi les espèces de mammifères. Les espèces de grande taille ont tendance à avoir un cerveau plus grand et les petites espèces ont tendance à avoir un cerveau plus petit.
+Le coefficient de corrélation est la quantité qui décrit la force et la direction de l'association entre deux variables numériques mesurées sur un échantillon de sujets ou d'unités d'observation. La corrélation reflète la quantité de dispersion dans un nuage de points entre deux variables.  Contrairement à la régression linéaire, la corrélation n'ajuste aucune droite à des données et ne permet donc pas de mesurer à quel point le changement d'une variable entraîne un changement rapide ou lent de l'autre variable.
+
+Ainsi, sur la figure ci-dessous, le coefficient de corrélation entre `X` et `Y` est le même pour les deux  graphiques : il vaut 1.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-asp: 1
+#| fig-width: 3
+#| layout-ncol: 2
+
+ex1 <- tibble(x = 1:100,
+              y = 1:100,
+              z = 2*y)
+
+p1 <- ggplot(ex1, aes(x, y)) +
+  geom_point() +
+  ylim(0,200) +
+  geom_label(aes(x = 10, y = 200, label = "r = 1"))
+
+p2 <- ggplot(ex1, aes(x, z)) +
+  geom_point() +
+  ylim(0,200) +
+  geom_label(aes(x = 10, y = 200, label = "r = 1")) +
+  labs(y = "y")
+
+p1
+p2
+```
+
+Ici, le coefficient de corrélation (noté $r$) vaut 1 dans les deux cas, car tous les points sont alignés sur une droite. La pente de la droite n'influence en rien la valeur de corrélation. En revanche, le degré de dispersion des points autour d'une droite parfaite a une influence :
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-asp: 1
+#| fig-width: 3
+#| layout-ncol: 2
+
+set.seed(12345)
+ex2 <- tibble(x = 1:100,
+              y = 1:100,
+              z = 2*y + rnorm(100, 5, 15))
+
+p3 <- ggplot(ex2, aes(x, z)) +
+  geom_point() +
+  ylim(0,200) +
+  geom_label(aes(x = 10, y = 200, label = "r = 0.96")) +
+  labs(y = "y")
+
+p2
+p3
+```
+
+Plus la dispersion autour d'une droite parfaite sera grande, plus la corrélation sera faible. C'est la raison pour laquelle lorsque l'on parle de "corrélation", on sous-entend généralement **corrélation linéaire**. Ainsi, 2 variables peuvent avoir une relation très forte, mais un coefficient de corrélation nul, si leur relation n'est pas linéaire :
+
+```{r, echo = FALSE, warning = FALSE}
+set.seed(12345)
+ex3 <- tibble(x = 1:100,
+              y = -(x-50)^2 + 2500)
+
+ggplot(ex3, aes(x, y)) +
+  geom_point() +
+  geom_label(aes(x = 5, y = 2500, label = "r = 0.0"))
+```
+
+L'exploration graphique de vos données devrait donc toujours être une priorité. Calculer un coefficient de corrélation nul ou très faible ne signifie par pour autant une absence de relation entre les 2 variables numériques étudiées. Cela peut signifier une relation non linéaire. La solution la plus simple pour distinguer une relation telle que celle du graphique précédent, et une absence de relation telle que celle présentée dans le graphique ci-dessous, est l'examen visuel des données :
+
+```{r, echo = FALSE, warning = FALSE}
+set.seed(12346)
+ex4 <- tibble(x = rnorm(100, 50, 10),
+              y = rnorm(100, 50, 10))
+
+ggplot(ex4, aes(x, y)) +
+  geom_point() +
+  geom_label(aes(x = 5, y = 100, label = "r = 0.1")) +
+  xlim(0,100) + ylim(0,100)
+```
+
+
+En bref, le coefficient de corrélation $r$ est compris entre -1 et +1 :
+
+- Une forte valeur absolue ($r$ proche de -1 ou +1), indique une relation presque linéaire.
+- Une faible valeur absolue indique soit une absence de relation, soit une relation non linéaire (la visualisation graphique permet généralement d'en savoir plus).
+- Une valeur positive indique qu'une augmentation de la première variable est associée à une augmentation de la seconde variable.
+- Une valeur négative indique qu'une augmentation de la première variable est associée à une diminution de la seconde variable.
+
+:::{.callout-important}
+## Important
+
+Le coefficient de corrélation suppose une relation linéaire entre les deux variables numériques examinées. Calculer un coefficient de corrélation très faible peut indiquer :
+
+- une absence de relation entre les variables étudiées
+- une relation forte, mais non linéaire entre les variables étudiées
+
+La façon la plus simple de distinguer ces 2 cas de figure très différents est l'**exploration graphique des données**.
+:::
+
+Dans la suite de ce chapitre, nous allons voir comment calculer le coefficient de corrélation entre 2 variables numériques^[Vous aurez compris je pense qu'un calcul de corrélation n'a de sens que si l'on dispose de 2 variables numériques, enregistrées sur les mêmes individus ou unités d'étude. Voir détails à la fin de la @sec-import5], et puisque nous travaillons avec des **échantillons**, ce calcul sera nécessairement entaché d'**incertitude**. Tout comme la moyenne ou la variance d'un échantillon, la corrélation est un **paramètre** des populations dont nous ne pourrons qu'estimer la valeur. Toute estimation de corrélation devra donc être encadrée par un intervalle d'incertitude, généralement, il s'agit de l'intervalle de confiance à 95% de la corrélation. Enfin, outre l'estimation de la valeur de la corrélation et de son incertitude, nous pourrons aussi faire des tests d'hypothèses au sujet des corrélations que nous estimerons. En particulier, nous pourrons tester si la corrélation observée est significativement différente de zéro ou non.
+
+## Contexte
+
+Les adultes qui infligent des mauvais traitements à leurs enfants ont souvent été maltraités dans leur enfance. Une telle relation existe-t-elle également chez d'autres espèces animales, chez qui cette relation pourrait être étudiée plus facilement ? @muller2011 ont étudié cette possibilité chez le [fou de Grant (*Sula granti*)](https://fr.wikipedia.org/wiki/Fou_de_Grant), un oiseau marin colonial vivant entre autres aux Galápagos. Les jeunes laissés au nid sans attention parentale reçoivent fréquemment la visite d'autres oiseaux, qui se comportent souvent de manière agressive à leur encontre. Les chercheurs ont compté le nombre de ces visites dans le nid de 24 poussins dotés d'une bague d'identification individuelle. Ces 24 individus ont ensuite été suivis à l'âge adulte, lorsqu'ils sont à leur tour devenus parents. On cherche donc à savoir s'il existe un lien entre le nombre de visites agressives qu'un individu à reçu lorsqu'il était à l'état de poussin, et un degré d'agressivité mesuré à l'âge adulte.
+
+
+## Importation et mise en forme des données {#sec-import5}
+
+Les données récoltées par les chercheurs figurent dans le fichier [`birds.csv`](data/birds.csv). Importez ces données dans `RStudio` dans un objet noté `birds`.
+
+```{r echo = -1, message = FALSE, warning = FALSE}
+birds <- read_csv("data/birds.csv")
+birds
+```
+
+La première colonne de ce tableau indique, pour chaque individu suivi, le nombre de visites reçues au nid de la part d'adultes agressifs lorsqu'ils étaient poussins. La seconde colonne indique, pour ces mêmes individus devenus adultes, le nombre de visites agressives effectuées à des nids d'autres poussins. Ce nombre n'est pas dans la même unité que la première variable car il a été corrigé par d'autres variables d'intérêt pour les chercheurs.
+
+Il manque à ce tableau une variable indiquant le code des individus. Elle n'est pas indispensable, mais la rajouter est une bonne habitude à prendre pour toujours travailler avec des "données rangées". Puisqu'on dispose de 24 individus, on leur assigne donc un code de 1 à 24 :
+
+```{r}
+birds <- birds %>%
+  mutate(ID = factor(1:24))
+birds
+```
+
+Présentées sous cette forme, les données ressemblent beaucoup à celles du @sec-moy2. Ça n'est pas un hasard : les données dont nous disposons ici sont appariées. Calculer la corrélation entre 2 variables n'a de sens que si chaque unité d'échantillonnage ou d'observation (ici, les individus), fournissent 2 valeurs dont on souhaite mesurer l'association. Dans l'étude sur les effets de la testostérone chez les carouges à épaulettes, on avait, pour chaque individu étudié, 2 mesures d'immunocompétence : une avant et l'autre après l'opération chirurgicale. Ici, chaque Fou de Grant étudié fournit 2 valeurs également. Contrairement à l'étude des carouges à épaulettes, il s'agit de deux variables distinctes (nombre de visites agressives reçues à l'état de poussin d'une part, et comportement agressif à l'âge adulte d'autre part), mais les 2 mesures sont bien liées puisqu'elles sont obtenues chez le même individu.
+
+Pour bien enfoncer le clou, voici un autre exemple. Calculer la corrélation entre la taille des femmes françaises et la tension artérielle des femmes anglaises n'a strictement aucun sens car ce sont des groupes de femmes distincts qui fournissent les mesures de chaque variable. En revanche, sélectionner un groupe de femmes au hasard dans la population mondiale, et examiner, pour chacune des femmes de l'échantillon, à la fois la taille et la tension artérielle est pertinent. On peut alors se poser la question de lien potentiel existant entre ces 2 variables dans la population générale. L'étude de la corrélation entre la taille et la tension artérielle chez les femmes prend alors tout sons sens.
+
+:::{.callout-important}
+Calculer une corrélation n'a de sens que si les données étudiées sont appariées.
+:::  
+
+## Exploration statistique des données
+
+Comme toujours, la première chose à faire est d'examiner quelques statistiques descriptives pour se faire une idée de la forme des données et pour repérer les éventuelles données manquantes ou aberrantes.
+
+```{r, render = knitr::normal_print}
+skim(birds)
+```
+
+Outre le facteur `ID` que nous venons de créer, nous disposons donc de 2 variables numériques qui ne contiennent pas de données manquantes.
+
+1. La variable `nVisitsNestling`, qui indique le nombre de visites agressives reçues par les individus suivis lorsqu'ils étaient de jeunes poussins, varie de 1 à 31, pour une moyenne de 13.12, une médiane proche (13) mais un écart-type important.
+2. La variable `futureBehavior` varie de -0.92 à 0.39, avec une moyenne et une médiane proche de 0 (-0.12 et -0.1 respectivement).
+
+Comme toujours, la fonction `skim()` nous renseigne sur la tendance centrale, ou **position**, des variables étudiées (grâce aux moyennes et médianes) et sur la **dispersion** des données (grâce à l'écart-type et aux "minis-histogrammes"). Ici, si la variable `nVisitsNestling` semble être à peu près distribuée selon une courbe en cloche (asymétrique), ce n'est pas le cas de la variable `futureBehavior` qui semble présenter une très forte asymétrie à gauche.
+
+D'habitude, on calcule à ce stade des indices d'**incertitude** : l'erreur standard de la moyenne ou l'intervalle de confiance de la moyenne. Ici, ça n'est pas utile car les moyennes en elles-mêmes ne nous intéressent pas, et donc leurs incertitudes non plus. C'est en revanche la relation entre les 2 variables numériques qui nous intéresse, en particulier l'intensité et le sens de cette relation. On calcule donc maintenant le coefficient de corrélation linéaire entre les 2 variables :
+
+```{r}
+birds %>%
+  select(nVisitsNestling, futureBehavior) %>%
+  cor()
+```
+
+Le résultat est fourni sous la forme d'une matrice symétrique :
+
+- Sur la diagonale, les corrélations valent 1 (le coefficient de corrélation d'une variable avec elle-même vaut toujours 1).
+- En dehors de la diagonale, on trouve le coefficient de corrélation linéaire entre les 2 variables d'intérêt. Ici, il est positif et vaut 0.534, ce qui est une valeur relativement élevée dans le domaine de la biologie ou de l'écologie. Le signe positif de la corrélation indique que lorsque la première variable augmente, la seconde variable augmente également. Autrement dit, plus les fous de Grant ont été maltraités quand ils étaient poussins, plus ils adoptent un comportement agressif à l'âge adulte.
+
+## Exploration graphique des données
+
+Pour répondre à la question posée et visualiser la relation entre les deux variables numériques, on peut simplement associer chaque variable à un axe d'un graphique et faire un nuage de points. Je vous encourage à jeter un œil à [ce chapitre du livre en ligne du semestre 3](https://besibo.github.io/BiometrieS3/03-visualization.html#deux-variables-numériques) pour voir quels types de graphiques sont pertinents dans cette situation.
+
+Afin de savoir si la valeur de $r$ calculée précédemment dans notre échantillon (`r round(cor(birds$nVisitsNestling, birds$futureBehavior),3)`) reflète une relation linéaire mais moyenne, ou une relation qui n'est pas vraiment linéaire, nous pouvons donc faire un nuage de points :
+
+```{r}
+#| fig-cap: "Relation entre agressivité à l'âge adulte et nombre de visites agressives reçues par les poussins de l'espèce *Sula granti*"
+#| label: fig-rel
+
+
+birds %>%
+  ggplot(aes(x = nVisitsNestling, y = futureBehavior)) +
+  geom_point() +
+  labs(x = "Nombre de visites reçues par le poussin",
+       y = "Agressivité à l'âge adulte")
+```
+
+On constate ici que la corrélation moyenne obtenue plus haut est due au fait que les points sont assez dispersés, et non au fait que la relation n'est pas linéaire. On peut donc dire que la relation, si elle existe, n'est pas parfaite. Le comportement des individus devenus adultes semble donc en partie lié au nombre de visites agressives qu'ils ont reçues étant jeunes, mais ce n'est certainement pas le seul facteur influençant leur comportement. Un test d'hypothèses devrait nous permettre de déterminer si la corrélation linéaire observée ici est simplement le fruit du hasard de l'échantillonnage, ou si au contraire la relation observée n'est pas seulement le fruit du hasard, mais bien le reflet d'un lien réel entre les 2 variables.
+
+Si visualiser la distribution des données n'est pas indispensable pour se faire une idée de la nature du lien qui existe (ou non) entre les deux variables, cela sera néanmoins utile pour vérifier les conditions d'application du test de corrélations paramétrique de Pearson. Comme dans les chapitres précédents, nous avons donc intérêt à examiner la distribution de ces 2 variables par le biais d'histogrammes, de graphiques de densité ou de boîtes à moustaches. 
+
+```{r}
+#| layout-ncol: 2
+#| fig-width: 3
+#| fig-asp: 0.8
+
+
+birds %>% 
+  ggplot(aes(x = nVisitsNestling)) +
+  geom_density(fill = "firebrick2", alpha = 0.5) +
+  geom_rug() +
+  labs(x = "Visites reçues par le poussin",
+       y = "Densité")
+
+birds %>% 
+  ggplot(aes(x = futureBehavior)) +
+  geom_density(fill = "firebrick2", alpha = 0.5) +
+  geom_rug() +
+  labs(x = "Agressivité à l'âge adulte",
+       y = "Densité")
+```
+
+Aucune des 2 variables ne semble suivre parfaitement une distribution Normale. Il faudra réaliser des tests de normalité pour en avoir le cœur net.
+
+## Le test paramétrique
+
+### Les hypothèses
+
+Comme pour la plupart des grandeurs calculées à partir d'un échantillon, la corrélation $r$ n'est qu'un estimateur de la corrélation qui existe réellement entre ces deux variables dans la population générale. Dans la population générale, la corrélation linéaire est généralement notée $\rho$. Son estimateur, $r$ est donc souvent noté $\hat{\rho}$.
+
+Le test d'hypothèses que nous allons faire maintenant permet de vérifier si le coefficient de corrélation $\rho$ dans la population générale est différent de 0 ou non. Les hypothèses de ce test sont les suivantes :
+
+- H$_0$ : le coefficient de corrélation entre les deux variables étudiées vaut 0 dans la population générale ($\rho = 0$). Autrement dit, la corrélation observée dans l'échantillon n'est que le fruit du hasard de l'échantillonnage : il n'y a aucun lien entre les 2 variables dans la population générale.
+- H$_1$ : le coefficient de corrélation entre les deux variables étudiées est différent de 0 dans la population générale ($\rho \neq 0$). La fluctuation d'échantillonnage ne suffit pas à expliquer la corrélation observée : en plus du hasard de l'échantillonnage, il existe bel et bien un lien entre les 2 variables étudiées.
+
+Ce test est réalisé dans `RStudio` grâce à la fonction `cor.test()`, qui permet, selon les arguments renseignés, de réaliser soit :
+
+- le test de corrélation paramétrique de Pearson.
+- le test de corrélation non paramétrique de Spearman.
+
+### Conditions d'application {#sec-ca5}
+
+Comme toujours, on cherche à réaliser un test paramétrique (ici, le test de Pearson) si les données le permettent. Pour avoir le droit de réaliser le test de corrélation de Pearson, il nous faut donc en vérifier les conditions d'application :
+
+1. Les individus doivent être indépendants les uns des autres
+2. Les mesures effectuées doivent suivre une **distribution Normale bivariée**
+
+Comme toujours, sauf si on a de bonnes raisons de penser le contraire, on considère généralement que si l'échantillonnage a été fait de façon aléatoire, l'indépendance des observations est garantie. La condition de "distribution Normale bivariée" des données est en revanche nouvelle. Elle suppose essentiellement que les 3 critères suivants soient vérifiés :
+
+1. La relation entre les 2 variables doit être linéaire. C'est que nous tentons de vérifier visuellement en réalisant un nuage de points des données.
+2. Sur un graphique représentant une variable en fonction de l'autre, le nuage de points doit avoir une forme circulaire ou elliptique. Là encore, une représentation graphique nous permet d'apprécier cette condition.
+3. Les 2 variables étudiées doivent suivre une distribution Normale dans la population générale. Avant de faire ce test, il nous faut donc vérifier la Normalité des données pour chacune des 2 variables séparément, à l'aide, par exemple, d'un test de Shapiro-Wilk.
+
+Pour résumer, l'examen du nuage de points permet de vérifier les 2 premières conditions et 2 tests de Shapiro permettent de vérifier la troisième. Pour l'examen du nuage de points, les conditions ne seront pas remplies dans les situations suivantes (voir les exemples du graphique ci-dessous) :
+
+- Le nuage de points a une forme d'entonnoir ou de nœud papillon.
+- Des ouliers sont présents (quelques points fortement éloignés du reste des observations).
+- Une relation non linéaire existe entre les deux variables.
+
+```{r, echo = FALSE, warning = FALSE}
+#| echo: false
+#| warning: false
+
+library(patchwork)
+
+set.seed(12345)
+ex5 <- tibble(x = rnorm(100),
+              y = rnorm(100) * sort(runif(100, 0, 30)),
+              w = c(rnorm(99, 100, 10), 230),
+              z = -(x)^2 + rnorm(100, sd = 0.5))
+
+p4 <- ggplot(ex5, aes(sort(x), y)) +
+  geom_point() +
+  geom_label(aes(x = -1.8, y = 50, label = "Entonnoir")) +
+  theme_bw() +
+  theme(axis.ticks = element_blank(),
+        axis.text = element_blank()) +
+  labs(x = "x", y = "y")
+
+
+p5 <- ggplot(ex5, aes(sort(x), w)) +
+  geom_point() +
+  geom_label(aes(x = -1.8, y = 220, label = "Outlier")) +
+  theme_bw() +
+  theme(axis.ticks = element_blank(),
+        axis.text = element_blank()) +
+  labs(x = "x", y = "y")
+
+
+p6 <- ex5 %>%
+  arrange(x) %>%
+  ggplot(aes(x, z)) +
+  geom_point() +
+  geom_label(aes(x = 0, y = -5, label = "Non linéaire")) +
+  theme_bw() +
+  theme(axis.ticks = element_blank(),
+        axis.text = element_blank()) +
+  labs(x = "x", y = "y")
+
+p4 + p5 + p6 + plot_layout(ncol = 2)
+```
+
+Enfin, si l'une, l'autre ou les deux séries de données ne suivent pas la loi Normale, il faudra faire un test non paramétrique.
+
+Dans notre cas, le graphique @fig-rel semble indiquer que les 2 premières conditions d'application sont remplies (la relation entre les deux variable semble globalement linéaire et le nuage de points a globalement une forme elliptique). Il nous reste donc à vérifier la normalité des 2 variables. Les hypothèses nulles et alternatives du test de Shapiro-Wilk sont toujours les mêmes : 
+
+- $H_0$ : les données suivent une distribution Normale dans la population générale.
+- $H_1$ : les données ne suivent pas une distribution Normale dans la population générale.
+
+```{r}
+birds %>% 
+  pull(nVisitsNestling) %>% 
+  shapiro.test()
+```
+
+Contrairement à ce que pouvait laisser croire le graphique de densité, la variable `nVisitsNestling` suit bien une distribution Normale (test de Shapiro-Wilk, $p = 0.397$).
+
+```{r}
+birds %>% 
+  pull(futureBehavior) %>% 
+  shapiro.test()
+```
+
+En revanche, au seuil $\alpha = 0.05$, la variable `futureBehavor` ne suit pas une distribution Normale (test de Shapiro-Wilk, $p = 0.047$). 
+
+Les conditions d'application ne sont pas vérifiées. En toute rigueur, il nous faudrait donc réaliser ici le test non-paramétrique de Spearman. Nous verrons comment le faire plus tard. Pour l'instant, et pour que vous sachiez comment faire, nous allons faire comme si les conditions d'application du tests paramétrique étaient bel et bien remplies, et nous allons donc réaliser le test paramétrique de Pearson.
+
+
+### Réalisation du test et interprétation
+
+La syntaxe du test est très simple :
+
+```{r}
+cor.test(birds$nVisitsNestling, birds$futureBehavior)
+```
+
+Comme expliqué plus haut (et sur la première ligne des résultats du test), il s'agit du **test paramétrique de corrélation de Pearson**. Comme pour tous les tests examinés jusqu'ici, les premières lignes des résultats fournissent toutes les informations utiles au sujet du test. Ici, on peut dire :
+
+> Au seuil $\alpha = 0.05$, le test de corrélation de Pearson a permis de rejeter l'hypothèse nulle selon laquelle le nombre de visites agressives au nid des poussins et leur futur comportement agressif sont indépendants ($t = 2.96$, $ddl = 22$, $p = 0.007$).
+
+Ce test prouve donc que $\rho$ est significativement différent de 0. La valeur de 0.53 observée ici n'est pas due au seul hasard de l'échantillonnage.
+
+Comme toujours, les résultats du test que nous avons réalisé ne nous disent rien de la valeur de la corrélation estimée, ni de son incertitude. Il nous faut pour cela examiner les autres lignes fournies par `RStudio` lorsque nous faisons ce test et qui relèvent de l'estimation (voir section suivante).
+
+Dernière chose concernant ce test, nous avons fait ici un test bilatéral comme nous le rappelle cette ligne des résultats :
+
+`alternative hypothesis: true correlation is not equal to 0`
+
+Comme pour les tests de comparaisons de moyennes, il est possible de réaliser un test unilatéral, à condition que cela ait un sens, à condition que nous soyons en mesure d'expliquer le choix de notre hypothèse alternative. La syntaxe est la même que pour les tests de Student ou de Wilcoxon : on utilise l'argument `alternative = "less"` ou `alternative = "greater"` au moment de faire le test, selon l'hypothèse que l'on souhaite tester.
+
+Ici, si les hypothèses que nous souhaitons tester sont les suivantes :
+
+- H$_0$ : le coefficient de corrélation entre les deux variables étudiées vaut 0 dans la population générale ($\rho = 0$)
+- H$_1$ : le coefficient de corrélation entre les deux variables étudiées est positif dans la population générale ($\rho > 0$)
+
+On utilise la syntaxe suivante :
+
+```{r}
+cor.test(birds$nVisitsNestling, birds$futureBehavior,
+         alternative = "greater")
+```
+
+Comme pour les autres test unilatéraux, le choix d'une hypothèse alternative aberrante se traduit par une $p-$value très forte, généralement égale à (ou très proche de) 1. Dans le cas précis de cette étude, il serait abusif de faire un tel test unilatéral. En effet, les scientifiques suppose que si un lien existe entre les deux variables, la corrélation devrait être positive. Mais avoir observé une relation de cette nature chez d'autres espèces (qui plus est, chez des espèces très différentes) n'est pas suffisant. Car peut-être qu'une relation inverse peut également être observée dans d'autres groupes, et on peut très bien imaginer des mécanismes permettant de l'expliquer. Enfin, avoir observé une corrélation positive dans notre échantillon lors de l'examen préliminaire des données n'est jamais une raison suffisante pour choisir une hypothèse alternative unilatérale. Le choix des hypothèses devrait en effet toujours être effectué avant la collecte des données (voir @sec-bilat). Il est donc bien plus honnête de réaliser un test unilatéral, puis, en cas de rejet de $H_0$, de revenir aux estimation pour interpréter les résultats et conclure. C'est que nous allons voir maintenant.
+
+### Estimation et intervalle de confiance
+
+Revenons à notre test bilatéral. La section "estimation" des résultats de ce test nous indique que la meilleure estimation du coefficient de corrélation linéaire de Pearson dans la population générale vaut $\hat{\rho} = 0.533$. C'est la valeur que nous avions calculé à la main avec la fonction `cor()`.
+
+L'intervalle de confiance à 95% de cette valeur estimée est également fourni. La conclusion de cette procédure pourrait donc être formulée de la façon suivante :
+
+> Au seuil $\alpha = 0.05$, le test de corrélation de Pearson a permis de rejeter l'hypothèse nulle selon laquelle le nombre de visites agressives au nid des poussins et leur futur comportement agressif sont indépendants ($t = 2.96$, $ddl = 22$, $p = 0.007$). La meilleure estimation du coefficient de corrélation dans la population générale vaut $\hat{\rho} = 0.533$. La vraie valeur dans la population générale a de bonnes chances de se trouver dans l'intervalle [0.17 ; 0.77] (intervalle de confiance à 95%).
+
+Autrement dit, le test a permis de rejeter l'hypothèse nulle et d'affirmer que les 2 variables sont corrélées. L'estimation du coefficient de corrélation et de son intervalle de confiance nous permettent de préciser le sens de cette relation (positive ou négative) et quantifier l'intensité de cette relation. Ici, la relation est bien positive : plus un individu est exposé à des comportements agressif au stade de poussin, plus il aura tendance à reproduire de tels comportements à l'âge adulte. L'incertitude associé à cette estimation de coefficient de corrélation est très grande (IC95% : [0.17 ; 0.77]). Un échantillonnage plus large permettrait de le réduire. Mais les études de ce type sont très coûteuses, notamment en temps, et on est souvent obligé de se contenter des données dont on dispose. La vraie corrélation entre ces 2 variables pourrait donc être relativement faible dans la population générale (0.17), laissant supposer que l'agressivité à l'âge adulte est finalement peu liée à l'agressivité à laquelle les poussins ont été exposés. Mais elle pourrait aussi être très forte (0.77), laissant supposer que l'agressivité à l'âge adulte est fortement liée à l'exposition des poussins à des comportement agressif. On voit bien ici que le seul test de corrélation ne permet pas de trancher dans l'absolu. Tout ce que fait un test, c'est dire si oui ou non on dispose d'assez de preuve pour affirmer qu'une hypothèse nulle est fausse. Le reste de l'interprétation dépend de l'estimation des paramètres de la population générale et de leur incertitude. Quand l'incertitude est faible, on peut être assez affirmatif. Mais quand elle est forte, comme ici, il faut rester prudent quant aux interprétations possibles.
+
+## Corrélation et causalité
+
+### Quelques exemples évidents
+
+On entend souvent que "**Corrélation n'est pas causalité**". Cela signifie que la corrélation ne mesure qu'un lien entre 2 variables, mais pas nécessairement que les variations de la première influencent celles de la deuxième. En réalité, si on dispose d'un nombre de variables suffisamment grand, on pourra toujours en trouver 2 qui sont fortement corrélées, sans qu'il n'y ait la moindre relation de causalité entre les deux.
+
+Par exemple, le nombre de morts par noyade aux états unis est corrélé à 66% ($r = 0.66$) avec le nombre de films dans lesquels Nicolas Cage joue chaque année. L'un n'est certainement pas la cause de l'autre. De même, le nombre de doctorats accordés chaque année dans le domaine du génie civil est corrélé à 96% ($r = 0.959$) avec la consommation de mozzarella. Là encore, on ne voit pas bien quelle relation de cause à effet pourrait exister entre ces 2 variables. Ces exemples (et de nombreux autres) peuvent être retrouvés, chiffres à l'appui, [sur ce site web](https://www.tylervigen.com/spurious-correlations).
+
+Pour ces exemples extrêmes, il est évident que la corrélation ne doit pas être interprétée comme une relation de cause à effet. Deux variables fortement corrélées sont simplement deux variables qui varient conjointement, dans le même sens (si la corrélation est positive) ou dans le sens opposé (si la corrélation est négative). 
+
+### Les variables confondantes
+
+Dans certaines situations, il est pourtant tentant de parler de causalité. Par exemple, à la fin des année 1990, des scientifiques ont montré, dans une étude tout à fait sérieuse, que dans les villes de France où l'on consomme le plus de crème solaire, la prévalence des cancers de la peau est également la plus forte. Certains journaux de vulgarisation scientifique se sont empressés de reprendre ce résultat (une corrélation positive entre utilisation de crème solaire et prévalence des mélanomes), et de conclure, à tort, que la crème solaire contribuait donc à donner le cancer de la peau. Pourtant, "corrélation n'est pas causalité" ! Une variable importante, pourtant évoquée dans l'article scientifique, est restée ignorée des journalistes scientifiques de l'époque : l'exposition au soleil. En effet, dans les villes où l'exposition au soleil est la plus forte (les villes de la côte méditerranéenne par exemple), on met en moyenne plus de crème solaire qu'ailleurs, mais on développe aussi plus de mélanomes qu'ailleurs. À l'inverse, dans les villes les moins ensoleillées de France, on utilise beaucoup moins de crème solaire, mais on développe aussi beaucoup moins de mélanomes, simplement parce qu'on est moins exposé au risque.
+
+Dans ce dernier exemple, la variable `exposition au soleil` est une **variable confondante** (ou "confounding variable" en anglais). C'est elle qui cause à la fois l'augmentation de la prévalence des mélanomes, et l'augmentation de l'utilisation de crème solaire. On a donc bien 2 relations de causalité, mais pas entre les variables que l'on étudie. La corrélation que l'on observe entre `prévalence des mélanomes` et `utilisation de crème solaire` n'est que la conséquence des relations de causalité avec la variable confondante.
+
+La difficulté est ici que l'on ne peut pas savoir à l'avance quelle variable confondante pourrait venir influencer les variables que nous mesurons. Dans le cas de l'agressivité du fou de Grant, des traits génétiques particuliers pourraient par exemple expliquer le lien que nous observons entre nos 2 variables. Imaginons par exemple que la présence de certains allèle dans le génome des individus soit responsables à la fois d'une plus grande agressivité à l'âge adulte, et d'une plus grande autonomie lorsqu'ils sont jeunes. Des poussins possédant ces allèles seront plus autonomes que d'autres, il seront donc laissés plus souvent seuls par leurs parents, ce qui les exposera à des visites plus fréquentes d'adultes agressifs. Sous cette hypothèse, les 2 variables que nous avons étudiées ne sont liées entre elles que parce qu'il existe une relation de causalité entre les traits génétique des individus et chacune des 2 variables étudiées. C'est la raison pour laquelle, lorsque j'ai décrit les résultats de nos tests et des analyses descriptives, j'ai bien fait attention à ne pas dire que les visites agressives auprès des poussins étaient la cause de l'agressivité future des adultes. Je me suis contenté de dire que les variables étaient liées, et que plus un poussin reçoit de visites agressives, plus il aura lui même un comportement agressif à l'âge adulte. Prouver que l'un est la cause de l'autre, ou que l'autre est la conséquence de l'un est impossible avec ce type d'étude.
+
+### Études expérimentales ou observationnelles
+
+Les exemples que nous venons d'aborder concernent tous des études dîtes **observationnelles**. À l'inverse des études **expérimentales**, dans lesquels l'expérimentateur a un certain contrôle des variables confondantes potentielles, ça n'est presque jamais le cas des études observationnelles. Dans l'exemple des fous de Grant, les scientifiques n'ont fait qu'observer des comportements dans une population naturelle. Ils n'ont pas eu la possibilité de vérifier en amont que tous les individus suivis avaient des gènes "normaux" vis-à-vis de l'agressivité. Dans le cas de l'étude sur la crème solaire, les chercheurs n'ont fait qu'observer ce qui se passe à plusieurs endroits de France. Ils n'ont pas pu s'assurer que l'ensoleillement était le même dans toutes les villes sur laquelle a porté cette étude.
+
+Les études expérimentales sont les seules à permettre d'établir des relations de cause à effet. C'est comme cela que par exemple, on peut affirmer qu'un vaccin est efficace ou non contre tel ou tel virus, ou à l'inverse qu'il présente tel ou tel effet secondaire. Pour tester l'efficacité d'un vaccin vis-à-vis d'un virus spécifique, on met en place une étude expérimentale dite "en double aveugle". Dans la population générale, on va constituer 2 échantillons de patients atteints par le virus. On administrera ensuite le vaccin à l'un des deux groupes, alors qu'on distribuera un placebo (le même vaccin mais sans son composé actif) à l'autre groupe, dans les mêmes conditions. L'étude est "en double aveugle", car les patients ne savent pas s'ils reçoivent le vaccin actif ou inactif, et les médecins qui administrent le traitement non plus. Cela a pour but de contrôler l'effet placebo. 
+
+Dans ces études, la façon dont les 2 groupes de patients sont constitués est sous le contrôle des expérimentateurs. Pour pouvoir établir des relations de causalité (entre administration du vaccin et guérison par exemple) ils doivent s'assurer que les groupes présentent les mêmes caractéristiques vis-à-vis de toutes les variables confondantes potentielles. Par exemple, on peut supposer que les hommes et les femmes ne réagissent pas de la même façon face au virus, ou face au vaccin. Ainsi, placer tous les hommes dans le premier groupe, et toutes les femmes dans le second groupe, serait évidemment une erreur. Car si le premier groupe guérit plus vite, comment peut-on être sûr de la cause de cette guérison ? Le premier groupe a-t-il guérit plus vite parce qu'il était constitué d'hommes, ou parce que les individus ont reçu le vaccin ? Puisque le sexe des individus est une variable confondante potentielle, il est important de répartir équitablement hommes et femmes dans les deux groupes. Et il en va de même pour énormément de variables confondantes potentielles : sexe des individus, âge, niveau d'études, revenu moyen, catégorie socio-professionnelle, etc. Ça n'est qu'en s'assurant que les 2 groupes sont homogènes vis-à-vis de l'ensemble de ces facteurs que les différences éventuelles qui seront observées à l'issue de l'expérience pourront être attribuées sans le moindre doute au traitement étudié : ici, l'administration du vaccin.
+
+Dans le domaine de l'écologie, la plupart des études sont observationnelles, et elles permettent au mieux d'établir des corrélations, des liens entre variables, mais beaucoup plus rarement des liens de causalité formels. Il est toutefois souvent possible, après avoir observé un lien entre variables dans le milieu naturel, de mettre au point des expériences (donc des études expérimentales) permettant de tester des hypothèses précises, y compris des relations de causalité. 
+
+Par exemple, dans le milieu marin, en particulier littoral, l'apparition d'[imposex](https://fr.wikipedia.org/wiki/Imposex) chez certains mollusques^[apparitions d'organes génitaux mâles chez des femelles saines par ailleurs] a pu être associé à la présence de tributylétain (TBT) à l'état de trace dans l'eau de mer> lorsque ce phénomène a été décelé, il était impossible d'affirmer que le TBT causait l'apparition d'imposex ; il n'y avait qu'une corrélation. Ça n'est que dans un second temps qu'une étude expérimentale en milieu contrôlé a permis d'établir un lien de causalité. Deux groupes de mollusques identiques en tous points sont placés dans différents bassins. On répartit ensuite de façon aléatoire les bassins en plusieurs lots, et chaque lot de bassin se voit attribuer un traitement : absence de TBT, TBT à la concentration X, TBT à la concentration Y, etc. C'est ce type d'étude expérimentale qui a permis d'établir avec certitude le caractère de perturbateur endocrinien du TBT, de prouver que l'imposex des mollusques pouvait être causé par le TBT, et de connaitre les concentrations à partir desquelles les effets apparaissent.
+
+
+:::{.callout-warning}
+## Important
+
+**Corrélation n'est pas causalité**. Les études observationnelles ne peuvent (presque) jamais établir de lien de causalité formel entre variables. Au mieux, elles peuvent constater que des variables varient conjointement, dans le même sens ou en un sens opposé.
+
+Seules les études expérimentales, dans lesquelles toutes les variables confondantes potentielles sont contrôlées, sont susceptibles de faire apparaître de véritables relations de cause à effet.
+:::
+
+
+## L'alternative non paramétrique
+
+Quand les conditions d'application du test de corrélation de Pearson ne sont pas remplies (ce qui était le cas ici, voir @sec-ca5), il faut faire un test équivalent non paramétrique. Le test utilisé le plus fréquemment dans cette situation est le test du $\rho$ de Spearman ($\rho$ est la lettre grecque "rho", et non la lettre "p"). On l'effectue comme le test de Pearson en précisant simplement un argument supplémentaire : `method = "spearman"` (sans majuscule) :
+
+```{r}
+cor.test(birds$nVisitsNestling, birds$futureBehavior,
+         method = "spearman")
+```
+
+Le test de Spearman est au test de Pearson ce que le test de Wilcoxon est au test de Student, ou ce que le test de Kruskal-Wallis est à l'ANOVA. Il travaille non pas sur les données brutes (ici, les mesures des scientifiques), mais sur des données modifiées, en l'occurrence, sur les rangs des données. La première conséquence évidente est une perte de puissance notable par rapport au test de Pearson. Cette perte de puissance peut être ici observée par le biais de la $p-$value plus élevée (donc moins significative) que pour le test précédent. Cela indique que même si la conclusion est la même, on rejette ici l'hypothèse nulle avec moins de confiance que pour le test de Pearson.
+
+Le $\rho$ de Spearman est équivalent au $r$ de Pearson calculé sur les rangs des données. Lorsque plusieurs valeurs observées sont égales, plusieurs valeurs ont le même rang, ce qui cause l'apparition du message d'avertissement suivant :
+
+`Impossible de calculer la p-value exacte avec des ex-aequos`
+
+Ce message est sans conséquence tant que la $p-$value du test de Spearman est éloignée du seuil $\alpha$ (ce qui est le cas ici). Mais quand $p \approx \alpha$, il faut être particulièrement prudent quant à l'interprétation qui est faite des résultats.
+
+Enfin, comme pour le test de Pearson, il est possible de réaliser un test de Spearman unilatéral en utilisant l'argument `alternative = "less"` ou `alternative = "greater"`. Les précautions à prendre pour utiliser ce genre de test sont toujours les mêmes.
+
+
+## Exercices
+
+### *Canis lupus*
+
+En 1970, le loup *canis lupus* a été éradiqué en Norvège et en Suède. Autour de 1980, un couple de loups, originaire d'une population plus à l'Est, a fondé une nouvelle population en Suède. En l'espace de 20 ans, cette population comptait approximativement 100 loups. Il y a toutefois fort à craindre qu'une population fondée par un si petit nombre d'individus souffre de consanguinité. @liberg2005 ont compilé les informations sur la reproduction dans cette population entre 1983 et 2002, et ils ont pu reconstruire le pédigrée des individus la composant. Ils ont ainsi été en mesure de déterminer avec précision le coefficient individuel de consanguinité dans 24 portées de louveteaux.
+Pour mémoire, le coefficient individuel de consanguinité vaut 0 si ses parents ne sont pas apparentés, 0.25 si ses parents sont frères et sœurs issus de grands-parents non apparentés, et plus de 0.25 si les associations consanguines se répètent depuis plusieurs générations.
+
+On souhaite déterminer si le coefficient de consanguinité est associé à la probabilité de survie des jeunes durant leur premier hiver. Les données de @liberg2005 sont disponibles dans le fichier [`loups.csv`](data/loups.csv). La première colonne contient les coefficients de consanguinité et la seconde, le nombre de jeunes de chaque portée ayant survécu à leur premier hiver. Vous analyserez ces données en suivant l'ordre des étapes décrites plus haut. En particulier, vous prendrez soin de :
+
+- Vérifier la qualité des données.
+- Mettre les données dans un format approprié si besoin.
+- Réaliser une exploration statistique puis visuelle des données.
+- Vérifier les conditions d'application d'un test paramétrique.
+- Faire le test approprié en posant les hypothèses nulles et alternatives judicieuses.
+- Répondre à la question posée en intégrant tous les éléments utiles.
+
+```{r include=FALSE, render = knitr::normal_print}
+loups <- read_csv("data/loups.csv")
+loups %>%
+  ggplot(aes(x = inbreedCoef, y = nPups)) +
+  geom_point()
+
+skim(loups)
+loups %>%
+  pull(inbreedCoef) %>%
+  shapiro.test
+
+loups %>%
+  pull(nPups) %>%
+  shapiro.test
+
+cor.test(loups$inbreedCoef, loups$nPups)
+```
+
+
+### Les miracles de la mémoire
+
+À quel point les souvenirs d'évènements miraculeux sont-il fiables ? Une façon d'étudier cette question est de comparer différents récits de tours de magie extraordinaires. Parmi les tours célèbres, on trouve celui de la corde du fakir. Dans l'une de ses versions, un magicien jette l'extrémité d'une corde d'apparence normale en l'air et cette corde devient rigide. Un garçon grimpe à la corde et finit par disparaître en haut de la scène. Le magicien lui demande de répondre mais n'obtient pas de réponse. Il attrape alors un couteau, grimpe à son tour, et le garçon, découpé en morceaux, tombe du ciel dans un panier posé par terre. Le magicien redescend de la corde et aide le garçon vivant, en un seul morceau et non blessé, à sortir du panier.
+
+@wiseman1996 ont retrouvé 21 récits écrits de ce tour par des personnes ayant elles-mêmes assisté à ce tour. Ils ont attribué un score à chaque description selon le caractère plus ou moins impressionnant de la description. Par exemple, un score de 1 était attribué si le récit faisait état que "le garçon grimpe à la corde, puis il en redescend". Les récits les plus impressionnants se sont vus attribuer la note de 5 ("le garçon grimpe, disparaît, est découpé en morceaux et réapparaît en chair et en os devant le public").
+Pour chaque récit, les chercheurs ont également enregistré le nombre d'années écoulées entre le moment où le témoin a assisté au tour de magie, et le moment où il a consigné son récit par écrit.
+
+Y a-t-il un lien entre le caractère impressionnant ("`impressiveness`") d'un souvenir et le temps écoulé jusqu'à l'écriture de sa description ("`years`") ? Si oui, cela pourrait indiquer une tendance de la mémoire humaine à exagérer et à perdre en précision avec le temps.
+
+Les données de @wiseman1996 sont disponibles dans le fichier [`ropetrick.csv`](data/ropetrick.csv). Importez ces données et analysez-les en respectant les consignes de l'exercice précédent.
+
+```{r include=FALSE, render = knitr::normal_print}
+rope <- read_csv("data/ropetrick.csv")
+rope %>%
+  ggplot(aes(x = years, y = impressiveness)) +
+  geom_point()
+
+skim(rope)
+rope %>%
+  pull(years) %>%
+  shapiro.test
+
+rope %>%
+  pull(impressiveness) %>%
+  shapiro.test
+
+cor.test(rope$impressiveness, rope$years,
+         method = "spearman")
+```
+
