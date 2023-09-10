@@ -169,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-R-basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R et RStudio : les bases</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><code>R</code> et <code>RStudio</code> : les bases</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -1272,7 +1272,7 @@ Lien avec les statistiques descriptives
 </div>
 </div>
 <p>La <a href="#fig-summarise2">Figure&nbsp;<span>5.12</span></a> ci-dessus indique comment travaille la fonction <code>summarise()</code> : elle prend plusieurs valeurs (potentiellement, un très grand nombre) et les réduit à <strong>une unique valeur qui les résume</strong>. La valeur qui résume les données est choisie par l’utilisateur. Il peut s’agir par exemple d’un calcul de moyenne, de quartile ou de variance, il peut s’agir de calculer une somme, ou d’extraire la valeur maximale ou minimale, ou encore, il peut tout simplement s’agir de déterminer un nombre d’observations. Mais le fonctionnement est toujours le même : la fonction <code>summarise()</code> ne renvoie qu’une unique valeur pour une variable donnée (ou pour chaque modalité d’une variable catégorielle).</p>
-<p>Ainsi, pour connaître la moyenne de la longueur du bec des manchots de l’île de Palmer, il suffit d’utiliser le tableau <code>penguins</code> du package <code>palmerpenguins</code> et sa variable <code>bill_length_mm</code> que nous avons déjà utilisée au semestre 3 :</p>
+<p>Ainsi, pour connaître la moyenne de la longueur du bec des manchots de l’île de Palmer, il suffit d’utiliser le tableau <code>penguins</code> du package <code>palmerpenguins</code> et sa variable <code>bill_length_mm</code> que nous avons déjà utilisée plus tôt :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(bill_length_mm))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2454,18 +2454,18 @@ Lien avec les statistiques descriptives
 <pre><code># A tibble: 3 × 2
       r       s
   &lt;int&gt;   &lt;dbl&gt;
-1    10 -0.0586
-2     9 -0.118 
-3     8  1.82  </code></pre>
+1    10 -1.01  
+2     9  0.205 
+3     8  0.0140</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
       x     y z         r       s
   &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;   &lt;dbl&gt;
-1     1     2 TRUE     10 -0.0586
-2     2     4 FALSE     9 -0.118 
-3     3     6 FALSE     8  1.82  </code></pre>
+1     1     2 TRUE     10 -1.01  
+2     2     4 FALSE     9  0.205 
+3     3     6 FALSE     8  0.0140</code></pre>
 </div>
 </div>
 <p>Ici, puisque <code>a</code> et <code>b</code> ont le même nombre de lignes, il est possible de les accoler. Cela n’a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.</p>
