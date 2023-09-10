@@ -10,11 +10,12 @@ Nous avons ici besoin des packages suivants :
 
 library(tidyverse)
 library(palmerpenguins)
-library(nycflights13)
 library(scales)
 ```
 
 Pensez à les charger en mémoire si ce n'est pas déjà fait ou si vous venez de démarrer une nouvelle session de travail.
+
+Le package `scales` [@R-scales] contient de très nombreuses fonctions particulièrement utiles pour améliorer l'aspect des légendes d'axes (par exemple, pour transformer des chiffres compris entre 0 et 1 en pourcentages, ou pour ajouter le symbole d'une devise quand l'axe renseigne sur des montants en euros ou dollars par exemple).
 
 
 ## La notion de dispersion
@@ -108,7 +109,7 @@ Vous remarquerez que :
 2. J'associe la couleur de remplissage à l'espèce, bien que ça ne soit pas indispensable puisque je fais un sous-graphique par espèce. Cela rend toutefois le graphique plus agréable et en facilite la lecture.
 3. Je modifie 3 échelles :
   - avec `scale_fill_brewer()`, je change la palette de couleur utilisée pour le remplissage des barres
-  - avec `scale_y_continuous()`, je modifie l'échelle (continue) de l'axe des ordonnées. Je fais appel à la fonction `number_format()` du package `scales` afin d'ajouter un séparateur des milliers aux chiffres de l'axe. Le package `scales` contient de très nombreuses fonctions particulièrement utiles pour améliorer l'aspect des légendes d'axes (par exemple, pour transformer des chiffres compris entre 0 et 1 en pourcentages, ou pour ajouter le symbole d'une devise quand l'axe renseigne sur des montants en euros ou dollars par exemple)
+  - avec `scale_y_continuous()`, je modifie l'échelle (continue) de l'axe des ordonnées. Je fais appel à la fonction `number_format()` du package `scales` afin d'ajouter un séparateur des milliers aux chiffres de l'axe.
   - avec `scale_x_discrete()`, le modifie les termes qui apparaissent sur l'axe des abscisses (qui est un axe discontinu, ou catégoriel, ou discret). Les catégories `female` et `male` de la variable `sex` du tableau `penguins` sont transformées en `Femelles` et `Mâles` respectivement
 
 Puisque chaque barre de la @fig-meanmass correspond à une valeur de moyenne, il nous faut présenter également **l'incertitude associée à ces calculs de moyennes**. Pour cela, nous devons calculer l'erreur standard des moyennes :

@@ -330,7 +330,7 @@ div.csl-indent {
   <li><a href="#une-variable-de-chaque-type" id="toc-une-variable-de-chaque-type" class="nav-link" data-scroll-target="#une-variable-de-chaque-type"><span class="header-section-number">3.9</span> Une variable de chaque type</a>
   <ul class="collapse">
   <li><a href="#sec-factorhisto" id="toc-sec-factorhisto" class="nav-link" data-scroll-target="#sec-factorhisto"><span class="header-section-number">3.9.1</span> Histogrammes “facettés”</a></li>
-  <li><a href="#les-stripcharts" id="toc-les-stripcharts" class="nav-link" data-scroll-target="#les-stripcharts"><span class="header-section-number">3.9.2</span> Les stripcharts</a></li>
+  <li><a href="#sec-factorstrip" id="toc-sec-factorstrip" class="nav-link" data-scroll-target="#sec-factorstrip"><span class="header-section-number">3.9.2</span> Les stripcharts</a></li>
   <li><a href="#sec-boxplot" id="toc-sec-boxplot" class="nav-link" data-scroll-target="#sec-boxplot"><span class="header-section-number">3.9.3</span> Les boîtes à moustaches ou boxplots</a></li>
   </ul></li>
   <li><a href="#trois-variables-et-plus" id="toc-trois-variables-et-plus" class="nav-link" data-scroll-target="#trois-variables-et-plus"><span class="header-section-number">3.10</span> Trois variables (et plus !)</a>
@@ -1755,8 +1755,8 @@ Important
 </div>
 <p>Ici, on peut donc discuter de la distribution de la variable numérique pour chaque modalité de la variable catégorielle (<em>i.e.</em> quelle distribution de l’épaisseur des becs pour chaque espèce), mais on peut en plus faire des comparaisons entre modalités (entre les espèces). Cela est beaucoup plus pertinent que de s’intéresser à la distribution de l’épaisseur des becs toutes espèces confondues.</p>
 </section>
-<section id="les-stripcharts" class="level3" data-number="3.9.2">
-<h3 data-number="3.9.2" class="anchored" data-anchor-id="les-stripcharts"><span class="header-section-number">3.9.2</span> Les stripcharts</h3>
+<section id="sec-factorstrip" class="level3" data-number="3.9.2">
+<h3 data-number="3.9.2" class="anchored" data-anchor-id="sec-factorstrip"><span class="header-section-number">3.9.2</span> Les stripcharts</h3>
 <p>Nous avons déjà abordé ce type de graphique dans la <a href="#sec-cloud"><span>Section&nbsp;3.5.2</span></a>. Contrairement à la situation où nous n’avions qu’une variable numérique et où nous devions fixer <code>x = ""</code> pour que toutes les observations se placent au même niveau de l’axe des abscisses (voir <a href="#fig-strip">Figure&nbsp;<span>3.6</span></a>), nous allons ici associer la variable catégorielle à l’axe des <code>x</code>. La variable numérique sera quant-à-elle toujours associée à l’axe des ordonnées :</p>
 <div class="cell" data-fig.asp="1">
 <div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>

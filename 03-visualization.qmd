@@ -1137,7 +1137,7 @@ C'est la position des données le long de l'axe des `x` qui nous permet de faire
 
 Ici, on peut donc discuter de la distribution de la variable numérique pour chaque modalité de la variable catégorielle (*i.e.* quelle distribution de l'épaisseur des becs pour chaque espèce), mais on peut en plus faire des comparaisons entre modalités (entre les espèces). Cela est beaucoup plus pertinent que de s'intéresser à la distribution de l'épaisseur des becs toutes espèces confondues.
 
-### Les stripcharts
+### Les stripcharts {#sec-factorstrip}
 
 Nous avons déjà abordé ce type de graphique dans la @sec-cloud. Contrairement à la situation où nous n'avions qu'une variable numérique et où nous devions fixer `x = ""` pour que toutes les observations se placent au même niveau de l'axe des abscisses (voir @fig-strip), nous allons ici associer la variable catégorielle à l'axe des `x`. La variable numérique sera quant-à-elle toujours associée à l'axe des ordonnées :
 

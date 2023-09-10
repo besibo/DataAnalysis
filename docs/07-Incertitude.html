@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -292,10 +311,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Pensez à les charger en mémoire si ce n’est pas déjà fait ou si vous venez de démarrer une nouvelle session de travail.</p>
+<p>Le package <code>scales</code> <span class="citation" data-cites="R-scales">(<a href="references.html#ref-R-scales" role="doc-biblioref">Wickham et Seidel 2022</a>)</span> contient de très nombreuses fonctions particulièrement utiles pour améliorer l’aspect des légendes d’axes (par exemple, pour transformer des chiffres compris entre 0 et 1 en pourcentages, ou pour ajouter le symbole d’une devise quand l’axe renseigne sur des montants en euros ou dollars par exemple).</p>
 </section>
 <section id="la-notion-de-dispersion" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="la-notion-de-dispersion"><span class="header-section-number">7.2</span> La notion de dispersion</h2>
@@ -401,7 +420,7 @@ Autrement dit…
 </ol>
 <ul>
 <li>avec <code>scale_fill_brewer()</code>, je change la palette de couleur utilisée pour le remplissage des barres</li>
-<li>avec <code>scale_y_continuous()</code>, je modifie l’échelle (continue) de l’axe des ordonnées. Je fais appel à la fonction <code>number_format()</code> du package <code>scales</code> afin d’ajouter un séparateur des milliers aux chiffres de l’axe. Le package <code>scales</code> contient de très nombreuses fonctions particulièrement utiles pour améliorer l’aspect des légendes d’axes (par exemple, pour transformer des chiffres compris entre 0 et 1 en pourcentages, ou pour ajouter le symbole d’une devise quand l’axe renseigne sur des montants en euros ou dollars par exemple)</li>
+<li>avec <code>scale_y_continuous()</code>, je modifie l’échelle (continue) de l’axe des ordonnées. Je fais appel à la fonction <code>number_format()</code> du package <code>scales</code> afin d’ajouter un séparateur des milliers aux chiffres de l’axe.</li>
 <li>avec <code>scale_x_discrete()</code>, le modifie les termes qui apparaissent sur l’axe des abscisses (qui est un axe discontinu, ou catégoriel, ou discret). Les catégories <code>female</code> et <code>male</code> de la variable <code>sex</code> du tableau <code>penguins</code> sont transformées en <code>Femelles</code> et <code>Mâles</code> respectivement</li>
 </ul>
 <p>Puisque chaque barre de la <a href="#fig-meanmass">Figure&nbsp;<span>7.1</span></a> correspond à une valeur de moyenne, il nous faut présenter également <strong>l’incertitude associée à ces calculs de moyennes</strong>. Pour cela, nous devons calculer l’erreur standard des moyennes :</p>
@@ -631,6 +650,11 @@ Autrement dit…
 <p>Les bornes inférieures et supérieures des intervalles de confiance à 95% des moyennes ne sont pas égales quand on les calcule manuellement de façon approchée et quand on les calcule de façon exacte, mais les différences sont minimes.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-R-scales" class="csl-entry" role="listitem">
+Wickham, Hadley, et Dana Seidel. 2022. <em>scales: Scale Functions for Visualization</em>. <a href="https://CRAN.R-project.org/package=scales">https://CRAN.R-project.org/package=scales</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

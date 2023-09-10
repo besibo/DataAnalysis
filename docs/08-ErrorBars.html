@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -292,89 +311,123 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(colorspace)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Pensez à les charger en mémoire si ce n’est pas déjà fait ou si vous venez de démarrer une nouvelle session de travail.</p>
-<p>Il existe plusieurs façons de représenter visuellement les <strong>positions</strong>, les <strong>dispersions</strong> et les incertitudes. Concernant les positions et les dispersions tout d’abord, nous avons déjà vu plusieurs façons de faire au semestre 3, en particulier dans les parties consacrées aux histogrammes, aux stripcharts et aux boxplots. Nous reprenons ici brièvement chacun de ces 3 types de graphique afin de les remettre en contexte avec ce que nous avons appris ici.</p>
+<p>Le package <code>colorspace</code> <span class="citation" data-cites="R-colorspace">(<a href="references.html#ref-R-colorspace" role="doc-biblioref">Ihaka et al. 2023</a>)</span> permet d’utiliser de très nombreuses palettes de couleurs. Ces palettes ont de nombreux avantages (dont la propriété de permettre aux daltoniens de distinguer correctement les différentes couleurs des palettes catégorielles). N’hésitez pas à consulter <a href="https://colorspace.r-forge.r-project.org/index.html">le site dédié à ce package</a> qui est très complet et présente de nombreux exemples.</p>
+<p>Nous aurons aussi besoin des tableaux créés au <a href="07-Incertitude.html"><span>Chapitre&nbsp;7</span></a> (<code>masses_se</code>, <code>masses_se_bornes</code>, <code>masses_ci_approx</code> et <code>masses_ci</code>).</p>
+<p>Donc pensez bien à charger en mémoire les packages et à relancer les commandes de vos scripts qui vous ont permis de créer ces tableaux s’ils ne sont plus en mémoire dans votre environnement de travail. Il existe plusieurs façons de représenter visuellement les <strong>positions</strong>, les <strong>dispersions</strong> et les incertitudes. Concernant les positions et les dispersions tout d’abord, nous avons déjà vu plusieurs façons de faire au <a href="03-Visualization.html"><span>Chapitre&nbsp;3</span></a>, en particulier dans les parties consacrées aux histogrammes, aux stripcharts et aux boxplots. Nous reprenons ici brièvement chacun de ces 3 types de graphique afin de les remettre en contexte avec ce que nous avons appris ici.</p>
 <p>Dans un dernier temps, nous verrons comment visualiser l’<strong>incertitude</strong> associée à des calculs de moyennes ou de variances grâce aux barres d’erreurs ou aux encoches des boîtes à moustaches.</p>
 </section>
 <section id="position-et-dispersion-les-histogrammes" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="position-et-dispersion-les-histogrammes"><span class="header-section-number">8.2</span> Position et dispersion : les histogrammes</h2>
-<p>Je vous renvoie à <a href="https://besibo.github.io/BiometrieS3/03-visualization.html#les-histogrammes">la partie sur les histogrammes</a> du livre en ligne de biométrie du semestre 3 si vous avez besoin de vous rafraîchir la mémoire. Jetez aussi un œil la partie sur <a href="https://besibo.github.io/BiometrieS3/03-visualization.html#sec-factorhisto">les histogrammes facettés</a>.</p>
+<p>Je vous renvoie à la <a href="03-Visualization.html#sec-histo"><span>Section&nbsp;3.5.1</span></a> si vous avez besoin de vous rafraîchir la mémoire. Vous pouvez aussi jeter aussi un œil à la partie sur <a href="03-Visualization.html#sec-factorhisto">les histogrammes facettés, section&nbsp;<span>3.9.1</span></a>.</p>
 <p>Les histogrammes permettent de déterminer à la fois où se trouvent les valeurs les plus fréquemment observées (la position du pic principal correspond à la tendance centrale), et la dispersion (ou variabilité) des valeurs autour de la tendance centrale. Par exemple, la fonction <code>facet_grid()</code> permet de faire des histogrammes des températures pour chaque aéroport de New York et chaque mois de l’année 2013 :</p>
-<div class="cell" data-fig.asp="1.4">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> temp_celsius, <span class="at">fill =</span> <span class="fu">factor</span>(month))) <span class="sc">+</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="fu">factor</span>(month) <span class="sc">~</span> origin, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Températures (ºC)"</span>, <span class="at">y =</span> <span class="st">"Fréquence"</span>) <span class="sc">+</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_bin()`).</code></pre>
-</div>
+<div class="cell" data-fig.asp="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species <span class="sc">~</span> sex, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Masse corporelle (g)"</span>, <span class="at">y =</span> <span class="st">"Fréquence"</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="fu">number_format</span>())<span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="08-ErrorBars_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div id="fig-gridmass" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="08-ErrorBars_files/figure-html/fig-gridmass-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8.1: Distribution des masses corporelles chez les mâles et les femelles de 3 espèces de manchots</figcaption>
+</figure>
 </div>
 </div>
-<p>Ici, 36 histogrammes sont produits. Ils permettent de constater que :</p>
+</div>
+<p>Ici, 6 histogrammes sont produits. Ils permettent de constater que :</p>
 <ul>
-<li>les températures évoluent à peu près de la même façon dans les 3 aéroports (les 3 colonnes de graphiques se ressemblent beaucoup).</li>
-<li>les températures moyennes sont plus faibles en hiver qu’en été, et qu’elles sont intermédiaires au printemps et à l’automne. C’est bien la position des pics sur l’axe des abscisses qui nous renseigne là-dessus. On sait aussi que les températures moyennes les plus fortes sont autour de 25ºC en juillet, alors que ces mêmes températures moyennes sont proches de 0ºC en janvier, février et décembre.</li>
-<li>la variabilité des températures est comparable pour la plupart des mois de l’année, avec une exception au mois d’août où la dispersion des valeurs semble plus limitée. Cette fois, c’est l’étalement de l’histogramme qui nous renseigne sur la dispersion.</li>
+<li>les masses sont à peu près toutes distribuées selon une courbe en cloche</li>
+<li>les masses moyennes sont plus élevées chez les Gentoo que chez les deux autres espèces. C’est bien la position des pics sur l’axe des abscisses qui nous renseigne là-dessus.</li>
+<li>pour chaque espèce, les masses moyennes sont globalement plus élevées chez les mâles que chez les femelles. Par exemple, pour l’espèce Adélie, le pic se situe autour de 3500 grammes pour les femelles, et autour de 4000 grammes pour les mâles.</li>
+<li>la variabilité des masses est comparable pour les 3 espèces et les 2 sexes. Cette fois, c’est l’étalement des histogrammes qui nous renseigne sur la dispersion. Ici, l’étalement est toujours d’environ 1500 grammes, sauf peut-être pour les femelles Gentoo dont l’étalement est d’environ 1000 grammes.</li>
 </ul>
 </section>
 <section id="position-et-dispersion-les-stripcharts" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="position-et-dispersion-les-stripcharts"><span class="header-section-number">8.3</span> Position et dispersion : les stripcharts</h2>
-<p>Une autre façon de visualiser à la fois les tendances centrales et les dispersions consiste à produire un nuage de points “stripchart”. Là encore, je vous renvoie à <a href="https://besibo.github.io/BiometrieS3/03-visualization.html#les-stripcharts">la partie sur les stripcharts</a> du livre en ligne de biométrie du semestre 3 si vous avez besoin de vous rafraîchir la mémoire.</p>
-<div class="cell" data-fig.asp="1.4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> temp_celsius, <span class="at">fill =</span> <span class="fu">factor</span>(month))) <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">height =</span> <span class="dv">0</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> origin, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<p>Une autre façon de visualiser à la fois les tendances centrales et les dispersions consiste à produire un nuage de points “stripchart”. Là encore, je vous renvoie à <a href="03-Visualization.html#sec-factorstrip">la partie sur les stripcharts, section&nbsp;<span>3.9.2</span></a> si vous avez besoin de vous rafraîchir la mémoire.</p>
+<div class="cell" data-layout-align="center" data-fig.asp="1.4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> body_mass_g, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">height =</span> <span class="dv">0</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> species, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sexe"</span>, <span class="at">y =</span> <span class="st">"Masse corporelle (g)"</span>) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">number_format</span>())<span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-massstrip" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="08-ErrorBars_files/figure-html/fig-massstrip-1.png" class="img-fluid figure-img" width="384"></p>
+<figcaption class="figure-caption">Figure&nbsp;8.2: Distribution des masses corporelles chez les mâles et les femelles de 3 espèces de manchots</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Cette fois, nous visualisons la totalité des données disponibles, et non les données regroupées dans des classes plus ou moins arbitraires. Mais là encore, on peut facilement comparer la position de chaque série de données : pour chaque espèce, les mâles ont des masses corporelles plus importantes que les femelles, et globalement, les Gentoo ont des masses corporelles plus élevées que les autres espèces. La dispersion des données est aussi facile à comparer entre les groupes. C’est ici l’étendue du nuage de points sur l’axe des ordonnées qui nous permet de le faire.</p>
+<p>Enfin, les stripcharts facettés sont particulièrement utiles lorsque le nombre de séries de données est grand. Par exemple, dans le package <code>nycflights13</code>, le tableau <code>weather</code> contient des données météo enregistrées toutes les heures de l’année 2013. Si l’on souhaite comparer l’évolution des températures mensuelles dans chacun des 3 aéroports de New York, voilà ce qu’on peut faire :</p>
+<div class="cell" data-layout-align="center" data-fig.asp="1.4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> temp_celsius, <span class="at">fill =</span> temp_celsius)) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">height =</span> <span class="dv">0</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> origin, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous_diverging</span>(<span class="at">palette =</span> <span class="st">"Blue-Red 3"</span>) <span class="sc">+</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Mois"</span>, <span class="at">y =</span> <span class="st">"Températures (ºC)"</span>) <span class="sc">+</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing missing values (`geom_point()`).</code></pre>
-</div>
 <div class="cell-output-display">
-<p><img src="08-ErrorBars_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div id="fig-weatherstrip" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="08-ErrorBars_files/figure-html/fig-weatherstrip-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8.3: Distribution des températures mensuelles dans les 3 aéroports de New York en 20123</figcaption>
+</figure>
 </div>
 </div>
-<p>Cette fois, nous visualisons la totalité des données disponibles, et non les données regroupées dans des classes plus ou moins arbitraires. Mais là encore, on peut facilement comparer la position de chaque série de données : pour les mois d’été, les températures sont plus élevées que pour les mois d’hiver. Et la dispersion des données est aussi facile à comparer entre les mois. Par exemple, la variabilité des températures en janvier est nettement supérieure à celle du mois de février. C’est ici l’étendue du nuage de points sur l’axe des ordonnées qui nous permet de le dire.</p>
+</div>
 </section>
 <section id="position-et-dispersion-les-boxplots" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="position-et-dispersion-les-boxplots"><span class="header-section-number">8.4</span> Position et dispersion : les boxplots</h2>
-<p>La dernière façon classique de visualiser à la fois les tendances centrales et les dispersions consiste à produire un graphique boîtes à moustaches, ou “boxplot”. Là encore, je vous renvoie à <a href="https://besibo.github.io/BiometrieS3/03-visualization.html#les-boîtes-à-moustaches-ou-boxplots">la partie sur les boxplots</a> du livre en ligne de biométrie du semestre 3 si vous avez besoin de vous rafraîchir la mémoire.</p>
-<div class="cell" data-fig.asp="1.4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> temp_celsius, <span class="at">fill =</span> <span class="fu">factor</span>(month))) <span class="sc">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> origin, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Mois"</span>, <span class="at">y =</span> <span class="st">"Températures (ºC)"</span>) <span class="sc">+</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_boxplot()`).</code></pre>
-</div>
+<p>La dernière façon classique de visualiser à la fois les tendances centrales et les dispersions consiste à produire un graphique boîtes à moustaches, ou “boxplot”. Là encore, je vous renvoie à <a href="03-Visualization.html#sec-boxplot">la partie sur les boxplots, section&nbsp;<span>3.9.3</span></a> si vous avez besoin de vous rafraîchir la mémoire. Les boîtes à moustaches sont également très pratiques pour comparer de nombreux groupes les uns avec les autres. Avec les données de températures, voilà à quoi ça ressemble :</p>
+<div class="cell" data-layout-align="center" data-fig.asp="1.4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> temp_celsius, <span class="at">fill =</span> <span class="fu">factor</span>(month))) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> origin, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Mois"</span>, <span class="at">y =</span> <span class="st">"Températures (ºC)"</span>) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="08-ErrorBars_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div id="fig-weatherbxplt" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="08-ErrorBars_files/figure-html/fig-weatherbxplt-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8.4: Distribution des températures mensuelles dans les 3 aéroports de New York en 20123</figcaption>
+</figure>
 </div>
 </div>
-<p>Vous voyez que le code est très proche pour produire un stripchart ou un boxplot. Comme indiqué au semestre 3, les différents éléments de chaque boîte nous renseignent sur la position et sur la dispersion des données pour chaque mois et chaque aéroport :</p>
+</div>
+<p>Vous voyez que le code est très proche pour produire un stripchart ou un boxplot. Comme indiqué au <a href="06-EDA.html"><span>Chapitre&nbsp;6</span></a>, les différents éléments de chaque boîte nous renseignent sur la position et sur la dispersion des données pour chaque mois et chaque aéroport :</p>
 <ul>
 <li>La limite inférieure de la boîte correspond au premier quartile : 25% des données de l’échantillon sont situées au-dessous de cette valeur.</li>
 <li>La limite supérieure de la boîte correspond au troisième quartile : 75% des données de l’échantillon sont situées au-dessous de cette valeur.</li>
 <li>Le segment épais à l’intérieur de la boîte correspond au second quartile : c’est la médiane de l’échantillon, qui nous renseigne sur la position de la distribution. 50% des données de l’échantillon sont situées au-dessus de cette valeur, et 50% au-dessous.</li>
 <li>La hauteur de la boîte correspond à l’étendue (ou intervalle) interquartile ou Inter Quartile Range (IQR) en anglais. On trouve dans cette boîte 50% des observations de l’échantillon. C’est une mesure de la dispersion des 50% des données les plus centrales. Une boîte plus allongée indique donc une plus grande dispersion.</li>
-<li>Les moustaches correspondent à des valeurs qui sont en dessous du premier quartile (pour la moustache du bas) et au-dessus du troisième quartile (pour la moustache du haut). La règle utilisée dans <code>R</code> est que ces moustaches s’étendent jusqu’aux valeurs minimales et maximales de l’échantillon, mais elles ne peuvent en aucun cas s’étendre au-delà de 1,5 fois la hauteur de la boîte (1,5 fois l’IQR) vers le haut et le bas. Si des points apparaissent au-delà des moustaches (vers le haut ou le bas), ces points sont appelés “outliers”. On peut en observer ici pour plusieurs mois et pour les 3 aéroports (par exemple, en avril dans les 3 aéroports). Ce sont des points qui s’éloignent du centre de la distribution de façon importante puisqu’ils sont au-delà de 1,5 fois l’IQR de part et d’autre du premier ou du troisième quartile. Il peut s’agir d’anomalies de mesures, d’anomalies de saisie des données, ou tout simplement, d’enregistrements tout à fait valides mais atypiques ou extrêmes ; ll ne s’agit donc pas toujours de point aberrants. J’attire votre attention sur le fait que la définition de ces outliers est relativement arbitraire. Nous pourrions faire le choix d’étendre les moustaches jusqu’à 1,8 fois l’IQR (ou 2, ou 2,5). Nous observerions alors beaucoup moins d’outliers. D’une façons générale, la longueur des moustaches renseigne sur la variabilité des données en dehors de la zone centrale. Plus elles sont longues, plus la variabilité est importante. Très souvent, l’examen attentif des outliers est utile car il nous permet d’en apprendre plus sur le comportement extrême de certaines observations.</li>
+<li>Les moustaches correspondent à des valeurs qui sont en dessous du premier quartile (pour la moustache du bas) et au-dessus du troisième quartile (pour la moustache du haut). La règle utilisée dans <code>R</code> est que ces moustaches s’étendent jusqu’aux valeurs minimales et maximales de l’échantillon, mais elles ne peuvent en aucun cas s’étendre au-delà de 1,5 fois la hauteur de la boîte (1,5 fois l’IQR) vers le haut et le bas. Si des points apparaissent au-delà des moustaches (vers le haut ou le bas), ces points sont appelés “outliers”. On peut en observer ici pour plusieurs mois et pour les 3 aéroports (par exemple, en avril dans les 3 aéroports). Ce sont des points qui s’éloignent du centre de la distribution de façon importante puisqu’ils sont au-delà de 1,5 fois l’IQR de part et d’autre du premier ou du troisième quartile. Il peut s’agir d’anomalies de mesures, d’anomalies de saisie des données, ou tout simplement, d’enregistrements tout à fait valides mais atypiques ou extrêmes ; il ne s’agit donc pas toujours de point aberrants. J’attire votre attention sur le fait que la définition de ces outliers est relativement arbitraire. Nous pourrions faire le choix d’étendre les moustaches jusqu’à 1,8 fois l’IQR (ou 2, ou 2,5). Nous observerions alors beaucoup moins d’outliers. D’une façons générale, la longueur des moustaches renseigne sur la variabilité des données en dehors de la zone centrale. Plus elles sont longues, plus la variabilité est importante. Très souvent, l’examen attentif des outliers est utile car il nous permet d’en apprendre plus sur le comportement extrême de certaines observations.</li>
 </ul>
 <p>Lorsque les boîtes ont une forme à peu près symétrique de part et d’autre de la médiane (c’est le cas pour cet exemple dans la plupart des catégories), cela signifie qu’un histogramme des mêmes données serait symétrique également.</p>
 <p>Les stripcharts et les boxplots sont donc un bon moyen de comparer rapidement la position et la dispersion d’un grand nombre de séries de données : ici, en quelques lignes de code, nous en comparons 12 pour chacun des 3 aéroports de New York.</p>
-<p>Les histogrammes sont plus utiles lorsqu’il y a moins de catégories à comparer. Ils permettent en outre de mieux visualiser les distributions non symétriques, ou qui présentent plusieurs pics (distribution bi- ou poly-modales).</p>
+<p>Les histogrammes sont plus utiles lorsqu’il y a moins de catégories à comparer, comme pour la <a href="#fig-gridmass">Figure&nbsp;<span>8.1</span></a>. Ils permettent en outre de mieux visualiser les distributions non symétriques, ou qui présentent plusieurs pics (distribution bi- ou poly-modales).</p>
 </section>
 <section id="visualiser-lincertitude-les-barres-derreur" class="level2" data-number="8.5">
 <h2 data-number="8.5" class="anchored" data-anchor-id="visualiser-lincertitude-les-barres-derreur"><span class="header-section-number">8.5</span> Visualiser l’incertitude : les barres d’erreur</h2>
@@ -383,121 +436,107 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>soit à l’erreur standard de la moyenne</li>
 <li>soit à l’intervalle de confiance à 95% de la moyenne</li>
 </ul>
-<p>Puisque deux choix sont possibles, il sera important de préciser systématiquement dans la légende du graphique, la nature des barres représentées. Commençons par visualiser les températures mensuelles avec les erreurs standards. Pour cela, je reprends le tableau <code>temperatures_se</code> créé précédemment :</p>
+<p>Puisque deux choix sont possibles, il sera important de préciser systématiquement dans la légende du graphique, la nature des barres représentées. Revenons aux données de masses corporelles des manchots, et commençons par visualiser les masses moyennes avec les erreurs standards. Pour cela, je reprends le tableau <code>masses_se</code> créé précédemment :</p>
 <div class="cell" data-fig.asp="1.4">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>temperatures_se <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> moyenne)) <span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> moyenne <span class="sc">-</span> erreur_standard,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> moyenne <span class="sc">+</span> erreur_standard),</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>origin, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Mois"</span>, </span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Moyenne des températures quotidiennes maximales (ºC)"</span>) <span class="sc">+</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>masses_se <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> moyenne, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> moyenne <span class="sc">-</span> erreur_standard,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> moyenne <span class="sc">+</span> erreur_standard),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.15</span>) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Masse moyenne (g)"</span>, <span class="at">fill =</span> <span class="st">"Espèce"</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">number_format</span>()) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Femelles"</span>, <span class="st">"Mâles"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-errorbar-se" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="08-ErrorBars_files/figure-html/fig-errorbar-se-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;8.1: Températures moyennes mensuelles observées en 2013 dans les 3 aéroports de New York. Les barres d’erreur sont les erreurs standard</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;8.5: Comparison des masses moyennes observées chez les mâles et les femelles de 3 espèces de manchots. Les barres d’erreur sont les erreurs standard</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Vous remarquerez que :</p>
 <ol type="1">
-<li>j’associe <code>factor(month)</code>, et non simplement <code>month</code>, à l’axe des <code>x</code> afin d’avoir, sur l’axe des abscisses, des chiffres cohérents allant de 1 à 12, et non des chiffres à virgule.</li>
-<li>l’argument <code>group = 1</code> doit être ajouté pour que la ligne reliant les points apparaisse. En effet, les lignes sont censées relier des points qui appartiennent à une même série temporelle. Or ici, nous avons transformé <code>month</code> en facteur. Préciser <code>group = 1</code> permet d’indiquer à <code>geom_line()</code> que toutes les catégories du facteur <code>month</code> appartiennent au même groupe, que ce facteur peut être considéré comme une variable continue, et qu’il est donc correct de relier les points.</li>
-<li>la fonction <code>geom_errorbar()</code> contient de nouvelles caractéristiques esthétiques qu’il nous faut obligatoirement renseigner : les extrémités inférieures et supérieures des barres d’erreur. Il nous faut donc associer 2 variables à ces caractéristiques esthétiques. Ici, nous utilisons <code>moyenne - erreur_std</code> pour la borne inférieure des barres d’erreur, et <code>moyenne + erreur_std</code> pour la borne supérieure. Les variables <code>moyenne</code> et <code>erreur_standard</code> faisant partie du tableau <code>temperatures_se</code>, <code>geom_errorbar()</code> les trouve sans difficulté.</li>
+<li>la fonction <code>geom_errorbar()</code> contient de nouvelles caractéristiques esthétiques qu’il nous faut obligatoirement renseigner : les extrémités inférieures et supérieures des barres d’erreur. Il nous faut donc associer 2 variables à ces caractéristiques esthétiques. Ici, nous utilisons <code>moyenne - erreur_standard</code> pour la borne inférieure des barres d’erreur, et <code>moyenne + erreur_standard</code> pour la borne supérieure. Les variables <code>moyenne</code> et <code>erreur_standard</code> faisant partie du tableau <code>masses_se</code>, <code>geom_errorbar()</code> les trouve sans difficulté.</li>
 <li>l’argument <code>width</code> de la fonction <code>geom_errorbar()</code> permet d’indiquer la longueur des segments horizontaux qui apparaissent à chaque extrémité des barres d’erreur.</li>
 </ol>
-<p>Ici, bien que moins lisible, on peut aussi faire apparaître les trois courbes sur le même graphique, afin de mieux visualiser les similarités des fluctuations de températures entre les 3 aéroports :</p>
+<p>Nous pouvons arriver au même résultats en utilisant le tableau <code>masses_se_bornes</code>, qui contient des variables différentes :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>temperatures_se <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> moyenne, <span class="at">color =</span> origin, <span class="at">group =</span> origin)) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> moyenne <span class="sc">-</span> erreur_standard,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> moyenne <span class="sc">+</span> erreur_standard),</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Mois"</span>, </span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Moyenne des températures quotidiennes maximales (ºC)"</span>,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Aéroport"</span>) <span class="sc">+</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-errorbar-se_all" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="08-ErrorBars_files/figure-html/fig-errorbar-se_all-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;8.2: Températures moyennes mensuelles observées en 2013 dans les 3 aéroports de New York. Les barres d’erreur sont les erreurs standard.</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Nous pouvons arriver au même résultats en utilisant le tableau <code>temperature_se_bornes</code>, qui contient des variables différentes :</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>temperature_se_bornes <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> moyenne, <span class="at">color =</span> origin, <span class="at">group =</span> origin)) <span class="sc">+</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> moyenne_moins_se,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> moyenne_plus_se),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Mois"</span>, </span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Moyenne des températures quotidiennes maximales (ºC)"</span>,</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Aéroport"</span>) <span class="sc">+</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>masses_se_bornes <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> moyenne, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> moyenne_moins_se,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> moyenne_plus_se),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.15</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Masse moyenne (g)"</span>, <span class="at">fill =</span> <span class="st">"Espèce"</span>) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">number_format</span>()) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Femelles"</span>, <span class="st">"Mâles"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-errorbar-se_all2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="08-ErrorBars_files/figure-html/fig-errorbar-se_all2-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;8.3: Températures moyennes mensuelles observées en 2013 dans les 3 aéroports de New York. Les barres d’erreur sont les erreurs standard.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;8.6: Comparison des masses moyennes observées chez les mâles et les femelles de 3 espèces de manchots. Les barres d’erreur sont les erreurs standard</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>De la même façon, nous pouvons parfaitement faire apparaître, au lieu des erreurs standards, les intervalles de confiance à 95% de chaque valeur de température moyenne. Il nous suffit pour cela d’utiliser le tableau <code>temperatures_ci</code> qui contient les valeurs de moyennes et des bornes supérieures et inférieures de ces intervalles :</p>
+<p>Seule la spécification de <code>ymin</code> et <code>ymax</code> dans <code>geom_errorbar()</code> a changé puisque le tableau <code>masses_se_bornes</code> contient des variables différentes de celles du tableau <code>masses_se</code>.</p>
+<p>De la même façon, nous pouvons parfaitement faire apparaître, au lieu des erreurs standards, les intervalles de confiance à 95% de chaque masse moyenne. Il nous suffit pour cela d’utiliser le tableau <code>masses_ci</code> qui contient les valeurs de moyennes et des bornes supérieures et inférieures de ces intervalles :</p>
 <div class="cell" data-fig.asp="1.4">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>temperature_ci <span class="sc">|&gt;</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> moyenne, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> ci_borne_inf, <span class="at">ymax =</span> ci_borne_sup), <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>origin, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Mois"</span>, </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Moyenne des températures quotidiennes maximales (ºC)"</span>,</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Aéroport"</span>) <span class="sc">+</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>masses_ci <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> moyenne, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> ci_borne_inf,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> ci_borne_sup),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.15</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Masse moyenne (g)"</span>, <span class="at">fill =</span> <span class="st">"Espèce"</span>) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">number_format</span>()) <span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Femelles"</span>, <span class="st">"Mâles"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-errorbar-ci" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="08-ErrorBars_files/figure-html/fig-errorbar-ci-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;8.4: Températures moyennes mensuelles observées en 2013 dans les 3 aéroports de New York. Les barres d’erreur sont les intervalels de confiance à 95% des moyenes mensuelles.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;8.7: Comparison des masses moyennes observées chez les mâles et les femelles de 3 espèces de manchots. Les barres d’erreur sont les intervales de confiance à 95% des masses moyennes.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Comme vous voyez, les barres d’erreurs sont maintenant plus longues que sur la <a href="#fig-errorbar-se">Figure&nbsp;<span>8.1</span></a>. C’est normal car rappelez-vous que les intervalles de confiance sont à peu près équivalents à 2 fois les erreurs standards. L’intérêt de représenter les intervalles de confiance est qu’ils sont directement liés aux tests statistiques que nous aborderons en L3. Globalement, quand 2 séries de données ont des intervalles de confiance qui se chevauchent largement (comme les mois de janvier et février par exemple), alors, un test d’hypothèses conclurait presque toujours à l’absence de différence significative entre les 2 groupes. À l’inverse, quand 2 séries de données ont des intervalles de confiance qui ne se chevauchent pas du tout (comme les mois de mars et d’avril par exemple), alors, un test d’hypothèses conclurait presque toujours à l’existence d’une différence significative entre les 2 groupes. Lorsque les intervalles de confiance entre 2 catégories se chevauchent faiblement ou partiellement (comme entre les mois de juin et juillet pour l’aéroport LGA), la situation est moins tranchée, et nous devrons nous en remettre aux résultats du test pour savoir si la différence observée devrait être considérée comme significative ou non.</p>
+<p>Comme vous voyez, les barres d’erreurs sont maintenant plus longues que sur la <a href="#fig-errorbar-se">Figure&nbsp;<span>8.5</span></a>. C’est normal car rappelez-vous que les intervalles de confiance sont à peu près équivalents à 2 fois les erreurs standards. L’intérêt de représenter les intervalles de confiance est qu’ils sont directement liés aux tests statistiques que nous aborderons dans les chapitres qui viennent. Globalement, quand 2 séries de données ont des intervalles de confiance qui se chevauchent largement (comme par exemple pour les mâles Adélie et Chinstrap), alors, un test d’hypothèses conclurait presque toujours à l’absence de différence significative entre les 2 groupes. À l’inverse, quand 2 séries de données ont des intervalles de confiance qui ne se chevauchent pas du tout (comme les mâles et les femelles Adélie par exemple), alors, un test d’hypothèses conclurait presque toujours à l’existence d’une différence significative entre les 2 groupes. Lorsque les intervalles de confiance entre 2 catégories se chevauchent faiblement ou partiellement (comme entre les femelles Adélie et Chinstrap), la situation est moins tranchée, et nous devrons nous en remettre aux résultats du test pour savoir si la différence observée devrait être considérée comme significative ou non.</p>
 </section>
 <section id="visualiser-lincertitude-les-boîtes-à-moustaches" class="level2" data-number="8.6">
 <h2 data-number="8.6" class="anchored" data-anchor-id="visualiser-lincertitude-les-boîtes-à-moustaches"><span class="header-section-number">8.6</span> Visualiser l’incertitude : les boîtes à moustaches</h2>
 <p>Outre les informations de position et de dispersion, les boîtes à moustaches permettent également de visualiser l’incertitude associée aux médianes. Il suffit pour cela d’ajouter l’argument <code>notch = TRUE</code> dans la fonction <code>geom_boxplot()</code> :</p>
 <div class="cell" data-fig.asp="1.4">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> temp_celsius, <span class="at">fill =</span> <span class="fu">factor</span>(month))) <span class="sc">+</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">notch =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> origin, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Mois"</span>, <span class="at">y =</span> <span class="st">"Températures (ºC)"</span>) <span class="sc">+</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_boxplot()`).</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> body_mass_g, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">notch =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sexe"</span>, <span class="at">y =</span> <span class="st">"Masse moyenne (g)"</span>, <span class="at">fill =</span> <span class="st">"Espèce"</span>) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">number_format</span>()) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Femelles"</span>, <span class="st">"Mâles"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="08-ErrorBars_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div id="fig-boxplot-ci" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="08-ErrorBars_files/figure-html/fig-boxplot-ci-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8.8: Comparison des masses corporelles des mâles et femelles de 3 espèces de manchots.</figcaption>
+</figure>
 </div>
 </div>
-<p>Des encoches ont été ajoutées autour de la médiane de chaque boîte à moustache. Ces encoches sont des encoches d’incertitudes. Les limites inférieures et supérieures de ces encoches correspondent aux bornes inférieures et supérieures de l’intervalle de confiance à 95% des médianes. Comme pour les moyennes, le chevauchement ou l’absence de chevauchement entre les encoches de 2 séries de données nous renseigne sur l’issue probable des futurs tests statistiques que nous serions amenés à réaliser. Il sera donc important de bien examiner ces encoches en amont des tests statistiques pour éviter de faire/dire des bêtises…</p>
+</div>
+<p>Des encoches ont été ajoutées autour de la médiane de chaque boîte à moustache. Ces encoches sont des encoches d’incertitudes. Les limites inférieures et supérieures de ces encoches correspondent aux bornes inférieures et supérieures de l’intervalle de confiance à 95% des médianes. Comme pour les moyennes, le chevauchement ou l’absence de chevauchement entre les encoches de 2 séries de données nous renseigne sur l’issue probable des futurs tests statistiques que nous serions amenés à réaliser. Notez que tout ce que nous avons dit plus haut sur le chevauchement des intervalles de confiance des moyennes se retrouve ici pour les intervalles de confiance des médianes (<em>i.e.</em> large chevauchement entre les encoches des mâles Adélie et Chinstrap, absence de chevauchement entre femelles et mâles Adélie, faible chevauchement entre femelles Adélie et Chinstrap). Il sera donc important de bien examiner ces encoches en amont des tests statistiques pour éviter de faire/dire des bêtises…</p>
 </section>
 <section id="sec-ploterrbar" class="level2" data-number="8.7">
 <h2 data-number="8.7" class="anchored" data-anchor-id="sec-ploterrbar"><span class="header-section-number">8.7</span> Exercice</h2>
@@ -509,10 +548,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>la variance de la longueur des nageoires</li>
 <li>l’écart-type de la longueur des nageoires</li>
 <li>l’erreur standard de la longueur moyenne des nageoires</li>
-<li>la moyenne de la masse corporelle</li>
-<li>la variance de la masse corporelle</li>
-<li>l’écart-type de la masse corporelle</li>
-<li>l’erreur standard de la masse corporelle moyenne</li>
+<li>la moyenne de l’épaisseur du bec</li>
+<li>la variance de l’épaisseur du bec</li>
+<li>l’écart-type de l’épaisseur du bec</li>
+<li>l’erreur standard de l’épaisseur du bec</li>
 </ul>
 <p>Attention : pensez à retirer les individus dont le sexe est inconnu.</p>
 <ol start="2" type="1">
@@ -526,6 +565,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-R-colorspace" class="csl-entry" role="listitem">
+Ihaka, Ross, Paul Murrell, Kurt Hornik, Jason C. Fisher, Reto Stauffer, Claus O. Wilke, Claire D. McWhite, et Achim Zeileis. 2023. <em>colorspace: A Toolbox for Manipulating and Assessing Colors and Palettes</em>. <a href="https://CRAN.R-project.org/package=colorspace">https://CRAN.R-project.org/package=colorspace</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
