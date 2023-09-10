@@ -158,7 +158,7 @@ La fonction `summary()` (à ne pas confondre avec `summarise()`) permet d'obteni
 2. ce que renvoie la fonction quand on lui fournit un facteur
 3. ce que renvoie la fonction quand on lui fournit un tableau
 
-### Variable continue : vecteur numérique
+### Variable continue : vecteur numérique {#sec-vardisp}
 
 Commençons par fournir un vecteur numérique à la fonction `summary()`. Nous allons pour cela extraire les données de masses corporelles des manchots du tableau `penguins` :
 

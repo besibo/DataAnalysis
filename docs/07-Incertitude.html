@@ -292,19 +292,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Pensez à les charger en mémoire si ce n’est pas déjà fait ou si vous venez de démarrer une nouvelle session de travail.</p>
 </section>
 <section id="la-notion-de-dispersion" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="la-notion-de-dispersion"><span class="header-section-number">7.2</span> La notion de dispersion</h2>
-<p>Comme expliqué plus haut, les <strong>indices de dispersion</strong> nous renseignent sur la variabilités des données autour de la valeur centrale (moyenne ou médiane) d’une population ou d’un échantillon. L’écart-type, la variance et l’intervalle interquartile sont 3 exemples d’indices de dispersion. Prenons l’exemple de l’écart-type. Un écart-type faible indique que la majorité des observations ont des valeurs proches de la moyenne. À l’inverse, un écart-type important indique que la plupart des points sont éloignés de la moyenne. L’écart-type est une caractéristique de la population que l’on étudie grâce à un échantillon, au même titre que la moyenne. En travaillant sur un échantillon, on espère accéder aux vraies grandeurs de la population. Même si ces vraies grandeurs sont à jamais inaccessibles (on ne connaîtra jamais parfaitement quelle est la vraie valeur de moyenne <span class="math inline">\(\mu\)</span> ou d’écart-type <span class="math inline">\(\sigma\)</span> de la population), on espère qu’avec un échantillonnage réalisé correctement, la moyenne de l’échantillon (<span class="math inline">\(\bar{x}\)</span> ou <span class="math inline">\(m\)</span>) et l’écart-type (<span class="math inline">\(s\)</span>) de l’échantillon reflètent assez fidèlement les valeurs de la population générale. C’est la notion d’estimateur, intimement liée à la notion d’<strong>inférence statistique</strong> : la moyenne de l’échantillon, que l’on connait avec précision, est un estimateur de la moyenne <span class="math inline">\(\mu\)</span> de la population qui restera à jamais inconnue. C’est la raison pour laquelle la moyenne de l’échantillon est parfois notée <span class="math inline">\(\hat{\mu}\)</span> (en plus de <span class="math inline">\(\bar{x}\)</span> ou <span class="math inline">\(m\)</span>). De même, l’écart-type <span class="math inline">\(s\)</span> et la variance <span class="math inline">\(s^2\)</span> d’un échantillon sont des estimateurs de l’écart-type <span class="math inline">\(\sigma\)</span> et de la variance <span class="math inline">\(\sigma^2\)</span> de la population générale. C’est la raison pour laquelle on les note parfois <span class="math inline">\(\hat{\sigma}\)</span> et <span class="math inline">\(\hat{\sigma}^2\)</span> respectivement. L’accent circonflexe se prononce “chapeau”. On dit donc que <span class="math inline">\(\hat{\sigma}\)</span> (sigma chapeau, l’écart-type de l’échantillon) est un estimateur de l´écart-type de la population générale. Comme nous l’avons vu, les indices de dispersion doivent accompagner les indices de position lorsque l’on décrit des données, car présenter une valeur de moyenne, ou de médiane seule n’a pas de sens : il faut savoir à quel point les données sont proches ou éloignées de la tendance centrale pour savoir si, dans la population générale, les indicateurs de position correspondent ou non, aux valeurs portées par la majorité des individus.</p>
-<p>Nous avons vu plus haut comment calculer des indices de position et de dispersion. Tout ceci devrait donc être clair pour vous à ce stade.</p>
+<p>Comme expliqué à la <a href="06-EDA.html#sec-vardisp"><span>Section&nbsp;6.3.1</span></a>, les <strong>indices de dispersion</strong> nous renseignent sur la variabilités des données autour de la valeur centrale (moyenne ou médiane) d’une population ou d’un échantillon. L’écart-type, la variance et l’intervalle interquartile sont 3 exemples d’indices de dispersion. Prenons l’exemple de l’écart-type. Un écart-type faible indique que la majorité des observations ont des valeurs proches de la moyenne. À l’inverse, un écart-type important indique que la plupart des points sont éloignés de la moyenne. L’écart-type est une caractéristique de la population que l’on étudie grâce à un échantillon, au même titre que la moyenne. En travaillant sur un échantillon, on espère accéder aux vraies grandeurs de la population. Même si ces vraies grandeurs sont à jamais inaccessibles (on ne connaîtra jamais parfaitement quelle est la vraie valeur de moyenne <span class="math inline">\(\mu\)</span> ou d’écart-type <span class="math inline">\(\sigma\)</span> de la population), on espère qu’avec un échantillonnage réalisé correctement, la moyenne de l’échantillon (<span class="math inline">\(\bar{x}\)</span> ou <span class="math inline">\(m\)</span>) et l’écart-type (<span class="math inline">\(s\)</span>) de l’échantillon reflètent assez fidèlement les valeurs de la population générale. C’est la notion d’estimateur, intimement liée à la notion d’<strong>inférence statistique</strong> : la moyenne de l’échantillon, que l’on connait avec précision, est un estimateur de la moyenne <span class="math inline">\(\mu\)</span> de la population qui restera à jamais inconnue. C’est la raison pour laquelle la moyenne de l’échantillon est parfois notée <span class="math inline">\(\hat{\mu}\)</span> (en plus de <span class="math inline">\(\bar{x}\)</span> ou <span class="math inline">\(m\)</span>). De même, l’écart-type <span class="math inline">\(s\)</span> et la variance <span class="math inline">\(s^2\)</span> d’un échantillon sont des estimateurs de l’écart-type <span class="math inline">\(\sigma\)</span> et de la variance <span class="math inline">\(\sigma^2\)</span> de la population générale. C’est la raison pour laquelle on les note parfois <span class="math inline">\(\hat{\sigma}\)</span> et <span class="math inline">\(\hat{\sigma}^2\)</span> respectivement. L’accent circonflexe se prononce “chapeau”. On dit donc que <span class="math inline">\(\hat{\sigma}\)</span> (sigma chapeau, l’écart-type de l’échantillon) est un estimateur de l´écart-type de la population générale. Comme nous l’avons vu, les indices de dispersion doivent accompagner les indices de position lorsque l’on décrit des données, car présenter une valeur de moyenne, ou de médiane seule n’a pas de sens : il faut savoir à quel point les données sont proches ou éloignées de la tendance centrale pour savoir si, dans la population générale, les indicateurs de position correspondent ou non, aux valeurs portées par la majorité des individus.</p>
+<p>Nous avons vu au <a href="06-EDA.html"><span>Chapitre&nbsp;6</span></a> comment calculer des indices de position et de dispersion. Tout ceci devrait donc être clair pour vous à ce stade.</p>
 </section>
 <section id="la-notion-dincertitude" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="la-notion-dincertitude"><span class="header-section-number">7.3</span> La notion d’incertitude</h2>
 <p>Par ailleurs, puisqu’on ne sait jamais avec certitude si nos estimations (de moyennes ou d’écarts-types ou de tout autre paramètre) reflètent fidèlement ou non les vraies valeurs de la population, nous devons quantifier à quel point nos estimations s’écartent de celles de la population générale. C’est tout l’intérêt des statistiques et c’est ce que permettent les <strong>indices d’incertitude</strong> : on ne connaîtra jamais la vraie valeur de moyenne ou d’écart-type de la population, mais on peut quantifier à quel point nos estimations (basées sur un échantillon) sont précises ou imprécises.<br>
-Les deux indices d’incertitude les plus connus (et les plus utilisés) sont l’<strong>intervalle de confiance à 95%</strong> (de la moyenne ou de tout autre estimateur ; les formules sont nombreuses et il n’est pas utile de les détailler ici : nous verrons comment les calculer plus bas) et l’<strong>erreur standard</strong> de la moyenne (<span class="math inline">\(se_{\bar{x}}\)</span>), dont la formule est la suivante :</p>
+Les deux indices d’incertitude les plus connus (et les plus utilisés) sont :</p>
+<ol type="1">
+<li>l’<strong>intervalle de confiance à 95%</strong> (de la moyenne ou de tout autre estimateur ; les formules sont nombreuses et il n’est pas utile de les détailler ici : nous verrons comment les calculer plus bas)</li>
+<li>et l’<strong>erreur standard</strong> de la moyenne (<span class="math inline">\(se_{\bar{x}}\)</span>), dont la formule est la suivante :</li>
+</ol>
 <p><span class="math display">\[se_{\bar{x}} = \frac{s}{\sqrt{n}}\]</span> avec <span class="math inline">\(s\)</span>, l’écart-type de l’échantillon et <span class="math inline">\(n\)</span> la taille de l’échantillon.</p>
 <p>Comme pour la moyenne, on peut calculer l’erreur standard d’un écart-type, d’une médiane, d’une proportion, ou de tout autre estimateur calculé sur un échantillon. Cet indice d’incertitude ne nous renseigne pas sur une grandeur de la population générale qu’on chercherait à estimer, mais bien sur l’incertitude associée à une estimation que nous faisons en travaillant sur un échantillon de taille forcément limitée. Tout processus d’échantillonnage est forcément entaché d’incertitude, causée entre autre par le hasard de l’échantillonnage (ou fluctuation d’échantillonnage). Puisque nous travaillons sur des échantillons forcément imparfaits, les indices d’incertitude vont nous permettre de quantifier à quel point nos estimations s’écartent des vraies valeurs de la population. Ces “vraies valeurs”, faute de pouvoir collecter tous les individus de la population, resteront à jamais inconnues.</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -321,168 +326,130 @@ Autrement dit…
 </div>
 </div>
 <p>En examinant la formule de l’erreur standard de la moyenne présentée ci-dessus, on comprend intuitivement que plus la taille de l’échantillon (<span class="math inline">\(n\)</span>) augmente, plus l’erreur standard (donc l’incertitude) associée à notre estimation de moyenne diminue. Autrement dit, plus les données sont abondantes dans l’échantillon, meilleure sera notre estimation de moyenne, et donc, moins le risque de raconter des bêtises sera grand.</p>
-<p>L’autre indice d’incertitude très fréquemment utilisé est l’intervalle de confiance à 95% (de la moyenne, de la médiane, de la variance, ou de toute autre estimateur calculé dans un échantillon). L’intervalle de confiance nous renseigne sur la gamme des valeurs les plus probables pour un paramètre de la population étudiée. Par exemple, si j’observe, dans un échantillon, une moyenne de 10, avec un intervalle de confiance calculé de [7 ; 15], cela signifie que, dans la population générale, la vraie valeur de moyenne a de bonnes chances de se trouver dans l’intervalle [7 ; 15]. Dans la population générale, toutes les valeurs comprises entre 7 et 15 sont vraisemblables pour la moyenne alors que les valeurs situées en dehors de cet intervalle sont moins probables. Une autre façon de comprendre l’intervalle de confiance est de dire que si je récupère un grand nombre d’échantillons dans la même population, en utilisant exactement le même protocole expérimental, 95% des échantillons que je vais récupérer auront une moyenne située à l’intérieur de l’intervalle de confiance à 95%, et 5% des échantillons auront une moyenne située à l’extérieur de l’intervalle de confiance à 95%. C’est une notion qui n’est pas si évidente que ça à comprendre, donc prenez bien le temps de relire cette section si besoin, et de poser des questions le cas échéant.</p>
+<p>L’autre indice d’incertitude très fréquemment utilisé est l’intervalle de confiance à 95% (de la moyenne, de la médiane, de la variance, ou de tout autre estimateur calculé dans un échantillon). L’intervalle de confiance nous renseigne sur la gamme des valeurs les plus probables pour un paramètre de la population étudiée. Par exemple, si j’observe, dans un échantillon, une moyenne de 10, avec un intervalle de confiance calculé de [7 ; 15], cela signifie que, dans la population générale, la vraie valeur de moyenne a de bonnes chances de se trouver dans l’intervalle [7 ; 15]. Dans la population générale, toutes les valeurs comprises entre 7 et 15 sont vraisemblables pour la moyenne alors que les valeurs situées en dehors de cet intervalle sont moins probables. Une autre façon de comprendre l’intervalle de confiance est de dire que si je récupère un grand nombre d’échantillons dans la même population, en utilisant exactement le même protocole expérimental, 95% des échantillons que je vais récupérer auront une moyenne située à l’intérieur de l’intervalle de confiance à 95%, et 5% des échantillons auront une moyenne située à l’extérieur de l’intervalle de confiance à 95%. C’est une notion qui n’est pas si évidente que ça à comprendre, donc prenez bien le temps de relire cette section si besoin, et de poser des questions le cas échéant.</p>
 <p>Concrètement, plus l’intervalle de confiance est large, moins notre confiance est grande. Si la moyenne d’un échantillon vaut <span class="math inline">\(\bar{x} = 10\)</span>, et que son intervalle de confiance à 95% vaut [9,5 ; 11], la gamme des valeurs probables pour la moyenne de la population est étroite. Autrement dit, la moyenne de l’échantillon (10), a de bonne chances d’être très proche de la vraie valeur de moyenne de la population générale (vraisemblablement comprise quelque part entre 9,5 et 11). À l’inverse, si l’intervalle de confiance à 95% de la moyenne vaut [4 ; 17], la gamme des valeurs possibles pour la vraie moyenne de la population est grande. La moyenne de l’échantillon aura donc de grandes chances d’être assez éloignée de la vraie valeur de la population.</p>
 <p>La notion d’intervalle de confiance à 95% est donc très proche de celle d’erreur standard. D’ailleurs, pour de nombreux paramètres, l’intervalle de confiance est calculé à partir de l’erreur standard.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+À retenir !
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les paramètres de <strong>position</strong> et de <strong>dispersion</strong> sont des caractéristiques des populations que l’on étudie. On espère pouvoir les estimer correctement grâce aux échantillons dont on dispose.</p>
+<p>Les indices d’<strong>incertitude</strong> ne sont pas des paramètres ou des caractéristiques des populations que l’on étudie. On ne cherche donc pas à les estimer. Ils nous permettent en revanche de quantifier à quel point on se trompe en cherchant à estimer des paramètres de la population générale à partir d’estimateurs calculés sur un échantillon.</p>
+<p>Autrement dit, calculer des estimateurs de <strong>position</strong> et de <strong>dispersion</strong> permet d’apprendre des choses au sujet des populations étudiées. Calculer des indices d’<strong>incertitude</strong> ne permet pas d’apprendre quoi que ce soit sur les populations étudiées, mais permet d’apprendre des choses sur la qualité de notre travail d’échantillonnage et d’estimation. En général, les indices d’incertitudes nous fournissent une gamme de valeurs au sein desquelles les vraies valeurs des paramètres des populations générales ont de bonnes chances de se trouver. Si on a bien travaillé, et qu’on dispose de beaucoup de données, ces gammes de valeurs seront peu étendues. Si à l’inverse, nous ne disposons que de trop peu de données, ces gammes de valeurs seront très étendues.</p>
+</div>
+</div>
 </section>
 <section id="sec-errstd" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="sec-errstd"><span class="header-section-number">7.4</span> Calcul de l’erreur standard de la moyenne</h2>
 <p>Contrairement aux indices de position et de dispersion, il n’existe pas de fonction intégrée à <code>R</code> qui permette de calculer l’erreur standard de la moyenne. Toutefois, sa formule très simple nous permet de la calculer à la main quand on en a besoin grâce à la fonction <code>summarise()</code>.</p>
-<p>Par exemple, reprenons les données de température (tableau <code>weather</code> du package <code>nycflights13</code>, colonne <code>temp</code>) dans les 3 aéroports de New York (colonne <code>origin</code>). Imaginons que nous souhaitions étudier les fluctuations de températures au fil des mois de l’année 2013 :</p>
-<ol type="1">
-<li>Je vais commencer par transformer les températures (fournies en degrés Fahrenheit) en degrés Celsius :</li>
-</ol>
+<p>Par exemple, reprenons les données de masse corporelle des 3 espèces de manchots dans le tableau <code>penguins</code>. Imaginons que nous souhaitions étudier les différences de masses corporelles des 3 espèces, en tenant compte du sexe des individus. Pour chaque espèce et chaque sexe, nous allons calculer la masse moyenne des individus en grammes (variable <code>body_mass_g</code>). Nous prendrons soin au préalable d’éliminer les lignes pour lesquelles le sex des individus est inconnu :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(species, sex))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 26,115 × 16
-   origin  year month   day  hour  temp  dewp humid wind_dir wind_speed
-   &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
- 1 EWR     2013     1     1     1  39.0  26.1  59.4      270      10.4 
- 2 EWR     2013     1     1     2  39.0  27.0  61.6      250       8.06
- 3 EWR     2013     1     1     3  39.0  28.0  64.4      240      11.5 
- 4 EWR     2013     1     1     4  39.9  28.0  62.2      250      12.7 
- 5 EWR     2013     1     1     5  39.0  28.0  64.4      260      12.7 
- 6 EWR     2013     1     1     6  37.9  28.0  67.2      240      11.5 
- 7 EWR     2013     1     1     7  39.0  28.0  64.4      240      15.0 
- 8 EWR     2013     1     1     8  39.9  28.0  62.2      250      10.4 
- 9 EWR     2013     1     1     9  39.9  28.0  62.2      260      15.0 
-10 EWR     2013     1     1    10  41    28.0  59.6      260      13.8 
-# ℹ 26,105 more rows
-# ℹ 6 more variables: wind_gust &lt;dbl&gt;, precip &lt;dbl&gt;, pressure &lt;dbl&gt;,
-#   visib &lt;dbl&gt;, time_hour &lt;dttm&gt;, temp_celsius &lt;dbl&gt;</code></pre>
-</div>
-</div>
-<ol start="2" type="1">
-<li>Ensuite, je détermine, pour chaque jour de chaque mois de l’année, et pour chaque aéroport, quelle est la température maximale atteinte, et je stocke ces valeurs dans un nouvel objet pour pouvoir le ré-utiliser :</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>temp_jour <span class="ot">&lt;-</span> weather <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp_celsius =</span> (temp <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temperature_max =</span> <span class="fu">max</span>(temp_celsius, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month, day))</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>temp_jour</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,092 × 4
-   origin month   day temperature_max
-   &lt;chr&gt;  &lt;int&gt; &lt;int&gt;           &lt;dbl&gt;
- 1 EWR        1     1            5   
- 2 EWR        1     2            1.10
- 3 EWR        1     3            1.10
- 4 EWR        1     4            4.4 
- 5 EWR        1     5            6.7 
- 6 EWR        1     6            8.9 
- 7 EWR        1     7            8.3 
- 8 EWR        1     8            9.4 
- 9 EWR        1     9           10   
-10 EWR        1    10           10   
-# ℹ 1,082 more rows</code></pre>
-</div>
-</div>
-<ol start="3" type="1">
-<li>Je peux maintenant calculer la température moyenne mensuelle pour chaque aéroport :</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>temp_jour <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 36 × 3
-   origin month moyenne
-   &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;
- 1 EWR        1    5.69
- 2 EWR        2    4.74
- 3 EWR        3    8.20
- 4 EWR        4   16.4 
- 5 EWR        5   22.2 
- 6 EWR        6   27.4 
- 7 EWR        7   31.0 
- 8 EWR        8   27.8 
- 9 EWR        9   24.6 
-10 EWR       10   20.0 
-# ℹ 26 more rows</code></pre>
+<pre><code># A tibble: 6 × 3
+  species   sex    moyenne
+  &lt;fct&gt;     &lt;fct&gt;    &lt;dbl&gt;
+1 Adelie    male     4043.
+2 Adelie    female   3369.
+3 Gentoo    female   4680.
+4 Gentoo    male     5485.
+5 Chinstrap female   3527.
+6 Chinstrap male     3939.</code></pre>
 </div>
 </div>
 <p>Pour pouvoir réutiliser ce tableau, je lui donne un nom :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>temp_moyennes <span class="ot">&lt;-</span> temp_jour <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>masses <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(species, sex))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Au final, je peux faire un graphique de l’évolution de ces températures :</p>
-<div class="cell" data-fig.asp="1">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>temp_moyennes <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(month), <span class="at">y =</span> moyenne)) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>origin, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Mois"</span>, </span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Moyenne des températures quotidiennes maximales (ºC)"</span>) <span class="sc">+</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Au final, on peut faire un graphique avec ces données. Puisqu’on dispose d’une variable numérique et 2 variables catégorielles, je fais le cjoix de produire un diagramme bâtons facettés :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>masses <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> moyenne, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Masse moyenne (g)"</span>, <span class="at">fill =</span> <span class="st">"Espèce"</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">number_format</span>()) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Femelles"</span>, <span class="st">"Mâles"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="07-Incertitude_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div id="fig-meanmass" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="07-Incertitude_files/figure-html/fig-meanmass-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7.1: Comparison des tailles moyennes observées chez les mâles et les femelles de 3 espèces de manchots</figcaption>
+</figure>
+</div>
 </div>
 </div>
 <p>Vous remarquerez que :</p>
 <ol type="1">
-<li>j’associe <code>factor(month)</code>, et non simplement <code>month</code>, à l’axe des <code>x</code> afin d’avoir, sur l’axe des abscisses, des chiffres cohérents allant de 1 à 12, et non des chiffres à virgule</li>
-<li>l’argument <code>group = 1</code> doit être ajouté pour que la ligne reliant les points apparaisse. En effet, les lignes sont censées relier des points qui appartiennent à une même série temporelle. Or ici, nous avons transformé <code>month</code> en facteur. Préciser <code>group = 1</code> permet d’indiquer à <code>geom_line()</code> que toutes les catégories du facteur <code>month</code> appartiennent au même groupe, que ce facteur peut être considéré comme une variable continue, et qu’il est donc correct de relier les points.</li>
+<li>J’utilise <code>geom_col()</code> et non <code>geom_bar()</code> car j’ai déjà calculé manuellement la variable que je souhaite associer à l’axe des ordonnées</li>
+<li>J’associe la couleur de remplissage à l’espèce, bien que ça ne soit pas indispensable puisque je fais un sous-graphique par espèce. Cela rend toutefois le graphique plus agréable et en facilite la lecture.</li>
+<li>Je modifie 3 échelles :</li>
 </ol>
-<p>Pour les 3 aéroports, les profils de températures sont très proches. C’est tout à fait logique puisqu’ils sont situés dans un rayon de quelques kilomètres seulement. Le problème de ce graphique est que chaque point a été obtenu en calculant une moyenne. En janvier, nous avons fait la moyenne de 31 valeurs de températures quotidiennes pour chaque aéroport. En février, nous avons fait la moyenne de 28 valeurs de températures quotidiennes pour chaque aéroport. Et ainsi de suite pour tous les mois de l’année 2013. Puisque nous présentons des valeurs de moyennes, il nous faut présenter également <strong>l’incertitude associée à ces calculs de moyennes</strong>. Pour cela, nous devons calculer l’erreur standard des moyennes :</p>
+<ul>
+<li>avec <code>scale_fill_brewer()</code>, je change la palette de couleur utilisée pour le remplissage des barres</li>
+<li>avec <code>scale_y_continuous()</code>, je modifie l’échelle (continue) de l’axe des ordonnées. Je fais appel à la fonction <code>number_format()</code> du package <code>scales</code> afin d’ajouter un séparateur des milliers aux chiffres de l’axe. Le package <code>scales</code> contient de très nombreuses fonctions particulièrement utiles pour améliorer l’aspect des légendes d’axes (par exemple, pour transformer des chiffres compris entre 0 et 1 en pourcentages, ou pour ajouter le symbole d’une devise quand l’axe renseigne sur des montants en euros ou dollars par exemple)</li>
+<li>avec <code>scale_x_discrete()</code>, le modifie les termes qui apparaissent sur l’axe des abscisses (qui est un axe discontinu, ou catégoriel, ou discret). Les catégories <code>female</code> et <code>male</code> de la variable <code>sex</code> du tableau <code>penguins</code> sont transformées en <code>Femelles</code> et <code>Mâles</code> respectivement</li>
+</ul>
+<p>Puisque chaque barre de la <a href="#fig-meanmass">Figure&nbsp;<span>7.1</span></a> correspond à une valeur de moyenne, il nous faut présenter également <strong>l’incertitude associée à ces calculs de moyennes</strong>. Pour cela, nous devons calculer l’erreur standard des moyennes :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>temp_jour <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">N_obs =</span> <span class="fu">n</span>(),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">erreur_standard =</span> <span class="fu">sd</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(N_obs),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">N_obs =</span> <span class="fu">n</span>(),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">erreur_standard =</span> <span class="fu">sd</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(N_obs),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(species, sex))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 36 × 5
-   origin month moyenne N_obs erreur_standard
-   &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt; &lt;int&gt;           &lt;dbl&gt;
- 1 EWR        1    5.69    31           1.14 
- 2 EWR        2    4.74    28           0.762
- 3 EWR        3    8.20    31           0.649
- 4 EWR        4   16.4     30           0.919
- 5 EWR        5   22.2     31           1.02 
- 6 EWR        6   27.4     30           0.769
- 7 EWR        7   31.0     31           0.700
- 8 EWR        8   27.8     31           0.385
- 9 EWR        9   24.6     30           0.716
-10 EWR       10   20.0     31           0.882
-# ℹ 26 more rows</code></pre>
+<pre><code># A tibble: 6 × 5
+  species   sex    moyenne N_obs erreur_standard
+  &lt;fct&gt;     &lt;fct&gt;    &lt;dbl&gt; &lt;int&gt;           &lt;dbl&gt;
+1 Adelie    male     4043.    73            40.6
+2 Adelie    female   3369.    73            31.5
+3 Gentoo    female   4680.    58            37.0
+4 Gentoo    male     5485.    61            40.1
+5 Chinstrap female   3527.    34            48.9
+6 Chinstrap male     3939.    34            62.1</code></pre>
 </div>
 </div>
-<p>Notre tableau de statistiques descriptives possède maintenant 2 colonnes supplémentaires : le nombre d’observations (que j’ai nommé <code>N_obs</code>), et l’erreur standard associée à chaque moyenne, calculée grâce à la formule vue plus haut <span class="math inline">\(se_{\bar{x}} = \frac{s}{\sqrt{n}}\)</span> (la fonction <code>sqrt()</code> permet de calculer la racine carrée). On constate que l’erreur standard, qui s’exprime dans la même unité que la moyenne, est variable selon les mois de l’année. Ainsi, pour l’aéroport de Newark, l’incertitude semble particulièrement faible pour le mois d’août (0.385 ºC) mais presque 3 fois plus forte pour le mois de janvier (1.14 ºC).</p>
+<p>Notre tableau de statistiques descriptives possède maintenant 2 colonnes supplémentaires : le nombre d’observations (que j’ai nommé <code>N_obs</code>), et l’erreur standard associée à chaque moyenne, calculée grâce à la formule vue plus haut <span class="math inline">\(se_{\bar{x}} = \frac{s}{\sqrt{n}}\)</span> (la fonction <code>sqrt()</code> permet de calculer la racine carrée). On constate que l’erreur standard, qui s’exprime dans la même unité que la moyenne, varie du simple au double selon les groupes. Ainsi, pour les mâles de l’espèce Chinstrap, l’incertitude est deux fois plus importante que pour les femelles de l’espèce Adélie. Cela est probablement dû en partie à des différences de tailles d’échantillons importantes entre ces 2 catégories (73 femelles Adélie contre 34 mâles Chinstrap), mais ça n’est certainement pas la seule explications. Sinon, les femelles Chinstrap auraient elles aussi une incertitude plus grande. L’incertitude reflète aussi, de façon indirecte, la variabilité de la variable étudiée.</p>
 <p>Une fois de plus, je donne un nom à ce tableau de données pour pouvoir le réutiliser plus tard :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>temperatures_se <span class="ot">&lt;-</span> temp_jour <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">N_obs =</span> <span class="fu">n</span>(),</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">erreur_standard =</span> <span class="fu">sd</span>(temperature_max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(N_obs),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>masses_se <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">N_obs =</span> <span class="fu">n</span>(),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">erreur_standard =</span> <span class="fu">sd</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(N_obs),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(species, sex))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Notez que le package <code>ggplot2</code> contient une fonction permettant de calculer à la fois la moyenne et erreur standard de la moyenne d’un échantillon : <code>mean_se()</code>. Puisque cette fonction renvoie 3 valeurs (<span class="math inline">\(\bar{x}\)</span>, <span class="math inline">\(\bar{x} - se\)</span> et <span class="math inline">\(\bar{x} + se\)</span>), on utilise <code>reframe()</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>temp_jour <span class="sc">|&gt;</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_se</span>(temperature_max), </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_se</span>(body_mass_g), </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(species, sex))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 36 × 5
-   origin month     y  ymin  ymax
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 EWR        1  5.69  4.55  6.82
- 2 EWR        2  4.74  3.97  5.50
- 3 EWR        3  8.20  7.55  8.85
- 4 EWR        4 16.4  15.5  17.4 
- 5 EWR        5 22.2  21.1  23.2 
- 6 EWR        6 27.4  26.6  28.1 
- 7 EWR        7 31.0  30.3  31.7 
- 8 EWR        8 27.8  27.4  28.2 
- 9 EWR        9 24.6  23.9  25.3 
-10 EWR       10 20.0  19.1  20.9 
-# ℹ 26 more rows</code></pre>
+<pre><code># A tibble: 6 × 5
+  species   sex        y  ymin  ymax
+  &lt;fct&gt;     &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Adelie    male   4043. 4003. 4084.
+2 Adelie    female 3369. 3337. 3400.
+3 Gentoo    female 4680. 4643. 4717.
+4 Gentoo    male   5485. 5445. 5525.
+5 Chinstrap female 3527. 3478. 3576.
+6 Chinstrap male   3939. 3877. 4001.</code></pre>
 </div>
 </div>
 <p>Les résultats obtenus ne sont pas exactement au même format :</p>
@@ -491,32 +458,29 @@ Autrement dit…
 <li>la colonne <code>ymin</code> contient la valeur de moyenne moins une fois l’erreur standard (<span class="math inline">\(\bar{x} - se\)</span>)</li>
 <li>la colonne <code>ymax</code> contient la valeur de moyenne plus une fois l’erreur standard (<span class="math inline">\(\bar{x} + se\)</span>)</li>
 </ul>
-<p>Il ne nous restera plus qu’à ajouter des barres d’erreur sur notre graphique pour visualiser l’incertitude associée à chaque valeur de moyenne.</p>
+<p>Notez également que contrairement aux fonctions <code>mean()</code> ou <code>sd()</code>, la fonction <code>mean_se()</code> n’a pas besoin qu’on lui précise <code>na.rm = TRUE</code> : par défaut, elle ignore les valeurs manquantes.</p>
+<p>Il ne nous restera plus qu’à ajouter des barres d’erreur sur notre graphique pour visualiser l’incertitude associée à chaque valeur de moyenne. C’est ce que nous verrons au <a href="08-ErrorBars.html"><span>Chapitre&nbsp;8</span></a>.</p>
 </section>
 <section id="sec-confint" class="level2" data-number="7.5">
 <h2 data-number="7.5" class="anchored" data-anchor-id="sec-confint"><span class="header-section-number">7.5</span> Calculs d’intervalles de confiance à 95%</h2>
-<p>Comme pour les erreurs standard, il est possible de calculer des intervalles de confiance de n’importe quel estimateur calculé à partir d’un échantillon, pour déterminer la gamme des valeurs les plus probables pour les paramètres équivalents dans la population générale. Nous nous concentrerons ici sur le calcul des intervalles de confiance à 95% de la moyenne, mais nous serons amenés à examiner également l’intervalle de confiance de la médiane, puis, au cours de votre L3, l’intervalle de confiance à 95% d’une différence de moyennes.</p>
+<p>Comme pour les erreurs standard, il est possible de calculer des intervalles de confiance de n’importe quel estimateur calculé à partir d’un échantillon, pour déterminer la gamme des valeurs les plus probables pour les paramètres équivalents dans la population générale. Nous nous concentrerons ici sur le calcul des intervalles de confiance à 95% de la moyenne, mais nous serons amenés à examiner également l’intervalle de confiance de la médiane, puis au <a href="11-TwoSampleTests.html"><span>Chapitre&nbsp;11</span></a>, l’intervalle de confiance à 95% d’une différence de moyennes.</p>
 <p>Contrairement à l’erreur standard, il n’y a pas qu’une bonne façon de calculer l’intervalle de confiance à 95% d’une moyenne. Plusieurs formules existent et le choix de la formule dépend en partie de la distribution des données (la distribution suit-elle une loi Normale ou non) et de la taille de l’échantillon dont nous disposons (<span class="math inline">\(n\)</span> est-il supérieur à 30 ou non ?). Dans la situation idéale d’une variable qui suit la distribution Normale, les bornes inférieures et supérieures de l’intervalle de confiance à 95% sont obtenues grâce à cette formule</p>
 <p><span class="math display">\[\bar{x} - 1.96 \cdot \frac{s}{\sqrt{n}} &lt; \mu &lt; \bar{x} + 1.96 \cdot \frac{s}{\sqrt{n}}\]</span> Autrement dit, la vraie moyenne <span class="math inline">\(\mu\)</span> d’une population a de bonnes chances de se trouver dans un intervalle de plus ou moins 1.96 fois l’erreur standard de la moyenne. En première approximation, l’intervalle de confiance est donc la moyenne de l’échantillon <span class="math inline">\(\bar{x}\)</span> plus ou moins 2 fois l’erreur standard (que nous avons appris à calculer à la main un peu plus tôt). On peut donc calculer à la main les bornes inférieures et supérieures de l’intervalle de confiance ainsi :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>temp_jour <span class="sc">|&gt;</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_se</span>(temperature_max, <span class="at">mult =</span> <span class="fl">1.96</span>),</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_se</span>(body_mass_g, <span class="at">mult =</span> <span class="fl">1.96</span>), </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(species, sex))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 36 × 5
-   origin month     y  ymin  ymax
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 EWR        1  5.69  3.46  7.92
- 2 EWR        2  4.74  3.24  6.23
- 3 EWR        3  8.20  6.93  9.47
- 4 EWR        4 16.4  14.6  18.2 
- 5 EWR        5 22.2  20.1  24.2 
- 6 EWR        6 27.4  25.8  28.9 
- 7 EWR        7 31.0  29.6  32.3 
- 8 EWR        8 27.8  27.0  28.5 
- 9 EWR        9 24.6  23.2  26.0 
-10 EWR       10 20.0  18.3  21.7 
-# ℹ 26 more rows</code></pre>
+<pre><code># A tibble: 6 × 5
+  species   sex        y  ymin  ymax
+  &lt;fct&gt;     &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Adelie    male   4043. 3964. 4123.
+2 Adelie    female 3369. 3307. 3431.
+3 Gentoo    female 4680. 4607. 4752.
+4 Gentoo    male   5485. 5406. 5563.
+5 Chinstrap female 3527. 3431. 3623.
+6 Chinstrap male   3939. 3817. 4061.</code></pre>
 </div>
 </div>
 <p>Ici, grâce à l’argument <code>mult = 1.96</code> de la fonction <code>mean_se()</code> :</p>
@@ -526,24 +490,20 @@ Autrement dit…
 </ul>
 <p>Dans la pratique, puisque cette méthode reste approximative et dépend de la nature des données dont on dispose, on utilisera plutôt des fonctions spécifiques qui calculeront pour nous les intervalles de confiance à 95% de nos estimateurs. C’est ce que permet en particulier la fonction <code>mean_cl_normal()</code> du package <code>ggplot2</code>. Il est toutefois important de bien comprendre qu’il y a un lien étroit entre l’erreur standard (l’incertitude associées à l’estimation d’un paramètre d’une population à partir des données d’un échantillon), et l’intervalle de confiance à 95% de ce paramètre.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>temp_jour <span class="sc">|&gt;</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_cl_normal</span>(temperature_max),</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_cl_normal</span>(body_mass_g), </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(species, sex))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 36 × 5
-   origin month     y  ymin  ymax
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 EWR        1  5.69  3.36  8.01
- 2 EWR        2  4.74  3.17  6.30
- 3 EWR        3  8.20  6.88  9.53
- 4 EWR        4 16.4  14.6  18.3 
- 5 EWR        5 22.2  20.1  24.2 
- 6 EWR        6 27.4  25.8  28.9 
- 7 EWR        7 31.0  29.5  32.4 
- 8 EWR        8 27.8  27.0  28.6 
- 9 EWR        9 24.6  23.1  26.0 
-10 EWR       10 20.0  18.2  21.8 
-# ℹ 26 more rows</code></pre>
+<pre><code># A tibble: 6 × 5
+  species   sex        y  ymin  ymax
+  &lt;fct&gt;     &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Adelie    male   4043. 3963. 4124.
+2 Adelie    female 3369. 3306. 3432.
+3 Gentoo    female 4680. 4606. 4754.
+4 Gentoo    male   5485. 5405. 5565.
+5 Chinstrap female 3527. 3428. 3627.
+6 Chinstrap male   3939. 3813. 4065.</code></pre>
 </div>
 </div>
 <p>Comme dans les tableaux précédents, 3 nouvelles colonnes ont été crées :</p>
@@ -553,144 +513,117 @@ Autrement dit…
 <li><code>ymax</code> contient maintenant les bornes supérieures de l’intervalle à 95% des moyennes</li>
 </ul>
 <p>Pour que la suite soit plus claire, nous allons afficher et donner des noms à ces différents tableaux en prenant soin de renommer les colonnes pour plus de clarté.</p>
-<p>Tout d’abord, nous disposons du tableau <code>temperatures_se</code>, qui contient, les moyennes des températures mensuelles de chaque aéroport de New York en 2013, et les erreurs standard de ces moyennes :</p>
+<p>Tout d’abord, nous disposons du tableau <code>masses_se</code>, qui contient, les masses moyennes des mâles et des femelles des 3 espèces, et les erreurs standard de ces moyennes :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>temperatures_se</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>masses_se</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 36 × 5
-   origin month moyenne N_obs erreur_standard
-   &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt; &lt;int&gt;           &lt;dbl&gt;
- 1 EWR        1    5.69    31           1.14 
- 2 EWR        2    4.74    28           0.762
- 3 EWR        3    8.20    31           0.649
- 4 EWR        4   16.4     30           0.919
- 5 EWR        5   22.2     31           1.02 
- 6 EWR        6   27.4     30           0.769
- 7 EWR        7   31.0     31           0.700
- 8 EWR        8   27.8     31           0.385
- 9 EWR        9   24.6     30           0.716
-10 EWR       10   20.0     31           0.882
-# ℹ 26 more rows</code></pre>
+<pre><code># A tibble: 6 × 5
+  species   sex    moyenne N_obs erreur_standard
+  &lt;fct&gt;     &lt;fct&gt;    &lt;dbl&gt; &lt;int&gt;           &lt;dbl&gt;
+1 Adelie    male     4043.    73            40.6
+2 Adelie    female   3369.    73            31.5
+3 Gentoo    female   4680.    58            37.0
+4 Gentoo    male     5485.    61            40.1
+5 Chinstrap female   3527.    34            48.9
+6 Chinstrap male     3939.    34            62.1</code></pre>
 </div>
 </div>
-<p>Ensuite, nous avons produit un tableau presque équivalent que nous allons nommer <code>temperature_se_bornes</code> et pour lequel nous allons modifier le nom des colonnes <code>y</code>, <code>ymin</code> et <code>ymax</code> :</p>
+<p>Ensuite, nous avons produit un tableau presque équivalent que nous allons nommer <code>masses_se_bornes</code> et pour lequel nous allons modifier le nom des colonnes <code>y</code>, <code>ymin</code> et <code>ymax</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>temperature_se_bornes <span class="ot">&lt;-</span> temp_jour <span class="sc">|&gt;</span> </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_se</span>(temperature_max),</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(origin, month)) <span class="sc">|&gt;</span> </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">moyenne =</span> y,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">moyenne_moins_se =</span> ymin,</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">moyenne_plus_se =</span> ymax)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>temperature_se_bornes</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>masses_se_bornes <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_se</span>(body_mass_g),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(species, sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">moyenne =</span> y,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">moyenne_moins_se =</span> ymin,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">moyenne_plus_se =</span> ymax)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>masses_se_bornes</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 36 × 5
-   origin month moyenne moyenne_moins_se moyenne_plus_se
-   &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
- 1 EWR        1    5.69             4.55            6.82
- 2 EWR        2    4.74             3.97            5.50
- 3 EWR        3    8.20             7.55            8.85
- 4 EWR        4   16.4             15.5            17.4 
- 5 EWR        5   22.2             21.1            23.2 
- 6 EWR        6   27.4             26.6            28.1 
- 7 EWR        7   31.0             30.3            31.7 
- 8 EWR        8   27.8             27.4            28.2 
- 9 EWR        9   24.6             23.9            25.3 
-10 EWR       10   20.0             19.1            20.9 
-# ℹ 26 more rows</code></pre>
+<pre><code># A tibble: 6 × 5
+  species   sex    moyenne moyenne_moins_se moyenne_plus_se
+  &lt;fct&gt;     &lt;fct&gt;    &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
+1 Adelie    male     4043.            4003.           4084.
+2 Adelie    female   3369.            3337.           3400.
+3 Gentoo    female   4680.            4643.           4717.
+4 Gentoo    male     5485.            5445.           5525.
+5 Chinstrap female   3527.            3478.           3576.
+6 Chinstrap male     3939.            3877.           4001.</code></pre>
 </div>
 </div>
-<p>Nous avons ensuite calculé manuellement des intervalles de confiance approximatifs, avec la fonction <code>mean_se()</code> et son argument <code>mult = 1.96</code>. Là encore, nous allons stocker cet objet dans un tableau nommé <code>temperatures_ci_approx</code>, et nous allons modifier le nom des colonnes <code>y</code>, <code>ymin</code>, et <code>ymax</code> :</p>
+<p>Nous avons ensuite calculé manuellement des intervalles de confiance approximatifs, avec la fonction <code>mean_se()</code> et son argument <code>mult = 1.96</code>. Là encore, nous allons stocker cet objet dans un tableau nommé <code>masses_ci_approx</code>, et nous allons modifier le nom des colonnes <code>y</code>, <code>ymin</code>, et <code>ymax</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>temperature_ci_approx <span class="ot">&lt;-</span> temp_jour <span class="sc">|&gt;</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_se</span>(temperature_max, <span class="at">mult =</span> <span class="fl">1.96</span>),</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(origin, month)) <span class="sc">|&gt;</span> </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">moyenne =</span> y,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_inf =</span> ymin,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_sup =</span> ymax)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>temperature_ci_approx</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>masses_ci_approx <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_se</span>(body_mass_g, <span class="at">mult =</span> <span class="fl">1.96</span>), </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(species, sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">moyenne =</span> y,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_inf =</span> ymin,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_sup =</span> ymax)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>masses_ci_approx</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 36 × 5
-   origin month moyenne ci_borne_inf ci_borne_sup
-   &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
- 1 EWR        1    5.69         3.46         7.92
- 2 EWR        2    4.74         3.24         6.23
- 3 EWR        3    8.20         6.93         9.47
- 4 EWR        4   16.4         14.6         18.2 
- 5 EWR        5   22.2         20.1         24.2 
- 6 EWR        6   27.4         25.8         28.9 
- 7 EWR        7   31.0         29.6         32.3 
- 8 EWR        8   27.8         27.0         28.5 
- 9 EWR        9   24.6         23.2         26.0 
-10 EWR       10   20.0         18.3         21.7 
-# ℹ 26 more rows</code></pre>
+<pre><code># A tibble: 6 × 5
+  species   sex    moyenne ci_borne_inf ci_borne_sup
+  &lt;fct&gt;     &lt;fct&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+1 Adelie    male     4043.        3964.        4123.
+2 Adelie    female   3369.        3307.        3431.
+3 Gentoo    female   4680.        4607.        4752.
+4 Gentoo    male     5485.        5406.        5563.
+5 Chinstrap female   3527.        3431.        3623.
+6 Chinstrap male     3939.        3817.        4061.</code></pre>
 </div>
 </div>
-<p>Enfin, nous avons calculé les intervalles de confiance avec une fonction spécialement dédiée à cette tâche : la fonction <code>mean_cl_normal()</code>. Nous allons stocker cet objet dans un tableau nommé <code>temperatures_ci</code>, et nous allons modifier le nom des colonnes <code>y</code>, <code>ymin</code>, et <code>ymax</code> :</p>
+<p>Enfin, nous avons calculé les intervalles de confiance avec une fonction spécialement dédiée à cette tâche : la fonction <code>mean_cl_normal()</code>. Nous allons stocker cet objet dans un tableau nommé <code>masses_ci</code>, et nous allons modifier le nom des colonnes <code>y</code>, <code>ymin</code>, et <code>ymax</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>temperature_ci <span class="ot">&lt;-</span> temp_jour <span class="sc">|&gt;</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_cl_normal</span>(temperature_max),</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(origin, month)) <span class="sc">|&gt;</span> </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">moyenne =</span> y,</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_inf =</span> ymin,</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_sup =</span> ymax)</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>temperature_ci</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>masses_ci <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_cl_normal</span>(body_mass_g), </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">.by =</span> <span class="fu">c</span>(species, sex)) <span class="sc">|&gt;</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">moyenne =</span> y,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_inf =</span> ymin,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci_borne_sup =</span> ymax)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>masses_ci</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 36 × 5
-   origin month moyenne ci_borne_inf ci_borne_sup
-   &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
- 1 EWR        1    5.69         3.36         8.01
- 2 EWR        2    4.74         3.17         6.30
- 3 EWR        3    8.20         6.88         9.53
- 4 EWR        4   16.4         14.6         18.3 
- 5 EWR        5   22.2         20.1         24.2 
- 6 EWR        6   27.4         25.8         28.9 
- 7 EWR        7   31.0         29.5         32.4 
- 8 EWR        8   27.8         27.0         28.6 
- 9 EWR        9   24.6         23.1         26.0 
-10 EWR       10   20.0         18.2         21.8 
-# ℹ 26 more rows</code></pre>
+<pre><code># A tibble: 6 × 5
+  species   sex    moyenne ci_borne_inf ci_borne_sup
+  &lt;fct&gt;     &lt;fct&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+1 Adelie    male     4043.        3963.        4124.
+2 Adelie    female   3369.        3306.        3432.
+3 Gentoo    female   4680.        4606.        4754.
+4 Gentoo    male     5485.        5405.        5565.
+5 Chinstrap female   3527.        3428.        3627.
+6 Chinstrap male     3939.        3813.        4065.</code></pre>
 </div>
 </div>
 <p>Maintenant, si l’on compare les 2 tableaux contenant les calculs d’intervalles de confiance de la moyenne, on constate que les résultats sont très proches :</p>
 <div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>temperature_ci_approx</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>temperature_ci</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>masses_ci_approx</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>masses_ci</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<pre><code># A tibble: 36 × 5
-   origin month moyenne ci_borne_inf ci_borne_sup
-   &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
- 1 EWR        1    5.69         3.46         7.92
- 2 EWR        2    4.74         3.24         6.23
- 3 EWR        3    8.20         6.93         9.47
- 4 EWR        4   16.4         14.6         18.2 
- 5 EWR        5   22.2         20.1         24.2 
- 6 EWR        6   27.4         25.8         28.9 
- 7 EWR        7   31.0         29.6         32.3 
- 8 EWR        8   27.8         27.0         28.5 
- 9 EWR        9   24.6         23.2         26.0 
-10 EWR       10   20.0         18.3         21.7 
-# ℹ 26 more rows</code></pre>
+<pre><code># A tibble: 6 × 5
+  species   sex    moyenne ci_borne_inf ci_borne_sup
+  &lt;fct&gt;     &lt;fct&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+1 Adelie    male     4043.        3964.        4123.
+2 Adelie    female   3369.        3307.        3431.
+3 Gentoo    female   4680.        4607.        4752.
+4 Gentoo    male     5485.        5406.        5563.
+5 Chinstrap female   3527.        3431.        3623.
+6 Chinstrap male     3939.        3817.        4061.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<pre><code># A tibble: 36 × 5
-   origin month moyenne ci_borne_inf ci_borne_sup
-   &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
- 1 EWR        1    5.69         3.36         8.01
- 2 EWR        2    4.74         3.17         6.30
- 3 EWR        3    8.20         6.88         9.53
- 4 EWR        4   16.4         14.6         18.3 
- 5 EWR        5   22.2         20.1         24.2 
- 6 EWR        6   27.4         25.8         28.9 
- 7 EWR        7   31.0         29.5         32.4 
- 8 EWR        8   27.8         27.0         28.6 
- 9 EWR        9   24.6         23.1         26.0 
-10 EWR       10   20.0         18.2         21.8 
-# ℹ 26 more rows</code></pre>
+<pre><code># A tibble: 6 × 5
+  species   sex    moyenne ci_borne_inf ci_borne_sup
+  &lt;fct&gt;     &lt;fct&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+1 Adelie    male     4043.        3963.        4124.
+2 Adelie    female   3369.        3306.        3432.
+3 Gentoo    female   4680.        4606.        4754.
+4 Gentoo    male     5485.        5405.        5565.
+5 Chinstrap female   3527.        3428.        3627.
+6 Chinstrap male     3939.        3813.        4065.</code></pre>
 </div>
 </div>
 </div>
