@@ -1,4 +1,4 @@
-# R et RStudio : les bases {#sec-basics}
+# `R` et `RStudio` : les bases {#sec-basics}
 
 
 ## Préambule

@@ -188,7 +188,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-R-basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R et RStudio : les bases</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><code>R</code> et <code>RStudio</code> : les bases</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -374,7 +374,7 @@ Important
 </div>
 <p>La visualisation des données est en outre un excellent point de départ quand on découvre la programmation sous <code>R</code>, car ses bénéfices sont clairs et immédiats : vous pouvez créer des graphiques élégants et informatifs qui vous aident à comprendre les données. Dans ce chapitre, vous allez donc plonger dans l’art de la visualisation des données, en apprenant la structure de base des graphiques réalisés avec <code>ggplot2</code> qui permettent de transformer des données numériques et catégorielles en graphiques.</p>
 <p>Toutefois, la visualisation seule ne suffit généralement pas. Il est en effet souvent nécessaire de transformer les données pour produire des représentations plus parlantes. Ainsi, dans le <a href="05-DataWrangling.html"><span>Chapitre&nbsp;5</span></a>, vous découvrirez les fonctions clés qui vous permettront de sélectionner des variables importantes, de filtrer des observations, de créer de nouvelles variables, ou d’en modifier la forme.</p>
-<p>Ce n’est qu’en combinant les transformations de données et représentations graphiques d’une part, avec votre curiosité et votre esprit critique d’autre part, que vous serez véritablement en mesure de réaliser une analyse exploratoire de vos données à la fois utile et pertinente. C’est la seule façon d’identifier des questions intéressantes sur vos données, afin de tenter d’y répondre par les analyses statistiques et la modélisation qui seront abordées lors des prochains semestres.</p>
+<p>Ce n’est qu’en combinant les transformations de données et représentations graphiques d’une part, avec votre curiosité et votre esprit critique d’autre part, que vous serez véritablement en mesure de réaliser une analyse exploratoire de vos données à la fois utile et pertinente. C’est la seule façon d’identifier des questions intéressantes sur vos données, afin de tenter d’y répondre par les analyses statistiques et la modélisation.</p>
 </section>
 <section id="prérequis" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="prérequis"><span class="header-section-number">3.2</span> Prérequis</h2>
@@ -1708,9 +1708,9 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <ol type="1">
 <li>les histogrammes facettés</li>
 <li>les stripcharts</li>
-<li>les boîtes à moustaches, que nous détaillerons au semestre 4. Nous donnerons ici un simple exemple sans expliquer la signification de tous les éléments de ces graphiques</li>
+<li>les boîtes à moustaches. Nous donnerons ici un simple. La signification de tous les éléments de ces graphiques sera fournie à la <a href="06-EDA.html#sec-reframe"><span>Section&nbsp;6.2</span></a></li>
 </ol>
-<p>Pour illustrer ces différentes possibilités, intéressons nous maintenant à la relation qui existe entre l’épaisseur du bec des manchots (<code>bill_depth_mm</code>, variable numérique) et l’espèce (<code>species</code>, variable catogorielle ou facteur)</p>
+<p>Pour illustrer ces différentes possibilités, intéressons nous maintenant à la relation qui existe entre l’épaisseur du bec des manchots (<code>bill_depth_mm</code>, variable numérique) et l’espèce (<code>species</code>, variable catégorielle ou facteur)</p>
 <section id="sec-factorhisto" class="level3" data-number="3.9.1">
 <h3 data-number="3.9.1" class="anchored" data-anchor-id="sec-factorhisto"><span class="header-section-number">3.9.1</span> Histogrammes “facettés”</h3>
 <p>La syntaxe est ici tout à fait classique. Pour réaliser un histogramme, on place la variable numérique sur l’axe des abscisses. La variable catégorielle nous servira à créer les sous graphiques, ici, un par espèce. Afin de faciliter les comparaisons, nous placerons les sous-graphiques les uns sous les autres en spécifiant <code>ncol = 1</code>. Enfin, l’aspect général sera amélioré en modifiant quelques caractéristiques esthétiques :</p>
@@ -2597,7 +2597,7 @@ Important
 </div>
 <p><embed src="images/fonts2.pdf" class="img-fluid"></p>
 <p>Le choix d’un thème et d’une police adaptés doivent vous permettre de faire des graphiques originaux et clairs. Rappelez-vous toujours que vos choix en matière de graphiques doivent avoir pour objectif principal de rendre les tendances plus faciles à décrypter pour un lecteur non familier de vos données. C’est un outil de communication au même titre que n’importe quel paragraphe d’un rapport ou compte-rendu. Et comme pour un paragraphe, la première version d’un graphique est rarement la bonne.</p>
-<p>Vous devriez donc maintenant être bien armés pour produire 95% des graphiques dont vous aurez besoin tout au long de votre cursus universitaire. Toutefois, un point important a pour l’instant été omis : l’ajout de barres d’erreurs sur vos graphiques. Nous verrons comment faire cela au prochain semestre, après avoir appris à manipuler efficacement des tableaux de données avec les packages <code>tidyr</code> et <code>dplyr</code>.</p>
+<p>Vous devriez donc maintenant être bien armés pour produire 95% des graphiques dont vous aurez besoin tout au long de votre cursus universitaire. Toutefois, un point important a pour l’instant été omis : l’ajout de barres d’erreurs sur vos graphiques. Nous verrons comment faire cela au <a href="08-ErrorBars.html"><span>Chapitre&nbsp;8</span></a>, après avoir appris à manipuler efficacement des tableaux de données avec les packages <code>tidyr</code> et <code>dplyr</code> dans les <a href="04-Tidy-Data.html">chapitres&nbsp;<span>4</span></a> et <a href="05-DataWrangling.html"><span>5</span></a> respectivement.</p>
 <p>Quoi qu’il en soit, il est maintenant attendu de vous que vous utilisez <code>R</code> et ce que vous avez appris de <code>ggplot2</code> pour produire tous les graphiques que vous serez amenés à intégrer à vos comptes-rendus de TP et à vos rapports.</p>
 </section>
 </section>

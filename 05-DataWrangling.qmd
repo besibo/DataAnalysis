@@ -736,7 +736,7 @@ knitr::include_graphics('images/summarize.png')
 
 La @fig-summarise2 ci-dessus indique comment travaille la fonction `summarise()` : elle prend plusieurs valeurs (potentiellement, un très grand nombre) et les réduit à **une unique valeur qui les résume**. La valeur qui résume les données est choisie par l'utilisateur. Il peut s'agir par exemple d'un calcul de moyenne, de quartile ou de variance, il peut s'agir de calculer une somme, ou d'extraire la valeur maximale ou minimale, ou encore, il peut tout simplement s'agir de déterminer un nombre d'observations. Mais le fonctionnement est toujours le même : la fonction `summarise()` ne renvoie qu'une unique valeur pour une variable donnée (ou pour chaque modalité d'une variable catégorielle).
 
-Ainsi, pour connaître la moyenne de la longueur du bec des manchots de l'île de Palmer, il suffit d'utiliser le tableau `penguins` du package `palmerpenguins` et sa variable `bill_length_mm` que nous avons déjà utilisée au semestre 3 :
+Ainsi, pour connaître la moyenne de la longueur du bec des manchots de l'île de Palmer, il suffit d'utiliser le tableau `penguins` du package `palmerpenguins` et sa variable `bill_length_mm` que nous avons déjà utilisée plus tôt :
 
 ```{r}
 #| tidy: false
