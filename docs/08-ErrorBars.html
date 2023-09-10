@@ -437,7 +437,7 @@ div.csl-indent {
 <li>soit à l’intervalle de confiance à 95% de la moyenne</li>
 </ul>
 <p>Puisque deux choix sont possibles, il sera important de préciser systématiquement dans la légende du graphique, la nature des barres représentées. Revenons aux données de masses corporelles des manchots, et commençons par visualiser les masses moyennes avec les erreurs standards. Pour cela, je reprends le tableau <code>masses_se</code> créé précédemment :</p>
-<div class="cell" data-fig.asp="1.4">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>masses_se <span class="sc">|&gt;</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> moyenne, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
@@ -489,7 +489,7 @@ div.csl-indent {
 </div>
 <p>Seule la spécification de <code>ymin</code> et <code>ymax</code> dans <code>geom_errorbar()</code> a changé puisque le tableau <code>masses_se_bornes</code> contient des variables différentes de celles du tableau <code>masses_se</code>.</p>
 <p>De la même façon, nous pouvons parfaitement faire apparaître, au lieu des erreurs standards, les intervalles de confiance à 95% de chaque masse moyenne. Il nous suffit pour cela d’utiliser le tableau <code>masses_ci</code> qui contient les valeurs de moyennes et des bornes supérieures et inférieures de ces intervalles :</p>
-<div class="cell" data-fig.asp="1.4">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>masses_ci <span class="sc">|&gt;</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> moyenne, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="st">"grey20"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
@@ -516,7 +516,7 @@ div.csl-indent {
 <section id="visualiser-lincertitude-les-boîtes-à-moustaches" class="level2" data-number="8.6">
 <h2 data-number="8.6" class="anchored" data-anchor-id="visualiser-lincertitude-les-boîtes-à-moustaches"><span class="header-section-number">8.6</span> Visualiser l’incertitude : les boîtes à moustaches</h2>
 <p>Outre les informations de position et de dispersion, les boîtes à moustaches permettent également de visualiser l’incertitude associée aux médianes. Il suffit pour cela d’ajouter l’argument <code>notch = TRUE</code> dans la fonction <code>geom_boxplot()</code> :</p>
-<div class="cell" data-fig.asp="1.4">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> body_mass_g, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
