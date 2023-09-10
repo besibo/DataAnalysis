@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Analyse de Données - 14&nbsp; Régression linéaire</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./15-PropTests.html" rel="next">
+<link href="./13-Correlation.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14-Regression.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Régression linéaire</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title"><span id="sec-regression" class="quarto-section-identifier"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Régression linéaire</span></span></h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analyse de Données</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/besibo/DataAnalysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Analyse-de-Données.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-RBasics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><code>R</code> et <code>RStudio</code> : les bases</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Dataset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Explorez votre premier jeu de données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-Visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualiser des données avec <code>ggplot2</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-TidyData.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-DataWrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler des tableaux avec <code>dplyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-EDA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploration statistique des données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Incertitude.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dispersion et incertitude</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ErrorBars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Visualiser l’incertitude et la dispersion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-OneSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Comparaison de la moyenne d’une population à une valeur théorique</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-TwoSamplePairedTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-TwoSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-ANOVA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-Correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-Regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Régression linéaire</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-PropTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Comparaison de proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#sec-packages6" id="toc-sec-packages6" class="nav-link active" data-scroll-target="#sec-packages6"><span class="header-section-number">14.1</span> Pré-requis</a></li>
+  <li><a href="#principe" id="toc-principe" class="nav-link" data-scroll-target="#principe"><span class="header-section-number">14.2</span> Principe</a></li>
+  <li><a href="#contexte" id="toc-contexte" class="nav-link" data-scroll-target="#contexte"><span class="header-section-number">14.3</span> Contexte</a></li>
+  <li><a href="#importation-et-mise-en-forme-des-données" id="toc-importation-et-mise-en-forme-des-données" class="nav-link" data-scroll-target="#importation-et-mise-en-forme-des-données"><span class="header-section-number">14.4</span> Importation et mise en forme des données</a></li>
+  <li><a href="#exploration-statistique-des-données" id="toc-exploration-statistique-des-données" class="nav-link" data-scroll-target="#exploration-statistique-des-données"><span class="header-section-number">14.5</span> Exploration statistique des données</a></li>
+  <li><a href="#exploration-graphique-des-données" id="toc-exploration-graphique-des-données" class="nav-link" data-scroll-target="#exploration-graphique-des-données"><span class="header-section-number">14.6</span> Exploration graphique des données</a></li>
+  <li><a href="#le-test-paramétrique" id="toc-le-test-paramétrique" class="nav-link" data-scroll-target="#le-test-paramétrique"><span class="header-section-number">14.7</span> Le test paramétrique</a>
+  <ul class="collapse">
+  <li><a href="#les-hypothèses" id="toc-les-hypothèses" class="nav-link" data-scroll-target="#les-hypothèses"><span class="header-section-number">14.7.1</span> Les hypothèses</a></li>
+  <li><a href="#réalisation-du-test" id="toc-réalisation-du-test" class="nav-link" data-scroll-target="#réalisation-du-test"><span class="header-section-number">14.7.2</span> Réalisation du test</a></li>
+  <li><a href="#conditions-dapplication" id="toc-conditions-dapplication" class="nav-link" data-scroll-target="#conditions-dapplication"><span class="header-section-number">14.7.3</span> Conditions d’application</a></li>
+  <li><a href="#interprétation-des-résultats" id="toc-interprétation-des-résultats" class="nav-link" data-scroll-target="#interprétation-des-résultats"><span class="header-section-number">14.7.4</span> Interprétation des résultats</a></li>
+  <li><a href="#intervalle-de-confiance-de-la-régression" id="toc-intervalle-de-confiance-de-la-régression" class="nav-link" data-scroll-target="#intervalle-de-confiance-de-la-régression"><span class="header-section-number">14.7.5</span> Intervalle de confiance de la régression</a></li>
+  </ul></li>
+  <li><a href="#lalternative-non-paramétrique" id="toc-lalternative-non-paramétrique" class="nav-link" data-scroll-target="#lalternative-non-paramétrique"><span class="header-section-number">14.8</span> L’alternative non paramétrique</a></li>
+  <li><a href="#exercices" id="toc-exercices" class="nav-link" data-scroll-target="#exercices"><span class="header-section-number">14.9</span> Exercices</a>
+  <ul class="collapse">
+  <li><a href="#datasaurus-et-anscombe" id="toc-datasaurus-et-anscombe" class="nav-link" data-scroll-target="#datasaurus-et-anscombe"><span class="header-section-number">14.9.1</span> Datasaurus et Anscombe</a></li>
+  <li><a href="#in-your-face" id="toc-in-your-face" class="nav-link" data-scroll-target="#in-your-face"><span class="header-section-number">14.9.2</span> In your face</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+<section id="sec-packages6" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="sec-packages6"><span class="header-section-number">14.1</span> Pré-requis</h2>
+<p>Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu <code>Session &gt; Restart R</code>). Inutile en revanche de créer un nouveau <code>Rproject</code> : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même <code>Rproject</code>. Comme toujours, consultez <a href="https://besibo.github.io/BiometrieS3/01-R-basics.html#sec-code">le livre en ligne du semestre 3</a> si vous ne savez plus comment faire.</p>
+<p>Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé <code>RStudio</code>), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d’utiliser :</p>
+<ul>
+<li>le <code>tidyverse</code> <span class="citation" data-cites="R-tidyverse">(<a href="references.html#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span>, qui comprend notamment le package <code>readr</code> <span class="citation" data-cites="R-readr">(<a href="references.html#ref-R-readr" role="doc-biblioref">Wickham, Hester, et Bryan 2023</a>)</span>, pour importer facilement des fichiers <code>.csv</code> au format <code>tibble</code>, le package <code>dplyr</code> <span class="citation" data-cites="R-dplyr">(<a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al. 2023</a>)</span>, pour manipuler des tableaux, et le package <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al. 2023</a>)</span> pour les représentations graphiques.</li>
+<li><code>skimr</code> <span class="citation" data-cites="R-skimr">(<a href="references.html#ref-R-skimr" role="doc-biblioref">Waring et al. 2022</a>)</span>, qui permet de calculer des résumés de données très informatifs.</li>
+<li><code>datasauRus</code> <span class="citation" data-cites="R-datasauRus">(<a href="references.html#ref-R-datasauRus" role="doc-biblioref">Davies, Locke, et D’Agostino McGowan 2022</a>)</span>, qui fournit plusieurs jeux de données fictifs que nous examinerons en guise d’exercices.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasauRus)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Vous aurez également besoin des jeux de données suivants, qu’il vous faut donc télécharger dans votre répertoire de travail :</p>
+<ul>
+<li><a href="data/plantbiomass.csv"><code>plantbiomass.csv</code></a></li>
+<li><a href="data/hockey.csv"><code>hockey.csv</code></a></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="principe" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="principe"><span class="header-section-number">14.2</span> Principe</h2>
+<p>La <strong>régression linéaire</strong> est une méthode qui fait partie de la famille des <strong>modèles linéaires</strong>, tout comme l’<strong>ANOVA</strong>. ANOVA et régression linéaires sont en effet deux méthodes très proches, et leur mise en œuvre dans <code>RStudio</code> présente de nombreuses similitudes, tant dans la syntaxe des fonctions que nous utiliserons, que dans la façon de vérifier les conditions d’application.</p>
+<p>La régression linéaire est une méthode souvent utilisée pour prédire les valeurs d’une variable numérique (appelée variable expliquée) à partir des valeurs d’une seconde variable 9appelée variable explicative). Par exemple, le nuage de points de la figure ci-dessous montre comment la diversité génétique dans une population humaine locale peut être prédite par sa distance de dispersion depuis l’Est africain en ajustant une droite aux données <span class="citation" data-cites="whitlock2015">(d’après <a href="references.html#ref-whitlock2015" role="doc-biblioref">Whitlock et Schluter 2015</a>)</span>. L’homme moderne est apparu en Afrique et nos ancêtres ont perdu un peu de diversité génétique à chaque étape de leur colonisation de nouveaux territoires.</p>
+<p><img src="images/genetics.jpg" class="img-fluid"></p>
+<p>Contrairement à la corrélation, ici, on n’examine pas seulement une éventuelle liaison entre 2 variables numériques : on suppose qu’une variable peut être (en partie) expliquée par une autre. Nous aurons donc à distinguer les variables expliquées (ou dépendantes) qui figureront sur l’axe des ordonnées et seront nos variables prédites, et les variables explicatives (ou indépendantes) qui figureront sur l’axe des abscisses et seront les prédicteurs.</p>
+<p>Contrairement à la corrélation qui, comme nous l’avons expliqué en détail, ne permet pas d’aborder les questions de causalité, lorsque l’on s’intéresse à la régression linéaire, on essaie au contraire de prédire ou d’expliquer les variations de la variable expliquée par celles de la variable explicative. En d’autres termes, on considère que les variations de la variable explicative sont au moins en partie la cause des variations de la variable expliquée.</p>
+<p>Lorsque l’on s’intéresse à la régression linéaire, on considère que la relation qui lie les deux variables est linéaire, et on souhaite <strong>quantifier l’intensité de cette relation</strong> (quand la variable explicative augmente d’une unité, de combien d’unité la variable expliquée augmente ou diminue-t-elle ?). Nous allons voir maintenant comment mettre en œuvre cette méthode dans <code>RStudio</code>.</p>
+</section>
+<section id="contexte" class="level2 page-columns page-full" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="contexte"><span class="header-section-number">14.3</span> Contexte</h2>
+<div class="page-columns page-full"><p>Les activités humaines réduisent le nombre d’espèces dans un grand nombre d’écosystèmes à la surface du globe. Est-ce que cette diminution du nombre d’espèces affecte le fonctionnement de base des écosystèmes ? Où est-ce qu’au contraire, les espèces végétales sont majoritairement interchangeables, les fonctions écologique des espèces disparues<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> pouvant être assurées par les espèces toujours présentes ?</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;par exemple, la production d’O<span class="math inline">\(_2\)</span> et la fixation de CO<span class="math inline">\(_2\)</span>, la dépollution des sols, leur fixation, la protection contre les inondations et l’érosion…</p></li></div></div>
+<p>Pour tenter de répondre à cette question, <span class="citation" data-cites="tilman2006">Tilman, Reich, et Knops (<a href="references.html#ref-tilman2006" role="doc-biblioref">2006</a>)</span> ont ensemencé 161 parcelles de 9 mètres sur 9 mètres dans la réserve de Cedar Creek (Minesota, USA). Ils ont utilisé un nombre variable d’espèces typiques des prairies et ont mesuré la production de biomasse de chaque parcelle pendant 10 ans. Des lots de 1, 2, 4, 8 ou 16 plantes pluriannuelles (choisies au hasard parmi une liste de 18 espèces possibles) ont été assignés au hasard dans chacune des 161 parcelles. À l’issue des 10 années d’étude, les chercheurs ont mesuré un indice de stabilité de la biomasse en divisant la moyenne des biomasses sur 10 ans, par l’écart-type de ces mêmes biomasses.</p>
+</section>
+<section id="importation-et-mise-en-forme-des-données" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="importation-et-mise-en-forme-des-données"><span class="header-section-number">14.4</span> Importation et mise en forme des données</h2>
+<p>Les données de cette expérience sont disponibles dans le fichier <a href="data/plantbiomass.csv"><code>plantbiomass.csv</code></a>.</p>
+<p>Comme toujours, on importe les données et on commence par un examen visuel afin de détecter les éventuels problèmes et pour savoir où l’on va.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plant</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 161 × 2
+   nSpecies biomassStability
+      &lt;dbl&gt;            &lt;dbl&gt;
+ 1        1             2.01
+ 2        1             1.91
+ 3        1             1.89
+ 4        1             1.86
+ 5        1             1.74
+ 6        1             1.66
+ 7        1             1.57
+ 8        1             1.48
+ 9        1             1.48
+10        1             1.45
+# ℹ 151 more rows</code></pre>
+</div>
+</div>
+<p>Ce premier examen nous montre que nous disposons bien de 161 observations pour 2 variables : le nombre d’espèces présentes dans la parcelle pendant 10 ans, et l’indice de stabilité de la biomasse de chaque parcelle. Visiblement, les données sont au bon format, on dispose bien de toutes les variables dont on a besoin et leurs noms sont parlants. Nous n’aurons donc pas besoin de modifier quoi que ce soit dans ces données.</p>
+</section>
+<section id="exploration-statistique-des-données" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="exploration-statistique-des-données"><span class="header-section-number">14.5</span> Exploration statistique des données</h2>
+<p>Comme toujours, on examine quelques statistiques descriptives de position et de dispersion (voir d’incertitude), pour se faire un idée de la forme des données et pour repérer les éventuelles données manquantes ou valeurs aberrantes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(plant)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Data Summary ────────────────────────
+                           Values
+Name                       plant 
+Number of rows             161   
+Number of columns          2     
+_______________________          
+Column type frequency:           
+  numeric                  2     
+________________________         
+Group variables            None  
+
+── Variable type: numeric ──────────────────────────────────────────────────────
+  skim_variable    n_missing complete_rate mean    sd    p0  p25  p50  p75  p100
+1 nSpecies                 0             1 6.32 5.64  1     2    4    8    16   
+2 biomassStability         0             1 1.41 0.394 0.293 1.12 1.39 1.65  2.76
+  hist 
+1 ▇▁▂▁▃
+2 ▁▆▇▃▁</code></pre>
+</div>
+</div>
+<p>Ce premier examen nous montre que nous n’avons aucune données manquantes et que l’indice de stabilité a une distribution à peu près symétrique et qu’il varie d’un peu plus de 0.3 à près de 2.8. Pour en apprendre un peu plus, nous pouvons examiner les données en groupes. Ici, la variable <code>nSpecies</code> est bien une variable numérique, mais elle prend seulement quelques valeurs entières (1, 2, 4, 8 ou 16 espèces). Il est donc possible de regarder les valeurs de stabilité de biomasse pour chaque nombre d’espèces dans les parcelles:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plant <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(nSpecies) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Data Summary ────────────────────────
+                           Values    
+Name                       Piped data
+Number of rows             161       
+Number of columns          2         
+_______________________              
+Column type frequency:               
+  numeric                  1         
+________________________             
+Group variables            nSpecies  
+
+── Variable type: numeric ──────────────────────────────────────────────────────
+  skim_variable    nSpecies n_missing complete_rate mean    sd    p0   p25  p50
+1 biomassStability        1         0             1 1.21 0.388 0.728 0.880 1.10
+2 biomassStability        2         0             1 1.28 0.360 0.293 1.09  1.32
+3 biomassStability        4         0             1 1.31 0.314 0.756 1.10  1.35
+4 biomassStability        8         0             1 1.50 0.251 0.928 1.32  1.48
+5 biomassStability       16         0             1 1.71 0.403 1.08  1.39  1.66
+   p75 p100 hist 
+1 1.48 2.01 ▇▅▃▂▂
+2 1.51 2.00 ▁▃▇▇▂
+3 1.51 2.00 ▅▇▇▇▁
+4 1.61 2.05 ▁▅▇▂▂
+5 1.96 2.76 ▇▆▆▃▂</code></pre>
+</div>
+</div>
+<p>Cette fois, on obtient des informations pour chaque groupe de parcelles contenant un nombre d’espèces spécifique. On constate par exemple que la moyenne de l’indice de stabilité de la biomasse augmente très peu entre les catégories 1, 2 et 4 espèces par parcelle, mais que l’augmentation semble plus marquée pour 8 et 16 espèces par parcelle. Tous les écarts-types semblent très proches. Les parcelles avec 1 et 16 espèces en particulier présentent des histogrammes nettement asymétriques.</p>
+<p>Comme pour la corrélation, il est inutile ici de calculer des indices d’imprécision. Ça n’est pas la moyenne de ces variables qui nous intéresse, mais la relation entre elles. Nous serons en revanche amenés à calculer des intervalles de confiances à 95% des paramètres de la régression linéaire, puisque ce sont eux qui nous permettront de qualifier (et quantifier) la relation entre les 2 variables.</p>
+</section>
+<section id="exploration-graphique-des-données" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="exploration-graphique-des-données"><span class="header-section-number">14.6</span> Exploration graphique des données</h2>
+<p>Visualiser les données est toujours aussi indispensable. Ici, comme pour la corrélation, on commence par un nuage de points pour visualiser les données et la forme de leur relation :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plant <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> nSpecies, <span class="at">y =</span> biomassStability)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Nombre d'espèces par parcelle"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Indice de stabilité de la biomasse"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="14-Regression_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Ce graphique nous apprend que contrairement à la plupart des méthodes statistiques vues jusqu’ici, il n’est pas nécessaire que les données des variables soient distribuées selon une loi Normale. Ici, nous avons des données qui sont tout sauf normales pour la variable explicative puisque nous avons seulement les entiers 1, 2, 4, 8 et 16. Un histogramme ou une courbe de densité montre que la distribution de cette variable est très loin de la Normalité :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plant <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> nSpecies)) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"firebrick2"</span>, <span class="at">adjust =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Nombre d'espèces par parcelle"</span>, </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Densité"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="14-Regression_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Cela n’est pas du tout problématique : comme pour l’ANOVA, les conditions d’application porteront sur les <strong>résidus de la régression</strong>, pas sur les variables elles-mêmes. Comme pour l’ANOVA, ce sont les résidus de la régression qui devront suivre une distribution Normale, pas les variables de départ.</p>
+<p>On peut visualiser dès maintenant la droite de régression linéaire qui permet de lier ces deux variables grâce à la fonction <code>geom_smooth(method = "lm", se = FALSE</code>)` :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plant <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> nSpecies, <span class="at">y =</span> biomassStability)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Nombre d'espèces par parcelle"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Transformation log</span><span class="sc">\n</span><span class="st"> de l'indice de stabilité de la biomasse"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="14-Regression_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>L’argument <code>method = "lm"</code> indique qu’on souhaite ajouter une droite de régression sur le graphique, et <code>se = FALSE</code> permet de ne faire apparaître que la droite de régression, sans son intervalle d’incertitude. Nous reviendrons sur la notion d’incertitude de la régression un peu plus loin.</p>
+<p>À supposer que nous ayons le droit d’effectuer une régression linéaire (ce qu’il faudra vérifier avec les conditions d’application, <strong>après</strong> avoir fait la régression), la pente devrait être positive.</p>
+</section>
+<section id="le-test-paramétrique" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="le-test-paramétrique"><span class="header-section-number">14.7</span> Le test paramétrique</h2>
+<section id="les-hypothèses" class="level3" data-number="14.7.1">
+<h3 data-number="14.7.1" class="anchored" data-anchor-id="les-hypothèses"><span class="header-section-number">14.7.1</span> Les hypothèses</h3>
+<p>À une exception près, la procédure de régression linéaire est en tous points identique à l’analyse de variance. Quand on fait une ANOVA, la variable expliquée est numérique et la variable explicative est catégorielle (c’est un facteur). Dans <code>RStudio</code>, la formule ressemble donc à ceci :</p>
+<p><span class="math display">\[Y \sim F\]</span> Quand on fait une régression linéaire, les 2 variables sont numériques. La formule dans `RStudio ressemble donc à ça :</p>
+<p><span class="math display">\[Y \sim X\]</span> Dans ces formules, <code>Y</code> est la variable numérique expliquée, <code>F</code> est une variable catégorielle (ou facteur) et <code>X</code> est une variable numérique explicative. La forme est donc très proche, et tout le reste est identique : on exprime la variable expliquée en fonction de la variable explicative et on vérifie après coup, grâce aux résidus, si nous avions le droit ou non de faire l’analyse.</p>
+<p>La différence majeure entre ANOVA et régression linéaire concerne les hypothèses du test. Faire une régression linéaire revient en effet à effectuer en même temps 2 tests d’hypothèses indépendants : le premier concerne l’ordonnée à l’origine de la droite de régression et le second concerne la pente de la droite de régression. On ne parle donc plus de comparer des moyennes entre groupes : on cherche à déterminer si la pente et l’ordonnée à l’origine de la meilleure droite de régression possible valent zéro ou non. Les hypothèses de ces tests sont les suivantes :</p>
+<p><em>Pour l’ordonnée à l’origine</em> (“intercept” en anglais) :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : l’ordonnée à l’origine de la droite de régression vaut 0 dans la population générale.</li>
+<li>H<span class="math inline">\(_1\)</span> : l’ordonnée à l’origine de la droite de régression est différente de 0 dans la population générale.</li>
+</ul>
+<p><em>Pour la pente</em> (“slope” en anglais) :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la pente de la droite de régression vaut 0 dans la population générale. Autrement dit, il n’y a pas de lien entre les deux variables.</li>
+<li>H<span class="math inline">\(_1\)</span> : la pente de la droite de régression est différente de 0 dans la population générale. Autrement dit, il y a bien un lien entre les deux variables étudiées.</li>
+</ul>
+<p>Vous notez qu’ici, comme pour tous les autres tests statistiques traités dans ce livre en ligne, les tests ne permettent que de rejeter ou non les hypothèses nulles. Si on rejette ces hypothèses, le test ne nous dit rien de la valeur de la pente et de l’ordonnée à l’origine. On sait que ces paramètres sont significativement différents de zéro, mais rien de plus. Il faudra alors recourir à l’estimation pour déterminer la valeur de ces paramètres, ainsi que leurs intervalles d’incertitude.</p>
+</section>
+<section id="réalisation-du-test" class="level3" data-number="14.7.2">
+<h3 data-number="14.7.2" class="anchored" data-anchor-id="réalisation-du-test"><span class="header-section-number">14.7.2</span> Réalisation du test</h3>
+<p>Pour faire une régression linéaire dans <code>RStudio</code>, on utilise la fonction <code>lm()</code> (comme <strong>l</strong>inear <strong>m</strong>odel). Et comme pour l’ANOVA, les résultats de l’analyse doivent être stockés dans un objet puisque cet objet contiendra tous les éléments utiles pour vérifier les conditions d’application :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>reg1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomassStability <span class="sc">~</span> nSpecies, <span class="at">data =</span> plant)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Comme pour l’ANOVA, on affiche les résultats de ces tests à l’aide de la fonction <code>summary()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg1)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = biomassStability ~ nSpecies, data = plant)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.97148 -0.25984 -0.00234  0.23100  1.03237 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 1.198294   0.041298  29.016  &lt; 2e-16 ***
+nSpecies    0.032926   0.004884   6.742 2.73e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3484 on 159 degrees of freedom
+Multiple R-squared:  0.2223,    Adjusted R-squared:  0.2174 
+F-statistic: 45.45 on 1 and 159 DF,  p-value: 2.733e-10</code></pre>
+</div>
+</div>
+<p>Dans la forme, ces résultats sont très proches de ceux de l’ANOVA. La rubrique <code>Residuals</code> donne des informations sommaires sur les résidus. Ces informations sont utiles puisque les résidus serviront à vérifier les conditions d’application de la régression. À ce stade, on regarde surtout si la médiane des résidus est proche de 0 et si les résidus sont à peu près symétriques (les premier et troisième quartiles ont à peu près la même valeur absolue, idem pour le minimum et le maximum).</p>
+<p>Le tableau <code>Coefficients</code> est celui qui nous intéresse le plus puisqu’il nous fournit, outre la réponse aux 2 tests, les estimations pour l’ordonnée à l’origine et la pente de la droite de régression.</p>
+<p>Avant d’aller plus loin dans l’interprétation de ces résultats, il nous faut déterminer si nous avions bel et bien le droit de réaliser cette régression, en vérifiant si ses conditions d’application sont remplies.</p>
+</section>
+<section id="conditions-dapplication" class="level3" data-number="14.7.3">
+<h3 data-number="14.7.3" class="anchored" data-anchor-id="conditions-dapplication"><span class="header-section-number">14.7.3</span> Conditions d’application</h3>
+<p>Les conditions d’application de la régression sont les mêmes que celles de l’ANOVA. Je vous renvoie donc à la <a href="12-ANOVA.html#sec-caanova"><span>Section&nbsp;12.6.2</span></a> pour savoir quelles sont ces conditions d’application et comment les vérifier. J’insiste bien sur le fait que les conditions d’application sont absolument identiques à celles de l’ANOVA. Si je fais ici l’économie de la description, vous ne devez <strong>jamais faire l’économie</strong> de la vérification des conditions d’application.</p>
+<div class="cell" data-fig.asp="1">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reg1)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="14-Regression_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>C’est seulement après avoir réalisé, examiné et commenté ces graphiques que vous serez en mesure de dire si oui ou non vous aviez le droit de faire la régression linéaire, et donc d’en interpréter les résultats.</p>
+<p>Ici, les conditions d’application semblent tout à fait remplies :</p>
+<ol type="1">
+<li>Les deux graphiques de gauche confirment que les résidus sont homogènes. En particulier, sur le premier graphique (en haut à gauche), la ligne rouge est presque parfaitement horizontale, il y a à peu près autant de résidus au-dessus qu’en dessous de la ligne pointillée, et les résidus pourraient rentrer dans une boîte ayant la même hauteur d’un bout à l’autre du graphique (pas d’effet “entonnoir” ou “nœud papillon”).</li>
+<li>Le graphique quantile-quantile (en haut à droite), montre des points qui sont presque parfaitement alignés sur la droite pointillée, indiquant des résidus distribués selon une distribution Normale.</li>
+</ol>
+<p>On pourrait vérifier ces éléments avec des tests statistiques (encore une fois, reportez vous à la <a href="12-ANOVA.html#sec-caanova"><span>Section&nbsp;12.6.2</span></a> si vous ne vous rappelez plus comment faire), mais c’est ici inutile tant les conditions semblent bien respectées.</p>
+<p>Le dernier graphique (en bas à droite, “Residuals vs Leverage”) ne permet pas de vérifier les conditions d’application à proprement parler, mais permet de repérer des points ayant un poids trop important dans l’analyse. Ces points devraient être retirés s’il y en a (ce qui n’est pas le cas ici), car leur influence est tellement forte qu’ils faussent grandement les résultats de l’analyse. Pour voir à quoi ce graphique ressemble quand de tels points sont présents, je représente ci-dessous un exemple fictif.</p>
+<p>Imaginez un jeu de données dans lequel absolument aucune tendance n’est présente. Le nuage de points d’un tel jeu de données devrait être approximativement circulaire, avec une droite de régression presque horizontale, indiquant une absence de lien entre les 2 variables étudiées <code>x</code> et <code>y</code> :</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="14-Regression_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Imaginez maintenant qu’on ajoute à ces données un unique point (en rouge sur le graphique), très éloigné des autres :</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="14-Regression_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>La seule présence de ce point modifierait très fortement les résultats de la régression linéaire :</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="14-Regression_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Sans ce point supplémentaire, la droite de régression a une pente légèrement négative, avec ce point, la pente est fortement positive. Il n’est pas normal qu’une observation unique prenne le pas sur toutes les autres (il y en a 50) et qu’elle affecte autant les résultats de la régression. la situation est ici caricaturale, et on voit bien qu’il faudrait retirer la valeur atypique pour obtenir des résultats censés. Les points ayant une influence démesurée sur les résultats ne sont pas toujours aussi évidents à repérer. C’est justement à cela que sert le graphique “Residuals vs Leverage” :</p>
+<div class="cell" data-fig.asp="1">
+<div class="cell-output-display">
+<p><img src="14-Regression_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Sur ce graphique, les points qui apparaissent au-delà des lignes pointillées (en haut à droite ou en bas à gauche du graphique) sont ceux qui ont une influence trop forte sur les résultats et qu’il faudrait donc retirer des données pour obtenir des résultats plus représentatifs de la tendance observée pour la majorité des points.</p>
+<p>Si je reviens à nos données de stabilité des biomasses en fonction du nombre d’espèces par parcelles, les lignes courbes pointillées qui délimitent les zones “à problème” ne sont même pas visibles sur le graphique. Nous n’avons donc pas de points problématiques.</p>
+<p>Au final, les conditions d’application de la régression sont parfaitement vérifiées et nous pouvons donc en interpréter les résultats.</p>
+</section>
+<section id="interprétation-des-résultats" class="level3" data-number="14.7.4">
+<h3 data-number="14.7.4" class="anchored" data-anchor-id="interprétation-des-résultats"><span class="header-section-number">14.7.4</span> Interprétation des résultats</h3>
+<p>Revenons donc à l’affichage des résultats :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg1)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = biomassStability ~ nSpecies, data = plant)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.97148 -0.25984 -0.00234  0.23100  1.03237 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 1.198294   0.041298  29.016  &lt; 2e-16 ***
+nSpecies    0.032926   0.004884   6.742 2.73e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3484 on 159 degrees of freedom
+Multiple R-squared:  0.2223,    Adjusted R-squared:  0.2174 
+F-statistic: 45.45 on 1 and 159 DF,  p-value: 2.733e-10</code></pre>
+</div>
+</div>
+<p>Outre une description synthétique de la distribution des résidus, ces résultats nous apprennent que :</p>
+<ul>
+<li>l’ordonnée à l’origine (intercept) est estimée à 1.198 (rappelez-vous que cette valeur fait référence à l’indice de stabilité de la biomasse)</li>
+<li>la pente est estimée à 0.033 (quand le nombre d’espèces augmente d’une unité, l’indice de stabilité de la biomasse augmente de 0.033 unités)</li>
+</ul>
+<p>Les <span class="math inline">\(p-\)</span>values de chacun des 2 tests sont fournies dans la dernière colonne et sont ici très inférieures à <span class="math inline">\(\alpha\)</span> : on rejette donc les 2 hypothèses nulles. En particulier, puisque l’hypothèse nulle est rejetée pour le test qui concerne la pente de la droite, on peut considérer que le nombre de plantes dans les parcelles influence bel et bien l’indice de stabilité de la biomasse. Autrement dit, le nombre de plantes dans les parcelles, permet, dans une certaine mesure, de prédire la valeur de l’indice de stabilité de la biomasse.</p>
+<p>La relation n’est toutefois pas très forte : le nombre de plantes dans chaque parcelle ne permet de prédire l’indice de stabilité de la biomasse que dans une mesure assez faible. C’est le <code>Adjusted R-squared</code> qui nous indique quelle est la “qualité” de prédiction du modèle. Ici, il vaut 0.22. Cela signifie que 22% des variations de l’indice de stabilité de la biomasse sont prédits par le nombre de plantes dans les parcelles. Une autre façon de présenter les choses consiste à dire que 78% des variations de l’indice de stabilité de biomasse sont expliqués par d’autres facteurs que celui que nous avons pris en compte dans notre modèle de régression linéaire (<em>i.e.</em> le nombre d’espèces par parcelle). Le <span class="math inline">\(R^2\)</span> (à en pas confondre avec le coefficient de corrélation <span class="math inline">\(r\)</span>) renseigne sur la qualité de l’ajustement des données à la droite de régression. Il nous indique ici que le pouvoir prédictif de notre modèle linéaire est assez faible. Il est néanmoins significatif, ce qui indique que notre variable explicative joue bel et bien un rôle non négligeable dans les variations de la variable expliquée. Une autre façon de comprendre ce résultat est la suivante : si on connait le nombre de plantes dans une parcelle, on peut prédire 22% de la valeur de l’indice de stabilité de la biomasse.</p>
+</section>
+<section id="intervalle-de-confiance-de-la-régression" class="level3" data-number="14.7.5">
+<h3 data-number="14.7.5" class="anchored" data-anchor-id="intervalle-de-confiance-de-la-régression"><span class="header-section-number">14.7.5</span> Intervalle de confiance de la régression</h3>
+<p>L’équation de notre droite de régression vaut donc :</p>
+<p><span class="math display">\[ y = 0.033 \times x + 1.198\]</span> Avec <code>y</code>, l’indice de stabilité de la biomasse, et <code>x</code>, le nombre d’espèces par parcelles. On voit bien que la droite nous permet de prédire une valeur d’indice de stabilité de la biomasse pour un nombre d’espèces donnée par parcelle, y compris pour des nombres d’espèces qui n’ont pas été testés. par exemple, pour $n = $ 6 espèces, on peut s’attendre à un indice de stabilité de la biomasse de <span class="math inline">\(0.033 * 6 + 1.198 = 1.396\)</span>. Il convient toutefois de prendre deux précautions très importantes quand on fait ce genre prédiction :</p>
+<ol type="1">
+<li><p>la régression et son équation ne sont valables que sur l’intervalle que nous avons étudié pour la variable explicative. Ainsi, on peut faire des prédictions pour des valeurs de nombre d’espèces comprises entre 1 et 16, mais pas au-delà. En effet, rien ne nous dit que cette relation reste valable au-delà de la gamme <span class="math inline">\(n =\)</span> [1 ; 16]. Peut-être la relation change-t-elle de nature à partir de <span class="math inline">\(n =\)</span> 20 espèces par parcelles. Peut-être que la pente devient nulle ou négative. Ou peut-être la relation n’est-elle plus linéaire au-delà de <span class="math inline">\(n =\)</span> 16 espèces par parcelle. En bref, puisque nous n’avons des informations sur le comportement de notre système d’étude que pour une gamme de valeurs précises sur l’axe des <code>x</code>, il nous est impossible de prédire quoi que ce soit en dehors de cette gamme de valeurs.</p></li>
+<li><p>Même à l’intérieur de la gamme de valeur permettant de faire des prédictions, toute prédiction est entachée d’incertitude. Pour s’en convaincre, il suffit de regarder la grande dispersion des valeurs observées pour <code>y</code> pour chaque valeur de <code>x</code>. Par exemple, pour $n = $ 8 espèces par parcelle, les valeurs observées pour l’indice de stabilité vont de moins de 1 à plus de 2. Le modèle prédit une valeur d’environ 1.46 (<span class="math inline">\(0.033 * 8 + 1.198 = 1.462\)</span>), mais on voit bien que l’incertitude persiste. C’est la raison pour laquelle on aura toujours besoin de calculer des <strong>indices d’incertitude</strong>, pour avoir une idée de l’erreur commise lorsque l’on fait une prédiction.</p></li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Prudence avec les prédictions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une droite de régression permet de faire des prédictions :</p>
+<ul>
+<li>uniquement sur la gamme de valeurs de l’axe des <code>x</code> qui a permis d’établir l’équation de la droite de régression</li>
+<li>avec une imprécision/incertitude qu’il est toujours nécessaire d’estimer.</li>
+</ul>
+</div>
+</div>
+<p>La pente et l’ordonnée à l’origine de cette droite de régression ont été obtenues à partir des données d’un échantillon (ici, <span class="math inline">\(n =\)</span> 161 parcelles). Il s’agit donc d’estimations des pentes et ordonnées à l’origine de la relation plus générale qui concerne la population globale, mais que nous ne connaîtrons jamais avec précision. Comme toute estimation, les valeurs de pente et d’ordonnée à l’origine de la droite de régression sont entachées d’<strong>incertitude</strong>. Nous pouvons quantifier ces incertitudes grâce au calcul des intervalles de confiance à 95% de ces 2 paramètres :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(reg1)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %     97.5 %
+(Intercept) 1.11673087 1.27985782
+nSpecies    0.02328063 0.04257117</code></pre>
+</div>
+</div>
+<p>Ces résultats nous indiquent que les valeurs d’ordonnées à l’origine les plus probables dans la population générale sont vraisemblablement comprises entre 1.117 et 1.280. De même, les valeurs de pentes les plus probables dans la population générale sont vraisemblablement situées dans l’intervalle [0.023 ; 0.043]. Autrement dit, pour la pente de la droite de régression, la meilleure estimation possible vaut 0.033, mais dans la population générale, les valeurs comprises dans l’intervalle [0.023 ; 0.043] sont parmi les plus probables.</p>
+<p>Il est possible de visualiser cette incertitude grâce à la fonction <code>geom_smooth()</code> utilisée plus tôt, en spécifiant <code>se = TRUE</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plant <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> nSpecies, <span class="at">y =</span> biomassStability)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Nombre d'espèces par parcelle"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Transformation log</span><span class="sc">\n</span><span class="st"> de l'indice de stabilité de la biomasse"</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="fl">0.25</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="14-Regression_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Dans la population générale, la vraie droite de régression peut se trouver n’importe où dans la bande grise. Cet intervalle d’incertitude est bien moins large que l’étendue des données sur l’axe des ordonnées, et c’est tant mieux. Il correspond à l’<strong>incertitude de la moyenne</strong> de l’indice de stabilité de la biomasse pour une valeur donnée de la variable explicative. Ainsi, par exemple, si on réalise une expérience avec plusieurs parcelles contenant toutes 8 espèces, alors, la régression et son incertitude associée nous disent que **la moyenne* de l’indice de stabilité de la biomasse vaudra environ 1.46 (la valeur de la droite de régression pour <code>x = 8</code>), avec un intervalle de confiance à 95% de [1.40 ; 1.51] (l’étendue de la zone grisée autour de la courbe pour <span class="math inline">\(n =\)</span> 8 espèces.</p>
+</section>
+</section>
+<section id="lalternative-non-paramétrique" class="level2" data-number="14.8">
+<h2 data-number="14.8" class="anchored" data-anchor-id="lalternative-non-paramétrique"><span class="header-section-number">14.8</span> L’alternative non paramétrique</h2>
+<p>Lorsque les conditions d’application de la régression linéaire ne sont pas vérifiées, on a principalement deux options :</p>
+<ol type="1">
+<li>On essaie de transformer les données afin que les résidus de la régression se comportent mieux. Cela signifie tester différents types de transformations (passage au logarithme, à l’inverse, à la racine carrée…), ce qui peut être chronophage pour un résultat pas toujours garanti. Il existe de très nombreuses transformations et trouver la meilleure n’est pas trivial. Par ailleurs, l’interprétation d’une relation linéaire impliquant des données transformées n’est pas toujours aisée.</li>
+<li>On utilise d’autre types de modèles de régression, en particulier les modèles de régressions linéaires généralisées (GLM), qui s’accommodent très bien de résidus non normaux et/ou non homogènes. Ces méthodes sont aujourd’hui préférées à la transformation des données et elles donnent de très bons résultats. Mais il s’agit là d’une toute autre classe de méthodes qui ne sont pas au programme de la licence.</li>
+</ol>
+</section>
+<section id="exercices" class="level2" data-number="14.9">
+<h2 data-number="14.9" class="anchored" data-anchor-id="exercices"><span class="header-section-number">14.9</span> Exercices</h2>
+<section id="datasaurus-et-anscombe" class="level3" data-number="14.9.1">
+<h3 data-number="14.9.1" class="anchored" data-anchor-id="datasaurus-et-anscombe"><span class="header-section-number">14.9.1</span> Datasaurus et Anscombe</h3>
+<p>Exécutez les commandes suivantes :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasauRus)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(dataset) <span class="sc">%&gt;%</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">moy_x    =</span> <span class="fu">mean</span>(x),</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">moy_y    =</span> <span class="fu">mean</span>(y),</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">ecart_type_x =</span> <span class="fu">sd</span>(x),</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">ecart_type_y =</span> <span class="fu">sd</span>(y),</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">correl_x_y  =</span> <span class="fu">cor</span>(x, y),</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">pente =</span> <span class="fu">coef</span>(<span class="fu">lm</span>(y<span class="sc">~</span>x))[<span class="dv">2</span>],</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">ordonnee_origine =</span> <span class="fu">coef</span>(<span class="fu">lm</span>(y<span class="sc">~</span>x))[<span class="dv">1</span>]</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Examinez attentivement les nombreux résultats produits par cette commande. Vous devriez remarquer que pour ces 13 jeux de données, 2 variables numériques <code>x</code> et <code>y</code> sont mises en relation. Pour tous ces jeux de données, on observe que la moyenne de tous les <code>x</code> est la même, la moyenne de tous les <code>y</code> est la même, les écarts-types des <code>x</code> sont identiques, les écarts-types des <code>y</code> aussi, la corrélation entre <code>x</code> et <code>y</code> est également extrêmement proche pour tous les jeux de données, et lorsque l’on effectue une régression linéaire de <code>y</code> en fonction de <code>x</code>, les ordonnées à l’origine et les pentes des droites de régression sont extrêmement proches pour les 13 jeux de données.</p>
+<p>Si on s’en tient à ces calculs d’indices synthétiques, on pourrait croire que ces jeux de données sont identiques ou presque. Pourtant, ce n’est pas par hasard que je vous répète à longueur de temps qu’il est <strong>indispensable de regarder les données</strong> avant de se lancer dans les analyses et les statistiques. Car ici, ces jeux de données sont très différents ! Conclure qu’ils sont identiques simplement parce que les statistiques descriptives sont égales, serait une erreur majeure :</p>
+<div class="cell" data-fig.asp="1">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y, <span class="at">color =</span> dataset)) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>dataset, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="14-Regression_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Le quartet d’Anscombe est un autre exemple de ce type de problème.</p>
+<p>Dans la console, exécutez la commande suivante (il vous faudra peut-être presser la touche Entrée plusieurs fois) pour produire les 4 graphiques d’Anscombe :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">example</span>(anscombe)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Examinez attentivement les nombreux résultats produits par cette commande dans la console, ainsi que les 4 graphiques obtenus. Vous devriez remarquer que pour ces 4 jeux de données, 2 variables numériques sont là encore mises en relation, et qu’elles présentent toutes les mêmes caractéristiques. En particulier, les régressions linéaires ont toutes les mêmes pentes et ordonnées à l’origine. Pourtant, seule l’une de ces régressions linéaires est valide. Pourquoi ?</p>
+</section>
+<section id="in-your-face" class="level3" data-number="14.9.2">
+<h3 data-number="14.9.2" class="anchored" data-anchor-id="in-your-face"><span class="header-section-number">14.9.2</span> In your face</h3>
+<p>Les hommes ont en moyenne un ratio “largeur du visage sur longueur du visage” supérieur à celui des femmes. Cela reflète des niveaux d’expression de la testostérone différents entre hommes et femmes au moment de la puberté. On sait aussi que les niveaux de testosterone permettent de prédire, dans une certaine mesure, l’agressivité chez les mâles de nombreuses espèces. On peut donc poser la question suivante : la forme du visage permet-elle de prédire l’agressivité ?</p>
+<p>Pour tester cela, <span class="citation" data-cites="carre2008">Carré et McCormick (<a href="references.html#ref-carre2008" role="doc-biblioref">2008</a>)</span> ont suivi 21 joueurs de hockey sur glace au niveau universitaire. Ils ont tout d’abord mesuré le ratio largeur du visage sur longueur du visage de chaque sujet, puis, ils ont compté le nombre moyen de minutes de pénalité par match reçu par chaque sujet au cours de la saison, en se limitant aux pénalités infligées pour cause de brutalité. Les données sont fournies dans le fichier <a href="data/hockey.csv"><code>hockey.csv</code></a>.</p>
+<p>Importez, examinez et analysez ces données pour répondre à la question posée.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-carre2008" class="csl-entry" role="listitem">
+Carré, Justin M, et Cheryl M McCormick. 2008. <span>«&nbsp;In Your Face: Facial Metrics Predict Aggressive Behaviour in the Laboratory and in Varsity and Professional Hockey Players&nbsp;»</span>. <em>Proceedings of the Royal Society B: Biological Sciences</em> 275 (1651): 2651‑56. <a href="https://doi.org/10.1098/rspb.2008.0873">https://doi.org/10.1098/rspb.2008.0873</a>.
+</div>
+<div id="ref-R-datasauRus" class="csl-entry" role="listitem">
+Davies, Rhian, Steph Locke, et Lucy D’Agostino McGowan. 2022. <em>datasauRus: Datasets from the Datasaurus Dozen</em>. <a href="https://CRAN.R-project.org/package=datasauRus">https://CRAN.R-project.org/package=datasauRus</a>.
+</div>
+<div id="ref-tilman2006" class="csl-entry" role="listitem">
+Tilman, David, Peter B. Reich, et Johannes M. H Knops. 2006. <span>«&nbsp;Biodiversity and Ecosystem Stability in a Decade-Long Grassland Experiment&nbsp;»</span>. <em>Nature</em> 441 (7093): 629. <a href="https://doi.org/10.1038/nature04742">https://doi.org/10.1038/nature04742</a>.
+</div>
+<div id="ref-R-skimr" class="csl-entry" role="listitem">
+Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, et Shannon Ellis. 2022. <em>skimr: Compact and Flexible Summaries of Data</em>. <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>.
+</div>
+<div id="ref-whitlock2015" class="csl-entry" role="listitem">
+Whitlock, Michael, et Dolph Schluter. 2015. <em>The Analysis of Biological Data</em>. Second edition. Greenwood Village, Colorado: <span>Roberts and Company Publishers</span>.
+</div>
+<div id="ref-R-tidyverse" class="csl-entry" role="listitem">
+Wickham, Hadley. 2023. <em>tidyverse: Easily Install and Load the Tidyverse</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.
+</div>
+<div id="ref-R-ggplot2" class="csl-entry" role="listitem">
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, et Dewey Dunnington. 2023. <em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
+</div>
+<div id="ref-R-dplyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, et Davis Vaughan. 2023. <em>dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+<div id="ref-R-readr" class="csl-entry" role="listitem">
+Wickham, Hadley, Jim Hester, et Jennifer Bryan. 2023. <em>readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.
+</div>
+</div>
+</section>
+</section>
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./13-Correlation.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./15-PropTests.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Comparaison de proportions</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

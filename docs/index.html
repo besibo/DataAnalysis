@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Benoît Simon-Bouhet">
+
+<title>Analyse de Données</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./01-RBasics.html" rel="next">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introduction</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Analyse de Données</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Auteur</div>
+      <div class="quarto-title-meta-contents">
+               <p>Benoît Simon-Bouhet </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Dernière Mise à jour</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">dimanche 10 septembre 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analyse de Données</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/besibo/DataAnalysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Analyse-de-Données.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-RBasics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><code>R</code> et <code>RStudio</code> : les bases</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Dataset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Explorez votre premier jeu de données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-Visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualiser des données avec <code>ggplot2</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-TidyData.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-DataWrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler des tableaux avec <code>dplyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-EDA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploration statistique des données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Incertitude.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dispersion et incertitude</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ErrorBars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Visualiser l’incertitude et la dispersion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-OneSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Comparaison de la moyenne d’une population à une valeur théorique</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-TwoSamplePairedTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-TwoSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-ANOVA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-Correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Régression linéaire</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-PropTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Comparaison de proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#objectifs" id="toc-objectifs" class="nav-link" data-scroll-target="#objectifs">Objectifs</a></li>
+  <li><a href="#organisation" id="toc-organisation" class="nav-link" data-scroll-target="#organisation">Organisation</a>
+  <ul class="collapse">
+  <li><a href="#les-cours-magistraux" id="toc-les-cours-magistraux" class="nav-link" data-scroll-target="#les-cours-magistraux">Les cours magistraux</a></li>
+  <li><a href="#les-travaux-pratiques" id="toc-les-travaux-pratiques" class="nav-link" data-scroll-target="#les-travaux-pratiques">Les Travaux pratiques</a></li>
+  <li><a href="#utilisation-de-slack" id="toc-utilisation-de-slack" class="nav-link" data-scroll-target="#utilisation-de-slack">Utilisation de Slack</a></li>
+  <li><a href="#le-tea" id="toc-le-tea" class="nav-link" data-scroll-target="#le-tea">Le TEA</a></li>
+  </ul></li>
+  <li><a href="#progession-conseillée" id="toc-progession-conseillée" class="nav-link" data-scroll-target="#progession-conseillée">Progession conseillée</a></li>
+  <li><a href="#lévaluation" id="toc-lévaluation" class="nav-link" data-scroll-target="#lévaluation">L’évaluation</a></li>
+  <li><a href="#licence" id="toc-licence" class="nav-link" data-scroll-target="#licence">Licence</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level1 unnumbered">
+<h1 class="unnumbered">Introduction</h1>
+<section id="objectifs" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="objectifs">Objectifs</h2>
+<p>Ce livre contient l’ensemble du matériel (contenus, exemples, exercices…) nécessaire à la réalisation des travaux pratiques de l’EC <strong>Stratégie d’échantillonnage et analyse de données</strong> consacrés à la prise en main de <code>R</code> et <code>RStudio</code>.</p>
+<p>Ces travaux pratiques ont essentiellement 4 objectifs :</p>
+<ol type="1">
+<li><p><strong>Vous faire découvrir les logiciels <a href="https://cran.r-project.org">R</a> et <a href="https://www.rstudio.com">Rstudio</a></strong> (<a href="01-RBasics.html"><span>Chapitre&nbsp;1</span></a> et <a href="02-Dataset.html"><span>Chapitre&nbsp;2</span></a>) dans lesquels vous allez passer beaucoup de temps tout au long de votre cursus de master. Vous avez choisi une spécialité de master qui implique de traiter des données et de communiquer des résultats d’analyses statistiques : <code>R</code> et <code>RStudio</code> devraient être les logiciels vers lesquels vous vous tournez naturellement pour faire l’un et l’autre.</p></li>
+<li><p><strong>Vous apprendre à faire des graphiques de qualités</strong> dans <code>RStudio</code> et <strong>vous faire prendre conscience de l’importance des visualisations graphiques</strong> (<a href="03-Visualization.html"><span>Chapitre&nbsp;3</span></a> : attention, ce chapitre est très long, ne vous laissez pas surprendre !) :</p></li>
+</ol>
+<ul>
+<li>d’une part, pour comprendre à quoi ressemblent les données en votre possession,</li>
+<li>d’autre part, pour vous permettre de formuler des hypothèses pertinentes et intéressantes concernant les systèmes que vous étudiez,</li>
+<li>et enfin, pour communiquer efficacement vos trouvailles à un public qui ne connaît pas vos données aussi bien que vous (cela inclut évidemment vos enseignants à l’issue de vos stages).<br>
+Les données que vous serez amenés à traiter lors de vos stages, ou plus tard, lorsque vous serez en poste, ont souvent été acquises à grands frais, et au prix d’efforts importants. Il est donc de votre responsabilité d’en tirer le maximum. Et ça commence toujours (ou presque), par la réalisation de visualisations graphiques parlantes.</li>
+</ul>
+<ol start="3" type="1">
+<li><p><strong>Vous apprendre à manipuler efficacement des tableaux de données de grande taille</strong> (<a href="04-TidyData.html"><span>Chapitre&nbsp;4</span></a> et <a href="05-DataWrangling.html"><span>Chapitre&nbsp;5</span></a>). Cela signifie que vous devriez être en mesure de sélectionner des variables (colonnes) d’un tableau, d’en créer de nouvelles en modifiant et/ou combinant des variables existantes, de filtrer des lignes spécifiques, d’effectuer des tris de données, de transformer des tableaux larges en tableaux longs (et réciproquement), d’effectuer des jointures entre plusieurs tableaux, etc.</p></li>
+<li><p><strong>Vous apprendre comment calculer des statistiques descriptives simples</strong>, sur plusieurs types de variables, et <strong>comment mettre en œuvre, dans <code>RStudio</code>, les procédures statistiques décrites en cours</strong>, afin de vous mettre dans les meilleures conditions possibles pour aborder d’une part les comptes-rendus de TP et rapports de stage que vous aurez à produire dans ce cursus de master et d’autre part les statistiques plus avancées que vous découvrirez lors des semestres 2 et 3. Vos enseignants attendent de vous la plus grande rigueur lorsque vous analysez et présentez des résultats d’analyses statistiques. Ces TP ont pour objectifs de vous fournir les bases nécessaires pour satisfaire ce niveau d’exigence.</p></li>
+</ol>
+<p>À l’issue de ces TP et TEA, vous devriez donc être suffisamment à l’aise avec le logiciel <code>RStudio</code> pour y importer des données issues de tableurs, les manipuler pour les mettre dans un format permettant les représentations graphiques et les analyses statistiques, pour produire des graphiques pertinents, adaptés aux données dont vous disposez, et d’une qualité vous permettant de les intégrer sans honte à vos compte-rendus de TP et rapports de stages, et de réaliser les tests et analyses statistiques les plus adaptés aux questions auxquelles vous tenterez de répondre.</p>
+<p>Les données que vous serez amenés à traiter lors de vos stages, ou plus tard, lorsque vous serez en poste, ont souvent été acquises à grands frais, et au prix d’efforts importants. Il est donc de votre responsabilité d’en tirer le maximum. Et ça commence toujours (ou presque), par la manipulation de données dans <code>RStudio</code> et la réalisation de visualisations graphiques parlantes. Se lancer dans les tests statistiques sans avoir une idée claire de la structure des données dont on dispose est toujours une erreur. C’est pourquoi les chapitres consacrés aux statistiques n’arrivent que dans la seconde partie de ce livre en ligne. En règle générale, face à une question scientifique précise, lorsque l’on traite des données, <strong>environ 80% du temps est consacré à la mise en forme et l’exploration (statistique et graphique) des données.</strong> La réalisation des tests et leur interprétation ne prend que rarement plus de 20% du temps. Cela souligne l’importance des 5 premiers chapitres de ce livre en ligne : plus vous serez à l’aise avec les notions et concepts décrits dans ces chapitres, plus vous serez efficaces et plus vous gagnerez du temps par la suite.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>À partir de maintenant, tous les compte-rendus de TP que vous aurez à produire dans le cadre du master Gestion de l’Environnement et Écologie Littorale devront respecter les bonnes pratiques décrites dans ce document. En particulier, les collègues de l’équipe pédagogique attendent que les graphiques que vous intégrerez à vos compte-rendus de TP soient systématiquement produits dans <code>RStudio</code>. C’est la raison pour laquelle cet enseignement arrive si tôt dans votre cursus.</p>
+</div>
+</div>
+</section>
+<section id="organisation" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="organisation">Organisation</h2>
+<p>Au total, la partie <em>analyse de données</em> de l’EC “Stratégie d’échantillonnage et analyse de données” contient :</p>
+<ul>
+<li>15 heures de cours magistraux</li>
+<li>9 heures de travaux pratiques (pour chaque groupe)</li>
+<li>16 heures de TEA</li>
+</ul>
+<section id="les-cours-magistraux" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="les-cours-magistraux">Les cours magistraux</h3>
+<p>Les cours magistraux sont globalement découpés en 2 blocs à peu près indépendants :</p>
+<ol type="1">
+<li><p>un bloc de 10 heures consacrées aux notions statistiques élémentaires, aux statistiques descriptives et aux statistiques inférentielles. Nous couvrirons notamment les notions d’incertitude et d’inférence, les tests d’hypothèses, la comparaison de proportions, l’ajustement de données observées à des distributions théoriques, l’analyse de tables de contingences, les comparaisons de moyennes, les régressions linéaires, les ANOVA et ANCOVA…</p></li>
+<li><p>un bloc de 5 heures consacrées aux statistiques multivariées telles que l’Analyse en Composantes Principales (ACP) et l’Analyse Factorielle des Correspondances (AFC).</p></li>
+</ol>
+<p>Mon objectif n’est pas de survoler l’ensemble du matériel dans ce faible volume horaire : s’il n’est pas suffisant, nous ajouterons quelques séances afin de traiter correctement l’ensemble du matériel. Je suis convaincu que tout le monde est capable de comprendre les grands principes des statistiques, et de réaliser des analyses dans un logiciel tel que <code>R</code>, y compris les plus réfractaires aux mathématiques et à l’informatique. Mais il est nécessaire de démystifier cette discipline essentielle, et si certains ont besoin de plus de temps que d’autres, nous prendrons ce temps. Les TP et TEA, décrits plus bas, sont justement organisés pour permettre à chacun d’avancer à son rythme. Mais ne vous y trompez pas, cela vous demandera <strong>beaucoup</strong> de travail pendant ces 3 semaines.</p>
+<p>Tous les aspects vus en cours seront en effet développés lors des séances de TP et de TEA. Vous aurez, pour chaque partie, des exercices à préparer et nous les corrigerons ensemble lors des séances de TP et/ou de TEA. ils doivent d’une part vous préparer aux évaluations (voir plus bas) mais surtout, vous permettre d’acquérir des compétences en analyse de données, compétences qui seront attendues de vous lorsque vous sortirez diplômé·e de ce master.</p>
+</section>
+<section id="les-travaux-pratiques" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="les-travaux-pratiques">Les Travaux pratiques</h3>
+<p>Le contenu des séances de travaux pratiques sera découpé en 3 parties (inégales) :</p>
+<ol type="1">
+<li>Prise en main des logiciels <code>R</code> et <code>RStudio</code></li>
+<li>Illustration du cours sur les statistiques descriptives et inférentielles, mise en pratique et réalisation d’exercices</li>
+<li>Illustration du cours sur les statistiques multivariées, mise en pratique et réalisation d’exercices</li>
+</ol>
+<p>Pour chaque séance de TP, vous travaillerez soit à distance, soit en salle banalisée, sur vos ordinateurs personnels. La première séance aura lieu en présentiel et sera consacrée à l’installation des logiciels ainsi qu’à la présentation de l’organisation des séances.</p>
+<p>Les séances de travaux pratiques ne seront <em>pas toutes obligatoires</em> : seules quelques séances en présentiel (les dates vous seront présentées ultérieurement) le seront, probablement pas plus d’une ou deux par semaine.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’essentiel du contenu de cet enseignement peut être abordé en autonomie, à distance, grâce à ce livre en ligne, aux ressources mises à disposition sur Moodle et à votre ordinateur personnel. Cela signifie que <strong>la présence physique lors de ces séances de TP n’est pas obligatoire</strong>.</p>
+</div>
+</div>
+<p>Pour toutes les autres séances, le fonctionnement sera celui d’une permanence non obligatoire : seuls celles et ceux qui en éprouvent le besoin sont tenus de se déplacer. Ces séances de permanence n’auront lieu que si certains parmi vous m’ont fait part de difficultés ou ont formulé des questions en amont des séances. Si aucune question ne m’a été posée en amont, les permanences n’auront pas lieu. Si une permanence a lieu, elle est ouverte à tous, quel que soit votre groupe de TP. Vous n’êtes d’ailleurs pas tenus de rester pendant 90 minutes : vous venez avec votre question, on y répond ensemble, et vous êtes libres de repartir quand bon vous semble. Les années précédentes, je voyais certains de vos collègues à chaque séance de permanence alors que d’autres ne sont jamais venus. Si vous n’en avez pas besoin, libre à vous de ne pas venir. Tant que le travail est fait et que les exercices ne vous posent pas de problème, vous êtes libres de vous organiser comme vous l’entendez.</p>
+<p>Attention toutefois, venir à une séance de permanence en n’ayant pas préparé de question au préalable ne vous sera d’aucune aide. C’est parce que vous avez travaillé en amont de ces séances et que vous arrivez avec des questions que ces permanences sont utiles et efficaces. Donc si vous venez, c’est que vous avez bossé en amont !</p>
+<p>Ce fonctionnement très souple a de nombreux avantages :</p>
+<ul>
+<li>vous vous organisez comme vous le souhaitez</li>
+<li>vous ne venez que lorsque vous en avez vraiment besoin</li>
+<li>celles et ceux qui se déplacent reçoivent une aide personnalisée “sur mesure”</li>
+<li>vous travaillez sur vos ordinateurs</li>
+<li>les effectifs étant réduits, les conditions de travail sont idéales</li>
+</ul>
+<p>Toutefois, pour que cette organisation fonctionne, cela demande de la rigueur de votre part, en particulier sur la régularité du travail que vous devez fournir. Si la présence en salle de TP n’est pas requise, le travail demandé est bel et bien obligatoire ! Si vous venez en salle de TP sans avoir travaillé en amont, votre venue sera totalement inutile puisque vous n’aurez pas de question à poser et que vous passerez votre séance à lire ce livre en ligne. Vous perdrez donc votre temps, celui de vos collègues, et le mien. De même, si vous attendez la 3e semaine pour vous y mettre, vous irez droit dans le mur. Outre les heures de TP/TEA prévues dans vos emplois du temps, vous devez donc prévoir du travail personnel supplémentaire, chaque jour ou presque.</p>
+</section>
+<section id="utilisation-de-slack" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="utilisation-de-slack">Utilisation de Slack</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Comment savoir si une séance de permanence a lieu, comment poser une question ?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Tout se passera en ligne, grâce au logiciel <a href="https://slack.com/intl/fr-fr/">Slack</a>, qui fonctionne un peu comme un “twitter privé”.</p>
+</div>
+</div>
+<p>Slack facilite la communication des équipes et permet de travailler ensemble. Créez-vous un compte en ligne et installez le logiciel sur votre ordinateur (il existe aussi des versions pour tablettes et smartphones). Lorsque vous aurez installé le logiciel, <a href="https://join.slack.com/t/geel2022/shared_invite/zt-1ga9vd9zn-~aQ~lhmJRgrH2qYNjO111g">cliquez sur ce lien</a> pour vous connecter à notre espace de travail commun, et reprenez la lecture de ce document.</p>
+<p>Vous verrez que 3 “chaînes” sont disponibles :</p>
+<ul>
+<li><code>#organisation</code> : c’est là que les questions liées à l’organisation du cours, des TP et TEA doivent être posées. Si vous ne savez pas si une séance de permanence a lieu, posez la question ici.</li>
+<li><code>#rstudio</code> : c’est ici que toutes les questions pratiques liées à l’utilisation de <code>R</code> et <code>RStudio</code> devront êtres posées. Problèmes de syntaxe, problèmes liés à l’interface, à l’installation des packages ou à l’utilisation des fonctions… Tout ce qui concerne <code>R</code> ou <code>RStudio</code> mais pas directement les statistiques sera traité ici. Vous êtes libres de poser des questions, de poster des captures d’écran, des morceaux de code, des messages d’erreur. Et vous êtes bien entendus vivement encouragés à vous entraider et à répondre aux questions de vos collègues. Je n’interviendrai ici que pour répondre aux questions laissées sans réponse ou si les réponses apportées sont inexactes. Le fonctionnement est celui d’un forum de discussion instantané. Vous en tirerez le plus grand bénéfice en participant et en n’ayant pas peur de poser des questions, même si elles vous paraissent idiotes. Rappelez-vous toujours que si vous vous posez une question, d’autres se la posent aussi probablement.</li>
+<li><code>#statistiques</code> : c’est ici que toutes les questions liées aux méthodes statistiques devront être posées. Comme pour la chaîne <code>#rstudio</code>, vous êtes encouragés à poster des questions mais aussi des réponses. Le fonctionnement de l’ensemble se veut participatif.</li>
+</ul>
+<p>Ainsi, quand vous travaillerez à vos TP ou TEA, prenez l’habitude de garder Slack ouvert sur votre ordinateur. Même si vous n’avez pas de question à poser, votre participation active pour répondre à vos collègues est souhaitable et souhaitée. Votre niveau de participation sur Slack pourra faire partie de votre note finale.</p>
+<p>Si toutes les questions posées sur Slack ont trouvé une réponse, alors, inutile d’organiser une permanence. Si en revanche, certains n’ont pas compris, si les mêmes questions reviennent fréquemment, ou si des explications “en direct” sont plus efficaces qu’un long message sur Slack, alors une permanence aura lieu.</p>
+</section>
+<section id="le-tea" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="le-tea">Le TEA</h3>
+<p>Les séances de TEA auront toutes lieu “à distance”. Je ne suis pas tenu d’être présent lors des séances de TEA, même si une salle banalisée est systématiquement réservée pour vous permettre de vous retrouver et de travailler ensemble. Je m’engage en revanche à être disponible sur Slack pour répondre rapidement aux questions posées lors des TEA. Et si certaines questions n’ont pas trouvé de réponse pendant les séances de TEA, nous y répondront lors du TP suivant.</p>
+<p>Généralement, l’organisation de votre journée sera la suivante :</p>
+<ol type="1">
+<li>En début de matinée, 1h30 ou 3h de cours magistraux</li>
+<li>En milieu de journée du temps libre ou pour avancer sur ce document, les exercices, la prise en main de <code>R</code> et <code>RStudio</code>, etc.</li>
+<li>En fin de journée une séance de TEA et/ou de TP/permanence non obligatoire de 90 minutes pour ceux qui en ont besoin et se manifestent.</li>
+</ol>
+</section>
+</section>
+<section id="progession-conseillée" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="progession-conseillée">Progession conseillée</h2>
+<p>Pour apprendre à utiliser un logiciel comme <code>R</code>, il faut faire les choses soi-même, ne pas avoir peur des messages d’erreurs (il faut d’ailleurs apprendre à les déchiffrer pour comprendre d’où viennent les problèmes), essayer maintes fois, se tromper beaucoup, recommencer, et surtout, ne pas se décourager. J’utilise ce logiciel presque quotidiennement depuis plus de 15 ans et à chaque session de travail, je rencontre des messages d’erreur. Avec suffisamment d’habitude, on apprend à les déchiffrer, et on corrige les problèmes en quelques secondes. Ce livre est conçu pour vous faciliter la tâche, mais ne vous y trompez pas, vous rencontrerez des difficultés, et c’est normal. C’est le prix à payer pour profiter de la puissance du meilleur logiciel permettant d’analyser des données, de produire des graphiques de qualité et de réaliser toutes les statistiques dont vous aurez besoin d’ici la fin de vos études et au-delà.</p>
+<p>Pour que cet apprentissage soit le moins problématique possible, il convient de prendre les choses dans l’ordre. C’est la raison pour laquelle les chapitres de ce livre doivent être lus dans l’ordre, et les exercices d’application faits au fur et à mesure de la lecture.</p>
+<p>Une fois compilé en pdf, ce document représente plus de 350 pages, ce qui veut dire que vous devriez vous approprier <strong>environ 25 pages par jour</strong>. En particulier, la <a href="03-Visualization.html"><span>Chapitre&nbsp;3</span></a> est très longue et il est facile de se laisser dépasser.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Travaillez régulièrement !
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Que vous veniez aux séances de permanence ou non, j’insiste sur l’importance de travailler cette matière <strong>régulièrement</strong>. Vous devez vous y mettre dès maintenant et y consacrer quelques heures chaque jour. Interrogez vos collègues de M2 qui ont eu cet enseignement l’an dernier : il y a beaucoup de temps à y passer et il est hélas facile de prendre et d’accumuler du retard…</p>
+</div>
+</div>
+<p>Une fois cette UE terminée, vous pourrez évidemment consulter ce livre quand bon vous semblera, et dans n’importe quel ordre. Le champ de recherche situé en haut à gauche est d’ailleurs très utile pour (re)trouver les passages que vous recherchez. Ce livre restera en ligne et vous pourrez y accéder même après avoir quitté l’université de La Rochelle. Vos prédécesseurs me confirment régulièrement à quel point il leur est resté utile bien après le master. Soyez toutefois prévenu que les contenus de ce livre peuvent évoluer avec le temps : j’essaie en effet de remettre à jour tout ce qui doit l’être le plus régulièrement possible. Et cela signifie parfois que des sections peuvent disparaître ou être remplacées si des façons de procéder plus modernes sont préférables.</p>
+</section>
+<section id="lévaluation" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="lévaluation">L’évaluation</h2>
+<p>Vous aurez plusieurs types d’évaluations cette année :</p>
+<ol type="1">
+<li><p>Une évaluations par les pairs qui portera sur la qualité de vos scripts. Cette évaluation qui entrera pour une toute petite partie dans la note finale de l’EC a pour objectif principal de vous permettre de vous situer dans vos apprentissages. Vous évaluerez vous même, et de façon anonyme, plusieurs copies de vos camarades en suivant une grille d’évaluation critériée que nous construirons ensemble. De même, votre copie sera évaluée par plusieurs de vos camarades. Cette approche a de nombreux avantages. Elle vous permet notamment de mieux vous approprier les grilles de notations (par exemple, qu’est-ce qu’un bon script sous <code>R</code> ? À l’inverse, qu’est-ce qu’un script médiocre ? Comment être sûr que la méthode statistique choisie est la bonne pour répondre à une question donnée ? Suis-je capable de décrire correctement un tableau de données de grande taille ? Suis-je capable de produire des graphiques informatifs ?) et rends possible un retour personnalisé sur vos travaux beaucoup plus rapidement que si votre enseignant était le seul à corriger l’ensemble de vos travaux. Pas d’inquiétude, vous serez guidés à chaque étape.</p></li>
+<li><p>Une évaluation individuelle courte qui ne portera pas sur les analyses statistiques à proprement parler, mais sur votre capacité à produire un graphique de qualité, original et qui raconte une histoire intéressante sur un jeu de données imposé. Cet exercice n’est pas réalisé chaque année faute de temps.</p></li>
+<li><p>Une évaluation individuelle plus classique, sur table ou à la maison, avec quelques exercices qui vous demanderont de mettre en œuvre les méthodes statistiques décrites lors de cours magistraux.</p></li>
+<li><p>Enfin, une évaluation qui prendra la forme d’un rapport et qui sera réalisé conjointement avec les travaux de stratégie d’échantillonnage réalisés avec Fanny Cusset. Cette partie de l’EC est en effet complémentaire de l’analyse de données puisqu’elle permet d’avoir une approche globale, de la question scientifique à la production d’un rapport et d’une soutenance, en passant par la réflexion sur la stratégie d’échantillonnage, la mise en œuvre sur le terrain, le traitement des échantillons au laboratoire, et l’exploitation statistique des résultats. Ce travail sera donc évalué conjointement par Fanny Cusset et moi. La note de la partie analyse de données portera essentiellement sur les parties “matériels et méthodes” et “résultats” du rapport. Il est en effet important de comprendre dès maintenant que l’analyse de données n’est pas une fin en soi : <strong>on ne fait pas des statistiques pour le plaisir, ou sans but précis. Ça n’est qu’un outil de votre panoplie d’écologue au service d’une question scientifique.</strong> L’analyse de données et les statistiques vous permettront de répondre à des questions scientifiques de façon objective, mais leur utilisation appropriée suppose que vous ayez les idées claires en amont sur la question scientifique à laquelle vous tentez de répondre. C’est cette démarche qui devrait vous guider tout au long de votre cursus de master et au-delà, dans votre vie professionnelle.</p></li>
+</ol>
+<p>Dans le cadre de l’approche compétences, j’essaierai d’indiquer, dans la mesure du possible, quelles sont les compétences et résultats d’apprentissages dont vous devrez faire l’acquisition pour chaque évaluation. À l’issue de cet enseignement, vous devriez être capables de :</p>
+<ol type="1">
+<li>Mettre en forme des données acquises sur le terrain ou au laboratoire afin d’en permettre l’importation dans <code>R</code> ou <code>RStudio</code>.</li>
+<li>Produire des statistiques descriptives informatives permettant de comprendre la structure et les tendances principales d’un jeu de données.</li>
+<li>Créer dans <code>R</code> ou <code>RStudio</code> des graphiques lisibles et informatifs permettant de mettre en évidence les tendances principales d’un jeu de données.</li>
+<li>Produire des scripts clairs sous <code>R</code> ou <code>RStudio</code>, permettant la reproductibilité des traitements de données et des analyses statistiques ainsi que la communication avec vos pairs.</li>
+<li>Analyser des données uni-, bi- ou multi-variées issues d’observations et de mesures sur le terrain et au laboratoire en choisissant les méthodes appropriées pour répondre à une problématique scientifique précise.</li>
+<li>Maîtriser les logiciels <code>R</code> ou <code>RStudio</code> pour réaliser des analyses statistiques, des représentations graphiques ou des simulations numériques.</li>
+</ol>
+</section>
+<section id="licence" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="licence">Licence</h2>
+<p>Ce livre est ligne est sous licence Creative Commons (<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.fr">CC BY-NC-ND 4.0</a>)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.fr"><img src="images/cc_licence.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>Vous êtes autorisé à partager, copier, distribuer et communiquer ce matériel par tous moyens et sous tous formats, tant que les conditions suivantes sont respectées :</p>
+<ul class="fa-ul">
+<li>
+<span class="fa-li"><i class="fa-brands fa-creative-commons-by fa-xl" aria-label="creative-commons-by"></i></span> <strong>Attribution</strong> : vous devez créditer ce travail (donc citer son auteur), fournir un lien vers ce livre en ligne, intégrer un lien vers la licence Creative Commons et indiquer si des modifications du contenu original ont été effectuées. Vous devez indiquer ces informations par tous les moyens raisonnables, sans toutefois suggérer que l’auteur vous soutient ou soutient la façon dont vous avez utilisé son travail.
+</li>
+<li>
+<span class="fa-li"><i class="fa-brands fa-creative-commons-nc-eu fa-xl" aria-label="creative-commons-nc-eu"></i></span> <strong>Pas d’utilisation commerciale</strong> : vous n’êtes pas autorisé à faire un usage commercial de cet ouvrage, ni de tout ou partie du matériel le composant. Cela comprend évidemment la diffusion sur des plateformes de partage telles que studocu.com qui tirent profit d’œuvres dont elles ne sont pas propriétaires, souvent à l’insu des auteurs.
+</li>
+<li>
+<span class="fa-li"><i class="fa-brands fa-creative-commons-nd fa-xl" aria-label="creative-commons-nd"></i></span> <strong>Pas de modifications</strong> : dans le cas où vous effectuez un remix, que vous transformez, ou créez à partir du matériel composant l’ouvrage original, vous n’êtes pas autorisé à distribuer ou mettre à disposition l’ouvrage modifié.
+</li>
+<li>
+<span class="fa-li"><i class="fa-solid fa-unlock-alt fa-xl" aria-label="unlock-alt"></i></span> <strong>Pas de restrictions complémentaires</strong> : vous n’êtes pas autorisé à appliquer des conditions légales ou des mesures techniques qui restreindraient légalement autrui à utiliser cet ouvrage dans les conditions décrites par la licence.
+</li>
+</ul>
+<!-- You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015]. -->
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./01-RBasics.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><code>R</code> et <code>RStudio</code> : les bases</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
