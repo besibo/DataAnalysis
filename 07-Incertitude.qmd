@@ -68,7 +68,7 @@ Autrement dit, calculer des estimateurs de **position** et de **dispersion** per
 
 Contrairement aux indices de position et de dispersion, il n'existe pas de fonction intégrée à `R` qui permette de calculer l'erreur standard de la moyenne. Toutefois, sa formule très simple nous permet de la calculer à la main quand on en a besoin grâce à la fonction `summarise()`.
 
-Par exemple, reprenons les données de masse corporelle des 3 espèces de manchots dans le tableau `penguins`. Imaginons que nous souhaitions étudier les différences de masses corporelles des 3 espèces, en tenant compte du sexe des individus. Pour chaque espèce et chaque sexe, nous allons calculer la masse moyenne des individus en grammes (variable `body_mass_g`). Nous prendrons soin au préalable d'éliminer les lignes pour lesquelles le sex des individus est inconnu :
+Par exemple, reprenons les données de masse corporelle des 3 espèces de manchots dans le tableau `penguins`. Imaginons que nous souhaitions étudier les différences de masses corporelles des 3 espèces, en tenant compte du sexe des individus. Pour chaque espèce et chaque sexe, nous allons calculer la masse moyenne des individus en grammes (variable `body_mass_g`). Nous prendrons soin au préalable d'éliminer les lignes pour lesquelles le sexe des individus est inconnu :
 
 ```{r}
 penguins |> 

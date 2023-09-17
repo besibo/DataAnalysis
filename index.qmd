@@ -43,7 +43,7 @@ Ces travaux pratiques ont essentiellement 4 objectifs :
 
 1. **Vous faire découvrir les logiciels [R](https://cran.r-project.org) et [Rstudio](https://www.rstudio.com)** (@sec-basics et @sec-dataset) dans lesquels vous allez passer beaucoup de temps tout au long de votre cursus de master. Vous avez choisi une spécialité de master qui implique de traiter des données et de communiquer des résultats d'analyses statistiques : `R` et `RStudio` devraient être les logiciels vers lesquels vous vous tournez naturellement pour faire l'un et l'autre.
 
-2. **Vous apprendre à faire des graphiques de qualités** dans `RStudio` et **vous faire prendre conscience de l'importance des visualisations graphiques** (@sec-viz : attention, ce chapitre est très long, ne vous laissez pas surprendre !) :
+2. **Vous apprendre à faire des graphiques de qualités** dans `RStudio` et **vous faire prendre conscience de l'importance des visualisations graphiques** (@sec-viz : attention, ce chapitre est très long, ne vous laissez pas surprendre ! Et @sec-vizincert) :
   - d'une part, pour comprendre à quoi ressemblent les données en votre possession,
   - d'autre part, pour vous permettre de formuler des hypothèses pertinentes et intéressantes concernant les systèmes que vous étudiez, 
   - et enfin, pour communiquer efficacement vos trouvailles à un public qui ne connaît pas vos données aussi bien que vous (cela inclut évidemment vos enseignants à l'issue de vos stages).  
@@ -51,7 +51,7 @@ Ces travaux pratiques ont essentiellement 4 objectifs :
 
 3. **Vous apprendre à manipuler efficacement des tableaux de données de grande taille** (@sec-tidyr et @sec-wrangling). Cela signifie que vous devriez être en mesure de sélectionner des variables (colonnes) d'un tableau, d'en créer de nouvelles en modifiant et/ou combinant des variables existantes, de filtrer des lignes spécifiques, d'effectuer des tris de données, de transformer des tableaux larges en tableaux longs (et réciproquement), d'effectuer des jointures entre plusieurs tableaux, etc.
 
-4. **Vous apprendre comment calculer des statistiques descriptives simples**, sur plusieurs types de variables, et **comment mettre en œuvre, dans `RStudio`, les procédures statistiques décrites en cours**, afin de vous mettre dans les meilleures conditions possibles pour aborder d'une part les comptes-rendus de TP et rapports de stage que vous aurez à produire dans ce cursus de master et d'autre part les statistiques plus avancées que vous découvrirez lors des semestres 2 et 3. Vos enseignants attendent de vous la plus grande rigueur lorsque vous analysez et présentez des résultats d'analyses statistiques. Ces TP ont pour objectifs de vous fournir les bases nécessaires pour satisfaire ce niveau d'exigence.
+4. **Vous apprendre comment calculer des statistiques descriptives simples**, sur plusieurs types de variables (@sec-EDA et @sec-disp), et **comment mettre en œuvre, dans `RStudio`, les procédures statistiques décrites en cours** ([Chapitres @sec-moy1], [-@sec-moy2], [-@sec-moy3], [-@sec-anova], [-@sec-correlation], [-@sec-regression] et [-@sec-prop]), afin de vous mettre dans les meilleures conditions possibles pour aborder d'une part les comptes-rendus de TP et rapports de stage que vous aurez à produire dans ce cursus de master et d'autre part les statistiques plus avancées que vous découvrirez lors des semestres 2 et 3. Vos enseignants attendent de vous la plus grande rigueur lorsque vous analysez et présentez des résultats d'analyses statistiques. Ces TP ont pour objectifs de vous fournir les bases nécessaires pour satisfaire ce niveau d'exigence.
 
 
 À l'issue de ces TP et TEA, vous devriez donc être suffisamment à l'aise avec le logiciel `RStudio` pour y importer des données issues de tableurs, les manipuler pour les mettre dans un format permettant les représentations graphiques et les analyses statistiques, pour produire des graphiques pertinents, adaptés aux données dont vous disposez, et d'une qualité vous permettant de les intégrer sans honte à vos compte-rendus de TP et rapports de stages, et de réaliser les tests et analyses statistiques les plus adaptés aux questions auxquelles vous tenterez de répondre.
@@ -123,10 +123,10 @@ Toutefois, pour que cette organisation fonctionne, cela demande de la rigueur de
 :::{.callout-tip}
 ## Comment savoir si une séance de permanence a lieu, comment poser une question ?
 
-Tout se passera en ligne, grâce au logiciel [Slack](https://slack.com/intl/fr-fr/), qui fonctionne un peu comme un "twitter privé".
+Tout se passera en ligne, grâce au logiciel [Slack](https://slack.com/intl/fr-fr/), qui fonctionne un peu comme un "Twitter privé".
 :::
 
-Slack facilite la communication des équipes et permet de travailler ensemble. Créez-vous un compte en ligne et installez le logiciel sur votre ordinateur (il existe aussi des versions pour tablettes et smartphones). Lorsque vous aurez installé le logiciel, [cliquez sur ce lien](https://join.slack.com/t/geel2022/shared_invite/zt-1ga9vd9zn-~aQ~lhmJRgrH2qYNjO111g) pour vous connecter à notre espace de travail commun, et reprenez la lecture de ce document.
+Slack facilite la communication des équipes et permet de travailler ensemble. Créez-vous un compte en ligne et installez le logiciel sur votre ordinateur (il existe aussi des versions pour tablettes et smartphones). Lorsque vous aurez installé le logiciel, [cliquez sur ce lien](https://join.slack.com/t/geel2023/shared_invite/zt-23oq8inio-lGZ8HWmVTK9Cyzy~H~27WA) pour vous connecter à notre espace de travail commun, et reprenez la lecture de ce document.
 
 Vous verrez que 3 "chaînes" sont disponibles :
 

@@ -54,26 +54,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -325,41 +306,11 @@ div.csl-indent {
 
 <section id="sec-packages1" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="sec-packages1"><span class="header-section-number">9.1</span> Pré-requis</h2>
-<p>Pour travailler dans de bonnes conditions, créez un nouveau dossier sur votre ordinateur, créez un <code>Rproject</code> et un script dans ce dossier, et travaillez systématiquement <strong>dans votre script</strong>, et surtout pas directement dans la console. Consultez <a href="https://besibo.github.io/BiometrieS3/01-R-basics.html#sec-code">le livre en ligne du semestre 3</a> si vous ne savez plus comment faire.</p>
-<p>Dans ce chapitre, vous aurez besoin d’utiliser des packages spécifiques et d’importer des données depuis des fichiers externes téléchargeables directement depuis ce document. Les packages dont vous aurez besoin ici et que vous devez donc charger en mémoire, sont :</p>
-<ul>
-<li>le <code>tidyverse</code> <span class="citation" data-cites="R-tidyverse">(<a href="references.html#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span>, qui comprend notamment le package <code>readr</code> <span class="citation" data-cites="R-readr">(<a href="references.html#ref-R-readr" role="doc-biblioref">Wickham, Hester, et Bryan 2023</a>)</span>, pour importer facilement des fichiers <code>.csv</code> au format <code>tibble</code>, le package <code>dplyr</code> <span class="citation" data-cites="R-dplyr">(<a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al. 2023</a>)</span>, pour manipuler des tableaux, et le package <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al. 2023</a>)</span> pour les représentations graphiques. <!-- - `readxl` [@R-readxl], pour importer facilement des fichiers Excel au format `tibble`. --></li>
-<li><code>skimr</code> <span class="citation" data-cites="R-skimr">(<a href="references.html#ref-R-skimr" role="doc-biblioref">Waring et al. 2022</a>)</span>, qui permet de calculer des résumés de données très informatifs. <!-- - `car` [@R-car], qui permet d'effectuer le test de comparaison des variances de Levene. --> <!-- - les packages `palmerpenguins` [@R-palmerpenguins] et `nycflights13` [@R-nycflights13], pour accéder à plusieurs jeux de données que nous utiliserons en guise d'exemples ou pour les exercices (`penguins`, `flights`, `weather`...). --></li>
-</ul>
+<p>Dans ce chapitre, nous abordons pour la première fois les tests d’hypothèses. Je vous conseille donc de créer un nouveau script dans votre répertoire de travail (au même endroit que votre <code>RProject</code>) et de réinitialiser votre session de travail en relançant <code>R</code> (<code>ctrl + shift + 0</code> sous Windows, ou <code>command + shift + 0</code> sous MacOS) ou <code>RStudio</code>.</p>
+<p>Dans ce chapitre, vous aurez besoin d’utiliser des packages spécifiques et d’importer des données depuis des fichiers externes téléchargeables directement depuis ce document. Les packages dont vous aurez besoin ici et que vous devez donc charger en mémoire, sont le <code>tidyverse</code> et <code>skimr</code> déjà décrits en détail dans les chapitres précédents :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Même si vous avez déjà installé le <code>tidyverse</code> ou <code>dplyr</code> au semestre précédent, ré-installez <code>dplyr</code> avec <code>install.packages("dplyr")</code>. Ce package a en effet été mis à jour tout récemment, et nous aurons besoin de sa toute dernière version (v1.1.0). Chargez-le ensuite en mémoire avec <code>library(dplyr)</code>.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Attention
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Pensez à installer tous les packages listés ci-dessous avant de les charger en mémoire si vous ne l’avez pas déjà fait. Si vous ne savez plus comment faire, consultez d’urgence <a href="https://besibo.github.io/BiometrieS3/01-R-basics.html#sec-packages">la section dédiée aux packages dans le livre en ligne de Biométrie du semestre 3</a>.</p>
-</div>
 </div>
 <p>Vous aurez également besoin des jeux de données suivants :</p>
 <ul>
@@ -370,6 +321,7 @@ Attention
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Cette commande permet d’éviter d’avoir à ajouter la couche <code>theme_bw()</code> à chaque graphique que je vais créer durant cette session de travail.</p>
 </section>
 <section id="contexte" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="contexte"><span class="header-section-number">9.2</span> Contexte</h2>
@@ -391,13 +343,13 @@ Attention
 </div>
 <div class="callout-body-container callout-body">
 <p>Avant de se lancer dans les tests d’hypothèses, il est <strong>toujours indispensable</strong> d’examiner les données dont on dispose à l’aide, d’une part de statistiques descriptives numériques, et d’autres part, de graphiques exploratoires.</p>
-<p>Nous avons vu au cours des semestres précédents quels indices statistiques il peut être utile de calculer (<a href="https://besibo.github.io/BiometrieS4/01-dispersion.html">dans le livre en ligne du semestre 4</a>) et quelles représentations graphiques il peut être utile de réaliser (<a href="https://besibo.github.io/BiometrieS3/03-visualization.html">dans le livre en ligne du semestre 3</a>) afin de pouvoir se lancer dans des tests d’hypothèses sans risquer de grossières erreurs. N’hésitez pas à cliquer sur ces liens pour vous rafraîchir la mémoire !</p>
+<p>Nous avons vu dans <a href="06-EDA.html">les chapitres&nbsp;<span>6</span></a> et <a href="07-Incertitude.html"><span>7</span></a> quels indices statistiques il peut être utile de calculer, et dans <a href="03-Visualization.html">les chapitres&nbsp;<span>3</span></a> et <a href="08-ErrorBars.html"><span>8</span></a> quelles représentations graphiques il peut être utile de réaliser, afin de pouvoir se lancer dans des tests d’hypothèses sans risquer de grossières erreurs. N’hésitez pas à cliquer sur ces liens pour vous rafraîchir la mémoire !</p>
 </div>
 </div>
 </section>
 <section id="importation-et-mise-en-forme-des-données" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="importation-et-mise-en-forme-des-données"><span class="header-section-number">9.3</span> Importation et mise en forme des données</h2>
-<p>Nous allons travailler ici sur les données contenues dans le fichier <a href="data/Temperature.csv"><code>Temperature.csv</code></a>. Téléchargez ces données dans votre répertoire de travail (attention : ne les ouvrez pas avec Excel !), puis importez les données dans <code>RStudio</code> grâce à l’assistant d’importation. Si vous ne savez plus comment faire, consultez <a href="https://besibo.github.io/BiometrieS3/04-DataWrangling.html#plaintext">la section dédiée à l’importation des données dans le livre en ligne de Biométrie du semestre 3</a></p>
+<p>Nous allons travailler ici sur les données contenues dans le fichier <a href="data/Temperature.csv"><code>Temperature.csv</code></a>. Téléchargez ces données dans votre répertoire de travail (attention : ne les ouvrez pas avec Excel, les données pourraient s’en trouver modifiées !), puis importez les données dans <code>RStudio</code> grâce à l’assistant d’importation. Si vous ne savez plus comment faire, consultez la <a href="04-TidyData.html#sec-plaintext"><span>Section&nbsp;4.4.3</span></a>.</p>
 <p>Vous stockerez les données dans un objet que vous nommerez <code>Temperature</code>. Après l’importation, tapez son nom dans la console de <code>RStudio</code> et vérifiez que vous obtenez bien exactement ce résultat :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Temperature</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -425,13 +377,13 @@ Attention
 <p>Cette commande ouvre un nouvel onglet présentant les données dans un tableur simplifié, en lecture seule. On constate ici 2 choses que nous allons modifier :</p>
 <ol type="1">
 <li>la première colonne, intitulée <code>individual</code>, n’est pas véritablement une variable. Cette colonne ne contient qu’un identifiant sans intérêt pour notre étude et est en fait identique au numéro de ligne. Nous allons donc supprimer cette colonne.</li>
-<li>les températures sont exprimées en degrés Fahrenheit, ce qui rend leur lecture difficile pour nous qui sommes habitués à utiliser le système métrique et les degrés Celsius. Nous allons donc convertir les températures en degrés Celsius grâce à la formule suivante :</li>
+<li>les températures sont exprimées en degrés Fahrenheit, ce qui rend leur lecture difficile pour nous qui sommes habitués à utiliser le système métrique et les degrés Celsius. Grâce à la fonction <code>mutate()</code> décrite à la <a href="05-DataWrangling.html#sec-mutate"><span>Section&nbsp;5.6</span></a>, nous allons donc convertir les températures en degrés Celsius grâce à la formule que nous avons déjà vue dans les chapitres précédents :</li>
 </ol>
 <p><span class="math display">\[ºC = \frac{ºF - 32}{1.8}\]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="ot">&lt;-</span> Temperature <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>individual) <span class="sc">%&gt;%</span>      <span class="co"># Suppression de la colonne `individual`</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(                      <span class="co"># Transformation des températures en ºCelsius</span></span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="ot">&lt;-</span> Temperature <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>individual) <span class="sc">|&gt;</span>      <span class="co"># Suppression de la colonne `individual`</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(                     <span class="co"># Transformation des températures en ºCelsius</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">temperature =</span> (temperature <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> <span class="fl">1.8</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -456,7 +408,7 @@ Attention
 <p>Il nous est maintenant possible d’examiner à nouveau les données avec la fonction <code>View()</code>. Avec des valeurs de températures comprises entre 36.3ºC et 37.8ºC, il n’y a visiblement pas de données aberrantes.</p>
 <p>Examiner les données brutes est donc la première chose que vous devriez prendre l’habitude de faire, et ce de façon systématique, car cela permet de repérer :</p>
 <ul>
-<li>La nature des variables présentes.</li>
+<li>La nature des variables présentes .</li>
 <li>Les variables inutiles qui pourront être supprimées ou négligées.</li>
 <li>Les unités des variables utiles, afin de pouvoir les convertir si nécessaire.</li>
 <li>Les valeurs manquantes, atypiques ou aberrantes qui demanderont toujours une attention particulière.</li>
@@ -467,13 +419,13 @@ Attention
 <h2 data-number="9.4" class="anchored" data-anchor-id="sec-eda"><span class="header-section-number">9.4</span> Exploration statistique des données</h2>
 <section id="position-et-dispersion" class="level3" data-number="9.4.1">
 <h3 data-number="9.4.1" class="anchored" data-anchor-id="position-et-dispersion"><span class="header-section-number">9.4.1</span> Position et dispersion</h3>
-<p>On s’intéresse ici au calcul de grandeurs statistiques nous apportant des renseignements sur la <strong>position</strong> et la <strong>dispersion</strong> des valeurs de l’échantillon. Les questions auxquelles on tente de répondre à ce stade sont les suivantes :</p>
+<p>On s’intéresse ici au calcul de grandeurs statistiques nous apportant des renseignements sur les paramètres de <strong>position</strong> et de <strong>dispersion</strong> de la population. On calcule donc pour cela des estimateurs de ces paramètres grâce à notre échantillon. Les questions auxquelles on tente de répondre à ce stade sont les suivantes :</p>
 <ul>
 <li>Quelle est la tendance centrale (moyenne ou médiane) ?</li>
 <li>Quelle est la dispersion des valeurs autour de la tendance centrale (écart-type, variance, intervalle interquartile…) ?</li>
 </ul>
-<p>Pour répondre à ces questions, on peut faire appel à de multiples fonctions déjà présentées <a href="https://besibo.github.io/BiometrieS4/01-dispersion.html">dans le livre en ligne du semestre 4</a>. Par exemple la fonction <code>summarise()</code>, en conjonction avec les fonctions <code>mean()</code>, <code>median()</code>, <code>sd()</code>, <code>var()</code>, <code>min()</code>, <code>max()</code> ou <code>quantile()</code>, ou les fonctions <code>summary()</code> ou <code>skim()</code> (du package <code>skimr</code>).</p>
-<p>Je prends ici un exemple simple, mais n’hésitez pas à expérimenter avec les méthodes décrites dans le livre en ligne du semestre 4.</p>
+<p>Pour répondre à ces questions, on peut faire appel à de multiples fonctions déjà présentées dans le <a href="06-EDA.html"><span>Chapitre&nbsp;6</span></a>. Par exemple les fonctions <code>summarise()</code> et <code>reframe()</code>, en conjonction avec les fonctions <code>mean()</code>, <code>median()</code>, <code>sd()</code>, <code>var()</code>, <code>min()</code>, <code>max()</code> ou <code>quantile()</code>, ou les fonctions <code>summary()</code> ou <code>skim()</code> (du package <code>skimr</code>).</p>
+<p>Je prends ici un exemple simple, mais n’hésitez pas à expérimenter avec les méthodes décrites dans le <a href="06-EDA.html"><span>Chapitre&nbsp;6</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Temp_clean)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -488,9 +440,9 @@ Attention
 </div>
 <p>On constate ici que la moyenne et la médiane sont très proches. La distribution des températures doit donc être à peut près symétrique, avec à peu près autant de valeurs au-dessus que de valeurs en dessous de la moyenne. Les premier et troisième quartiles sont à peu près aussi éloignés de la médiane l’un que l’autre, ce qui confirme l’apparente symétrie du jeu de données de part et d’autre de la tendance centrale.</p>
 <p>La moyenne observée dans l’échantillon vaut 36.96ºC, ce qui est très proche de la moyenne théorique de 37ºC.</p>
-<p>Une autre fonction utile est la fonction <code>IQR()</code>, qui renvoie l’étendue de l’intervalle interquartile (la valeur du troisième quartile moins la valeur de premier quartile) :</p>
+<p>Une autre fonction utile est la fonction <code>IQR()</code>, qui renvoie l’étendue de l’intervalle interquartile (c’est-à-dire la valeur du troisième quartile moins la valeur de premier quartile) :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">IQ_range =</span> <span class="fu">IQR</span>(temperature))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
@@ -533,7 +485,7 @@ Group variables            None
 </ul>
 <p>Toutes ces fonctions prennent seulement un vecteur en guise d’argument. Il faut donc procéder comme avec <code>IQR()</code> pour les utiliser, en les intégrant à l’intérieur de la fonction <code>summarise()</code>. Par exemple, pour calculer la variance, on peut taper :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">variance =</span> <span class="fu">var</span>(temperature))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
@@ -544,8 +496,8 @@ Group variables            None
 </div>
 <p>ou :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(temperature) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(temperature) <span class="sc">|&gt;</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">var</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1417901</code></pre>
@@ -564,7 +516,7 @@ Group variables            None
 <h3 data-number="9.4.2" class="anchored" data-anchor-id="sec-ic95"><span class="header-section-number">9.4.2</span> Incertitude</h3>
 <p>Outre les informations de position et de dispersion, nous avons vu <a href="https://besibo.github.io/BiometrieS4/02-incertitude.html#la-notion-dincertitude">au semestre 4</a> qu’il était également important d’avoir une idée de l’<strong>incertitude</strong> associée aux estimations de tendance centrale (erreur standard ou intervalle de confiance de la moyenne ou médiane). Ici, nous allons donc calculer l’intervalle de confiance à 95% de la moyenne. Si vous ne savez plus comment faire, ou que vous ne comprenez pas le code ci-dessous, consultez <a href="https://besibo.github.io/BiometrieS4/02-incertitude.html#sec-confint">le livre en ligne du semestre 4</a> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">|&gt;</span> </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_cl_normal</span>(temperature))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
@@ -583,7 +535,7 @@ Group variables            None
 <h3 data-number="9.5.1" class="anchored" data-anchor-id="histogramme"><span class="header-section-number">9.5.1</span> Histogramme</h3>
 <p>Voilà comment produire un histogramme de qualité pour les données de températures :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">|&gt;</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> temperature)) <span class="sc">+</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>, <span class="at">fill =</span> <span class="st">"firebrick2"</span>, <span class="at">color =</span> <span class="st">"grey20"</span>, </span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
@@ -603,7 +555,7 @@ Group variables            None
 <h3 data-number="9.5.2" class="anchored" data-anchor-id="diagramme-de-densité"><span class="header-section-number">9.5.2</span> Diagramme de densité</h3>
 <p>Une autre façon de visualiser la distribution d’une variable numérique est de produire un graphique de densité. Il a l’avantage d’éviter à l’utilisateur d’avoir à choisir une valeur pour l’argument <code>bin</code> de la fonction <code>geom_histogram()</code>, mais il a l’inconvénient de présenter une échelle plus difficile à comprendre pour l’axe des ordonnées :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">|&gt;</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> temperature)) <span class="sc">+</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"firebrick2"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
@@ -622,13 +574,13 @@ Group variables            None
 </ul>
 <!-- 3. Les boîtes à moustaches : -->
 <!-- ```{r, fig.asp = 1.5, out.width = '25%', fig.width = 2} -->
-<!-- Temp_clean %>% -->
+<!-- Temp_clean |> -->
 <!--   ggplot(aes(y = temperature)) + -->
 <!--   geom_boxplot(notch = TRUE) -->
 <!-- ``` -->
 <!-- Comme pour le stripchart présenté plus haut, l'axe des abscisses n'a ici aucun sens. Nous n'avons qu'une unique série de données, l'axe des `x` est donc inutile et nous pouvons donc le retirer : -->
 <!-- ```{r, fig.asp = 1.5, out.width = '25%', fig.width = 2} -->
-<!-- Temp_clean %>% -->
+<!-- Temp_clean |> -->
 <!--   ggplot(aes(y = temperature)) + -->
 <!--   geom_boxplot(notch = TRUE) + -->
 <!--   theme(axis.text.x = element_blank(), -->
@@ -638,17 +590,17 @@ Group variables            None
 <!-- Pour conclure, ces 3 types de représentations graphiques (nuages de points ou stripchart, histogrammes et boxplots) sont complémentaires. Ces trois types de représentations graphiques permettent de visualiser la distribution d'une variable numérique. Les nuages de points permettent de voir toutes les données brutes. Les histogrammes résument les données en quelques valeurs : une valeur d'abondance pour chaque barre ou classe. Les boxplots résument encore plus les données avec seulement 7 valeurs qui caractérisent la distribution (voir figure \@ref(fig:compdistr) ci-dessous). -->
 <!-- ```{r compdistr, warning = FALSE, message = FALSE, echo=FALSE, fig.cap="Comparaison de 2 types de représentations graphiques"} -->
 <!-- library(patchwork) -->
-<!-- pl1 <- Temp_clean %>% -->
+<!-- pl1 <- Temp_clean |> -->
 <!--   ggplot(aes(y = temperature)) + -->
 <!--     geom_histogram(bins = 10) + -->
 <!--     expand_limits(y = c(36.25, 37.8)) -->
-<!-- pl2 <- Temp_clean %>% -->
+<!-- pl2 <- Temp_clean |> -->
 <!--   ggplot(aes(y = temperature)) + -->
 <!--     geom_boxplot(notch = TRUE) + -->
 <!--     expand_limits(y = c(36.08, 37.8)) + -->
 <!--     theme(axis.text.x = element_blank(), -->
 <!--           axis.ticks.x = element_blank()) -->
-<!-- pl3 <- Temp_clean %>% -->
+<!-- pl3 <- Temp_clean |> -->
 <!--   ggplot(aes(x = 1, y = temperature)) + -->
 <!--     geom_jitter(width = 0.2, height = 0) + -->
 <!--     expand_limits(y = c(36.08, 37.8)) + -->
@@ -718,14 +670,14 @@ Important
 </div>
 <p>ou</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">%&gt;%</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(temperature) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(temperature) <span class="sc">|&gt;</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro.test</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
 
-data:  .
+data:  pull(Temp_clean, temperature)
 W = 0.97216, p-value = 0.7001</code></pre>
 </div>
 </div>
@@ -820,14 +772,14 @@ Hypothèses et paramètres
 </div>
 <p>ou encore,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">%&gt;%</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(temperature) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(temperature) <span class="sc">|&gt;</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(<span class="at">mu =</span> <span class="dv">37</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
 
-data:  .
+data:  pull(Temp_clean, temperature)
 t = -0.56065, df = 24, p-value = 0.5802
 alternative hypothesis: true mean is not equal to 37
 95 percent confidence interval:
@@ -859,22 +811,23 @@ Sur la première ligne, <code>R</code> nous confirme que nous avons bien réalis
 </div>
 <p>ou encore</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">%&gt;%</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(temperature) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(temperature) <span class="sc">|&gt;</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wilcox.test</span>(<span class="at">mu =</span> <span class="dv">37</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in wilcox.test.default(., mu = 37, conf.int = TRUE): impossible de
-calculer la p-value exacte avec des ex-aequos</code></pre>
+<pre><code>Warning in wilcox.test.default(pull(Temp_clean, temperature), mu = 37, conf.int
+= TRUE): impossible de calculer la p-value exacte avec des ex-aequos</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in wilcox.test.default(., mu = 37, conf.int = TRUE): impossible de
-calculer un intervalle de confiance exact avec des ex-aequos</code></pre>
+<pre><code>Warning in wilcox.test.default(pull(Temp_clean, temperature), mu = 37, conf.int
+= TRUE): impossible de calculer un intervalle de confiance exact avec des
+ex-aequos</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Wilcoxon signed rank test with continuity correction
 
-data:  .
+data:  pull(Temp_clean, temperature)
 V = 143, p-value = 0.6077
 alternative hypothesis: true location is not equal to 37
 95 percent confidence interval:
@@ -975,23 +928,6 @@ Important
 <p><a href="data/Temperature2.csv">Le fichier <code>Temperature2.csv</code></a> contient les données brutes d’une seconde étude similaire, réalisée à plus grande échelle. Importez ces données et analysez-les afin de vérifier si la température corporelle moyenne des adultes en bonne santé vaut bien 37ºC. Comme toujours, avant de vous lancer dans la réalisation des tests statistiques, prenez le temps d’examiner vos données comme nous l’avons décrit dans la <a href="#sec-eda"><span>Section&nbsp;9.4</span></a> et la <a href="#sec-edagraph"><span>Section&nbsp;9.5</span></a>, afin de savoir où vous allez, et de repérer les éventuelles données manquantes ou aberrantes. Enfin, interprétez les résultats à la lumière des notions que nous avons abordées ici (en particulier la notion de puissance statistique).</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
-<div id="ref-R-skimr" class="csl-entry" role="listitem">
-Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, et Shannon Ellis. 2022. <em>skimr: Compact and Flexible Summaries of Data</em>. <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>.
-</div>
-<div id="ref-R-tidyverse" class="csl-entry" role="listitem">
-Wickham, Hadley. 2023. <em>tidyverse: Easily Install and Load the Tidyverse</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.
-</div>
-<div id="ref-R-ggplot2" class="csl-entry" role="listitem">
-Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, et Dewey Dunnington. 2023. <em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
-</div>
-<div id="ref-R-dplyr" class="csl-entry" role="listitem">
-Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, et Davis Vaughan. 2023. <em>dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
-</div>
-<div id="ref-R-readr" class="csl-entry" role="listitem">
-Wickham, Hadley, Jim Hester, et Jennifer Bryan. 2023. <em>readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->

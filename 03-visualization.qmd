@@ -1961,6 +1961,13 @@ Vous devriez donc maintenant être bien armés pour produire 95% des graphiques 
 Quoi qu'il en soit, il est maintenant attendu de vous que vous utilisez `R` et ce que vous avez appris de `ggplot2` pour produire tous les graphiques que vous serez amenés à intégrer à vos comptes-rendus de TP et à vos rapports.
 
 
+## Pour conclure...
+
+Quoi que vous en pensiez, nous n'avons fait qu'effleurer ce qu'il est possible de faire avec `R` en matière de visualisation de données. Par exemple, il est possible de se servir du logiciel et de ses possibilités graphiques très puissantes comme d'un SIG. Par ailleurs, de très nombreux types de visualisations originales permettent, entre autres, d'explorer différemment des distributions statistiques, ou de visualiser des relations complexes entre variables. Par exemple, essayez de voir à quoi ressemble un `violin plot`, un `lollipop plot` ou un `cleveland dot plot` et comment les faire dans `R`. Ou encore, jetez un œil au package `ggridges` et tentez de comprendre à quoi il sert et dans quelle situation il peut être intéressant de l'utiliser. 
+
+Enfin, je vous encourage vivement à faire preuve de curiosité et à explorer de votre côté. C'est comme cela que vous trouverez des idées originales vous permettant de mettre vos données en valeur. De très nombreux exemples (avec le code !) sont notamment disponibles sur [le site de la R graph gallery](https://r-graph-gallery.com). Je ne peux que vous encourager à aller y faire un tour de temps en temps...
+
+
 ## Exercices
 
 1. Avec le jeu de données `diamonds`, du packages `ggplot2`, tapez les commandes suivantes pour créer un nouveau tableau `diams` contenant moins de lignes (3000 au lieu de près de 54000) :
