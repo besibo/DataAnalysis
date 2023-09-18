@@ -126,7 +126,7 @@ Toutefois, pour que cette organisation fonctionne, cela demande de la rigueur de
 Tout se passera en ligne, grâce au logiciel [Slack](https://slack.com/intl/fr-fr/), qui fonctionne un peu comme un "Twitter privé".
 :::
 
-Slack facilite la communication des équipes et permet de travailler ensemble. Créez-vous un compte en ligne et installez le logiciel sur votre ordinateur (il existe aussi des versions pour tablettes et smartphones). Lorsque vous aurez installé le logiciel, [cliquez sur ce lien](https://join.slack.com/t/geel2023/shared_invite/zt-23oq8inio-lGZ8HWmVTK9Cyzy~H~27WA) pour vous connecter à notre espace de travail commun, et reprenez la lecture de ce document.
+Slack facilite la communication des équipes et permet de travailler ensemble. Créez-vous un compte en ligne et installez le logiciel sur votre ordinateur (il existe aussi des versions pour tablettes et smartphones). Lorsque vous aurez installé le logiciel, [cliquez ici](https://join.slack.com/t/geel2023/shared_invite/zt-23oq8inio-lGZ8HWmVTK9Cyzy~H~27WA) pour vous connecter à notre espace de travail commun, et reprenez la lecture de ce document.
 
 Vous verrez que 3 "chaînes" sont disponibles :
 
