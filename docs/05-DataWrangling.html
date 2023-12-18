@@ -337,7 +337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <div id="fig-pipepref" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="images/PipePref.png" class="img-fluid figure-img" width="526"></p>
+<p><img src="images/PipePref.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Figure&nbsp;5.1: Pour que ces raccourcis fonctionnent, assurez-vous que l’option <code>Use native pipe operator</code> est bien cochée dans les préférences de <code>RStudio</code>.</figcaption>
 </figure>
 </div>
@@ -2452,20 +2452,20 @@ Lien avec les statistiques descriptives
 <div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
-      r       s
-  &lt;int&gt;   &lt;dbl&gt;
-1    10 -1.01  
-2     9  0.205 
-3     8  0.0140</code></pre>
+      r      s
+  &lt;int&gt;  &lt;dbl&gt;
+1    10 -0.739
+2     9 -1.12 
+3     8  1.27 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
-      x     y z         r       s
-  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;   &lt;dbl&gt;
-1     1     2 TRUE     10 -1.01  
-2     2     4 FALSE     9  0.205 
-3     3     6 FALSE     8  0.0140</code></pre>
+      x     y z         r      s
+  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;  &lt;dbl&gt;
+1     1     2 TRUE     10 -0.739
+2     2     4 FALSE     9 -1.12 
+3     3     6 FALSE     8  1.27 </code></pre>
 </div>
 </div>
 <p>Ici, puisque <code>a</code> et <code>b</code> ont le même nombre de lignes, il est possible de les accoler. Cela n’a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.</p>
