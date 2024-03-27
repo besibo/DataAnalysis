@@ -1,0 +1,65 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Analyse de Données"
+  author: "Benoît Simon-Bouhet"
+  date: now
+  date-format: "dddd D MMMM YYYY"
+  search: true
+  downloads: pdf
+  repo-url: "https://github.com/besibo/DataAnalysis"
+  chapters:
+    - index.qmd
+    - 01-RBasics.qmd
+    - 02-Dataset.qmd
+    - 03-Visualization.qmd
+    - 04-TidyData.qmd
+    - 05-DataWrangling.qmd
+    - 06-EDA.qmd
+    - 07-Incertitude.qmd
+    - 08-ErrorBars.qmd
+    - 09-OneSampleTests.qmd
+    - 10-TwoSamplePairedTests.qmd
+    - 11-TwoSampleTests.qmd
+    - 12-ANOVA.qmd
+    - 13-Correlation.qmd
+    - 14-Regression.qmd
+    - 15-PropTests.qmd
+    - references.qmd
+
+bibliography: all.bib
+lang: fr
+title-block-banner: true
+reference-location: margin
+
+language:
+  title-block-author-single: "Auteur"
+  title-block-published: "Dernière Mise à jour"
+
+format:
+  html:
+    theme: 
+      light: MyUnited.scss
+      dark: darkly
+    highlight-style: solarized
+    # code-tools:
+    #   source: false
+    #   toggle: true
+    # code-fold: show
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+    code-depth: 5
+    smooth-scroll: true
+    link-external-icon: true
+    link-external-newwindow: true
+  pdf:
+    documentclass: scrreprt
+    papersize: a4
+    highlight-style: github
+    code-block-bg: false
+    code-block-border-left: "#31BAE9"
+    code-depth: 5
+    colorlinks: true
+

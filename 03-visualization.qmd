@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Visualiser des données avec `ggplot2` {#sec-viz}
 
 ## Préambule

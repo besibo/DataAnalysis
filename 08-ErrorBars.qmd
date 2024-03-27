@@ -1,0 +1,324 @@
+# Visualiser l'incertitude et la dispersion {#sec-vizincert}
+
+## Pré-requis
+
+Nous avons ici besoin des packages suivants :
+
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(palmerpenguins)
+library(nycflights13)
+library(scales)
+library(colorspace)
+```
+
+Le package `colorspace` [@R-colorspace] permet d'utiliser de très nombreuses palettes de couleurs. Ces palettes ont de nombreux avantages (dont la propriété de permettre aux daltoniens de distinguer correctement les différentes couleurs des palettes catégorielles). N'hésitez pas à consulter [le site dédié à ce package](https://colorspace.r-forge.r-project.org/index.html) qui est très complet et présente de nombreux exemples.
+
+Nous aurons aussi besoin des tableaux créés au @sec-disp (`masses_se`, `masses_se_bornes`, `masses_ci_approx` et `masses_ci`).
+
+```{r}
+#| include: false
+
+masses_se <- penguins |> 
+  filter(!is.na(sex)) |> 
+  summarise(moyenne = mean(body_mass_g, na.rm = TRUE),
+            N_obs = n(),
+            erreur_standard = sd(body_mass_g, na.rm = TRUE) / sqrt(N_obs),
+            .by = c(species, sex))
+
+masses_se_bornes <- penguins |> 
+  filter(!is.na(sex)) |> 
+  reframe(mean_se(body_mass_g),
+            .by = c(species, sex)) |> 
+  rename(moyenne = y,
+         moyenne_moins_se = ymin,
+         moyenne_plus_se = ymax)
+
+masses_ci_approx <- penguins |> 
+  filter(!is.na(sex)) |> 
+  reframe(mean_se(body_mass_g, mult = 1.96), 
+          .by = c(species, sex)) |> 
+  rename(moyenne = y,
+         ci_borne_inf = ymin,
+         ci_borne_sup = ymax)
+
+masses_ci <- penguins |> 
+  filter(!is.na(sex)) |> 
+  reframe(mean_cl_normal(body_mass_g), 
+          .by = c(species, sex)) |> 
+  rename(moyenne = y,
+         ci_borne_inf = ymin,
+         ci_borne_sup = ymax)
+```
+
+Donc pensez bien à charger en mémoire les packages et à relancer les commandes de vos scripts qui vous ont permis de créer ces tableaux s'ils ne sont plus en mémoire dans votre environnement de travail. 
+Il existe plusieurs façons de représenter visuellement les **positions**, les **dispersions** et les incertitudes. Concernant les positions et les dispersions tout d'abord, nous avons déjà vu plusieurs façons de faire au @sec-viz, en particulier dans les parties consacrées aux histogrammes, aux stripcharts et aux boxplots. Nous reprenons ici brièvement chacun de ces 3 types de graphique afin de les remettre en contexte avec ce que nous avons appris ici.
+
+Dans un dernier temps, nous verrons comment visualiser l'**incertitude** associée à des calculs de moyennes ou de variances grâce aux barres d'erreurs ou aux encoches des boîtes à moustaches.
+
+
+## Position et dispersion : les histogrammes
+
+Je vous renvoie à la @sec-histo si vous avez besoin de vous rafraîchir la mémoire. Vous pouvez aussi jeter aussi un œil à la partie sur [les histogrammes facettés, section @sec-factorhisto].
+
+Les histogrammes permettent de déterminer à la fois où se trouvent les valeurs les plus fréquemment observées (la position du pic principal correspond à la tendance centrale), et la dispersion (ou variabilité) des valeurs autour de la tendance centrale. Par exemple, la fonction `facet_grid()` permet de faire des histogrammes des températures pour chaque aéroport de New York et chaque mois de l'année 2013 :
+
+```{r}
+#| fig-asp: 1
+#| label: fig-gridmass
+#| fig-cap: "Distribution des masses corporelles chez les mâles et les femelles de 3 espèces de manchots"
+
+penguins |> 
+  filter(!is.na(sex)) |> 
+  ggplot(aes(x = body_mass_g, fill = species)) +
+  geom_histogram(bins = 20, color = "grey20", alpha = 0.5, show.legend = FALSE) +
+  facet_grid(species ~ sex, scales = "free_y") +
+  labs(x = "Masse corporelle (g)", y = "Fréquence") +
+  scale_fill_brewer(palette = "Accent") +
+  scale_x_continuous(labels = number_format())+
+  theme_bw()
+```
+
+Ici, 6 histogrammes sont produits. Ils permettent de constater que :
+
+- les masses sont à peu près toutes distribuées selon une courbe en cloche
+- les masses moyennes sont plus élevées chez les Gentoo que chez les deux autres espèces. C'est bien la position des pics sur l'axe des abscisses qui nous renseigne là-dessus. 
+- pour chaque espèce, les masses moyennes sont globalement plus élevées chez les mâles que chez les femelles. Par exemple, pour l'espèce Adélie, le pic se situe autour de 3500 grammes pour les femelles, et autour de 4000 grammes pour les mâles.
+- la variabilité des masses est comparable pour les 3 espèces et les 2 sexes. Cette fois, c'est l'étalement des histogrammes qui nous renseigne sur la dispersion. Ici, l'étalement est toujours d'environ 1500 grammes, sauf peut-être pour les femelles Gentoo dont l'étalement est d'environ 1000 grammes.
+
+
+## Position et dispersion : les stripcharts
+
+Une autre façon de visualiser à la fois les tendances centrales et les dispersions consiste à produire un nuage de points "stripchart". Là encore, je vous renvoie à [la partie sur les stripcharts, section @sec-factorstrip] si vous avez besoin de vous rafraîchir la mémoire.
+
+```{r}
+#| fig-asp: 1.4
+#| label: fig-massstrip
+#| fig-cap: "Distribution des masses corporelles chez les mâles et les femelles de 3 espèces de manchots"
+#| warning: false
+#| fig-width: 4
+#| fig-align: 'center'
+
+penguins |> 
+  filter(!is.na(sex)) |> 
+  ggplot(aes(x = sex, y = body_mass_g, fill = sex)) +
+  geom_jitter(shape = 21, color = "grey20", show.legend = FALSE,
+              width = 0.15, height = 0,
+              alpha = 0.5) +
+  facet_wrap(~ species, ncol = 1, scales = "free_y") +
+  labs(x = "Sexe", y = "Masse corporelle (g)") +
+  scale_fill_brewer(palette = "Accent") +
+  scale_y_continuous(labels = number_format())+
+  theme_bw()
+
+```
+
+Cette fois, nous visualisons la totalité des données disponibles, et non les données regroupées dans des classes plus ou moins arbitraires. Mais là encore, on peut facilement comparer la position de chaque série de données : pour chaque espèce, les mâles ont des masses corporelles plus importantes que les femelles, et globalement, les Gentoo ont des masses corporelles plus élevées que les autres espèces. La dispersion des données est aussi facile à comparer entre les groupes. C'est ici l'étendue du nuage de points sur l'axe des ordonnées qui nous permet de le faire.
+
+Enfin, les stripcharts facettés sont particulièrement utiles lorsque le nombre de séries de données est grand. Par exemple, dans le package `nycflights13`, le tableau `weather` contient des données météo enregistrées toutes les heures de l'année 2013. Si l'on souhaite comparer l'évolution des températures mensuelles dans chacun des 3 aéroports de New York, voilà ce qu'on peut faire :
+
+```{r}
+#| fig-asp: 1.4
+#| label: fig-weatherstrip
+#| fig-cap: "Distribution des températures mensuelles dans les 3 aéroports de New York en 20123"
+#| warning: false
+#| fig-align: 'center'
+
+weather |>
+  mutate(temp_celsius = (temp - 32) / 1.8) |>
+  ggplot(aes(x = factor(month), y = temp_celsius, fill = temp_celsius)) +
+  geom_jitter(shape = 21, color = "grey20", alpha = 0.5,
+              width = 0.15, height = 0, show.legend = FALSE) +
+  facet_wrap(~ origin, ncol = 1) +
+  scale_fill_continuous_diverging(palette = "Blue-Red 3") +
+  labs(x = "Mois", y = "Températures (ºC)") +
+  theme_bw()
+```
+
+
+
+## Position et dispersion : les boxplots
+
+La dernière façon classique de visualiser à la fois les tendances centrales et les dispersions consiste à produire un graphique boîtes à moustaches, ou "boxplot". Là encore, je vous renvoie à [la partie sur les boxplots, section @sec-boxplot] si vous avez besoin de vous rafraîchir la mémoire. Les boîtes à moustaches sont également très pratiques pour comparer de nombreux groupes les uns avec les autres. Avec les données de températures, voilà à quoi ça ressemble :
+
+```{r}
+#| fig-asp: 1.4
+#| label: fig-weatherbxplt
+#| fig-cap: "Distribution des températures mensuelles dans les 3 aéroports de New York en 20123"
+#| warning: false
+#| fig-align: 'center'
+
+weather |>
+  mutate(temp_celsius = (temp - 32) / 1.8) |>
+  ggplot(aes(x = factor(month), y = temp_celsius, fill = factor(month))) +
+  geom_boxplot(show.legend = FALSE, alpha = 0.5) +
+  facet_wrap(~ origin, ncol = 1) +
+  labs(x = "Mois", y = "Températures (ºC)") +
+  theme_bw()
+```
+
+Vous voyez que le code est très proche pour produire un stripchart ou un boxplot. Comme indiqué au @sec-EDA, les différents éléments de chaque boîte nous renseignent sur la position et sur la dispersion des données pour chaque mois et chaque aéroport :
+
+- La limite inférieure de la boîte correspond au premier quartile : 25% des données de l'échantillon sont situées au-dessous de cette valeur.
+- La limite supérieure de la boîte correspond au troisième quartile : 75% des données de l'échantillon sont situées au-dessous de cette valeur.
+- Le segment épais à l'intérieur de la boîte correspond au second quartile : c'est la médiane de l'échantillon, qui nous renseigne sur la position de la distribution. 50% des données de l'échantillon sont situées au-dessus de cette valeur, et 50% au-dessous.
+- La hauteur de la boîte correspond à l'étendue (ou intervalle) interquartile ou Inter Quartile Range (IQR) en anglais. On trouve dans cette boîte 50% des observations de l'échantillon. C'est une mesure de la dispersion des 50% des données les plus centrales. Une boîte plus allongée indique donc une plus grande dispersion.
+- Les moustaches correspondent à des valeurs qui sont en dessous du premier quartile (pour la moustache du bas) et au-dessus du troisième quartile (pour la moustache du haut). La règle utilisée dans `R` est que ces moustaches s'étendent jusqu'aux valeurs minimales et maximales de l'échantillon, mais elles ne peuvent en aucun cas s'étendre au-delà de 1,5 fois la hauteur de la boîte (1,5 fois l'IQR) vers le haut et le bas. Si des points apparaissent au-delà des moustaches (vers le haut ou le bas), ces points sont appelés "outliers". On peut en observer ici pour plusieurs mois et pour les 3 aéroports (par exemple, en avril dans les 3 aéroports). Ce sont des points qui s'éloignent du centre de la distribution de façon importante puisqu'ils sont au-delà de 1,5 fois l'IQR de part et d'autre du premier ou du troisième quartile. Il peut s'agir d'anomalies de mesures, d'anomalies de saisie des données, ou tout simplement, d'enregistrements tout à fait valides mais atypiques ou extrêmes ; il ne s'agit donc pas toujours de point aberrants. J'attire votre attention sur le fait que la définition de ces outliers est relativement arbitraire. Nous pourrions faire le choix d'étendre les moustaches jusqu'à 1,8 fois l'IQR (ou 2, ou 2,5). Nous observerions alors beaucoup moins d'outliers. D'une façons générale, la longueur des moustaches renseigne sur la variabilité des données en dehors de la zone centrale. Plus elles sont longues, plus la variabilité est importante. Très souvent, l'examen attentif des outliers est utile car il nous permet d'en apprendre plus sur le comportement extrême de certaines observations.
+
+Lorsque les boîtes ont une forme à peu près symétrique de part et d'autre de la médiane (c'est le cas pour cet exemple dans la plupart des catégories), cela signifie qu'un histogramme des mêmes données serait symétrique également.
+
+Les stripcharts et les boxplots sont donc un bon moyen de comparer rapidement la position et la dispersion d'un grand nombre de séries de données : ici, en quelques lignes de code, nous en comparons 12 pour chacun des 3 aéroports de New York.
+
+Les histogrammes sont plus utiles lorsqu'il y a moins de catégories à comparer, comme pour la @fig-gridmass. Ils permettent en outre de mieux visualiser les distributions non symétriques, ou qui présentent plusieurs pics (distribution bi- ou poly-modales).
+
+
+## Visualiser l'incertitude : les barres d'erreur
+
+Comme évoqué plus haut, il est important de ne pas confondre **dispersion** et **incertitude**. Lorsque l'on visualise des moyennes calculées à partir des données d'un échantillon, il est important de faire apparaître des barres d'erreurs, qui correspondent en général :
+
+- soit à l'erreur standard de la moyenne
+- soit à l'intervalle de confiance à 95% de la moyenne
+
+Puisque deux choix sont possibles, il sera important de préciser systématiquement dans la légende du graphique, la nature des barres représentées. Revenons aux données de masses corporelles des manchots, et commençons par visualiser les masses moyennes avec les erreurs standards. Pour cela, je reprends le tableau `masses_se` créé précédemment :
+
+```{r}
+#| fig-cap: "Comparison des masses moyennes observées chez les mâles et les femelles de 3 espèces de manchots. Les barres d'erreur sont les erreurs standard"
+#| label: fig-errorbar-se
+
+masses_se |> 
+  ggplot(aes(x = sex, y = moyenne, fill = species)) +
+  geom_col(color = "grey20", alpha = 0.5) +
+  geom_errorbar(aes(ymin = moyenne - erreur_standard,
+                    ymax = moyenne + erreur_standard),
+                width = 0.15) +
+  facet_wrap(~species, nrow = 1) +
+  labs(x = "", y = "Masse moyenne (g)", fill = "Espèce") +
+  theme_bw() +
+  scale_fill_brewer(palette = "Accent") +
+  scale_y_continuous(labels = number_format()) +
+  scale_x_discrete(labels = c("Femelles", "Mâles"))
+```
+
+
+Vous remarquerez que :
+
+1. la fonction `geom_errorbar()` contient de nouvelles caractéristiques esthétiques qu'il nous faut obligatoirement renseigner : les extrémités inférieures et supérieures des barres d'erreur. Il nous faut donc associer 2 variables à ces caractéristiques esthétiques. Ici, nous utilisons `moyenne - erreur_standard` pour la borne inférieure des barres d'erreur, et `moyenne + erreur_standard` pour la borne supérieure. Les variables `moyenne` et `erreur_standard` faisant partie du tableau `masses_se`, `geom_errorbar()` les trouve sans difficulté.
+2. l'argument `width` de la fonction `geom_errorbar()` permet d'indiquer la longueur des segments horizontaux qui apparaissent à chaque extrémité des barres d'erreur.
+
+Nous pouvons arriver au même résultats en utilisant le tableau `masses_se_bornes`, qui contient des variables différentes :
+
+```{r}
+#| fig-cap: "Comparison des masses moyennes observées chez les mâles et les femelles de 3 espèces de manchots. Les barres d'erreur sont les erreurs standard"
+#| label: fig-errorbar-se_all2
+
+masses_se_bornes |> 
+  ggplot(aes(x = sex, y = moyenne, fill = species)) +
+  geom_col(color = "grey20", alpha = 0.5) +
+  geom_errorbar(aes(ymin = moyenne_moins_se,
+                    ymax = moyenne_plus_se),
+                width = 0.15) +
+  facet_wrap(~species, nrow = 1) +
+  labs(x = "", y = "Masse moyenne (g)", fill = "Espèce") +
+  theme_bw() +
+  scale_fill_brewer(palette = "Accent") +
+  scale_y_continuous(labels = number_format()) +
+  scale_x_discrete(labels = c("Femelles", "Mâles"))
+```
+
+Seule la spécification de `ymin` et `ymax` dans `geom_errorbar()` a changé puisque le tableau `masses_se_bornes` contient des variables différentes de celles du tableau `masses_se`.
+
+De la même façon, nous pouvons parfaitement faire apparaître, au lieu des erreurs standards, les intervalles de confiance à 95% de chaque masse moyenne. Il nous suffit pour cela d'utiliser le tableau `masses_ci` qui contient les valeurs de moyennes et des bornes supérieures et inférieures de ces intervalles :
+
+```{r}
+#| fig-cap: "Comparison des masses moyennes observées chez les mâles et les femelles de 3 espèces de manchots. Les barres d'erreur sont les intervales de confiance à 95% des masses moyennes."
+#| label: fig-errorbar-ci
+
+masses_ci |> 
+  ggplot(aes(x = sex, y = moyenne, fill = species)) +
+  geom_col(color = "grey20", alpha = 0.5) +
+  geom_errorbar(aes(ymin = ci_borne_inf,
+                    ymax = ci_borne_sup),
+                width = 0.15) +
+  facet_wrap(~species, nrow = 1) +
+  labs(x = "", y = "Masse moyenne (g)", fill = "Espèce") +
+  theme_bw() +
+  scale_fill_brewer(palette = "Accent") +
+  scale_y_continuous(labels = number_format()) +
+  scale_x_discrete(labels = c("Femelles", "Mâles"))
+```
+
+Comme vous voyez, les barres d'erreurs sont maintenant plus longues que sur la @fig-errorbar-se. C'est normal car rappelez-vous que les intervalles de confiance sont à peu près équivalents à 2 fois les erreurs standards. L'intérêt de représenter les intervalles de confiance est qu'ils sont directement liés aux tests statistiques que nous aborderons dans les chapitres qui viennent. Globalement, quand 2 séries de données ont des intervalles de confiance qui se chevauchent largement (comme par exemple pour les mâles Adélie et Chinstrap), alors, un test d'hypothèses conclurait presque toujours à l'absence de différence significative entre les 2 groupes. À l'inverse, quand 2 séries de données ont des intervalles de confiance qui ne se chevauchent pas du tout (comme les mâles et les femelles Adélie par exemple), alors, un test d'hypothèses conclurait presque toujours à l'existence d'une différence significative entre les 2 groupes. Lorsque les intervalles de confiance entre 2 catégories se chevauchent faiblement ou partiellement (comme entre les femelles Adélie et Chinstrap), la situation est moins tranchée, et nous devrons nous en remettre aux résultats du test pour savoir si la différence observée devrait être considérée comme significative ou non.
+
+
+## Visualiser l'incertitude : les boîtes à moustaches
+
+Outre les informations de position et de dispersion, les boîtes à moustaches permettent également de visualiser l'incertitude associée aux médianes. Il suffit pour cela d'ajouter l'argument `notch = TRUE` dans la fonction `geom_boxplot()` :
+
+```{r}
+#| fig-cap: "Comparison des masses corporelles des mâles et femelles de 3 espèces de manchots."
+#| label: fig-boxplot-ci
+
+penguins |> 
+  filter(!is.na(sex)) |> 
+  ggplot(aes(x = sex, y = body_mass_g, fill = species)) +
+  geom_boxplot(color = "grey20", alpha = 0.5, notch = TRUE) +
+  facet_wrap(~species, nrow = 1) +
+  labs(x = "Sexe", y = "Masse moyenne (g)", fill = "Espèce") +
+  theme_bw() +
+  scale_fill_brewer(palette = "Accent") +
+  scale_y_continuous(labels = number_format()) +
+  scale_x_discrete(labels = c("Femelles", "Mâles"))
+```
+
+Des encoches ont été ajoutées autour de la médiane de chaque boîte à moustache. Ces encoches sont des encoches d'incertitudes. Les limites inférieures et supérieures de ces encoches correspondent aux bornes inférieures et supérieures de l'intervalle de confiance à 95% des médianes. Comme pour les moyennes, le chevauchement ou l'absence de chevauchement entre les encoches de 2 séries de données nous renseigne sur l'issue probable des futurs tests statistiques que nous serions amenés à réaliser. Notez que tout ce que nous avons dit plus haut sur le chevauchement des intervalles de confiance des moyennes se retrouve ici pour les intervalles de confiance des médianes (*i.e.* large chevauchement entre les encoches des mâles Adélie et Chinstrap, absence de chevauchement entre femelles et mâles Adélie, faible chevauchement entre femelles Adélie et Chinstrap). Il sera donc important de bien examiner ces encoches en amont des tests statistiques pour éviter de faire/dire des bêtises...
+
+## Exercice {#sec-ploterrbar}
+
+1. Avec le tableau `penguins`, calculez les grandeurs suivantes pour chaque espèce de manchot et chaque sexe :
+- la moyenne de la longueur des nageoires
+- la variance de la longueur des nageoires
+- l'écart-type de la longueur des nageoires
+- l'erreur standard de la longueur moyenne des nageoires
+- la moyenne de l'épaisseur du bec
+- la variance de l'épaisseur du bec
+- l'écart-type de l'épaisseur du bec
+- l'erreur standard de l'épaisseur du bec
+
+Attention : pensez à retirer les individus dont le sexe est inconnu.
+
+2. Vérifiez avec la fonction `skim()` que les moyennes et écart-types calculés ci-dessus sont corrects.
+
+3. Avec ces données synthétiques faites le graphique suivant :
+
+```{r}
+#| echo: false
+#| warning: false
+
+resum_peng <- penguins |>
+  filter(!is.na(sex)) |>
+  group_by(species, sex) |>
+  summarise(moy_nag = mean(flipper_length_mm, na.rm = TRUE),
+            var_nag = var(flipper_length_mm, na.rm = TRUE),
+            sd_nag = sd(flipper_length_mm, na.rm = TRUE),
+            se_nag = sd_nag / sqrt(n()),
+            moy_bil = mean(bill_depth_mm, na.rm = TRUE),
+            var_bil = var(bill_depth_mm, na.rm = TRUE),
+            sd_bil = sd(bill_depth_mm, na.rm = TRUE),
+            se_bil = sd_bil / sqrt(n()))
+
+resum_peng |>
+  ggplot(aes(x = sex, y = moy_nag)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = moy_nag - se_nag,
+                    ymax = moy_nag + se_nag),
+                width = 0.15) +
+  facet_wrap(~species) +
+  labs(x = "Sexe",
+       y = "Longueur des nageoires (mm)",
+       title = "Moyennes (et erreurs standard) des longueurs de nageoires\nchez les mâles et les femelles de trois espèces de manchots") +
+  theme_bw()
+```
+
