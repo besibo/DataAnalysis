@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -102,7 +103,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Pas de résultats",
     "search-matching-documents-text": "documents trouvés",
@@ -111,6 +118,7 @@ div.csl-indent {
     "search-more-match-text": "correspondance de plus dans ce document",
     "search-more-matches-text": "correspondances de plus dans ce document",
     "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Annuler",
     "search-submit-button-title": "Envoyer",
     "search-label": "Recherche"
@@ -121,21 +129,47 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-sidebar floating slimcontent">
 
-
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./13-Correlation.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./13-Correlation.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -161,13 +195,13 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Analyse de Données</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://github.com/besibo/DataAnalysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./Analyse-de-Données.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/besibo/DataAnalysis" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+    <a href="./Analyse-de-Données.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
 </div>
     </div>
@@ -284,7 +318,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -325,9 +359,10 @@ div.csl-indent {
 
 
 
+
 <section id="sec-packages5" class="level2" data-number="13.1">
 <h2 data-number="13.1" class="anchored" data-anchor-id="sec-packages5"><span class="header-section-number">13.1</span> Pré-requis</h2>
-<p>Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu <code>Session &gt; Restart R</code>). Inutile en revanche de créer un nouveau <code>Rproject</code> : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même <code>Rproject</code>. Comme toujours, consultez <a href="https://besibo.github.io/BiometrieS3/01-R-basics.html#sec-code">le livre en ligne du semestre 3</a> si vous ne savez plus comment faire.</p>
+<p>Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu <code>Session &gt; Restart R</code>). Inutile en revanche de créer un nouveau <code>Rproject</code> : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même <code>Rproject</code>. Comme toujours, consultez les chapitres précédents (en particulier <a href="01-RBasics.html#sec-script" class="quarto-xref">les sections&nbsp;<span>1.3.2</span></a> et <a href="01-RBasics.html#sec-rproj" class="quarto-xref"><span>1.3.3</span></a>) si vous ne savez plus comment faire.</p>
 <p>Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé <code>RStudio</code>), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d’utiliser :</p>
 <ul>
 <li>le <code>tidyverse</code> <span class="citation" data-cites="R-tidyverse">(<a href="references.html#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span>, qui comprend notamment le package <code>readr</code> <span class="citation" data-cites="R-readr">(<a href="references.html#ref-R-readr" role="doc-biblioref">Wickham, Hester, et Bryan 2023</a>)</span>, pour importer facilement des fichiers <code>.csv</code> au format <code>tibble</code>, le package <code>dplyr</code> <span class="citation" data-cites="R-dplyr">(<a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham et al. 2023</a>)</span>, pour manipuler des tableaux, et le package <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham et al. 2024</a>)</span> pour les représentations graphiques.</li>
@@ -351,23 +386,29 @@ div.csl-indent {
 <h2 data-number="13.2" class="anchored" data-anchor-id="principe"><span class="header-section-number">13.2</span> Principe</h2>
 <p>Lorsque des variables numériques sont associées ont dit qu’elles sont <strong>corrélées</strong>. Par exemple, la taille du cerveau et la taille du corps sont corrélées positivement parmi les espèces de mammifères. Les espèces de grande taille ont tendance à avoir un cerveau plus grand et les petites espèces ont tendance à avoir un cerveau plus petit. Le coefficient de corrélation est la quantité qui décrit la force et la direction de l’association entre deux variables numériques mesurées sur un échantillon de sujets ou d’unités d’observation. La corrélation reflète la quantité de dispersion dans un nuage de points entre deux variables. Contrairement à la régression linéaire, la corrélation n’ajuste aucune droite à des données et ne permet donc pas de mesurer à quel point le changement d’une variable entraîne un changement rapide ou lent de l’autre variable.</p>
 <p>Ainsi, sur la figure ci-dessous, le coefficient de corrélation entre <code>X</code> et <code>Y</code> est le même pour les deux graphiques : il vaut 1.</p>
-<div class="cell quarto-layout-panel" data-fig.asp="1">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div>
+
+</div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="13-Correlation_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="288"></p>
 </div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="13-Correlation_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="288"></p>
 </div>
 </div>
 </div>
 <p>Ici, le coefficient de corrélation (noté <span class="math inline">\(r\)</span>) vaut 1 dans les deux cas, car tous les points sont alignés sur une droite. La pente de la droite n’influence en rien la valeur de corrélation. En revanche, le degré de dispersion des points autour d’une droite parfaite a une influence :</p>
-<div class="cell quarto-layout-panel" data-fig.asp="1">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div>
+
+</div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="13-Correlation_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="288"></p>
 </div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="13-Correlation_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="288"></p>
 </div>
 </div>
@@ -375,13 +416,21 @@ div.csl-indent {
 <p>Plus la dispersion autour d’une droite parfaite sera grande, plus la corrélation sera faible. C’est la raison pour laquelle lorsque l’on parle de “corrélation”, on sous-entend généralement <strong>corrélation linéaire</strong>. Ainsi, 2 variables peuvent avoir une relation très forte, mais un coefficient de corrélation nul, si leur relation n’est pas linéaire :</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="13-Correlation_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="13-Correlation_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>L’exploration graphique de vos données devrait donc toujours être une priorité. Calculer un coefficient de corrélation nul ou très faible ne signifie par pour autant une absence de relation entre les 2 variables numériques étudiées. Cela peut signifier une relation non linéaire. La solution la plus simple pour distinguer une relation telle que celle du graphique précédent, et une absence de relation telle que celle présentée dans le graphique ci-dessous, est l’examen visuel des données :</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="13-Correlation_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="13-Correlation_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>En bref, le coefficient de corrélation <span class="math inline">\(r\)</span> est compris entre -1 et +1 :</p>
@@ -409,8 +458,8 @@ Important
 <p>La façon la plus simple de distinguer ces 2 cas de figure très différents est l’<strong>exploration graphique des données</strong>.</p>
 </div>
 </div>
-<div class="page-columns page-full"><p>Dans la suite de ce chapitre, nous allons voir comment calculer le coefficient de corrélation entre 2 variables numériques<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, et puisque nous travaillons avec des <strong>échantillons</strong>, ce calcul sera nécessairement entaché d’<strong>incertitude</strong>. Tout comme la moyenne ou la variance d’un échantillon, la corrélation est un <strong>paramètre</strong> des populations dont nous ne pourrons qu’estimer la valeur. Toute estimation de corrélation devra donc être encadrée par un intervalle d’incertitude, généralement, il s’agit de l’intervalle de confiance à 95% de la corrélation. Enfin, outre l’estimation de la valeur de la corrélation et de son incertitude, nous pourrons aussi faire des tests d’hypothèses au sujet des corrélations que nous estimerons. En particulier, nous pourrons tester si la corrélation observée est significativement différente de zéro ou non.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;Vous aurez compris je pense qu’un calcul de corrélation n’a de sens que si l’on dispose de 2 variables numériques, enregistrées sur les mêmes individus ou unités d’étude. Voir détails à la fin de la <a href="#sec-import5"><span>Section&nbsp;13.4</span></a></p></li></div></div>
-</section>
+<p>Dans la suite de ce chapitre, nous allons voir comment calculer le coefficient de corrélation entre 2 variables numériques<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, et puisque nous travaillons avec des <strong>échantillons</strong>, ce calcul sera nécessairement entaché d’<strong>incertitude</strong>. Tout comme la moyenne ou la variance d’un échantillon, la corrélation est un <strong>paramètre</strong> des populations dont nous ne pourrons qu’estimer la valeur. Toute estimation de corrélation devra donc être encadrée par un intervalle d’incertitude, généralement, il s’agit de l’intervalle de confiance à 95% de la corrélation. Enfin, outre l’estimation de la valeur de la corrélation et de son incertitude, nous pourrons aussi faire des tests d’hypothèses au sujet des corrélations que nous estimerons. En particulier, nous pourrons tester si la corrélation observée est significativement différente de zéro ou non.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Vous aurez compris je pense qu’un calcul de corrélation n’a de sens que si l’on dispose de 2 variables numériques, enregistrées sur les mêmes individus ou unités d’étude. Voir détails à la fin de la <a href="#sec-import5" class="quarto-xref"><span>Section 13.4</span></a></p></div></div></section>
 <section id="contexte" class="level2" data-number="13.3">
 <h2 data-number="13.3" class="anchored" data-anchor-id="contexte"><span class="header-section-number">13.3</span> Contexte</h2>
 <p>Les adultes qui infligent des mauvais traitements à leurs enfants ont souvent été maltraités dans leur enfance. Une telle relation existe-t-elle également chez d’autres espèces animales, chez qui cette relation pourrait être étudiée plus facilement ? <span class="citation" data-cites="muller2011">Müller et al. (<a href="references.html#ref-muller2011" role="doc-biblioref">2011</a>)</span> ont étudié cette possibilité chez le <a href="https://fr.wikipedia.org/wiki/Fou_de_Grant">fou de Grant (<em>Sula granti</em>)</a>, un oiseau marin colonial vivant entre autres aux Galápagos. Les jeunes laissés au nid sans attention parentale reçoivent fréquemment la visite d’autres oiseaux, qui se comportent souvent de manière agressive à leur encontre. Les chercheurs ont compté le nombre de ces visites dans le nid de 24 poussins dotés d’une bague d’identification individuelle. Ces 24 individus ont ensuite été suivis à l’âge adulte, lorsqu’ils sont à leur tour devenus parents. On cherche donc à savoir s’il existe un lien entre le nombre de visites agressives qu’un individu à reçu lorsqu’il était à l’état de poussin, et un degré d’agressivité mesuré à l’âge adulte.</p>
@@ -460,7 +509,7 @@ Important
 # ℹ 14 more rows</code></pre>
 </div>
 </div>
-<p>Présentées sous cette forme, les données ressemblent beaucoup à celles du <a href="10-TwoSamplePairedTests.html"><span>Chapitre&nbsp;10</span></a>. Ça n’est pas un hasard : les données dont nous disposons ici sont appariées. Calculer la corrélation entre 2 variables n’a de sens que si chaque unité d’échantillonnage ou d’observation (ici, les individus), fournissent 2 valeurs dont on souhaite mesurer l’association. Dans l’étude sur les effets de la testostérone chez les carouges à épaulettes, on avait, pour chaque individu étudié, 2 mesures d’immunocompétence : une avant et l’autre après l’opération chirurgicale. Ici, chaque Fou de Grant étudié fournit 2 valeurs également. Contrairement à l’étude des carouges à épaulettes, il s’agit de deux variables distinctes (nombre de visites agressives reçues à l’état de poussin d’une part, et comportement agressif à l’âge adulte d’autre part), mais les 2 mesures sont bien liées puisqu’elles sont obtenues chez le même individu.</p>
+<p>Présentées sous cette forme, les données ressemblent beaucoup à celles du <a href="10-TwoSamplePairedTests.html" class="quarto-xref"><span>Chapitre 10</span></a>. Ça n’est pas un hasard : les données dont nous disposons ici sont appariées. Calculer la corrélation entre 2 variables n’a de sens que si chaque unité d’échantillonnage ou d’observation (ici, les individus), fournissent 2 valeurs dont on souhaite mesurer l’association. Dans l’étude sur les effets de la testostérone chez les carouges à épaulettes, on avait, pour chaque individu étudié, 2 mesures d’immunocompétence : une avant et l’autre après l’opération chirurgicale. Ici, chaque Fou de Grant étudié fournit 2 valeurs également. Contrairement à l’étude des carouges à épaulettes, il s’agit de deux variables distinctes (nombre de visites agressives reçues à l’état de poussin d’une part, et comportement agressif à l’âge adulte d’autre part), mais les 2 mesures sont bien liées puisqu’elles sont obtenues chez le même individu.</p>
 <p>Pour bien enfoncer le clou, voici un autre exemple. Calculer la corrélation entre la taille des femmes françaises et la tension artérielle des femmes anglaises n’a strictement aucun sens car ce sont des groupes de femmes distincts qui fournissent les mesures de chaque variable. En revanche, sélectionner un groupe de femmes au hasard dans la population mondiale, et examiner, pour chacune des femmes de l’échantillon, à la fois la taille et la tension artérielle est pertinent. On peut alors se poser la question de lien potentiel existant entre ces 2 variables dans la population générale. L’étude de la corrélation entre la taille et la tension artérielle chez les femmes prend alors tout sons sens.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -532,7 +581,7 @@ futureBehavior        0.5337225      1.0000000</code></pre>
 </section>
 <section id="exploration-graphique-des-données" class="level2" data-number="13.6">
 <h2 data-number="13.6" class="anchored" data-anchor-id="exploration-graphique-des-données"><span class="header-section-number">13.6</span> Exploration graphique des données</h2>
-<p>Pour répondre à la question posée et visualiser la relation entre les deux variables numériques, on peut simplement associer chaque variable à un axe d’un graphique et faire un nuage de points. Je vous encourage à jeter un œil à <a href="https://besibo.github.io/BiometrieS3/03-visualization.html#deux-variables-numériques">ce chapitre du livre en ligne du semestre 3</a> pour voir quels types de graphiques sont pertinents dans cette situation.</p>
+<p>Pour répondre à la question posée et visualiser la relation entre les deux variables numériques, on peut simplement associer chaque variable à un axe d’un graphique et faire un nuage de points. Je vous encourage à jeter un œil à nouveau à la <a href="03-Visualization.html#sec-deuxnum" class="quarto-xref"><span>Section 3.7</span></a> pour voir quels types de graphiques sont pertinents dans cette situation.</p>
 <p>Afin de savoir si la valeur de <span class="math inline">\(r\)</span> calculée précédemment dans notre échantillon (0.534) reflète une relation linéaire mais moyenne, ou une relation qui n’est pas vraiment linéaire, nous pouvons donc faire un nuage de points :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>birds <span class="sc">%&gt;%</span></span>
@@ -541,17 +590,20 @@ futureBehavior        0.5337225      1.0000000</code></pre>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Nombre de visites reçues par le poussin"</span>,</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Agressivité à l'âge adulte"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-rel" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="13-Correlation_files/figure-html/fig-rel-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;13.1: Relation entre agressivité à l’âge adulte et nombre de visites agressives reçues par les poussins de l’espèce <em>Sula granti</em></figcaption>
+<div id="fig-rel" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="13-Correlation_files/figure-html/fig-rel-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.1: Relation entre agressivité à l’âge adulte et nombre de visites agressives reçues par les poussins de l’espèce <em>Sula granti</em>
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>On constate ici que la corrélation moyenne obtenue plus haut est due au fait que les points sont assez dispersés, et non au fait que la relation n’est pas linéaire. On peut donc dire que la relation, si elle existe, n’est pas parfaite. Le comportement des individus devenus adultes semble donc en partie lié au nombre de visites agressives qu’ils ont reçues étant jeunes, mais ce n’est certainement pas le seul facteur influençant leur comportement. Un test d’hypothèses devrait nous permettre de déterminer si la corrélation linéaire observée ici est simplement le fruit du hasard de l’échantillonnage, ou si au contraire la relation observée n’est pas seulement le fruit du hasard, mais bien le reflet d’un lien réel entre les 2 variables.</p>
 <p>Si visualiser la distribution des données n’est pas indispensable pour se faire une idée de la nature du lien qui existe (ou non) entre les deux variables, cela sera néanmoins utile pour vérifier les conditions d’application du test de corrélations paramétrique de Pearson. Comme dans les chapitres précédents, nous avons donc intérêt à examiner la distribution de ces 2 variables par le biais d’histogrammes, de graphiques de densité ou de boîtes à moustaches.</p>
-<div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>birds <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> nVisitsNestling)) <span class="sc">+</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"firebrick2"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
@@ -564,14 +616,13 @@ futureBehavior        0.5337225      1.0000000</code></pre>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Agressivité à l'âge adulte"</span>,</span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Densité"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-fig.asp="0.8">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="13-Correlation_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="288"></p>
 </div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="13-Correlation_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="288"></p>
-</div>
 </div>
 </div>
 </div>
@@ -614,11 +665,15 @@ futureBehavior        0.5337225      1.0000000</code></pre>
 </ul>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="13-Correlation_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="13-Correlation_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Enfin, si l’une, l’autre ou les deux séries de données ne suivent pas la loi Normale, il faudra faire un test non paramétrique.</p>
-<p>Dans notre cas, le graphique <a href="#fig-rel">Figure&nbsp;<span>13.1</span></a> semble indiquer que les 2 premières conditions d’application sont remplies (la relation entre les deux variable semble globalement linéaire et le nuage de points a globalement une forme elliptique). Il nous reste donc à vérifier la normalité des 2 variables. Les hypothèses nulles et alternatives du test de Shapiro-Wilk sont toujours les mêmes :</p>
+<p>Dans notre cas, le graphique <a href="#fig-rel" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> semble indiquer que les 2 premières conditions d’application sont remplies (la relation entre les deux variable semble globalement linéaire et le nuage de points a globalement une forme elliptique). Il nous reste donc à vérifier la normalité des 2 variables. Les hypothèses nulles et alternatives du test de Shapiro-Wilk sont toujours les mêmes :</p>
 <ul>
 <li><span class="math inline">\(H_0\)</span> : les données suivent une distribution Normale dans la population générale.</li>
 <li><span class="math inline">\(H_1\)</span> : les données ne suivent pas une distribution Normale dans la population générale.</li>
@@ -702,7 +757,7 @@ sample estimates:
 0.5337225 </code></pre>
 </div>
 </div>
-<p>Comme pour les autres test unilatéraux, le choix d’une hypothèse alternative aberrante se traduit par une <span class="math inline">\(p-\)</span>value très forte, généralement égale à (ou très proche de) 1. Dans le cas précis de cette étude, il serait abusif de faire un tel test unilatéral. En effet, les scientifiques suppose que si un lien existe entre les deux variables, la corrélation devrait être positive. Mais avoir observé une relation de cette nature chez d’autres espèces (qui plus est, chez des espèces très différentes) n’est pas suffisant. Car peut-être qu’une relation inverse peut également être observée dans d’autres groupes, et on peut très bien imaginer des mécanismes permettant de l’expliquer. Enfin, avoir observé une corrélation positive dans notre échantillon lors de l’examen préliminaire des données n’est jamais une raison suffisante pour choisir une hypothèse alternative unilatérale. Le choix des hypothèses devrait en effet toujours être effectué avant la collecte des données (voir <a href="11-TwoSampleTests.html#sec-bilat"><span>Section&nbsp;11.10</span></a>). Il est donc bien plus honnête de réaliser un test unilatéral, puis, en cas de rejet de <span class="math inline">\(H_0\)</span>, de revenir aux estimation pour interpréter les résultats et conclure. C’est que nous allons voir maintenant.</p>
+<p>Comme pour les autres test unilatéraux, le choix d’une hypothèse alternative aberrante se traduit par une <span class="math inline">\(p-\)</span>value très forte, généralement égale à (ou très proche de) 1. Dans le cas précis de cette étude, il serait abusif de faire un tel test unilatéral. En effet, les scientifiques suppose que si un lien existe entre les deux variables, la corrélation devrait être positive. Mais avoir observé une relation de cette nature chez d’autres espèces (qui plus est, chez des espèces très différentes) n’est pas suffisant. Car peut-être qu’une relation inverse peut également être observée dans d’autres groupes, et on peut très bien imaginer des mécanismes permettant de l’expliquer. Enfin, avoir observé une corrélation positive dans notre échantillon lors de l’examen préliminaire des données n’est jamais une raison suffisante pour choisir une hypothèse alternative unilatérale. Le choix des hypothèses devrait en effet toujours être effectué avant la collecte des données (voir <a href="11-TwoSampleTests.html#sec-bilat" class="quarto-xref"><span>Section 11.10</span></a>). Il est donc bien plus honnête de réaliser un test unilatéral, puis, en cas de rejet de <span class="math inline">\(H_0\)</span>, de revenir aux estimation pour interpréter les résultats et conclure. C’est que nous allons voir maintenant.</p>
 </section>
 <section id="estimation-et-intervalle-de-confiance" class="level3" data-number="13.7.4">
 <h3 data-number="13.7.4" class="anchored" data-anchor-id="estimation-et-intervalle-de-confiance"><span class="header-section-number">13.7.4</span> Estimation et intervalle de confiance</h3>
@@ -734,8 +789,8 @@ sample estimates:
 <p>Les études expérimentales sont les seules à permettre d’établir des relations de cause à effet. C’est comme cela que par exemple, on peut affirmer qu’un vaccin est efficace ou non contre tel ou tel virus, ou à l’inverse qu’il présente tel ou tel effet secondaire. Pour tester l’efficacité d’un vaccin vis-à-vis d’un virus spécifique, on met en place une étude expérimentale dite “en double aveugle”. Dans la population générale, on va constituer 2 échantillons de patients atteints par le virus. On administrera ensuite le vaccin à l’un des deux groupes, alors qu’on distribuera un placebo (le même vaccin mais sans son composé actif) à l’autre groupe, dans les mêmes conditions. L’étude est “en double aveugle”, car les patients ne savent pas s’ils reçoivent le vaccin actif ou inactif, et les médecins qui administrent le traitement non plus. Cela a pour but de contrôler l’effet placebo.</p>
 <p>Dans ces études, la façon dont les 2 groupes de patients sont constitués est sous le contrôle des expérimentateurs. Pour pouvoir établir des relations de causalité (entre administration du vaccin et guérison par exemple) ils doivent s’assurer que les groupes présentent les mêmes caractéristiques vis-à-vis de toutes les variables confondantes potentielles. Par exemple, on peut supposer que les hommes et les femmes ne réagissent pas de la même façon face au virus, ou face au vaccin. Ainsi, placer tous les hommes dans le premier groupe, et toutes les femmes dans le second groupe, serait évidemment une erreur. Car si le premier groupe guérit plus vite, comment peut-on être sûr de la cause de cette guérison ? Le premier groupe a-t-il guérit plus vite parce qu’il était constitué d’hommes, ou parce que les individus ont reçu le vaccin ? Puisque le sexe des individus est une variable confondante potentielle, il est important de répartir équitablement hommes et femmes dans les deux groupes. Et il en va de même pour énormément de variables confondantes potentielles : sexe des individus, âge, niveau d’études, revenu moyen, catégorie socio-professionnelle, etc. Ça n’est qu’en s’assurant que les 2 groupes sont homogènes vis-à-vis de l’ensemble de ces facteurs que les différences éventuelles qui seront observées à l’issue de l’expérience pourront être attribuées sans le moindre doute au traitement étudié : ici, l’administration du vaccin.</p>
 <p>Dans le domaine de l’écologie, la plupart des études sont observationnelles, et elles permettent au mieux d’établir des corrélations, des liens entre variables, mais beaucoup plus rarement des liens de causalité formels. Il est toutefois souvent possible, après avoir observé un lien entre variables dans le milieu naturel, de mettre au point des expériences (donc des études expérimentales) permettant de tester des hypothèses précises, y compris des relations de causalité.</p>
-<div class="page-columns page-full"><p>Par exemple, dans le milieu marin, en particulier littoral, l’apparition d’<a href="https://fr.wikipedia.org/wiki/Imposex">imposex</a> chez certains mollusques<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> a pu être associé à la présence de tributylétain (TBT) à l’état de trace dans l’eau de mer&gt; lorsque ce phénomène a été décelé, il était impossible d’affirmer que le TBT causait l’apparition d’imposex ; il n’y avait qu’une corrélation. Ça n’est que dans un second temps qu’une étude expérimentale en milieu contrôlé a permis d’établir un lien de causalité. Deux groupes de mollusques identiques en tous points sont placés dans différents bassins. On répartit ensuite de façon aléatoire les bassins en plusieurs lots, et chaque lot de bassin se voit attribuer un traitement : absence de TBT, TBT à la concentration X, TBT à la concentration Y, etc. C’est ce type d’étude expérimentale qui a permis d’établir avec certitude le caractère de perturbateur endocrinien du TBT, de prouver que l’imposex des mollusques pouvait être causé par le TBT, et de connaitre les concentrations à partir desquelles les effets apparaissent.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;apparitions d’organes génitaux mâles chez des femelles saines par ailleurs</p></li></div></div>
-<div class="callout callout-style-default callout-warning callout-titled">
+<p>Par exemple, dans le milieu marin, en particulier littoral, l’apparition d’<a href="https://fr.wikipedia.org/wiki/Imposex">imposex</a> chez certains mollusques<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> a pu être associé à la présence de tributylétain (TBT) à l’état de trace dans l’eau de mer&gt; lorsque ce phénomène a été décelé, il était impossible d’affirmer que le TBT causait l’apparition d’imposex ; il n’y avait qu’une corrélation. Ça n’est que dans un second temps qu’une étude expérimentale en milieu contrôlé a permis d’établir un lien de causalité. Deux groupes de mollusques identiques en tous points sont placés dans différents bassins. On répartit ensuite de façon aléatoire les bassins en plusieurs lots, et chaque lot de bassin se voit attribuer un traitement : absence de TBT, TBT à la concentration X, TBT à la concentration Y, etc. C’est ce type d’étude expérimentale qui a permis d’établir avec certitude le caractère de perturbateur endocrinien du TBT, de prouver que l’imposex des mollusques pouvait être causé par le TBT, et de connaitre les concentrations à partir desquelles les effets apparaissent.</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;apparitions d’organes génitaux mâles chez des femelles saines par ailleurs</p></div></div><div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -753,7 +808,7 @@ Important
 </section>
 <section id="lalternative-non-paramétrique" class="level2" data-number="13.9">
 <h2 data-number="13.9" class="anchored" data-anchor-id="lalternative-non-paramétrique"><span class="header-section-number">13.9</span> L’alternative non paramétrique</h2>
-<p>Quand les conditions d’application du test de corrélation de Pearson ne sont pas remplies (ce qui était le cas ici, voir <a href="#sec-ca5"><span>Section&nbsp;13.7.2</span></a>), il faut faire un test équivalent non paramétrique. Le test utilisé le plus fréquemment dans cette situation est le test du <span class="math inline">\(\rho\)</span> de Spearman (<span class="math inline">\(\rho\)</span> est la lettre grecque “rho”, et non la lettre “p”). On l’effectue comme le test de Pearson en précisant simplement un argument supplémentaire : <code>method = "spearman"</code> (sans majuscule) :</p>
+<p>Quand les conditions d’application du test de corrélation de Pearson ne sont pas remplies (ce qui était le cas ici, voir <a href="#sec-ca5" class="quarto-xref"><span>Section 13.7.2</span></a>), il faut faire un test équivalent non paramétrique. Le test utilisé le plus fréquemment dans cette situation est le test du <span class="math inline">\(\rho\)</span> de Spearman (<span class="math inline">\(\rho\)</span> est la lettre grecque “rho”, et non la lettre “p”). On l’effectue comme le test de Pearson en précisant simplement un argument supplémentaire : <code>method = "spearman"</code> (sans majuscule) :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(birds<span class="sc">$</span>nVisitsNestling, birds<span class="sc">$</span>futureBehavior,</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -802,7 +857,7 @@ sample estimates:
 <p>Les données de <span class="citation" data-cites="wiseman1996">Wiseman et Lamont (<a href="references.html#ref-wiseman1996" role="doc-biblioref">1996</a>)</span> sont disponibles dans le fichier <a href="data/ropetrick.csv"><code>ropetrick.csv</code></a>. Importez ces données et analysez-les en respectant les consignes de l’exercice précédent.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-liberg2005" class="csl-entry" role="listitem">
 Liberg, Olof, Henrik Andrén, Hans-Christian Pedersen, Håkan Sand, Sejberg, Petter Wabakken, Mikael Åkesson, et Staffan Bensch. 2005. <span>«&nbsp;Severe Inbreeding Depression in a Wild Wolf <span>Canis</span> Lupus Population&nbsp;»</span>. <em>Biology Letters</em> 1 (1): 17‑20. <a href="https://doi.org/10.1098/rsbl.2004.0266">https://doi.org/10.1098/rsbl.2004.0266</a>.
 </div>
@@ -876,6 +931,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -942,13 +1024,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1027,10 +1111,34 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1040,8 +1148,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1053,7 +1170,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1097,6 +1337,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1122,6 +1363,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1179,37 +1446,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-          // target, if specified
-          link.setAttribute("target", "_blank");
-          // default icon
-          link.classList.add("external");
-      }
-    }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./12-ANOVA.html" class="pagination-link">
+      <a href="./12-ANOVA.html" class="pagination-link" aria-label="Comparaison de moyennes : plus de 2 groupes">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./14-Regression.html" class="pagination-link">
+      <a href="./14-Regression.html" class="pagination-link" aria-label="Régression linéaire">
         <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Régression linéaire</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

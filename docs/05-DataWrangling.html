@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -83,7 +83,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Pas de résultats",
     "search-matching-documents-text": "documents trouvés",
@@ -92,6 +98,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "correspondance de plus dans ce document",
     "search-more-matches-text": "correspondances de plus dans ce document",
     "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Annuler",
     "search-submit-button-title": "Envoyer",
     "search-label": "Recherche"
@@ -102,21 +109,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-sidebar floating slimcontent">
 
-
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-DataWrangling.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler des tableaux avec `dplyr`</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-DataWrangling.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler des tableaux avec <code>dplyr</code></span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -142,13 +175,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Analyse de Données</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://github.com/besibo/DataAnalysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./Analyse-de-Données.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/besibo/DataAnalysis" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+    <a href="./Analyse-de-Données.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
 </div>
     </div>
@@ -265,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -281,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#exercice" id="toc-exercice" class="nav-link" data-scroll-target="#exercice"><span class="header-section-number">5.4.2</span> Exercice</a></li>
   <li><a href="#les-conditions-logiques" id="toc-les-conditions-logiques" class="nav-link" data-scroll-target="#les-conditions-logiques"><span class="header-section-number">5.4.3</span> Les conditions logiques</a></li>
   </ul></li>
-  <li><a href="#sélectionner-des-variables-avec-select" id="toc-sélectionner-des-variables-avec-select" class="nav-link" data-scroll-target="#sélectionner-des-variables-avec-select"><span class="header-section-number">5.5</span> Sélectionner des variables avec <code>select()</code></a></li>
+  <li><a href="#sec-select" id="toc-sec-select" class="nav-link" data-scroll-target="#sec-select"><span class="header-section-number">5.5</span> Sélectionner des variables avec <code>select()</code></a></li>
   <li><a href="#sec-mutate" id="toc-sec-mutate" class="nav-link" data-scroll-target="#sec-mutate"><span class="header-section-number">5.6</span> Créer de nouvelles variables avec <code>mutate()</code></a>
   <ul class="collapse">
   <li><a href="#principe-1" id="toc-principe-1" class="nav-link" data-scroll-target="#principe-1"><span class="header-section-number">5.6.1</span> Principe</a></li>
@@ -319,6 +352,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+
 <section id="pré-requis" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="pré-requis"><span class="header-section-number">5.1</span> Pré-requis</h2>
 <p>Nous abordons ici une étape essentielle de toute analyse de données : la manipulation de tableaux, la sélection de lignes, de colonnes, la création de nouvelles variables, etc. Bien souvent, les données brutes que nous importons dans <code>R</code> ne sont pas utiles en l’état. Il nous faut parfois sélectionner seulement certaines lignes pour travailler sur une petite partie du jeu de données. Il nous faut parfois modifier des variables existantes (pour modifier les unités par exemple) ou en créer de nouvelles à partir des variables existantes. Nous avons aussi très souvent besoin de constituer des groupes et d’obtenir des statistiques descriptives pour chaque groupe (moyenne, écart-type, erreur type, etc). Nous verrons dans ce chapitre comment faire tout cela grâce au package <code>dplyr</code> qui fournit un cadre cohérent et des fonctions simples permettant d’effectuer tous les tripatouillages de données dont nous pourrons avoir besoin.</p>
@@ -335,14 +369,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell fig-cap-location-top page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-pipepref" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/PipePref.png" class="img-fluid figure-img" width="526"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.1: Pour que ces raccourcis fonctionnent, assurez-vous que l’option <code>Use native pipe operator</code> est bien cochée dans les préférences de <code>RStudio</code>.</figcaption>
+<div id="fig-pipepref" class="quarto-figure quarto-figure-center quarto-float anchored" data-cap-location="top">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-pipepref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Pour que ces raccourcis fonctionnent, assurez-vous que l’option <code>Use native pipe operator</code> est bien cochée dans les préférences de <code>RStudio</code>.
+</figcaption>
+<div aria-describedby="fig-pipepref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/PipePref.png" class="img-fluid figure-img" width="526">
+</div>
 </figure>
 </div>
 </div></div></div>
-<p>Le pipe, noté <code>|&gt;</code>, peut être obtenu en pressant les touches <code>ctrl + shift + M</code> de votre clavier (ou <code>command + shift + M</code> sous macOS). Il peut aussi être noté de la façon suivante : <code>|&gt;</code>. Historiquement, c’est d’ailleurs ce symbole qui était systématiquement utilisé et qui apparaissait en pressant les raccourcis claviers décrits plus haut (voir <a href="#fig-pipepref">Figure&nbsp;<span>5.1</span></a> ci-contre). Ce pipe est apparu dans le package <code>magrittr</code> qui fait partie du <code>tidyverse</code>. Cet opérateur s’est avéré tellement utile et a permis de rendre les scripts tellement plus faciles à lire, que depuis la version <code>4.1.0</code> de <code>R</code>, un pipe “natif” (<code>|&gt;</code>, disponible par défaut, sans avoir besoin de charger le moindre package) a été rendu disponible.</p>
+<p>Le pipe, noté <code>|&gt;</code>, peut être obtenu en pressant les touches <code>ctrl + shift + M</code> de votre clavier (ou <code>command + shift + M</code> sous macOS). Il peut aussi être noté de la façon suivante : <code>|&gt;</code>. Historiquement, c’est d’ailleurs ce symbole qui était systématiquement utilisé et qui apparaissait en pressant les raccourcis claviers décrits plus haut (voir <a href="#fig-pipepref" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> ci-contre). Ce pipe est apparu dans le package <code>magrittr</code> qui fait partie du <code>tidyverse</code>. Cet opérateur s’est avéré tellement utile et a permis de rendre les scripts tellement plus faciles à lire, que depuis la version <code>4.1.0</code> de <code>R</code>, un pipe “natif” (<code>|&gt;</code>, disponible par défaut, sans avoir besoin de charger le moindre package) a été rendu disponible.</p>
 <p>Il permet d’enchaîner logiquement des actions les unes à la suite des autres. Globalement, le pipe prend l’objet situé à sa gauche, et le transmet à la fonction situé à sa droite. En d’autres termes, les 2 expressions suivantes sont strictement équivalentes :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ici, "f" est une fonction quelconque, </span></span>
@@ -354,14 +392,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Travailler avec le pipe est très intéressant car toutes les fonctions de <code>dplyr</code> que nous allons décrire ensuite sont construites autour de la même syntaxe : on leur fournit un <code>data.frame</code> (ou encore mieux, un <code>tibble</code>), elles effectuent une opération et renvoient un nouveau <code>data.frame</code> (ou un nouveau <code>tibble</code>). Il est ainsi possible de créer des groupes de commandes cohérentes qui permettent, grâce à l’enchaînement d’étapes simples, d’aboutir à des résultats complexes.</p>
 <p>De la même façon que le <code>+</code> permet d’ajouter une couche supplémentaire à un graphique <code>ggplot2</code>, le pipe <code>|&gt;</code> permet d’ajouter une opération supplémentaire dans un groupe de commandes.</p>
-<p>Pour reprendre un exemple de la <a href="03-Visualization.html#sec-empil"><span>Section&nbsp;3.8.1</span></a> sur les diagrammes bâtons empilés, nous avions utilisé ce code :</p>
+<p>Pour reprendre un exemple de la <a href="03-Visualization.html#sec-empil" class="quarto-xref"><span>Section 3.8.1</span></a> sur les diagrammes bâtons empilés, nous avions utilisé ce code :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(species), <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ligne par ligne, voilà la signification de ce code :</p>
@@ -376,7 +418,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_clean, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(species), <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>C’est strictement équivalent. La deuxième méthode à l’inconvénient de nous obliger à créer un objet intermédiaire (que j’ai ici nommé <code>penguins_clean</code>). Lorsque l’on a de nombreuses fonctions à enchaîner, il faut donc créer de nombreux objets intermédiaires dont nous n’avons besoin qu’une seule fois, ce qui peut être source de nombreuses erreurs.</p>
@@ -386,7 +432,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(species), <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Cette fois, on ne crée plus d’objet intermédiaire, mais on intègre directement la fonction <code>filter()</code> à l’intérieur de la fonction <code>ggplot()</code>. Le code devient un peu moins lisible, et quand ça n’est pas deux fonctions mais 4, 5 ou plus que nous devons enchaîner, procéder ainsi est la garantie que des erreurs seront commises et qu’elles seront très difficiles à corriger.</p>
@@ -422,10 +472,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="principe"><span class="header-section-number">5.4.1</span> Principe</h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-filterfig" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/filter.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.2: Schéma de la fonction <code>filter()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<div id="fig-filterfig" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-filterfig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/filter.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-filterfig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: Schéma de la fonction <code>filter()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -445,12 +499,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="exercice" class="level3" data-number="5.4.2">
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="exercice"><span class="header-section-number">5.4.2</span> Exercice</h3>
-<p>Créez un objet nommé <code>adelie_light</code> qui contiendra uniquement les données de l’espèce Adélie, et uniquement pour les individus pesant 3700 grammes ou moins. Indice : relisez la <a href="01-RBasics.html#sec-comparaison"><span>Section&nbsp;1.3.4.2</span></a></p>
+<p>Créez un objet nommé <code>adelie_light</code> qui contiendra uniquement les données de l’espèce Adélie, et uniquement pour les individus pesant 3700 grammes ou moins. Indice : relisez la <a href="01-RBasics.html#sec-comparaison" class="quarto-xref"><span>Section 1.3.4.2</span></a></p>
 <p>Vérifiez que cet objet contient bien 81 lignes.</p>
 </section>
 <section id="les-conditions-logiques" class="level3" data-number="5.4.3">
 <h3 data-number="5.4.3" class="anchored" data-anchor-id="les-conditions-logiques"><span class="header-section-number">5.4.3</span> Les conditions logiques</h3>
-<p>Dans la <a href="01-RBasics.html#sec-comparaison"><span>Section&nbsp;1.3.4.2</span></a>, nous avons présenté en détail le fonctionnement des opérateurs de comparaison dans <code>R</code>. Relisez cette section si vous ne savez plus de quoi il s’agit. Les opérateurs de comparaison permettent de vérifier l’égalité ou l’inégalité entre des éléments. Ils renvoient <code>TRUE</code> ou <code>FALSE</code> et seront particulièrement utiles pour filtrer des lignes dans un tableau. Voici à nouveau la liste des opérateurs de comparaison usuels :</p>
+<p>Dans la <a href="01-RBasics.html#sec-comparaison" class="quarto-xref"><span>Section 1.3.4.2</span></a>, nous avons présenté en détail le fonctionnement des opérateurs de comparaison dans <code>R</code>. Relisez cette section si vous ne savez plus de quoi il s’agit. Les opérateurs de comparaison permettent de vérifier l’égalité ou l’inégalité entre des éléments. Ils renvoient <code>TRUE</code> ou <code>FALSE</code> et seront particulièrement utiles pour filtrer des lignes dans un tableau. Voici à nouveau la liste des opérateurs de comparaison usuels :</p>
 <ul>
 <li><code>==</code> : égal à</li>
 <li><code>!=</code> : différent de</li>
@@ -585,14 +639,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="sélectionner-des-variables-avec-select" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="sélectionner-des-variables-avec-select"><span class="header-section-number">5.5</span> Sélectionner des variables avec <code>select()</code></h2>
+<section id="sec-select" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="sec-select"><span class="header-section-number">5.5</span> Sélectionner des variables avec <code>select()</code></h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-selectfig" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/select.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.3: Schéma de la fonction <code>select()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<div id="fig-selectfig" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-selectfig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/select.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-selectfig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: Schéma de la fonction <code>select()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -750,10 +808,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="5.6.1" class="anchored" data-anchor-id="principe-1"><span class="header-section-number">5.6.1</span> Principe</h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-mutatefig" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/mutate.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.4: Schéma de la fonction <code>mutate()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<div id="fig-mutatefig" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mutatefig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/mutate.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mutatefig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: Schéma de la fonction <code>mutate()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -911,7 +973,7 @@ Levels: imm mat pnl pl l repos</code></pre>
 </div>
 </div>
 <p>Pour le facteur <code>Statut</code> en revanche, l’ordre importe, car il reflète des stades qui se succèdent logiquement au cours de la vie des individus (et des femelles plus particulièrement). Sur un graphique, on souhaite donc que ces catégories apparaissent dans un ordre bien précis, différent de l’ordre alphabétique. C’est la raison pour laquelle, lorsque l’on crée un facteur avec la fonction <code>factor()</code>, on peut spécifier explicitement un ordre pour les catégories grâce à l’argument <code>levels =</code>. Il suffit ensuite de fournir un vecteur contenant le nom de chaque catégorie, dans l’ordre souhaité.</p>
-<p>Il existe de nombreuses façons de ré-ordonner les modalités d’un facteur le long des axes d’un graphique. Voyons un exemple avec la <a href="#fig-bxpltcol">Figure&nbsp;<span>5.5</span></a> :</p>
+<p>Il existe de nombreuses façons de ré-ordonner les modalités d’un facteur le long des axes d’un graphique. Voyons un exemple avec la <a href="#fig-bxpltcol" class="quarto-xref">Figure&nbsp;<span>5.5</span></a> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>dauphin_clean <span class="sc">|&gt;</span> </span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Organe, <span class="at">y =</span> Cu, <span class="at">fill =</span> Sexe)) <span class="sc">+</span></span>
@@ -919,10 +981,14 @@ Levels: imm mat pnl pl l repos</code></pre>
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
 <span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-bxpltcol" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/fig-bxpltcol-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.5: Un exemple de figure avec 2 facteurs et des modalités ordonnées automatiquement par ordre alphabétique</figcaption>
+<div id="fig-bxpltcol" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bxpltcol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05-DataWrangling_files/figure-html/fig-bxpltcol-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bxpltcol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.5: Un exemple de figure avec 2 facteurs et des modalités ordonnées automatiquement par ordre alphabétique
+</figcaption>
 </figure>
 </div>
 </div>
@@ -937,10 +1003,14 @@ Levels: imm mat pnl pl l repos</code></pre>
 <span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
 <span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-bxpltcol2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/fig-bxpltcol2-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.6: La même figure mais avec les modalités des 2 facteurs ordonnées manuellement</figcaption>
+<div id="fig-bxpltcol2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bxpltcol2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05-DataWrangling_files/figure-html/fig-bxpltcol2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bxpltcol2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.6: La même figure mais avec les modalités des 2 facteurs ordonnées manuellement
+</figcaption>
 </figure>
 </div>
 </div>
@@ -954,15 +1024,19 @@ Levels: imm mat pnl pl l repos</code></pre>
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-bxpltcol3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/fig-bxpltcol3-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.7: La même figure mais avec les modalités des 2 facteurs inversées avec <code>fct_rev()</code></figcaption>
+<div id="fig-bxpltcol3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bxpltcol3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05-DataWrangling_files/figure-html/fig-bxpltcol3-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bxpltcol3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.7: La même figure mais avec les modalités des 2 facteurs inversées avec <code>fct_rev()</code>
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Il conviendrait ici de changer les légendes de l’axe des <code>x</code> et de l’échelle de couleurs avec la fonction <code>labs()</code> (voir <a href="03-Visualization.html#sec-labels"><span>Section&nbsp;3.11.1</span></a>).</p>
+<p>Il conviendrait ici de changer les légendes de l’axe des <code>x</code> et de l’échelle de couleurs avec la fonction <code>labs()</code> (voir <a href="03-Visualization.html#sec-labels" class="quarto-xref"><span>Section 3.11.1</span></a>).</p>
 <p>Il existe de nombreuses autres fonctions très utiles dans le package <code>forcats</code>. L’une d’entre elles est la fonction <code>fct_recode()</code>, qui permet de changer le nom des modalités d’un facteur. Par exemple :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>dauphin <span class="sc">|&gt;</span> </span>
@@ -998,10 +1072,14 @@ Levels: imm mat pnl pl l repos</code></pre>
 <span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Organe"</span>, <span class="at">fill =</span> <span class="st">"Sexe"</span>, <span class="at">y =</span> <span class="st">"Concentration en cuivre (µg/g de poids sec)"</span>) <span class="sc">+</span></span>
 <span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-bxpltcol4" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/fig-bxpltcol4-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.8: La même figure mais avec les modalités plus claires pour le facteur <code>Sexe</code></figcaption>
+<div id="fig-bxpltcol4" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bxpltcol4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05-DataWrangling_files/figure-html/fig-bxpltcol4-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bxpltcol4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.8: La même figure mais avec les modalités plus claires pour le facteur <code>Sexe</code>
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1099,23 +1177,31 @@ Levels: imm mat pnl pl l repos</code></pre>
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-consommation" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/fig-consommation-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.9: Consommation en fonction de la cylindrée</figcaption>
+<div id="fig-consommation" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-consommation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05-DataWrangling_files/figure-html/fig-consommation-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-consommation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.9: Consommation en fonction de la cylindrée
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <ol start="4" type="1">
-<li>Ce graphique présente-t-il correctement l’ensemble des données de ces 2 variables ? Pourquoi ? Comparez la <a href="#fig-consommation">Figure&nbsp;<span>5.9</span></a> de la question 3 ci-dessus et la <a href="#fig-consommation2">Figure&nbsp;<span>5.10</span></a> présentée ci-dessous. Selon vous, quels arguments et/ou fonctions ont été modifiés pour arriver à ce nouveau graphique ? Quels sont les avantages et les inconvénients de ce graphique par rapport au précédent ?</li>
+<li>Ce graphique présente-t-il correctement l’ensemble des données de ces 2 variables ? Pourquoi ? Comparez la <a href="#fig-consommation" class="quarto-xref">Figure&nbsp;<span>5.9</span></a> de la question 3 ci-dessus et la <a href="#fig-consommation2" class="quarto-xref">Figure&nbsp;<span>5.10</span></a> présentée ci-dessous. Selon vous, quels arguments et/ou fonctions ont été modifiés pour arriver à ce nouveau graphique ? Quels sont les avantages et les inconvénients de ce graphique par rapport au précédent ?</li>
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-consommation2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/fig-consommation2-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.10: Consommation en fonction de la cylindrée</figcaption>
+<div id="fig-consommation2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-consommation2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05-DataWrangling_files/figure-html/fig-consommation2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-consommation2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.10: Consommation en fonction de la cylindrée
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1126,10 +1212,14 @@ Levels: imm mat pnl pl l repos</code></pre>
 <h2 data-number="5.7" class="anchored" data-anchor-id="sec-arrange"><span class="header-section-number">5.7</span> Trier des lignes avec <code>arrange()</code></h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-arrangefig" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/arrange.png" class="img-fluid figure-img" style="width:40.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.11: Schéma de la fonction <code>arrange()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<div id="fig-arrangefig" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-arrangefig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/arrange.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-arrangefig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.11: Schéma de la fonction <code>arrange()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1236,7 +1326,7 @@ Levels: imm mat pnl pl l repos</code></pre>
 <li><code>count()</code> : pour compter le nombre d’observations pour chaque niveau d’un facteur (ou modalité d’une variable catégorielle)</li>
 <li><code>group_by()</code> : pour effectuer des opérations pour chaque niveau d’un facteur (ou modalité d’une variable catégorielle). Cette dernière fonction a été rendue presque obsolète par une mise à jour récente du package <code>dplyr</code> qui introduit un nouvel argument pour plusieurs fonctions, dont <code>summarise()</code> (mais aussi <code>mutate()</code>, <code>filter()</code> et quelques autres) : l’argument <code>.by</code>. Un peu comme <code>group-by()</code>, ce nouvel argument permet d’effectuer des opérations pour chaque niveau d’un facteur (ou modalité d’une variable catégorielle). À notre niveau, les différences entre la fonction <code>group_by()</code> et l’argument <code>.by</code> ne sont pas importantes. Nous utiliserons donc de préférence la notation la plus simple, celle de l’argument <code>.by</code>.</li>
 </ul>
-<p>La fonction <code>reframe()</code> est très proche de la fonction <code>summarise()</code> car elle permet de créer des résumés de données plus élaborés à partir des colonnes d’un tableau. Nous verrons comment l’utiliser dans le chapitre dédié aux statistiques descriptives (<a href="06-EDA.html"><span>Chapitre&nbsp;6</span></a>).</p>
+<p>La fonction <code>reframe()</code> est très proche de la fonction <code>summarise()</code> car elle permet de créer des résumés de données plus élaborés à partir des colonnes d’un tableau. Nous verrons comment l’utiliser dans le chapitre dédié aux statistiques descriptives (<a href="06-EDA.html" class="quarto-xref"><span>Chapitre 6</span></a>).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1256,22 +1346,26 @@ Lien avec les statistiques descriptives
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/summarizearrow.png" class="img-fluid figure-img" style="width:55.0%"></p>
+<p><img src="images/summarizearrow.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:55.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-summarise2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/summarize.png" class="img-fluid figure-img" style="width:40.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.12: Schéma de la fonction <code>summarise()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<div id="fig-summarise2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-summarise2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/summarize.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-summarise2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.12: Schéma de la fonction <code>summarise()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>La <a href="#fig-summarise2">Figure&nbsp;<span>5.12</span></a> ci-dessus indique comment travaille la fonction <code>summarise()</code> : elle prend plusieurs valeurs (potentiellement, un très grand nombre) et les réduit à <strong>une unique valeur qui les résume</strong>. La valeur qui résume les données est choisie par l’utilisateur. Il peut s’agir par exemple d’un calcul de moyenne, de quartile ou de variance, il peut s’agir de calculer une somme, ou d’extraire la valeur maximale ou minimale, ou encore, il peut tout simplement s’agir de déterminer un nombre d’observations. Mais le fonctionnement est toujours le même : la fonction <code>summarise()</code> ne renvoie qu’une unique valeur pour une variable donnée (ou pour chaque modalité d’une variable catégorielle).</p>
+<p>La <a href="#fig-summarise2" class="quarto-xref">Figure&nbsp;<span>5.12</span></a> ci-dessus indique comment travaille la fonction <code>summarise()</code> : elle prend plusieurs valeurs (potentiellement, un très grand nombre) et les réduit à <strong>une unique valeur qui les résume</strong>. La valeur qui résume les données est choisie par l’utilisateur. Il peut s’agir par exemple d’un calcul de moyenne, de quartile ou de variance, il peut s’agir de calculer une somme, ou d’extraire la valeur maximale ou minimale, ou encore, il peut tout simplement s’agir de déterminer un nombre d’observations. Mais le fonctionnement est toujours le même : la fonction <code>summarise()</code> ne renvoie qu’une unique valeur pour une variable donnée (ou pour chaque modalité d’une variable catégorielle).</p>
 <p>Ainsi, pour connaître la moyenne de la longueur du bec des manchots de l’île de Palmer, il suffit d’utiliser le tableau <code>penguins</code> du package <code>palmerpenguins</code> et sa variable <code>bill_length_mm</code> que nous avons déjà utilisée plus tôt :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
@@ -1346,10 +1440,14 @@ Lien avec les statistiques descriptives
 <p>La fonction <code>summarise()</code> devient particulièrement puissante lorsqu’on y ajoute l’argument <code>.by</code> :</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-groupby" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/groupby.png" class="img-fluid figure-img" style="width:65.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.13: Fonctionnement de l’argument <code>.by</code> travaillant de concert avec <code>summarise()</code>, tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code></figcaption>
+<div id="fig-groupby" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-groupby-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/groupby.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:65.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-groupby-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.13: Fonctionnement de l’argument <code>.by</code> travaillant de concert avec <code>summarise()</code>, tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1401,7 +1499,7 @@ Lien avec les statistiques descriptives
 <p>Et l’objet obtenu au final n’est pas strictement identique : avec la fonction <code>group_by()</code>, et dans certaines situations, le tibble obtenu conserve l’information du regroupement effectué, ce qui peut être utile dans certaines situations, mais peut parfois poser problème et causer l’affichage de messages d’avertissements dans la console. Ce comportement n’est pas observé avec l’argument <code>.by</code> qui ne groupe les données qu’au moment du calcul des indices dans la fonction <code>summarise()</code> et n’en conserve pas la trace ensuite. C’est la raison pour laquelle nous privilégierons cette méthode.</p>
 <p>Pour aller plus loin, ajoutons à ce résumé 2 variables supplémentaires : le nombre de mesures et l’<strong>erreur standard</strong> (notée <span class="math inline">\(se\)</span>), qui peut être calculée de la façon suivante :</p>
 <p><span class="math display">\[se \approx \frac{s}{\sqrt{n}}\]</span></p>
-<p>avec <span class="math inline">\(s\)</span>, l’écart-type de l’échantillon et <span class="math inline">\(n\)</span>, la taille de l’échantillon (plus d’informations sur cette statistique très importante dans la <a href="07-Incertitude.html"><span>Chapitre&nbsp;7</span></a>). Nous allons donc calculer ici ces résumés, et nous donnerons un nom au tableau créé pour pouvoir ré-utiliser ces statistiques descriptives :</p>
+<p>avec <span class="math inline">\(s\)</span>, l’écart-type de l’échantillon et <span class="math inline">\(n\)</span>, la taille de l’échantillon (plus d’informations sur cette statistique très importante dans la <a href="07-Incertitude.html" class="quarto-xref"><span>Chapitre 7</span></a>). Nous allons donc calculer ici ces résumés, et nous donnerons un nom au tableau créé pour pouvoir ré-utiliser ces statistiques descriptives :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>stats_esp <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">moyenne =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -1475,8 +1573,8 @@ Lien avec les statistiques descriptives
 6 Chinstrap male      51.1       1.56     34      0.268</code></pre>
 </div>
 </div>
-<p>Si vous ne comprenez pas la commande <code>filter(!is.na(sex))</code>, je vous encourage vivement à relire la <a href="#sec-filter"><span>Section&nbsp;5.4</span></a>.</p>
-<p>Enfin, lorsque nous groupons par plusieurs variables, il peut être utile de présenter les résultats sous la forme d’un tableau large (grâce à la fonction <code>pivot_wider()</code>) pour l’intégration dans un rapport par exemple (voir la <a href="04-TidyData.html#sec-spread"><span>Section&nbsp;4.3.2</span></a>). La fonction <code>pivot_wider()</code> permet de passer d’un tableau qui possède ce format :</p>
+<p>Si vous ne comprenez pas la commande <code>filter(!is.na(sex))</code>, je vous encourage vivement à relire la <a href="#sec-filter" class="quarto-xref"><span>Section 5.4</span></a>.</p>
+<p>Enfin, lorsque nous groupons par plusieurs variables, il peut être utile de présenter les résultats sous la forme d’un tableau large (grâce à la fonction <code>pivot_wider()</code>) pour l’intégration dans un rapport par exemple (voir la <a href="04-TidyData.html#sec-spread" class="quarto-xref"><span>Section 4.3.2</span></a>). La fonction <code>pivot_wider()</code> permet de passer d’un tableau qui possède ce format :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
 <span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
@@ -1688,7 +1786,11 @@ Lien avec les statistiques descriptives
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="05-DataWrangling_files/figure-html/windspeed-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="05-DataWrangling_files/figure-html/windspeed-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Indications :</p>
@@ -1720,7 +1822,7 @@ Lien avec les statistiques descriptives
 </section>
 <section id="utiliser-.by-avec-dautres-fonctions" class="level2" data-number="5.9">
 <h2 data-number="5.9" class="anchored" data-anchor-id="utiliser-.by-avec-dautres-fonctions"><span class="header-section-number">5.9</span> Utiliser <code>.by</code> avec d’autres fonctions</h2>
-<p>Outre la fonction <code>summarise()</code>, de nombreuses autres fonctions du <code>tidyverse</code> possèdent un argument <code>.by</code>. C’est par exemple le cas des fonctions <code>filter()</code> et <code>mutate()</code> décrites plus haut, ou de la fonction <code>reframe()</code> que nous découvrirons dans la <a href="06-EDA.html#sec-reframe"><span>Section&nbsp;6.2</span></a>.</p>
+<p>Outre la fonction <code>summarise()</code>, de nombreuses autres fonctions du <code>tidyverse</code> possèdent un argument <code>.by</code>. C’est par exemple le cas des fonctions <code>filter()</code> et <code>mutate()</code> décrites plus haut, ou de la fonction <code>reframe()</code> que nous découvrirons dans la <a href="06-EDA.html#sec-reframe" class="quarto-xref"><span>Section 6.2</span></a>.</p>
 <section id="sec-filterby" class="level3" data-number="5.9.1">
 <h3 data-number="5.9.1" class="anchored" data-anchor-id="sec-filterby"><span class="header-section-number">5.9.1</span> Un exemple avec <code>filter()</code></h3>
 <p>Pour vous montrer à quel point cet argument peut-être utile dans d’autres contextes que celui du calcul de résumés statistiques, prenons un premier exemple. Imaginez que nous souhaitions identifier, dans le tableau <code>penguins</code>, les 10% des individus les plus lourds pour chaque espèce. Une première façon de faire serait de procéder espèce par espèce, en tapant ceci :</p>
@@ -1755,7 +1857,7 @@ Lien avec les statistiques descriptives
 # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
 </div>
 </div>
-<p>Ici, j’ai commencé par créer un tableau <code>adelie</code> qui ne contient que les individus de cette espèce. L’expression <code>quantile(body_mass_g, 0.9, na.rm = TRUE)</code> permet d’identifier le quatre vingt dixième percentile des masses corporelles en grammes pour cette espèce, et la fonction <code>filter()</code> me permet de ne récupérer que les individus dont la masse est supérieure à cette valeur. Ici, nous récupérons 15 individus dans le tableau <code>adelie_lourds</code>, qui correspondent donc aux 10% des individus les plus lourds pour cette espèce. Pour obtenir la même choses pour les 3 espèces, il me faut reproduire ce code pour les manchots Chinstrap et Gentoo, puis il faut que je fusionne les 3 tableaux (voir les détails de cette fonction dans la <a href="#sec-bindrows"><span>Section&nbsp;5.10.4</span></a>) :</p>
+<p>Ici, j’ai commencé par créer un tableau <code>adelie</code> qui ne contient que les individus de cette espèce. L’expression <code>quantile(body_mass_g, 0.9, na.rm = TRUE)</code> permet d’identifier le quatre vingt dixième percentile des masses corporelles en grammes pour cette espèce, et la fonction <code>filter()</code> me permet de ne récupérer que les individus dont la masse est supérieure à cette valeur. Ici, nous récupérons 15 individus dans le tableau <code>adelie_lourds</code>, qui correspondent donc aux 10% des individus les plus lourds pour cette espèce. Pour obtenir la même choses pour les 3 espèces, il me faut reproduire ce code pour les manchots Chinstrap et Gentoo, puis il faut que je fusionne les 3 tableaux (voir les détails de cette fonction dans la <a href="#sec-bindrows" class="quarto-xref"><span>Section 5.10.4</span></a>) :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour l'espèce Chinstrap</span></span>
 <span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>chinstrap <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
@@ -1910,10 +2012,14 @@ Lien avec les statistiques descriptives
 <span id="cb127-7"><a href="#cb127-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb127-8"><a href="#cb127-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"purple"</span>, <span class="st">"orange"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Court"</span>, <span class="st">"Long"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-billlength" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/fig-billlength-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.14: Masse en gramme des mâles et des femelles des 3 espèces de manchots. Les femelles ont majoritairement un bec plus court (en violet) que la moyenne de l’espèce et les mâles plus longs (en orange) que la moyenne de l’espèce.</figcaption>
+<div id="fig-billlength" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-billlength-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05-DataWrangling_files/figure-html/fig-billlength-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-billlength-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.14: Masse en gramme des mâles et des femelles des 3 espèces de manchots. Les femelles ont majoritairement un bec plus court (en violet) que la moyenne de l’espèce et les mâles plus longs (en orange) que la moyenne de l’espèce.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1929,10 +2035,14 @@ Lien avec les statistiques descriptives
 <span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb128-8"><a href="#cb128-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"purple"</span>, <span class="st">"orange"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Court"</span>, <span class="st">"Long"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-billlength2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/fig-billlength2-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.15: Masse en gramme des mâles et des femelles des 3 espèces de manchots. Les manchots Adélie ont majoritairement un bec plus court (en violet) que la moyenne toutes espèces confondues.</figcaption>
+<div id="fig-billlength2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-billlength2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05-DataWrangling_files/figure-html/fig-billlength2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-billlength2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.15: Masse en gramme des mâles et des femelles des 3 espèces de manchots. Les manchots Adélie ont majoritairement un bec plus court (en violet) que la moyenne toutes espèces confondues.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -2049,10 +2159,14 @@ Lien avec les statistiques descriptives
 <h3 data-number="5.10.2" class="anchored" data-anchor-id="inner_join"><span class="header-section-number">5.10.2</span> <code>inner_join()</code></h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-inner" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/innerjoin.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.16: Schéma de la fonction <code>inner_join()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<div id="fig-inner" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-inner-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/innerjoin.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inner-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.16: Schéma de la fonction <code>inner_join()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -2119,7 +2233,7 @@ Lien avec les statistiques descriptives
 <pre><code>[1] 101</code></pre>
 </div>
 </div>
-<p>Certaines lignes ont donc été supprimées car le code aéroport dans <code>popular_dest</code> (notre tableau de départ) n’a pas été retrouvé dans la colonne <code>faa</code> du tableau <code>airports</code>. C’est le principe même de la jointure interne (voir <a href="#fig-inner">Figure&nbsp;<span>5.16</span></a>) : seules les lignes communes trouvées dans les 2 tableaux sont conservées. Pour connaitre quelles lignes ont éte éliminées, on peut utiliser <code>anti_join()</code> :</p>
+<p>Certaines lignes ont donc été supprimées car le code aéroport dans <code>popular_dest</code> (notre tableau de départ) n’a pas été retrouvé dans la colonne <code>faa</code> du tableau <code>airports</code>. C’est le principe même de la jointure interne (voir <a href="#fig-inner" class="quarto-xref">Figure&nbsp;<span>5.16</span></a>) : seules les lignes communes trouvées dans les 2 tableaux sont conservées. Pour connaitre quelles lignes ont éte éliminées, on peut utiliser <code>anti_join()</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a>popular_dest <span class="sc">|&gt;</span></span>
 <span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2133,7 +2247,7 @@ Lien avec les statistiques descriptives
 4 PSE     365</code></pre>
 </div>
 </div>
-<p>Si l’on souhaite absolument conserver toutes les lignes du tableau de départ, il faut faire une jointure gauche, ou “left join” (voir <a href="#sec-leftjoin"><span>Section&nbsp;5.10.3</span></a> ci-dessous).</p>
+<p>Si l’on souhaite absolument conserver toutes les lignes du tableau de départ, il faut faire une jointure gauche, ou “left join” (voir <a href="#sec-leftjoin" class="quarto-xref"><span>Section 5.10.3</span></a> ci-dessous).</p>
 <p>Pour notre deuxième question, on procède exactement de la même façon : on réalise une jointure de tableaux entre <code>late-flights</code> et <code>planes</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a>inner_late <span class="ot">&lt;-</span> late_flights <span class="sc">|&gt;</span> </span>
@@ -2214,7 +2328,11 @@ Lien avec les statistiques descriptives
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Manifestement, l’âge des avions n’a pas grand chose à voir avec l’importance des retards constatés à l’arrivée des vols. En tous cas, s’il existe une relation, elle n’est certainement pas aussi simple qu’on aurait pu le penser.</p>
@@ -2223,15 +2341,19 @@ Lien avec les statistiques descriptives
 <h3 data-number="5.10.3" class="anchored" data-anchor-id="sec-leftjoin"><span class="header-section-number">5.10.3</span> <code>left_join()</code></h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-left" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/leftjoin.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.17: Schéma de la fonction <code>left_join()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.</figcaption>
+<div id="fig-left" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-left-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/leftjoin.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-left-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.17: Schéma de la fonction <code>left_join()</code> tiré de la ‘cheatsheet’ de <code>dplyr</code> et <code>tidyr</code>.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Comme indiqué par la <a href="#fig-left">Figure&nbsp;<span>5.17</span></a> ci-dessus, une jointure gauche fonctionne comme <code>inner_join()</code>, mais elle permet de conserver <em>toutes</em> les lignes du tableau de gauche, et de leur faire correspondre les lignes du second tableau. Si aucune correspondance n’est trouvée dans le second tableau, des données manquantes sont ajoutées sous forme de <code>NA</code>s. Voyons ce que cela donne avec les mêmes exemples que précédemment :</p>
+<p>Comme indiqué par la <a href="#fig-left" class="quarto-xref">Figure&nbsp;<span>5.17</span></a> ci-dessus, une jointure gauche fonctionne comme <code>inner_join()</code>, mais elle permet de conserver <em>toutes</em> les lignes du tableau de gauche, et de leur faire correspondre les lignes du second tableau. Si aucune correspondance n’est trouvée dans le second tableau, des données manquantes sont ajoutées sous forme de <code>NA</code>s. Voyons ce que cela donne avec les mêmes exemples que précédemment :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a>left_popular <span class="ot">&lt;-</span> popular_dest <span class="sc">|&gt;</span></span>
 <span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(airports, <span class="at">by =</span> <span class="fu">join_by</span>(dest <span class="sc">==</span> faa)) <span class="sc">|&gt;</span></span>
@@ -2314,7 +2436,11 @@ Lien avec les statistiques descriptives
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-101-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-101-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Attention toutefois : le fait que <code>left_join()</code> et <code>inner_join()</code> fournisse le même résultat n’est pas systématique. Ici, c’est bien le choix de la question d’intérêt qui fait que nous pouvons choisir l’une ou l’autre de ces fonctions de façon interchangeable. Mais ça ne sera pas toujours le cas. Quand on a besoin de conserver toutes les lignes du tableau de départ (ce qui est souvent lecas), il faudra utiliser <code>left_join()</code>.</p>
@@ -2456,20 +2582,20 @@ Lien avec les statistiques descriptives
 <div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
-      r      s
-  &lt;int&gt;  &lt;dbl&gt;
-1    10 -0.242
-2     9  0.945
-3     8 -1.39 </code></pre>
+      r       s
+  &lt;int&gt;   &lt;dbl&gt;
+1    10 -0.310 
+2     9 -0.0574
+3     8  2.29  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
-      x     y z         r      s
-  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;  &lt;dbl&gt;
-1     1     2 TRUE     10 -0.242
-2     2     4 FALSE     9  0.945
-3     3     6 FALSE     8 -1.39 </code></pre>
+      x     y z         r       s
+  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;   &lt;dbl&gt;
+1     1     2 TRUE     10 -0.310 
+2     2     4 FALSE     9 -0.0574
+3     3     6 FALSE     8  2.29  </code></pre>
 </div>
 </div>
 <p>Ici, puisque <code>a</code> et <code>b</code> ont le même nombre de lignes, il est possible de les accoler. Cela n’a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.</p>
@@ -2550,6 +2676,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -2616,13 +2769,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -2701,10 +2856,34 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2714,8 +2893,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2727,7 +2915,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2771,6 +3082,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2796,6 +3108,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2853,37 +3191,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-          // target, if specified
-          link.setAttribute("target", "_blank");
-          // default icon
-          link.classList.add("external");
-      }
-    }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./04-TidyData.html" class="pagination-link">
+      <a href="./04-TidyData.html" class="pagination-link" aria-label="(Ar)ranger des données avec `tidyr`">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./06-EDA.html" class="pagination-link">
+      <a href="./06-EDA.html" class="pagination-link" aria-label="Exploration statistique des données">
         <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploration statistique des données</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

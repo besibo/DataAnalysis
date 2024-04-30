@@ -175,7 +175,7 @@ Les stripcharts et les boxplots sont donc un bon moyen de comparer rapidement la
 Les histogrammes sont plus utiles lorsqu'il y a moins de catégories à comparer, comme pour la @fig-gridmass. Ils permettent en outre de mieux visualiser les distributions non symétriques, ou qui présentent plusieurs pics (distribution bi- ou poly-modales).
 
 
-## Visualiser l'incertitude : les barres d'erreur
+## Visualiser l'incertitude : les barres d'erreur {#sec-errorbar}
 
 Comme évoqué plus haut, il est important de ne pas confondre **dispersion** et **incertitude**. Lorsque l'on visualise des moyennes calculées à partir des données d'un échantillon, il est important de faire apparaître des barres d'erreurs, qui correspondent en général :
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -104,7 +105,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Pas de résultats",
     "search-matching-documents-text": "documents trouvés",
@@ -113,6 +120,7 @@ div.csl-indent {
     "search-more-match-text": "correspondance de plus dans ce document",
     "search-more-matches-text": "correspondances de plus dans ce document",
     "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Annuler",
     "search-submit-button-title": "Envoyer",
     "search-label": "Recherche"
@@ -125,17 +133,16 @@ div.csl-indent {
 
 <body class="nav-sidebar floating">
 
-
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-Visualization.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualiser des données avec `ggplot2`</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-Visualization.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualiser des données avec <code>ggplot2</code></span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -161,13 +168,13 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Analyse de Données</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://github.com/besibo/DataAnalysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./Analyse-de-Données.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/besibo/DataAnalysis" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+    <a href="./Analyse-de-Données.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
 </div>
     </div>
@@ -284,7 +291,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -314,7 +321,7 @@ div.csl-indent {
   <li><a href="#les-diagrammes-bâtons" id="toc-les-diagrammes-bâtons" class="nav-link" data-scroll-target="#les-diagrammes-bâtons"><span class="header-section-number">3.6.1</span> Les diagrammes bâtons</a></li>
   <li><a href="#sec-pie" id="toc-sec-pie" class="nav-link" data-scroll-target="#sec-pie"><span class="header-section-number">3.6.2</span> Éviter à tout prix les diagrammes circulaires</a></li>
   </ul></li>
-  <li><a href="#deux-variables-numériques" id="toc-deux-variables-numériques" class="nav-link" data-scroll-target="#deux-variables-numériques"><span class="header-section-number">3.7</span> Deux variables numériques</a>
+  <li><a href="#sec-deuxnum" id="toc-sec-deuxnum" class="nav-link" data-scroll-target="#sec-deuxnum"><span class="header-section-number">3.7</span> Deux variables numériques</a>
   <ul class="collapse">
   <li><a href="#nuage-de-points" id="toc-nuage-de-points" class="nav-link" data-scroll-target="#nuage-de-points"><span class="header-section-number">3.7.1</span> Nuage de points</a></li>
   <li><a href="#les-graphiques-en-lignes" id="toc-les-graphiques-en-lignes" class="nav-link" data-scroll-target="#les-graphiques-en-lignes"><span class="header-section-number">3.7.2</span> Les graphiques en lignes</a></li>
@@ -324,10 +331,10 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#sec-empil" id="toc-sec-empil" class="nav-link" data-scroll-target="#sec-empil"><span class="header-section-number">3.8.1</span> Diagrammes bâtons empilés</a></li>
   <li><a href="#sec-juxta" id="toc-sec-juxta" class="nav-link" data-scroll-target="#sec-juxta"><span class="header-section-number">3.8.2</span> Diagrammes bâtons juxtaposés</a></li>
-  <li><a href="#diagrammes-bâtons-facettés" id="toc-diagrammes-bâtons-facettés" class="nav-link" data-scroll-target="#diagrammes-bâtons-facettés"><span class="header-section-number">3.8.3</span> Diagrammes bâtons “facettés”</a></li>
+  <li><a href="#sec-facet" id="toc-sec-facet" class="nav-link" data-scroll-target="#sec-facet"><span class="header-section-number">3.8.3</span> Diagrammes bâtons “facettés”</a></li>
   <li><a href="#sec-mosa" id="toc-sec-mosa" class="nav-link" data-scroll-target="#sec-mosa"><span class="header-section-number">3.8.4</span> Mosaïc plots</a></li>
   </ul></li>
-  <li><a href="#une-variable-de-chaque-type" id="toc-une-variable-de-chaque-type" class="nav-link" data-scroll-target="#une-variable-de-chaque-type"><span class="header-section-number">3.9</span> Une variable de chaque type</a>
+  <li><a href="#sec-oneeach" id="toc-sec-oneeach" class="nav-link" data-scroll-target="#sec-oneeach"><span class="header-section-number">3.9</span> Une variable de chaque type</a>
   <ul class="collapse">
   <li><a href="#sec-factorhisto" id="toc-sec-factorhisto" class="nav-link" data-scroll-target="#sec-factorhisto"><span class="header-section-number">3.9.1</span> Histogrammes “facettés”</a></li>
   <li><a href="#sec-factorstrip" id="toc-sec-factorstrip" class="nav-link" data-scroll-target="#sec-factorstrip"><span class="header-section-number">3.9.2</span> Les stripcharts</a></li>
@@ -356,9 +363,10 @@ div.csl-indent {
 
 
 
+
 <section id="préambule" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="préambule"><span class="header-section-number">3.1</span> Préambule</h2>
-<p>Dans le <a href="01-RBasics.html"><span>Chapitre&nbsp;1</span></a> et le <a href="02-Dataset.html"><span>Chapitre&nbsp;2</span></a>, vous avez découvert les concepts essentiels qu’il est important de maîtriser avant de commencer à explorer en détail des données dans <code>R</code>. Les éléments de syntaxe abordés dans la <a href="01-RBasics.html#sec-code"><span>Section&nbsp;1.3</span></a> sont nombreux et vous n’avez probablement pas tout retenu. C’est pourquoi je vous conseille de garder les tutoriels de DataCamp à portée de main afin de pouvoir refaire les parties que vous maîtrisez le moins. Ce n’est qu’en répétant plusieurs fois ces tutoriels que les choses seront vraiment comprises et que vous les retiendrez. Ainsi, si des éléments de code présentés ci-dessous vous semblent obscurs, revenez en arrière : toutes les réponses à vos questions se trouvent probablement dans les chapitres précédents.</p>
+<p>Dans le <a href="01-RBasics.html" class="quarto-xref"><span>Chapitre 1</span></a> et le <a href="02-Dataset.html" class="quarto-xref"><span>Chapitre 2</span></a>, vous avez découvert les concepts essentiels qu’il est important de maîtriser avant de commencer à explorer en détail des données dans <code>R</code>. Les éléments de syntaxe abordés dans la <a href="01-RBasics.html#sec-code" class="quarto-xref"><span>Section 1.3</span></a> sont nombreux et vous n’avez probablement pas tout retenu. C’est pourquoi je vous conseille de garder les tutoriels de DataCamp à portée de main afin de pouvoir refaire les parties que vous maîtrisez le moins. Ce n’est qu’en répétant plusieurs fois ces tutoriels que les choses seront vraiment comprises et que vous les retiendrez. Ainsi, si des éléments de code présentés ci-dessous vous semblent obscurs, revenez en arrière : toutes les réponses à vos questions se trouvent probablement dans les chapitres précédents.</p>
 <p>Après la découverte des bases du langage <code>R</code>, nous abordons maintenant les parties de ce livre qui concernent la “science des données” (ou “Data Science” pour nos amis anglo-saxons). Nous allons voir dans ce chapitre qu’outre les fonctions <code>View()</code> et <code>glimpse()</code>, l’exploration visuelle <em>via</em> la représentation graphique des données est un moyen indispensable et très puissant pour comprendre ce qui se passe dans un jeu de données.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -374,7 +382,7 @@ Important
 </div>
 </div>
 <p>La visualisation des données est en outre un excellent point de départ quand on découvre la programmation sous <code>R</code>, car ses bénéfices sont clairs et immédiats : vous pouvez créer des graphiques élégants et informatifs qui vous aident à comprendre les données. Dans ce chapitre, vous allez donc plonger dans l’art de la visualisation des données, en apprenant la structure de base des graphiques réalisés avec <code>ggplot2</code> qui permettent de transformer des données numériques et catégorielles en graphiques.</p>
-<p>Toutefois, la visualisation seule ne suffit généralement pas. Il est en effet souvent nécessaire de transformer les données pour produire des représentations plus parlantes. Ainsi, dans le <a href="05-DataWrangling.html"><span>Chapitre&nbsp;5</span></a>, vous découvrirez les fonctions clés qui vous permettront de sélectionner des variables importantes, de filtrer des observations, de créer de nouvelles variables, ou d’en modifier la forme.</p>
+<p>Toutefois, la visualisation seule ne suffit généralement pas. Il est en effet souvent nécessaire de transformer les données pour produire des représentations plus parlantes. Ainsi, dans le <a href="05-DataWrangling.html" class="quarto-xref"><span>Chapitre 5</span></a>, vous découvrirez les fonctions clés qui vous permettront de sélectionner des variables importantes, de filtrer des observations, de créer de nouvelles variables, ou d’en modifier la forme.</p>
 <p>Ce n’est qu’en combinant les transformations de données et représentations graphiques d’une part, avec votre curiosité et votre esprit critique d’autre part, que vous serez véritablement en mesure de réaliser une analyse exploratoire de vos données à la fois utile et pertinente. C’est la seule façon d’identifier des questions intéressantes sur vos données, afin de tenter d’y répondre par les analyses statistiques et la modélisation.</p>
 </section>
 <section id="prérequis" class="level2" data-number="3.2">
@@ -498,13 +506,17 @@ Objectifs
 <li><code>Population</code> : nombre de personnes vivant dans le pays</li>
 <li><code>GDP per Capita</code> : produit intérieur brut (PIB) par habitant en dollars américains. GDP est l’abréviation de “Growth Domestic Product”. C’est un indicateur de l’activité économique d’un pays, parfois utilisé comme une approximation du revenu moyen par habitant.</li>
 </ul>
-<p>Examinons maintenant la <a href="#fig-gapminder">Figure&nbsp;<span>3.1</span></a> qui représente ces variables pour chacun des 142 pays de ce jeu de données (notez l’utilisation de la notation scientifique dans la légende, et de l’échelle logarithmique de l’axe des abscisses).</p>
-<div class="cell" data-fig.asp="0.618">
+<p>Examinons maintenant la <a href="#fig-gapminder" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> qui représente ces variables pour chacun des 142 pays de ce jeu de données (notez l’utilisation de la notation scientifique dans la légende, et de l’échelle logarithmique de l’axe des abscisses).</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-gapminder" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-gapminder-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.1: Espérance de vie en fonction du PIB par habitant en 2007.</figcaption>
+<div id="fig-gapminder" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gapminder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-gapminder-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gapminder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Espérance de vie en fonction du PIB par habitant en 2007.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -530,7 +542,7 @@ Objectifs
 </section>
 <section id="le-package-ggplot2" class="level3" data-number="3.3.4">
 <h3 data-number="3.3.4" class="anchored" data-anchor-id="le-package-ggplot2"><span class="header-section-number">3.3.4</span> Le package <code>ggplot2</code></h3>
-<p>Comme indiqué plus haut, le package <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham et al. 2024</a>)</span> permet de réaliser des graphiques dans <code>R</code> en respectant les principes de la grammaire des graphiques. Vous avez probablement remarqué que depuis le début de la section <a href="#sec-gggraph"><span>Section&nbsp;3.3</span></a>, beaucoup de termes sont écrits dans la police réservée au <code>code</code> informatique. C’est parce que les éléments de la grammaire des graphiques sont tous précisés dans la fonction <code>ggplot()</code> qui demande, au grand minimum, que les éléments suivants soient spécifiés :</p>
+<p>Comme indiqué plus haut, le package <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham et al. 2024</a>)</span> permet de réaliser des graphiques dans <code>R</code> en respectant les principes de la grammaire des graphiques. Vous avez probablement remarqué que depuis le début de la section <a href="#sec-gggraph" class="quarto-xref"><span>Section 3.3</span></a>, beaucoup de termes sont écrits dans la police réservée au <code>code</code> informatique. C’est parce que les éléments de la grammaire des graphiques sont tous précisés dans la fonction <code>ggplot()</code> qui demande, au grand minimum, que les éléments suivants soient spécifiés :</p>
 <ul>
 <li>le nom du <code>data.frame</code> contenant les variables qui seront utilisées pour le graphique. Ce nom correspond à l’argument <code>data</code> de la fonction <code>ggplot()</code>.</li>
 <li>l’association des variables à des attributs esthétiques. Cela se fait grâce à l’argument <code>mapping</code> et la fonction <code>aes()</code></li>
@@ -568,11 +580,15 @@ Objectifs
 # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
 </div>
 </div>
-<p>Comme évoqué plus haut, il s’agit d’un <code>tibble</code>. Plusieurs de ses variables concernent la biométrie des manchots, en particulier de son bec (voir <a href="#fig-morpho">Figure&nbsp;<span>3.2</span></a>).</p>
-<div id="fig-morpho" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/culmen_depth.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.2: Morphométrie du bec des manchots. Illustration de Allison Horst</figcaption>
+<p>Comme évoqué plus haut, il s’agit d’un <code>tibble</code>. Plusieurs de ses variables concernent la biométrie des manchots, en particulier de son bec (voir <a href="#fig-morpho" class="quarto-xref">Figure&nbsp;<span>3.2</span></a>).</p>
+<div id="fig-morpho" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-morpho-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/culmen_depth.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-morpho-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: Morphométrie du bec des manchots. Illustration de Allison Horst
+</figcaption>
 </figure>
 </div>
 <p>Supposons qu’on cherche à déterminer si la longueur du bec des manchots est proportionnelle à leur masse. Pour produire un graphique permettant de le déterminer, nous avons besoin des éléments suivants :</p>
@@ -585,7 +601,11 @@ Objectifs
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Cette première ligne de code permet de faire plusieurs choses :</p>
@@ -606,7 +626,7 @@ Objectifs
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="03-Visualization_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Relation entre masse corporelle et longueur du bec chez les manchots de l’archipel de Palmer</figcaption>
+<figcaption>Relation entre masse corporelle et longueur du bec chez les manchots de l’archipel de Palmer</figcaption>
 </figure>
 </div>
 </div>
@@ -641,7 +661,7 @@ En résumé
 <ul>
 <li>Notez que le signe <code>+</code> est placé <em>à la fin de la ligne</em>. Vous recevrez un message d’erreur si vous le placez au début.</li>
 <li>Quand vous ajoutez une couche à un graphique, je vous encourage vivement à presser la touche <code>enter</code> de votre clavier juste après le symbole <code>+</code>. Ainsi, le code correspondant à chaque couche sera sur une ligne distincte, ce qui augmente considérablement la lisibilité de votre code.</li>
-<li>Comme indiqué dans la <a href="01-RBasics.html#sec-functions"><span>Section&nbsp;1.3.4.3</span></a>, tant que les arguments d’une fonction sont spécifiés dans l’ordre, on peut se passer d’écrire leur nom. Ainsi, les deux blocs de commande suivants produisent exactement le même résultat :</li>
+<li>Comme indiqué dans la <a href="01-RBasics.html#sec-functions" class="quarto-xref"><span>Section 1.3.4.3</span></a>, tant que les arguments d’une fonction sont spécifiés dans l’ordre, on peut se passer d’écrire leur nom. Ainsi, les deux blocs de commande suivants produisent exactement le même résultat :</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Le nom des arguments est précisé</span></span>
@@ -706,7 +726,11 @@ Objectifs
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Deux messages nous sont adressés par le logiciel :</p>
@@ -741,7 +765,11 @@ Objectifs
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Les 30 classes de masses sont maintenant plus facilement visibles et distingables.</p>
@@ -774,7 +802,11 @@ Important
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Les couleurs qui apparaissent ne correspondent pas à ce qui est demandé, et une légende ne correspondant à rien apparaît à droite du graphique. La syntaxe utilisée ici suppose en effet que <code>"steelblue"</code> et <code>"black"</code> seraient des variables du jeu de données <code>penguins</code>. Puisqu’elles n’existent pas, <code>R</code> essaie de se débrouiller pour interpréter comme il peut ce qu’on lui demande, et finit par produire ce graphique incohérent. La couleur utilisée est la première couleur de la palette par défaut de <code>ggplot2</code>.</p>
@@ -791,7 +823,11 @@ Important
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>On constate que toutes les barres ont un contour noir, mais que plusieurs couleurs de remplissage apparaissent maintenant, selon le sexe des individus, dans chaque classe de masse. Une légende adaptée est aussi créée automatiquement à droite du graphique. On apprend ainsi que les individus les plus lourds sont tous des mâles. On constate également que le sexe de certains individus est inconnu.</p>
@@ -814,7 +850,11 @@ Important
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ici, diminuer le nombre de classes à 10 a pour effet de trop lisser la distribution des données. On ne visualise plus les variations subtiles de la distribution. À l’inverse, trop augmenter le nombre de classes n’est pas pertinent non plus :</p>
@@ -827,7 +867,11 @@ Important
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ici, passer à 100 classes de taille génère un histogramme plein de trous, avec des classes très étroites, dont certaines sont très représentées, et immédiatement suivies ou précédées par des classes très peu représentées. Cela n’a pas de logique, et c’est presque toujours le signe qu’il faut réduire le nombre de classes.</p>
@@ -841,7 +885,11 @@ Important
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>C’est un bon choix, entre trop peu d’information, et trop de bruit visuel. Évidemment, ce nombre sera différent pour chaque jeu de données. On constate ici à peu près 3 pics (autour de 3500 grammes, un peu au-dessus de 4500 grammes, et autour de 5500 grammes) qui reflètent bien la distribution de ces données.</p>
@@ -855,7 +903,11 @@ Important
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ici, chaque catégorie recouvre 200 grammes. Avec l’argument <code>bins</code>, on indique à <code>R</code> combien on souhaite obtenir de classes, et il détermine automatiquement leur largeur. Avec <code>binwidth</code>, on indique la largeur des classes souhaitées, et <code>R</code> détermine automatiquement le nombre de classes nécessaires pour couvrir la totalité des données.</p>
@@ -869,7 +921,11 @@ Important
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Vous constatez ici que les choix effectués ne sont pas très pertinents : toutes les classes n’ont pas la même largeur. Cela rend l’interprétation difficile. Il est donc vivement conseillé, pour spécifier <code>breaks</code>, de créer des suites régulières, comme avec la fonction <code>seq()</code> (consultez son fichier d’aide et les exemples) :</p>
@@ -887,7 +943,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="03-Visualization_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Un exemple d’utilisation de l’argument <code>breaks</code></figcaption>
+<figcaption>Un exemple d’utilisation de l’argument <code>breaks</code></figcaption>
 </figure>
 </div>
 </div>
@@ -916,7 +972,11 @@ Important
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Les tirets qui sont maintenant visibles en-dessous de l’histogramme correspondent aux 342 valeurs de masses réellement observées dans le jeu de données. Puisque certaines tailles ont été observées plusieurs fois, faire des tirets semi-transparents nous permettra de mieux visualiser quelles tailles ont été observées fréquemment ou rarement. On peut régler la transparence des éléments d’un graphique avec l’argument <code>alpha =</code>, qui prend des valeurs comprises entre 0 (transparence totale) et 1 (opacité totale) :</p>
@@ -930,7 +990,11 @@ Important
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Les tirets sont maintenant d’autant plus foncés que les tailles ont été observées un grand nombre de fois. On retrouve bien ici la distribution décrite plus haut, avec 3 principaux groupes de valeurs. Cela révèle certainement en partie la complexité des données : ces tailles correspondent en effet aux mesures effectuées chez 3 espèces distinctes qui peuvent avoir des caractéristiques différentes, sans compter que le sexe des individus, qui n’apparaît pas ici, entre aussi probablement en jeu. Nous y reviendrons plus tard.</p>
@@ -943,7 +1007,11 @@ Important
 (`stat_density()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>On obtient une sorte d’histogramme lissé qui fait bien apparaître les 3 tailles les plus fréquentes (au niveau des 3 “bosses” du graphique). Inutile ici de spécifier un nombre de classes de taille, ou leur largeur : le lissage est ici automatique. On peut modifier l’importance du lissage avec l’argument <code>bw</code>, mais la valeur choisie par défaut par <code>R</code> est généralement tout à fait satisfaisante. Vous pouvez essayer avec une valeur de lissage de 30, puis de 500 pour vous rendre compte de l’effet de ce paramètre.</p>
@@ -965,7 +1033,11 @@ Important
 (`stat_density()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Notez l’utilisation des arguments <code>alpha</code>, <code>color</code> et <code>size</code>, pour modifier l’aspect de différents éléments du graphique. Assurez-vous d’avoir compris comment on les utilise, et faites vos propres expériences.</p>
@@ -1014,7 +1086,11 @@ Important
 (`stat_density()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>C’est plus long, mais c’est tout à fait correct et ça produit exactement le même résultat qu’auparavant.</p>
@@ -1036,7 +1112,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>C’est la fonction <code>seq_along()</code>, que l’on associe à l’axe des <code>x</code>, qui permet de faire apparaître les numéros de lignes du tableau <code>penguins</code>. On constate ici que 3 groupes de points sont présents :</p>
@@ -1054,10 +1134,14 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="fig-cloud" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-cloud-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.3: Nuage de points des masses corporelles des 3 espèces de manchots</figcaption>
+<div id="fig-cloud" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cloud-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-cloud-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cloud-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: Nuage de points des masses corporelles des 3 espèces de manchots
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1071,10 +1155,14 @@ Important
 <li><code>fill</code> : la couleur de remplissage des points (pour les symboles qui permettent de spécifier une couleur de remplissage et une couleur de contour)</li>
 <li><code>shape</code> : pour modifier les symboles utilisés. Les symboles possibles sont codés ainsi :</li>
 </ul>
-<div id="fig-pch" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/pch.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.4: Liste des symboles et codes correspondants pour les graphiques faisant apparaître des points. Pour les symboles 21 à 25, il sera possible de spécifier une couleur de remplissage <code>fill</code> et une couleur de contour <code>color</code>. Pour tous les autres symboles, les changements de couleurs se feront avec l’argument <code>color</code>.</figcaption>
+<div id="fig-pch" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/pch.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.4: Liste des symboles et codes correspondants pour les graphiques faisant apparaître des points. Pour les symboles 21 à 25, il sera possible de spécifier une couleur de remplissage <code>fill</code> et une couleur de contour <code>color</code>. Pour tous les autres symboles, les changements de couleurs se feront avec l’argument <code>color</code>.
+</figcaption>
 </figure>
 </div>
 <p>Chacune de ces caractéristiques esthétiques peut être associée à une variable d’un tableau (il faut alors le spécifier à l’intérieur de <code>aes()</code>), ou à une valeur unique, constante et identique pour tous les points du graphique (il faut alors le spécifier à l’extérieur de <code>aes()</code>). Par exemple :</p>
@@ -1087,7 +1175,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>L’ajout de la transparence permet de régler le problème des points qui se superposent (un phénomène nommé “overplotting”).</p>
@@ -1100,7 +1192,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>En indiquant <code>x = ""</code>, nous créons une unique catégorie pour l’axe des abscisses, qui sera utilisée pour placer les valeurs de tous les individus. Les valeurs de <code>body_mass_g</code> sont lues sur l’axe des <code>y</code>, comme pour un nuage de point classique. Si les points apparaissent dispersés, c’est en raison de 2 arguments spécifiques de la fonction <code>geom_jitter()</code> :</p>
@@ -1109,7 +1205,6 @@ Important
 <li><code>height =</code> permet de spécifier l’étendue verticale du bruit aléatoire qui sera utilisé pour placer les points</li>
 </ul>
 <p>Si nous ne renseignons pas nous même ces deux arguments, ils sont fixés automatiquement par le logiciel, ce qui n’est pas souhaitable, notamment pour le bruit vertical. Pour mieux comprendre, voyons ce qui se passe dans 3 situations :</p>
-<div>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="dv">0</span>, <span class="at">height =</span> <span class="dv">0</span>)</span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1118,42 +1213,57 @@ Important
 <span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
 <span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">2000</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-jitter" class="cell quarto-layout-panel">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-jitter-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-jitter-1.png" class="img-fluid figure-img" data-ref-parent="fig-jitter" width="288"></p>
-<figcaption class="figure-caption">(a) Pas de dispersion horizontale, pas de dispersion verticale</figcaption>
+<div id="fig-jitter" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-jitter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-jitter" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-jitter-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-jitter-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-jitter-1.png" class="img-fluid figure-img" data-ref-parent="fig-jitter" width="288">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-jitter-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Pas de dispersion horizontale, pas de dispersion verticale
+</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-jitter-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-jitter-2.png" class="img-fluid figure-img" data-ref-parent="fig-jitter" width="288"></p>
-<figcaption class="figure-caption">(b) Faible dispersion horizontale, pas de dispersion verticale</figcaption>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-jitter" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-jitter-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-jitter-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-jitter-2.png" class="img-fluid figure-img" data-ref-parent="fig-jitter" width="288">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-jitter-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Faible dispersion horizontale, pas de dispersion verticale
+</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-jitter-3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-jitter-3.png" class="img-fluid figure-img" data-ref-parent="fig-jitter" width="288"></p>
-<figcaption class="figure-caption">(c) Faible dispersion horizontale, forte dispersion verticale</figcaption>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-jitter" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-jitter-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-jitter-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-jitter-3.png" class="img-fluid figure-img" data-ref-parent="fig-jitter" width="288">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-jitter-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Faible dispersion horizontale, forte dispersion verticale
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3.5: Trois exemples de stripchart</figcaption><p></p>
-</figure>
 </div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-jitter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.5: Trois exemples de stripchart
+</figcaption>
+</figure>
 </div>
 <ul>
-<li><p>Le premier exemple (<a href="#fig-jitter-1">Figure&nbsp;<span>3.5 (a)</span></a>) ne présente aucune dispersion, ni horizontale (<code>width = 0</code>), ni verticale (<code>height = 0</code>). Les points apparaissent donc tous alignés, ils ont en effet tous la même valeur sur l’axe des abscisses. Leur position sur l’axe des <code>y</code> reflète la masse réellement observée pour chaque individu. Cette façon de représenter les données n’est pas très utile car la superposition des points vient empêcher la visualisation correcte de la distribution : ici, il est impossible de dire quelles sont les masses les plus fréquemment observées ou les plus rarement observées.</p></li>
-<li><p>Le second exemple (<a href="#fig-jitter-2">Figure&nbsp;<span>3.5 (b)</span></a>) présente une dispersion horizontale modérée (<code>width = 0.1</code>) et pas de dispersion verticale (<code>height = 0</code>). Ici, tous les points ne sont plus alignés sur une seule droite. Puisque nous avons fixé <code>width = 0.1</code>, la position horizontale des points est choisie aléatoirement par <code>R</code> : il ajoute un léger bruit horizontal aléatoire, soit positif, soit négatif, avant de placer les points le long de l’axe des abscisses. Plus la valeur de <code>width</code> sera élevée, plus l’étendue du bruit horizontal sera importante. Sur l’axe des <code>y</code> en revanche, aucun bruit n’a été ajouté (<code>height = 0</code>). La position des points le long de cet axe reflète donc parfaitement la masse de chaque individu telle qu’enregistrées dans le tableau <code>penguins</code> et c’est bien ce que nous voulons. D’ailleurs, on constate que l’axe des ordonnées est strictement identique (même étendue, même graduations…) pour les 2 premiers sous-graphiques. C’est ce type de représentation que nous recherchons. En effet, l’absence de bruit vertical nous permet de visualiser correctement (donc sans distorsion) la variable numérique choisie (ici <code>body_mass_g</code>), et le bruit horizontal nous permet d’étaler légèrement les points de part et d’autres d’un axe vertical virtuel, ce qui a pour effet de réduire l’overplotting, et ce qui nous permet donc de visualiser les zones où les points sont plus nombreux/denses et les zones où les observations sont plus rares. Ici, on observe une majorité de points entre 3000 et 4000 grammes, une densité de points intermédiaire entre 4000 et 5000 grammes, et des points moins nombreux (donc moins d’individus) pour les masses supérieures à 5000 grammes.</p></li>
-<li><p>Le troisième exemple (<a href="#fig-jitter-3">Figure&nbsp;<span>3.5 (c)</span></a>) présente une dispersion horizontale modérée (<code>width = 0.1</code>) et une importante dispersion verticale (<code>height = 2000</code>). Cela signifie que la position des points sur l’axe des <code>y</code> ne reflète plus les vraies valeurs de masses enregistrées dans le tableau <code>penguins</code>, mais des valeurs de masses auxquelles un bruit aléatoire a été ajouté ou retiré. C’est ce qui explique que l’axe des ordonnées ne présente pas la même échelle que pour les 2 autres graphiques. Ce n’est évidemment pas souhaitable, car si nous voulons bel et bien ajouter un bruit horizontal pour éviter la superposition des points, il est essentiel de ne pas modifier la position verticale des points qui nous renseigne sur la variable d’intérêt. Ici, la <a href="#fig-jitter-3">Figure&nbsp;<span>3.5 (c)</span></a> présente un axe des <code>y</code> différent des 2 autres sous-figures, et la position verticale des points a été tellement altérée qu’on ne peut plus distinguer la sur-abondance de données entre 3000 et 4000 grammes, ni la sous-représentation des observations au-dessus de 5000 grammes. Il sera donc important à l’avenir de toujours fixer <code>height = 0</code> pour faire un stripchart correct.</p></li>
+<li><p>Le premier exemple (<a href="#fig-jitter-1" class="quarto-xref">Figure&nbsp;<span>3.5 (a)</span></a>) ne présente aucune dispersion, ni horizontale (<code>width = 0</code>), ni verticale (<code>height = 0</code>). Les points apparaissent donc tous alignés, ils ont en effet tous la même valeur sur l’axe des abscisses. Leur position sur l’axe des <code>y</code> reflète la masse réellement observée pour chaque individu. Cette façon de représenter les données n’est pas très utile car la superposition des points vient empêcher la visualisation correcte de la distribution : ici, il est impossible de dire quelles sont les masses les plus fréquemment observées ou les plus rarement observées.</p></li>
+<li><p>Le second exemple (<a href="#fig-jitter-2" class="quarto-xref">Figure&nbsp;<span>3.5 (b)</span></a>) présente une dispersion horizontale modérée (<code>width = 0.1</code>) et pas de dispersion verticale (<code>height = 0</code>). Ici, tous les points ne sont plus alignés sur une seule droite. Puisque nous avons fixé <code>width = 0.1</code>, la position horizontale des points est choisie aléatoirement par <code>R</code> : il ajoute un léger bruit horizontal aléatoire, soit positif, soit négatif, avant de placer les points le long de l’axe des abscisses. Plus la valeur de <code>width</code> sera élevée, plus l’étendue du bruit horizontal sera importante. Sur l’axe des <code>y</code> en revanche, aucun bruit n’a été ajouté (<code>height = 0</code>). La position des points le long de cet axe reflète donc parfaitement la masse de chaque individu telle qu’enregistrées dans le tableau <code>penguins</code> et c’est bien ce que nous voulons. D’ailleurs, on constate que l’axe des ordonnées est strictement identique (même étendue, même graduations…) pour les 2 premiers sous-graphiques. C’est ce type de représentation que nous recherchons. En effet, l’absence de bruit vertical nous permet de visualiser correctement (donc sans distorsion) la variable numérique choisie (ici <code>body_mass_g</code>), et le bruit horizontal nous permet d’étaler légèrement les points de part et d’autres d’un axe vertical virtuel, ce qui a pour effet de réduire l’overplotting, et ce qui nous permet donc de visualiser les zones où les points sont plus nombreux/denses et les zones où les observations sont plus rares. Ici, on observe une majorité de points entre 3000 et 4000 grammes, une densité de points intermédiaire entre 4000 et 5000 grammes, et des points moins nombreux (donc moins d’individus) pour les masses supérieures à 5000 grammes.</p></li>
+<li><p>Le troisième exemple (<a href="#fig-jitter-3" class="quarto-xref">Figure&nbsp;<span>3.5 (c)</span></a>) présente une dispersion horizontale modérée (<code>width = 0.1</code>) et une importante dispersion verticale (<code>height = 2000</code>). Cela signifie que la position des points sur l’axe des <code>y</code> ne reflète plus les vraies valeurs de masses enregistrées dans le tableau <code>penguins</code>, mais des valeurs de masses auxquelles un bruit aléatoire a été ajouté ou retiré. C’est ce qui explique que l’axe des ordonnées ne présente pas la même échelle que pour les 2 autres graphiques. Ce n’est évidemment pas souhaitable, car si nous voulons bel et bien ajouter un bruit horizontal pour éviter la superposition des points, il est essentiel de ne pas modifier la position verticale des points qui nous renseigne sur la variable d’intérêt. Ici, la <a href="#fig-jitter-3" class="quarto-xref">Figure&nbsp;<span>3.5 (c)</span></a> présente un axe des <code>y</code> différent des 2 autres sous-figures, et la position verticale des points a été tellement altérée qu’on ne peut plus distinguer la sur-abondance de données entre 3000 et 4000 grammes, ni la sous-représentation des observations au-dessus de 5000 grammes. Il sera donc important à l’avenir de toujours fixer <code>height = 0</code> pour faire un stripchart correct.</p></li>
 </ul>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1183,10 +1293,14 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="fig-strip" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-strip-1.png" class="img-fluid figure-img" width="480"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.6: Un exemple de stripchart</figcaption>
+<div id="fig-strip" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-strip-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-strip-1.png" class="img-fluid figure-img" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-strip-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.6: Un exemple de stripchart
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1256,10 +1370,14 @@ Important
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(panier, <span class="fu">aes</span>(<span class="at">x =</span> fruit)) <span class="sc">+</span></span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-barplot" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-barplot-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.7: Barplot pour des données non pré-comptées.</figcaption>
+<div id="fig-barplot" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-barplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-barplot-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-barplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.7: Barplot pour des données non pré-comptées.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1269,18 +1387,22 @@ Important
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(panier_counted, <span class="fu">aes</span>(<span class="at">x =</span> fruit, <span class="at">y =</span> nombre)) <span class="sc">+</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-barplotcol" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-barplotcol-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.8: Barplot pour des données pré-comptées.</figcaption>
+<div id="fig-barplotcol" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-barplotcol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-barplotcol-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-barplotcol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.8: Barplot pour des données pré-comptées.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Notez que les figures <a href="#fig-barplot">Figure&nbsp;<span>3.7</span></a> et <a href="#fig-barplotcol">Figure&nbsp;<span>3.8</span></a> sont absolument identiques (à l’exception du titre de l’axe des ordonnées), mais qu’elles ont été créées à partir de 2 tableaux de données différents. En particulier, notez que :</p>
+<p>Notez que les figures <a href="#fig-barplot" class="quarto-xref">Figure&nbsp;<span>3.7</span></a> et <a href="#fig-barplotcol" class="quarto-xref">Figure&nbsp;<span>3.8</span></a> sont absolument identiques (à l’exception du titre de l’axe des ordonnées), mais qu’elles ont été créées à partir de 2 tableaux de données différents. En particulier, notez que :</p>
 <ul>
-<li>Le code qui génère la figure <a href="#fig-barplot">Figure&nbsp;<span>3.7</span></a> utilise le jeu de données <code>panier</code>, et n’associe pas de variable à l’axe des ordonnées : dans la fonction <code>aes()</code>, seule la variable associée à <code>x</code> est précisée. C’est la fonction <code>geom_bar()</code> qui calcule automatiquement les abondances (ou fréquences) pour chaque catégorie de la variable <code>fruit</code>. La variable <code>count</code> est ainsi générée automatiquement et associée à <code>y</code>.</li>
-<li>Le code qui génère la figure <a href="#fig-barplotcol">Figure&nbsp;<span>3.8</span></a> utilise le jeu de données <code>panier_counted</code>. Ici, c’est bien l’utilisateur qui associe la variable <code>nombre</code> à l’axe des <code>y</code> à l’intérieur de la fonction <code>aes()</code>. La fonction <code>geom_col()</code> a besoin de 2 variables (une variable catégorielle pour l’axe des <code>x</code> et une numérique pour l’axe des <code>y</code>) pour fonctionner.</li>
+<li>Le code qui génère la figure <a href="#fig-barplot" class="quarto-xref">Figure&nbsp;<span>3.7</span></a> utilise le jeu de données <code>panier</code>, et n’associe pas de variable à l’axe des ordonnées : dans la fonction <code>aes()</code>, seule la variable associée à <code>x</code> est précisée. C’est la fonction <code>geom_bar()</code> qui calcule automatiquement les abondances (ou fréquences) pour chaque catégorie de la variable <code>fruit</code>. La variable <code>count</code> est ainsi générée automatiquement et associée à <code>y</code>.</li>
+<li>Le code qui génère la figure <a href="#fig-barplotcol" class="quarto-xref">Figure&nbsp;<span>3.8</span></a> utilise le jeu de données <code>panier_counted</code>. Ici, c’est bien l’utilisateur qui associe la variable <code>nombre</code> à l’axe des <code>y</code> à l’intérieur de la fonction <code>aes()</code>. La fonction <code>geom_col()</code> a besoin de 2 variables (une variable catégorielle pour l’axe des <code>x</code> et une numérique pour l’axe des <code>y</code>) pour fonctionner.</li>
 </ul>
 <p>Autrement dit, lorsque vous souhaiterez créer un diagramme bâtons, il faudra donc au préalable vérifier de quel type de données vous disposez pour choisir l’objet géométrique approprié :</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -1308,10 +1430,14 @@ Diagrammes bâtons
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span></span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-bpspecies" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-bpspecies-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.9: Effectifs pour les 3 espèces de manchots étudiées</figcaption>
+<div id="fig-bpspecies" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bpspecies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-bpspecies-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bpspecies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.9: Effectifs pour les 3 espèces de manchots étudiées
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1323,16 +1449,20 @@ Diagrammes bâtons
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(species))) <span class="sc">+</span></span>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-bpspecies-infreq" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-bpspecies-infreq-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.10: Effectifs pour les 3 espèces de manchots étudiées, triés en ordre décroissant</figcaption>
+<div id="fig-bpspecies-infreq" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bpspecies-infreq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-bpspecies-infreq-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bpspecies-infreq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.10: Effectifs pour les 3 espèces de manchots étudiées, triés en ordre décroissant
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Ordonner les catégories par ordre décroissant est souvent indispensable afin de faciliter la lecture du graphique et les comparaisons entre catégories.</p>
-<p>Si nous souhaitons connaître le nombre précis d’individus de chaque espèce, il nous faut faire appel à plusieurs fonctions du package <code>dplyr</code> que nous détaillerons dans le chapitre <a href="05-DataWrangling.html"><span>Chapitre&nbsp;5</span></a>. Ci-dessous, nous créons un nouveau tableau <code>species_table</code> contenant le nombre d’individus de chaque espèce et les espèces sont ordonnées par abondance décroissante :</p>
+<p>Si nous souhaitons connaître le nombre précis d’individus de chaque espèce, il nous faut faire appel à plusieurs fonctions du package <code>dplyr</code> que nous détaillerons dans le chapitre <a href="05-DataWrangling.html" class="quarto-xref"><span>Chapitre 5</span></a>. Ci-dessous, nous créons un nouveau tableau <code>species_table</code> contenant le nombre d’individus de chaque espèce et les espèces sont ordonnées par abondance décroissante :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>species_table <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span>   <span class="co"># On prend le tableau penguins, puis...</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species) <span class="sc">%&gt;%</span>            <span class="co"># On compte les effectifs de chaque espèce, puis...</span></span>
@@ -1360,7 +1490,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(species_table, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> n)) <span class="sc">+</span></span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Si nous souhaitons trier ces catégories par effectif décroissant, la fonction <code>fct_infreq()</code> ne nous est ici d’aucune utilité. En effet, le tableau <code>species_table</code> contient une seule ligne pour chaque espèce, donc une fréquence de <code>1</code> pour chaque espèce. Le critère de la fréquence d’occurrence des modalités dans le tableau de données ne peut donc pas être utilisé. Pour parvenir à nos fins avec ce tableau déjà précompté, il faut cette fois utiliser la fonction <code>fct_reorder()</code> pour ordonner correctement les catégories. Cette fonction prends 3 arguments :</p>
@@ -1374,7 +1508,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(species, n, <span class="at">.desc =</span> <span class="cn">TRUE</span>), <span class="at">y =</span> n)) <span class="sc">+</span></span>
 <span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Vous voyez donc que selon le type de données dont vous disposez (soit un tableau comme <code>penguins</code>, avec toutes les observations, soit un tableau beaucoup plus compact comme <code>species_table</code>), la démarche permettant de produire un diagramme bâtons, dans lequel les catégories seront triées, sera différente.</p>
@@ -1383,13 +1521,21 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">fct_infreq</span>(species))) <span class="sc">+</span></span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(species_table, </span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">fct_reorder</span>(species, n, <span class="at">.desc =</span> <span class="cn">TRUE</span>), <span class="at">x =</span> n)) <span class="sc">+</span></span>
 <span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"firebrick"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-44-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-44-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1409,10 +1555,14 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <p>À titre d’exemple, examinez ce diagramme, qui reprend les mêmes chiffres que précédemment, et tentez de répondre aux questions suivantes :</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pie" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-pie-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.11: Répartition des effectifs par espèce et par sexe</figcaption>
+<div id="fig-pie" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-pie-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.11: Répartition des effectifs par espèce et par sexe
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1422,21 +1572,25 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <li>De combien de fois la part des Gentoo mâles est-elle supérieure à celle des Chinstrap femelles ? (1,5 fois, 2 fois, 2.5 fois ?…)</li>
 <li>Quelle est la quatrième catégorie la plus représentée ?</li>
 </ul>
-<p>Il est difficile (voir impossible) de répondre précisément à ces questions avec le diagramme circulaire de la <a href="#fig-pie">Figure&nbsp;<span>3.11</span></a>, alors qu’il est très simple d’obtenir des réponses précises avec un diagramme bâtons tel que présenté à la <a href="#fig-bpspecies-sex">Figure&nbsp;<span>3.12</span></a> ci-dessous (vérifiez-le !) :</p>
+<p>Il est difficile (voir impossible) de répondre précisément à ces questions avec le diagramme circulaire de la <a href="#fig-pie" class="quarto-xref">Figure&nbsp;<span>3.11</span></a>, alors qu’il est très simple d’obtenir des réponses précises avec un diagramme bâtons tel que présenté à la <a href="#fig-bpspecies-sex" class="quarto-xref">Figure&nbsp;<span>3.12</span></a> ci-dessous (vérifiez-le !) :</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-bpspecies-sex" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-bpspecies-sex-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.12: Répartition des effectifs par espèce et par sexe</figcaption>
+<div id="fig-bpspecies-sex" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bpspecies-sex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-bpspecies-sex-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bpspecies-sex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.12: Répartition des effectifs par espèce et par sexe
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="deux-variables-numériques" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="deux-variables-numériques"><span class="header-section-number">3.7</span> Deux variables numériques</h2>
+<section id="sec-deuxnum" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="sec-deuxnum"><span class="header-section-number">3.7</span> Deux variables numériques</h2>
 <p>La représentation graphique la plus adaptée à la visualisation des relations entre deux variables numériques est aussi l’une des plus simples : il s’agit des nuages de points que nous avons déjà évoqués. Ici dépendant, puisque nous disposons de 2 variables numériques, nous allons en associer une à l’axe des <code>x</code> et l’autre à l’axe des <code>y</code>. Si l’on pressent que l’une des deux variables pourrait “expliquer” la seconde, ou être en partie responsable de ses variations, on l’appelle <strong>variable explicative</strong> et on la placera alors sur l’axe des <code>x</code>. L’autre variable, celle que l’on suppose influencée par la première est appelée <strong>variable expliquée</strong>, et sera associée à l’axe des <code>y</code>.</p>
 <p>Les nuages de points de 2 variables numériques permettent donc de visualiser les relations (supposées ou réelles) entre deux variables.</p>
 <section id="nuage-de-points" class="level3" data-number="3.7.1">
@@ -1452,7 +1606,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ici, j’associe <code>body_mass_g</code> à l’axe des <code>x</code> car je suppose que c’est la variable explicative. Il est en effet plus logique de considérer que la masse corporelle influence la longueur des nageoires plutôt que le contraire. La variable expliquée, ici <code>flipper_length_mm</code> est associée à l’axe des <code>y</code>.</p>
@@ -1477,7 +1635,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>L’argument <code>method = "lm"</code> indique que nous souhaitons ajouter une droite de régression (<code>lm</code> est l’abréviation de “linear model”). L’intervalle grisé autour de la droite représente l’incertitude associée à la régression et indique que la “vraie” droite de régression, dans la population générale (et pas seulement dans notre échantillon de 344 individus) est probablement située dans cette zone grisée. Nous aurons l’occasion de revenir en détail sur la notion de régression linéaire et d’incertitude associée plus loin dans ce livre.</p>
@@ -1501,10 +1663,14 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>L’argument <code>se = FALSE</code> de la fonction <code>geom_smooth()</code> permet de ne pas afficher l’intervalle d’incertitude de la régression linéaire. Ici, j’ai associé la couleur de remplissage des points et la couleur des droites de régression aux espèces (donc à l’intérieur de <code>aes()</code>, soit dans <code>ggplot()</code> soit dans <code>geom_smooth()</code>), et j’ai fixé pour tous les points, le choix du type de symbole (<code>shape = 21</code>, voir <a href="#fig-pch">Figure&nbsp;<span>3.4</span></a>), la couleur de contour (<code>color = "black"</code>) et la transparence <code>alpha = 0.6</code>.</p>
+</div>
+<p>L’argument <code>se = FALSE</code> de la fonction <code>geom_smooth()</code> permet de ne pas afficher l’intervalle d’incertitude de la régression linéaire. Ici, j’ai associé la couleur de remplissage des points et la couleur des droites de régression aux espèces (donc à l’intérieur de <code>aes()</code>, soit dans <code>ggplot()</code> soit dans <code>geom_smooth()</code>), et j’ai fixé pour tous les points, le choix du type de symbole (<code>shape = 21</code>, voir <a href="#fig-pch" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>), la couleur de contour (<code>color = "black"</code>) et la transparence <code>alpha = 0.6</code>.</p>
 <p>Là encore, il ne s’agit plus strictement d’un graphique représentant les relations entre 2 variables numériques, mais bien entre 3 variables : deux variables numériques (<code>body_mass_g</code> et <code>flipper_length_mm</code>) et une variable catégorielle ou facteur (<code>species</code>). Il est finalement très simple d’ajouter d’autres variables sur un graphique bivarié tel qu’un nuage de points.</p>
 </section>
 </section>
@@ -1531,11 +1697,15 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 </div>
 </div>
 <p>Le jeu de données <code>economics</code> est fourni avec le package <code>ggplot2</code>. Puisque vous avez chargé ce package (ou le <code>tidyverse</code> qui contient ce package), vous devriez pouvoir accéder à ce tableau sans difficulté. Nous nous intéresserons ici à la variable <code>date</code> que nous placerons sur l’axe des <code>x</code> et à la variable <code>uempmed</code> qui est la durée de chômage médiane dans la population américaine, en nombre de semaines, que nous placerons sur l’axe des <code>y</code>. Examinons donc comment la durée médiane du du chômage a évolué au fil du temps :</p>
-<div class="cell" data-fig.asp="0.4">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(economics, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> uempmed)) <span class="sc">+</span></span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Notez que puisque la variable <code>date</code> du tableau <code>economics</code> est comprise par <code>R</code> comme étant du type “variable temporelle” (le type indiqué dans le tableau, juste sous le nom de variable, est <code>&lt;date&gt;</code>), l’axe des abscisses du graphique, qui est associé à cette variable, est correctement mis en forme : seules les années apparaissent.</p>
@@ -1546,15 +1716,19 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <li><code>size</code> : l’épaisseur des lignes</li>
 <li><code>linetype</code> : le type de ligne (continue, pointillée, tirets, etc. Essayez plusieurs valeurs entières pour comparer les types de lignes)</li>
 </ul>
-<div class="cell" data-fig.asp="0.4">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(economics, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> uempmed)) <span class="sc">+</span></span>
 <span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">linetype =</span> <span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>L’argument <code>linetype</code> est également utilisable par l’objet géométrique <code>geom_smooth()</code> :</p>
-<div class="cell" data-fig.asp="0.4">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(economics, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> uempmed)) <span class="sc">+</span></span>
 <span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
 <span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">linetype =</span> <span class="dv">4</span>, <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1562,7 +1736,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Globalement, la durée médiane de chômage aux USA varie de façon cyclique. La durée des cycles varie selon les période entre 5 et 10 ans environ. Depuis les années 2000, la durée de chômage a augmenté de façon très importante, pour passer de 5 à 6 semaines en 2001, à plus de 25 semaines en 2011.</p>
@@ -1591,7 +1769,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ici, les espèces sont associées à l’axe des <code>x</code> (<code>x = species</code>) et la couleur de remplissage des barres est associée au sexe des individus (<code>fill = sex</code>), à l’intérieur de la fonction <code>aes()</code>. Comme toujours, on peut modifier certaines caractéristiques esthétiques (couleur de contour des barres, transparence, etc.) et ré-ordonner les espèces sur l’axe des abscisses :</p>
@@ -1599,7 +1781,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(species), <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"black"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ce type de visualisation est utile pour se rendre compte des ordres de grandeur. On voit ici clairement que l’espèce Adélie est la plus représentée dans cette étude, suivie par l’espèce Gentoo, et enfin l’espèce Chinstrap. Pour chacune de ces 3 espèces, le sex-ratio a l’air très équilibré. Toutefois, des différences subtiles de proportions entre mâles et femelles selon les espèces pourraient être masqués par les effectifs inégaux entre espèces. Il peut donc être préférable, pour comparer des proportions, de normaliser les effectifs de toutes les espèces pour ramener chaque barre du graphique à la même hauteur :</p>
@@ -1607,7 +1793,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(species), <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>L’argument <code>position = "fill"</code> de la fonction <code>geom_bar()</code> permet de transformer en proportions les abondances de chaque modalités de la variable portée par l’axe des <code>x</code>. L’axe des ordonnées varie maintenant entre 0 et 1 (0% et 100%), ce qui rend les comparaisons plus aisées. Ici, le fait que le sexe de quelques individus n’ait pas pu être déterminé vient gêner la lecture du graphique. On peut supprimer ces valeurs grâce à la fonction <code>filter()</code> du packages <code>dplyr</code>. Nous verrons dans le #sec-wrangling la signification du code suivant. Pour l’instant retenez simplement qu’il permet d’éliminer les individus dont le sexe est inconnu :</p>
@@ -1617,7 +1807,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(species), <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>On peut maintenant constater très facilement que le sex-ratio est parfaitement équilibré pour les espèces Adélie et Chinstrap, et qu’il est très légèrement en faveur des mâles pour l’espèce Gentoo.</p>
@@ -1629,7 +1823,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(species), <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>La seule chose qui a changé est la valeur prise par l’argument <code>position</code>, que l’on fixe ici à <code>dodge</code>. L’avantage de cette représentation est qu’elle permet à la fois de visualiser les effectifs de chaque catégorie et sous-catégorie (espèce et sexe), ainsi que de comparer les proportions au sein de chaque espèce. Un inconvénient et que lorsque les catégories n’ont pas toutes le même nombre de sous-catégories, les barres ont des largeurs différentes. Ici, l’espèce Chinstrap, qui n’a que 2 sous catégories (<code>female</code> et <code>male</code>) présente des barres plus larges que les deux autres espèces qui présentent chacune 3 sous-catégories (<code>female</code>, <code>male</code> et <code>NA</code>). Pour y remédier, on peut :</p>
@@ -1642,7 +1840,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(species), <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <ul>
@@ -1653,21 +1855,29 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"black"</span>,</span>
 <span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">preserve =</span> <span class="st">"single"</span>) )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ici, l’argument <code>position</code> prend une valeur plus complexe puisque nous faisons appel à une fonction nommée <code>position_dodge()</code>. C’est l’argument <code>preserve = "single"</code> qui permet de s’assurer que toutes les sous-catégories sont bien représentées au sein de chaque catégorie, et donc, que toutes les barres ont bien la même largueur.</p>
 <p>Le choix d’une méthode ou de l’autre dépend de ce que l’on souhaite montrer : il n’y a pas une façon de faire meilleure ou moins bonne que l’autre. Tout dépend de l’objectif poursuivi par l’auteur du graphique.</p>
 </section>
-<section id="diagrammes-bâtons-facettés" class="level3" data-number="3.8.3">
-<h3 data-number="3.8.3" class="anchored" data-anchor-id="diagrammes-bâtons-facettés"><span class="header-section-number">3.8.3</span> Diagrammes bâtons “facettés”</h3>
+<section id="sec-facet" class="level3" data-number="3.8.3">
+<h3 data-number="3.8.3" class="anchored" data-anchor-id="sec-facet"><span class="header-section-number">3.8.3</span> Diagrammes bâtons “facettés”</h3>
 <p>Dans le jargon de <code>ggplot2</code>, les <code>facet</code>s sont simplement des sous-graphiques. Typiquement, une variable catégorielle peut être utilisée pour représenter un sous-graphique pour chaque modalité de cette variable. Ici, on peut par exemple produire un diagramme bâton pour chaque espèce, et l’axe des <code>x</code> de chaque graphique portera la variable <code>sex</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> sex)) <span class="sc">+</span></span>
 <span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>C’est la fonction <code>facet_wrap()</code> qui permet de produire plusieurs sous graphiques. Examinons quelques-une de ces particularités :</p>
@@ -1682,7 +1892,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Les 3 sous-graphiques sont maintenant disposés dans 2 colonnes, et si l’axe des <code>x</code> est toujours le même pour chaque sous-graphique, les axes des <code>y</code> sont différents pour les 3 sous-graphiques.</p>
@@ -1692,7 +1906,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
 <span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>La légende qui est automatiquement créée à droite est inutile puisque les sous-graphiques indiquent déjà le nom des espèces. Pour retirer une légende inutile, on peut utiliser l’argument <code>show.legend = FALSE</code> de la plupart des objets géométriques :</p>
@@ -1701,7 +1919,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1717,7 +1939,11 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
 <span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_mosaic</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">product</span>(species), <span class="at">fill =</span> sex))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Il faut obligatoirement :</p>
@@ -1730,19 +1956,19 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <p>Au final, le choix d’un graphique doit vous permettre de mettre en évidence les relations qui vous paraissent importantes de la façon la plus visuelle et évidente possible pour une personne ne connaissant pas vos données. Votre choix dépendra donc des données disponibles et de votre objectif (p.&nbsp;ex. comparaisons de proportions ou de valeurs absolues, nombreuses modalités ou seulement quelques unes, etc.).</p>
 </section>
 </section>
-<section id="une-variable-de-chaque-type" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="une-variable-de-chaque-type"><span class="header-section-number">3.9</span> Une variable de chaque type</h2>
+<section id="sec-oneeach" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="sec-oneeach"><span class="header-section-number">3.9</span> Une variable de chaque type</h2>
 <p>Les représentations graphiques réalisables et pertinentes lorsque l’on dispose d’une variable numérique et d’un facteur sont souvent des adaptations des graphiques précédents. Globalement, trois choix s’offrent à nous :</p>
 <ol type="1">
 <li>les histogrammes facettés</li>
 <li>les stripcharts</li>
-<li>les boîtes à moustaches. Nous donnerons ici un simple. La signification de tous les éléments de ces graphiques sera fournie à la <a href="06-EDA.html#sec-reframe"><span>Section&nbsp;6.2</span></a></li>
+<li>les boîtes à moustaches. Nous donnerons ici un simple. La signification de tous les éléments de ces graphiques sera fournie à la <a href="06-EDA.html#sec-reframe" class="quarto-xref"><span>Section 6.2</span></a></li>
 </ol>
 <p>Pour illustrer ces différentes possibilités, intéressons nous maintenant à la relation qui existe entre l’épaisseur du bec des manchots (<code>bill_depth_mm</code>, variable numérique) et l’espèce (<code>species</code>, variable catégorielle ou facteur)</p>
 <section id="sec-factorhisto" class="level3" data-number="3.9.1">
 <h3 data-number="3.9.1" class="anchored" data-anchor-id="sec-factorhisto"><span class="header-section-number">3.9.1</span> Histogrammes “facettés”</h3>
 <p>La syntaxe est ici tout à fait classique. Pour réaliser un histogramme, on place la variable numérique sur l’axe des abscisses. La variable catégorielle nous servira à créer les sous graphiques, ici, un par espèce. Afin de faciliter les comparaisons, nous placerons les sous-graphiques les uns sous les autres en spécifiant <code>ncol = 1</code>. Enfin, l’aspect général sera amélioré en modifiant quelques caractéristiques esthétiques :</p>
-<div class="cell" data-fig.asp="1.2">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> bill_depth_mm)) <span class="sc">+</span></span>
 <span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>, </span>
 <span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
@@ -1752,11 +1978,15 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-68-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-68-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>On peut aussi choisir d’utiliser une couleur pour chaque espèce (mais on n’affichera pas la légende puisque les espèces sont déjà séparées dans les sous graphiques). En outre, puisque les effectifs des Chinstrap sont bien plus faibles que pour les deux autres espèces, on a intérêt à “libérer” l’axe des <code>y</code> afin que l’histogramme des Chinstrap soit plus facilement lisible (il apparaît pour l’instant très “écrasé” comparé aux autres).</p>
-<div class="cell" data-fig.asp="1.2">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> bill_depth_mm, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
 <span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"black"</span>, </span>
 <span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
@@ -1766,10 +1996,14 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-69-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-69-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>Les Gentoo, qui ont pourtant des masses corporelles supérieures à celle des deux autres espèces (voir <a href="#fig-cloud">Figure&nbsp;<span>3.3</span></a> de la <a href="#sec-cloud"><span>Section&nbsp;3.5.2</span></a>), ont visiblement des becs moins épais (entre 12 et 17 mm) que les deux autres espèces (entre 16 et 22 mm).</p>
+</div>
+<p>Les Gentoo, qui ont pourtant des masses corporelles supérieures à celle des deux autres espèces (voir <a href="#fig-cloud" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> de la <a href="#sec-cloud" class="quarto-xref"><span>Section 3.5.2</span></a>), ont visiblement des becs moins épais (entre 12 et 17 mm) que les deux autres espèces (entre 16 et 22 mm).</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1787,8 +2021,8 @@ Important
 </section>
 <section id="sec-factorstrip" class="level3" data-number="3.9.2">
 <h3 data-number="3.9.2" class="anchored" data-anchor-id="sec-factorstrip"><span class="header-section-number">3.9.2</span> Les stripcharts</h3>
-<p>Nous avons déjà abordé ce type de graphique dans la <a href="#sec-cloud"><span>Section&nbsp;3.5.2</span></a>. Contrairement à la situation où nous n’avions qu’une variable numérique et où nous devions fixer <code>x = ""</code> pour que toutes les observations se placent au même niveau de l’axe des abscisses (voir <a href="#fig-strip">Figure&nbsp;<span>3.6</span></a>), nous allons ici associer la variable catégorielle à l’axe des <code>x</code>. La variable numérique sera quant-à-elle toujours associée à l’axe des ordonnées :</p>
-<div class="cell" data-fig.asp="1">
+<p>Nous avons déjà abordé ce type de graphique dans la <a href="#sec-cloud" class="quarto-xref"><span>Section 3.5.2</span></a>. Contrairement à la situation où nous n’avions qu’une variable numérique et où nous devions fixer <code>x = ""</code> pour que toutes les observations se placent au même niveau de l’axe des abscisses (voir <a href="#fig-strip" class="quarto-xref">Figure&nbsp;<span>3.6</span></a>), nous allons ici associer la variable catégorielle à l’axe des <code>x</code>. La variable numérique sera quant-à-elle toujours associée à l’axe des ordonnées :</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
 <span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.20</span>, <span class="at">height =</span> <span class="dv">0</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -1796,10 +2030,14 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="fig-facstrip" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-facstrip-1.png" class="img-fluid figure-img" width="288"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.13: Un exemple de stripchart</figcaption>
+<div id="fig-facstrip" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-facstrip-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-facstrip-1.png" class="img-fluid figure-img" width="288">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-facstrip-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.13: Un exemple de stripchart
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1812,7 +2050,7 @@ Important
 <li>la dispersion horizontale <code>width</code> doit obligatoirement être fixée à 0</li>
 <li>la dispersion verticale <code>height</code> doit être comprise entre 0.1 et 0.4 pour étaler les points de chaque modalité et ainsi éviter l’overplotting</li>
 </ul>
-<div class="cell" data-fig.asp="0.4">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> bill_depth_mm, <span class="at">y =</span> species)) <span class="sc">+</span></span>
 <span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="dv">0</span>, <span class="at">height =</span> <span class="fl">0.20</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -1820,7 +2058,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-71-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-71-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1835,10 +2077,14 @@ Important
 (`stat_boxplot()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-72-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-72-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>Dans la forme, ça ressemble un à un stripchart (comparez par exemple avec la syntaxe et les résultats obtenus à la <a href="#fig-facstrip">Figure&nbsp;<span>3.13</span></a>). Néanmoins, ici, au lieu de visualiser tous les points du jeu de données, seules quelques valeurs caractéristiques sont utilisées pour construire le boîte à moustache de chaque espèce. Les différents éléments d’un boxplot, sont les suivants :</p>
+</div>
+<p>Dans la forme, ça ressemble un à un stripchart (comparez par exemple avec la syntaxe et les résultats obtenus à la <a href="#fig-facstrip" class="quarto-xref">Figure&nbsp;<span>3.13</span></a>). Néanmoins, ici, au lieu de visualiser tous les points du jeu de données, seules quelques valeurs caractéristiques sont utilisées pour construire le boîte à moustache de chaque espèce. Les différents éléments d’un boxplot, sont les suivants :</p>
 <ul>
 <li>La limite inférieure de la boîte correspond au premier quartile : 25% des données de l’échantillon sont situées au-dessous de cette valeur.</li>
 <li>La limite supérieure de la boîte correspond au troisième quartile : 25% des données de l’échantillon sont situées au-dessus de cette valeur.</li>
@@ -1846,7 +2092,7 @@ Important
 <li>La hauteur de la boîte correspond à ce que l’on appelle l’étendue inter-quartile ou Inter Quartile Range (IQR) en anglais. On trouve dans cette boîte 50% des observations de l’échantillon. C’est une mesure de la dispersion des 50% des données les plus centrales. Une boîte plus allongée indique donc une plus grande dispersion.</li>
 <li>Les moustaches correspondent à des valeurs qui sont en dessous du premier quartile (pour la moustache du bas) et au-dessus du troisième quartile (pour la moustache du haut). La règle utilisée dans <code>R</code> est que ces moustaches s’étendent jusqu’aux valeurs minimales et maximales de l’échantillon, mais elles ne peuvent en aucun cas s’étendre au-delà de 1,5 fois la hauteur de la boîte (1,5 fois l’IQR) vers le haut et le bas. Si des points apparaissent au-delà des moustaches (vers le haut ou le bas), ces points sont appelés “outliers”. On peut en observer un pour l’espèce Adélie. Ce sont des points qui s’éloignent du centre de la distribution de façon importante puisqu’ils sont au-delà de 1,5 fois l’IQR de part et d’autre du premier ou du troisième quartile. Il peut s’agir d’anomalies de mesures, d’anomalies de saisie des données, ou tout simplement, d’enregistrements tout à fait valides mais atypiques ou extrêmes. J’attire votre attention sur le fait que la définition de ces outliers est relativement arbitraire. Nous pourrions faire le choix d’étendre les moustaches jusqu’à 1,8 fois l’IQR (ou 2, ou 2,5). Nous observerions alors beaucoup moins d’outliers. D’une façons générale, la longueur des moustaches renseigne sur la variabilité des données en dehors de la zone centrale. Plus elles sont longues, plus la variabilité est importante. Et dans tous les cas, l’examen attentif des outliers est utile car il nous permet d’en apprendre plus sur le comportement extrême de certaines observations.</li>
 </ul>
-<p>Lorsque les boîtes ont une forme à peu près symétrique de part et d’autre de la médiane (c’est le cas pour notre exemple), cela signifie qu’un histogramme des mêmes données serait symétrique également (on peut le vérifier avec les histogrammes de la <a href="#sec-factorhisto"><span>Section&nbsp;3.9.1</span></a>).</p>
+<p>Lorsque les boîtes ont une forme à peu près symétrique de part et d’autre de la médiane (c’est le cas pour notre exemple), cela signifie qu’un histogramme des mêmes données serait symétrique également (on peut le vérifier avec les histogrammes de la <a href="#sec-factorhisto" class="quarto-xref"><span>Section 3.9.1</span></a>).</p>
 <section id="lintervalle-de-confiance-à-95-de-la-médiane" class="level4" data-number="3.9.3.1">
 <h4 data-number="3.9.3.1" class="anchored" data-anchor-id="lintervalle-de-confiance-à-95-de-la-médiane"><span class="header-section-number">3.9.3.1</span> L’intervalle de confiance à 95% de la médiane</h4>
 <p>On peut également ajouter une encoche autour de la valeur de médiane en ajoutant l’argument <code>notch = TRUE</code> à la fonction <code>geom_boxplot()</code> :</p>
@@ -1858,7 +2104,11 @@ Important
 (`stat_boxplot()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-73-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-73-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>L’encoche qui apparaît sur chaque boîte à moustache correspond à l’étendue de l’intervalle de confiance à 95% de la médiane. Pour chaque échantillon, nous espérons que la médiane calculée soit le reflet fidèle de la vraie valeur de médiane de la population générale. Mais il sera toujours impossible d’en avoir la certitude absolue. Le mieux que l’on puisse faire, c’est quantifier l’incertitude associée à l’estimation de la médiane à partir des données d’un échantillon. L’intervalle de confiance nous indique qu’il y a de bonnes chances que la vraie valeur de médiane de la population générale (qui restera à jamais inconnue) se trouve dans cet intervalle.</p>
@@ -1869,13 +2119,17 @@ Important
 <li>regrouper en partie les données brutes dans les classes d’un histogramme. On ne visualise plus l’ensemble des données individuelles, mais un résumé de ces données puisqu’on ne dispose plus que d’une unique valeur pour chaque classe de l’histogramme. L’histogramme peut donc résumer des centaines voire des milliers de points sous la forme d’un petit nombre de classes (entre 10 et 40 en général)</li>
 <li>regrouper très fortement les données brutes sous la forme d’une boîte à moustache. Les boîtes à moustaches permettent de résumer l’information de centaines ou milliers de points sous la forme d’un résumé statistique composé de 5 valeurs (minimum et maximum, médiane, premier et troisième quartiles), ou 7 si l’on ajoute les encoches des intervalles de confiance à 95% des médianes. On observe alors moins facilement les nuances subtiles de distribution qu’avec un histogramme ou les données brutes, mais l’avantage est qu’on peut comparer facilement les grandes tendances d’un grand nombre de séries de données (parfois plusieurs dizaines) en plaçant des boîtes à moustaches côte à côte.</li>
 </ul>
-<p>La <a href="#fig-comboxplot">Figure&nbsp;<span>3.14</span></a> illustre ces 3 possibilités de visualisation de la distribution d’une variable numérique (ici, la distribution des masses corporelles des manchots Adélie) :</p>
+<p>La <a href="#fig-comboxplot" class="quarto-xref">Figure&nbsp;<span>3.14</span></a> illustre ces 3 possibilités de visualisation de la distribution d’une variable numérique (ici, la distribution des masses corporelles des manchots Adélie) :</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-comboxplot" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-comboxplot-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.14: Trois façons de visualiser la distribution des masses des manchots Adélie</figcaption>
+<div id="fig-comboxplot" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-comboxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-comboxplot-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-comboxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.14: Trois façons de visualiser la distribution des masses des manchots Adélie
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1910,7 +2164,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-75-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-75-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>C’est ce qu’on appelle un “bubble plot”. Ici on constate que les individus qui ont les becs les plus courts, sont aussi ceux qui ont un bec épais (groupe de points en haut à gauche). Ces individus sont parmi les plus légers (symboles de petite taille). À l’inverse, les individus ayant les becs les plus longs ont aussi des becs peu épais (groupes de points situés en bas à droite). Ces individus sont parmi les plus lourds du jeu de données (symboles de grandes taille).</p>
@@ -1924,10 +2182,14 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-76-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-76-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>Cette fois, les individus les plus légers apparaissent en bleu très sombre, et les individus les plus lourds en bleu très clair. Ce choix de couleur nous est imposé, mais nous verrons plus loin comment le modifier pour rendre ce type de graphique plus facile à lire. Lorsque nous associons une variable numérique continue à la couleur des points, la légende qui est générée automatiquement pour nous par <code>R</code> sera toujours un gradient de couleurs. Si vous revenez en arrière au niveau des graphiques en mosaïques (<a href="#sec-mosa"><span>Section&nbsp;3.8.4</span></a>), ou au niveau des diagrammes bâtons juxtaposés (<a href="#sec-juxta"><span>Section&nbsp;3.8.2</span></a>), vous verrez que lorsque la couleur est associée à une variable catégorielle (ou facteur), la légende présente des couleurs distinctes, une pour chaque modalité du facteur considéré. Là encore, <code>R</code> choisit les couleurs pour nous. Mais là encore, nous verrons comment imposer des couleurs différentes si les choix par défaut ne nous conviennent pas.</p>
+</div>
+<p>Cette fois, les individus les plus légers apparaissent en bleu très sombre, et les individus les plus lourds en bleu très clair. Ce choix de couleur nous est imposé, mais nous verrons plus loin comment le modifier pour rendre ce type de graphique plus facile à lire. Lorsque nous associons une variable numérique continue à la couleur des points, la légende qui est générée automatiquement pour nous par <code>R</code> sera toujours un gradient de couleurs. Si vous revenez en arrière au niveau des graphiques en mosaïques (<a href="#sec-mosa" class="quarto-xref"><span>Section 3.8.4</span></a>), ou au niveau des diagrammes bâtons juxtaposés (<a href="#sec-juxta" class="quarto-xref"><span>Section 3.8.2</span></a>), vous verrez que lorsque la couleur est associée à une variable catégorielle (ou facteur), la légende présente des couleurs distinctes, une pour chaque modalité du facteur considéré. Là encore, <code>R</code> choisit les couleurs pour nous. Mais là encore, nous verrons comment imposer des couleurs différentes si les choix par défaut ne nous conviennent pas.</p>
 <p>Enfin, il est évidemment possible de jouer à la fois sur la couleur et sur la taille des symboles :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm,</span>
@@ -1938,7 +2200,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-77-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-77-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ici, l’information de masse est donc associée à 2 caractéristiques esthétiques distinctes : la couleur de remplissage des points et leur taille. Cela rend la lecture plus facile dans certaines situations.</p>
@@ -1960,7 +2226,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-78-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-78-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ici, 5 variables du jeu de données (3 numériques et 2 facteurs) sont associées à 5 caractéristiques esthétiques du graphique. Le graphique est donc très riche, on peut voir par exemple :</p>
@@ -1972,16 +2242,24 @@ Important
 <p>Au final, beaucoup d’informations sont présentées sur ce graphique et c’est presque trop. Même en améliorant l’aspect général du graphique pour le rendre plus lisible (voir ci-dessous), il vaut parfois mieux se limiter à 2 ou 3 variables et faire plusieurs graphiques, plutôt que de tout mettre sur le même. Une bonne solution consiste souvent à mettre 2 ou 3 variables sur un graphique, mais à faire plusieurs sous-graphiques pour chaque modalité d’une 4ème et/ou d’une 5ème variable catégorielle.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-79-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-79-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>En particulier, sur ce graphique, il est presque impossible de déterminer la masse des individus mâles. La légende indique en effet des tailles de cercles qui correspondent à des masses spécifiques. Mais nous n’avons aucune indication pour la taille des triangles. Il vaudrait donc mieux procéder ainsi :</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-multivar" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-multivar-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.15: Relation entre la morphologie du bec, la masse et le sexe chez trois espèces de manchots de l’archipel Palmer</figcaption>
+<div id="fig-multivar" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-multivar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-multivar-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multivar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.15: Relation entre la morphologie du bec, la masse et le sexe chez trois espèces de manchots de l’archipel Palmer
+</figcaption>
 </figure>
 </div>
 </div>
@@ -2000,7 +2278,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-81-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-81-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Nous avons vu plus haut que pour visualiser le relations qui existent entre deux variables numériques, il est possible d’ajouter une courbe ou une droite de tendance avec la fonction <code>geom_smooth()</code> :</p>
@@ -2020,7 +2302,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-82-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-82-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Si l’on s’en tient à ça, la relation semble claire : plus le bec des individus est épais, plus leurs nageoires sont courtes, et inversement. En outre, nous avons visiblement deux groupes d’individus qui présentent des caractéristiques distinctes : certains ont des becs fins et des nageoires très longues, quand d’autres ont des becs épais et des nageoires courtes. Et quasiment aucun individu ne présente de caractéristiques intermédiaires (becs d’épaisseur moyenne épais et nageoires moyennes).</p>
@@ -2042,7 +2328,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-83-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-83-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Le résultat obtenu ici est à l’opposé de nos conclusions précédentes : la relation entre les deux variables numérique est en fait positive ! Au sein de chaque espèce, les individus possédant les becs les plus épais sont aussi ceux qui possèdent les nageoires les plus longues !</p>
@@ -2066,7 +2356,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-84-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-84-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Même sans connaître en détail le principe et les limites de la régression linéaire, vous comprenez j’espère à quel point l’exploration rigoureuse d’un jeu de données est importante. Par exemple, nous avons vu que plus tôt que, pour chaque espèce, les mâles sont plus lourds que les femelles. Est-ce que des différences morphologiques entre les sexes pourraient expliquer la relation que nous observons ici entre épaisseur du bec et longueur des nageoires ? Est-il possible qu’un second effet Simpson se cache dans ces données ? Si on distingue les deux sexes au sein de chaque espèce, la relation existe-t-elle toujours ? Et si oui, est-elle toujours positive ou s’inverse-t-elle à nouveau ? Pour le savoir, on peut utiliser une autre fonction permettant de produire des sous-graphiques, la fonction <code>facte_grid()</code>, qui permet de faire un sous graphique pour chaque combinaison de modalités de 2 variables catégorielles :</p>
@@ -2082,7 +2376,11 @@ Important
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-85-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-85-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>La syntaxe <code>sex ~ species</code> indique que l’on souhaite un sous-graphique pour chaque combinaison des modalités des facteurs <code>sex</code> et <code>species</code>. Les graphiques correspondant aux différents sexes apparaîtront sur des lignes distinctes, et les espèces sur des colonnes distinctes. On constate ici que si la relation semble toujours positive et assez nette pour les mâles des 3 espèces, la situation est moins tranchée pour les femelles, en particulier pour les espèces Adélie et Chinstrap.</p>
@@ -2146,7 +2444,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-87-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-87-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Nous préciser les légendes en ajoutant la fonction <code>labs()</code> sur une nouvelle couche du graphique :</p>
@@ -2164,7 +2466,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-88-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-88-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Pour annoter correctement les légendes situées à droite, il convient d’avoir bien compris ce qui, dans notre code, a permis à <code>R</code> de générer automatiquement ces légendes. Le gradient de couleur a été créé parce que nous avons tapé <code>fill = body_mass_g</code>. Et l’échelle de taille des symboles a été créée parce que nous avons tapé <code>size = body_mass_g</code>. Dans la fonction <code>labs()</code>, nous devons donc préciser <code>fill = "..."</code> et <code>size = "..."</code> pour modifier le titre de ces 2 légendes :</p>
@@ -2184,10 +2490,14 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="fig-label" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-Visualization_files/figure-html/fig-label-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.16: Une figure correctement légendée</figcaption>
+<div id="fig-label" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-label-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-Visualization_files/figure-html/fig-label-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-label-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.16: Une figure correctement légendée
+</figcaption>
 </figure>
 </div>
 </div>
@@ -2200,7 +2510,7 @@ Important
 <p>Nous n’avons pas le temps ici d’aborder toutes ces questions en détail. Je vous encourage donc à consulter l’ouvrage en ligne intitulé <a href="http://r4ds.had.co.nz/">R for data science</a>, et en particulier <a href="http://r4ds.had.co.nz/graphics-for-communication.html#scales">son chapitre dédié aux échelles</a>, si vous avez besoin d’apporter des modifications à vos graphiques et que vous ne trouvez pas comment faire dans cet ouvrage.</p>
 <section id="la-gestion-des-couleurs" class="level4" data-number="3.11.2.1">
 <h4 data-number="3.11.2.1" class="anchored" data-anchor-id="la-gestion-des-couleurs"><span class="header-section-number">3.11.2.1</span> La gestion des couleurs</h4>
-<p>Nous allons néanmoins examiner quelques possibilités, à commencer par la façon de procéder pour modifier les couleurs choisies par défaut par <code>ggplot2</code>. Reprenons la figure <a href="#fig-label">Figure&nbsp;<span>3.16</span></a>, et changeons le gradient de couleur proposé par défaut par <code>R</code>. Il est possible de modifier ces couleurs de plusieurs façons :</p>
+<p>Nous allons néanmoins examiner quelques possibilités, à commencer par la façon de procéder pour modifier les couleurs choisies par défaut par <code>ggplot2</code>. Reprenons la figure <a href="#fig-label" class="quarto-xref">Figure&nbsp;<span>3.16</span></a>, et changeons le gradient de couleur proposé par défaut par <code>R</code>. Il est possible de modifier ces couleurs de plusieurs façons :</p>
 <ul>
 <li>soit en utilisant d’autres palettes de couleurs prédéfinies</li>
 <li>soit en choisissant manuellement les couleurs</li>
@@ -2228,7 +2538,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-90-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-90-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>La palette <code>viridis</code> est proposée pour les échelles continues (d’où le <code>_c</code> à la fin du nom de fonction), ou pour les échelles discrètes (<code>scale_fill_viridis_d</code>). Des fonctions équivalentes existent pour les couleurs de contour (<code>scale_color_viridis_c</code> et <code>scale_color_viridis_d</code>). Allez lire le fichier d’aide de cette fonction pour en apprendre plus sur son fonctionnement et ses nombreuses options.</p>
@@ -2250,7 +2564,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-91-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-91-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>D’autres palettes de couleurs sont également accessibles grâce à l’argument <code>option =</code> de ces fonctions :</p>
@@ -2271,13 +2589,21 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-92-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-92-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Voici toutes les possibilités :</p>
-<div class="cell" data-fig.asp="3">
+<div class="cell">
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-93-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-93-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Dernière chose concernant <code>viridis</code> : la fonction <code>scale_fill_viridis_b()</code> discrétise la variable continue pour en faire une échelle discontinue. Il est en effet parfois plus facile de repérer une couleur parmi une palette de 4 ou 5 couleurs distinctes, plutôt qu’au sein d’un gradient. Voilà à quoi cela ressemble :</p>
@@ -2298,7 +2624,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-94-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-94-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Outre les fonctions d’échelles proposant les palettes <code>viridis</code>, les fonctions se terminant par <code>_gradient()</code>, <code>_gradient2()</code> et <code>_gradientn()</code> permettent de spécifier manuellement les couleurs à intégrer dans un dégradé. Avec la fonction <code>scale_fill_gradient()</code> on indique simplement les couleurs du début de de la fin du gradient :</p>
@@ -2319,7 +2649,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>N’importe quelle nom de couleur valide, ou n’importe que code couleur hexadécimal fonctionne (voir par exemple <a href="">ce site</a> pour trouver les codes hexadécimaux dont vous avez besoin) :</p>
@@ -2340,7 +2674,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-96-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-96-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Avec la fonction <code>scale_fill_gradient2()</code>, nous avons plus de contrôle : on indique une couleur de départ, une couleur d’arrivée, mais aussi, une couleur intermédiaire, et la valeur numérique à laquelle cette couleur doit apparaître :</p>
@@ -2362,7 +2700,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-97-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-97-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Je vous laisse explorer l’aide de cette fonction ainsi que celle de <code>scale_fill_gradientn()</code> pour savoir comment en utiliser toutes les possibilités.</p>
@@ -2383,7 +2725,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-98-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-98-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>La version discrète de <code>viridis</code> peut maintenant être appliquée. Les mêmes options que pour la version continue sont disponibles :</p>
@@ -2404,7 +2750,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-99-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-99-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Les possibilités sont nombreuses, notamment grâce aux fonctions <code>scale_fill_brewer()</code> (pour les couleurs de remplissages associées à une variable catégorielle) et <code>scale_color_brewer()</code> (pour les couleurs de contour associées à une variable catégorielle). L’utilisation est simple, un précise simplement quelle palette on souhaite utiliser parmi la liste des palettes disponibles :</p>
@@ -2427,7 +2777,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-100-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-100-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Enfin, il est possible de spécifier manuellement la liste des couleurs que l’on souhaite utiliser avec la fonction <code>scale_fill_manual()</code>. il faut bien entendu indiquer autant de couleurs que de modalités pour notre variable catégorielle (ici 3 espèces dont 3 couleurs) :</p>
@@ -2448,10 +2802,14 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-101-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-101-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>Dernière chose concernant les couleurs : un choix de fonction <code>scale_XXX_XXX()</code> inapproprié est une cause d’erreur très fréquente ! Par exemple, pour la première figure de la partie consacrée au paradoxe de Simpson (<a href="#sec-simpson"><span>Section&nbsp;3.10.3</span></a>), la couleur des points et des lignes n’est pas spécifiée avec <code>fill</code> mais avec <code>color</code>. C’est donc bien une fonction qui commence par <code>scale_color_</code> qu’il faut utiliser :</p>
+</div>
+<p>Dernière chose concernant les couleurs : un choix de fonction <code>scale_XXX_XXX()</code> inapproprié est une cause d’erreur très fréquente ! Par exemple, pour la première figure de la partie consacrée au paradoxe de Simpson (<a href="#sec-simpson" class="quarto-xref"><span>Section 3.10.3</span></a>), la couleur des points et des lignes n’est pas spécifiée avec <code>fill</code> mais avec <code>color</code>. C’est donc bien une fonction qui commence par <code>scale_color_</code> qu’il faut utiliser :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb170"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a href="#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> bill_depth_mm, <span class="at">y =</span> flipper_length_mm,</span>
 <span id="cb170-2"><a href="#cb170-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> species)) <span class="sc">+</span></span>
@@ -2472,7 +2830,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-102-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-102-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Comme pour les fonctions <code>geom_XXX()</code>, les fonctions <code>scale_color_XXX()</code> et <code>scale_fill_XXX()</code> sont très nombreuses. Je vous encourage donc à explorer les fichiers d’aide et à faire des essais.</p>
@@ -2489,7 +2851,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-103-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-103-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>On commence par légender les axes avec <code>labs()</code> :</p>
@@ -2502,7 +2868,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-104-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-104-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Si on souhaite renommer l’espèce <code>Adelie</code> en <code>Adélie</code> (avec un accent sur le “e” donc), il faut modifier l’échelle de l’axe des <code>x</code>, qui porte une variable catégorielle :</p>
@@ -2516,7 +2886,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-105-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-105-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Pour l’axe des <code>y</code>, qui porte une variable continue, on peut avoir besoin de faire apparaître des graduations tous les 2 millimètres (au lieu de tous les 2,5 millimètres) :</p>
@@ -2531,7 +2905,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-106-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-106-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Il est également très fréquent de souhaiter étendre les axes au-delà des seules valeurs observées, pour faire apparaître le 0 par exemple. C’est tellement fréquent qu’une fonction de raccourci très facile à utiliser nous permet d’éviter le recours à une fonction <code>scale_XXX_XXX()</code>. Même si dans ce cas précis, ça n’est pas très pertinent, voilà un exemple :</p>
@@ -2546,7 +2924,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-107-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-107-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Enfin, il arrive que les valeurs prises par une variable numérique recouvrent plusieurs ordres de grandeurs (avec par exemple des valeurs de l’ordre des dizaines, des centaines et des milliers). Utiliser une échelle logarithmique permet, dans cette situation, de mieux visualiser la variabilité des données, notamment parmi les valeurs les plus faibles. Les fonctions <code>scale_x_log10()</code> et <code>scale_y_log10()</code> permettent d’effectuer ce changement d’échelle tout en conservant des valeurs normales sur les axes.</p>
@@ -2575,7 +2957,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-108-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-108-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Le thème utilisé par défaut est <code>theme_gray()</code>. Il est notamment responsable de l’arrière plan gris et du quadrillage blanc. Pour changer de thème, il suffit d’ajouter une couche au graphique en donnant le nom du nouveau thème :</p>
@@ -2597,7 +2983,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-109-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-109-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Le fond gris a disparu, et le quadrillage a changé de couleur. Les thèmes complets proposés par <code>ggplot2</code> que vous pouvez utiliser sont les suivants :</p>
@@ -2629,7 +3019,11 @@ Important
 (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-110-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-110-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Tous les thèmes possèdent la même liste d’argument. L’un d’entre eux est l’argument <code>base_family</code>, qui permet de spécifier une police de caractères différente de celle utilisée par défaut. Évidemment, vous ne pourrez utiliser que des polices qui sont disponibles sur l’ordinateur que vous utilisez. Un bon tutoriel expliquant comment indiquer à <code>R</code> les polices qui sont disponibles sur votre ordinateur est <a href="https://r-coder.com/custom-fonts-r/">disponible ici</a>. N’hésitez pas à revenir vers moi pour toute question à ce sujet.</p>
@@ -2666,7 +3060,7 @@ Important
 </div>
 <p><embed src="images/fonts2.pdf" class="img-fluid"></p>
 <p>Le choix d’un thème et d’une police adaptés doivent vous permettre de faire des graphiques originaux et clairs. Rappelez-vous toujours que vos choix en matière de graphiques doivent avoir pour objectif principal de rendre les tendances plus faciles à décrypter pour un lecteur non familier de vos données. C’est un outil de communication au même titre que n’importe quel paragraphe d’un rapport ou compte-rendu. Et comme pour un paragraphe, la première version d’un graphique est rarement la bonne.</p>
-<p>Vous devriez donc maintenant être bien armés pour produire 95% des graphiques dont vous aurez besoin tout au long de votre cursus universitaire. Toutefois, un point important a pour l’instant été omis : l’ajout de barres d’erreurs sur vos graphiques. Nous verrons comment faire cela au <a href="08-ErrorBars.html"><span>Chapitre&nbsp;8</span></a>, après avoir appris à manipuler efficacement des tableaux de données avec les packages <code>tidyr</code> et <code>dplyr</code> dans les <a href="04-TidyData.html">chapitres&nbsp;<span>4</span></a> et <a href="05-DataWrangling.html"><span>5</span></a> respectivement.</p>
+<p>Vous devriez donc maintenant être bien armés pour produire 95% des graphiques dont vous aurez besoin tout au long de votre cursus universitaire. Toutefois, un point important a pour l’instant été omis : l’ajout de barres d’erreurs sur vos graphiques. Nous verrons comment faire cela au <a href="08-ErrorBars.html" class="quarto-xref"><span>Chapitre 8</span></a>, après avoir appris à manipuler efficacement des tableaux de données avec les packages <code>tidyr</code> et <code>dplyr</code> dans les <a href="04-TidyData.html" class="quarto-xref">chapitres&nbsp;<span>4</span></a> et <a href="05-DataWrangling.html" class="quarto-xref"><span>5</span></a> respectivement.</p>
 <p>Quoi qu’il en soit, il est maintenant attendu de vous que vous utilisez <code>R</code> et ce que vous avez appris de <code>ggplot2</code> pour produire tous les graphiques que vous serez amenés à intégrer à vos comptes-rendus de TP et à vos rapports.</p>
 </section>
 </section>
@@ -2694,7 +3088,7 @@ Important
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="03-Visualization_files/figure-html/unnamed-chunk-116-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Prix de 3000 diamants en fonction de leur taille en carats et de leur clarté.</figcaption>
+<figcaption>Prix de 3000 diamants en fonction de leur taille en carats et de leur clarté.</figcaption>
 </figure>
 </div>
 </div>
@@ -2718,7 +3112,11 @@ Important
 <p>En vous appuyant sur les fonctions et les principes de la grammaire des graphiques que vous avez découverts dans ce chapitre, et en vous servant de ce nouveau jeu de données, tapez les commandes qui permettent de produire le graphique ci-dessous :</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-118-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-118-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Quelques indices :</p>
@@ -2730,9 +3128,13 @@ Important
 <ol start="8" type="1">
 <li>Toujours avec ce jeu de données <code>small-flights</code>, tapez les commandes permettant de produire le graphique ci-dessous :</li>
 </ol>
-<div class="cell" data-fig.asp="1">
+<div class="cell">
 <div class="cell-output-display">
-<p><img src="03-Visualization_files/figure-html/unnamed-chunk-119-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="03-Visualization_files/figure-html/unnamed-chunk-119-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Quelques indices :</p>
@@ -2741,10 +3143,9 @@ Important
 <li>Les variables utilisées sont <code>month</code>, <code>carrier</code> et <code>origin</code>.</li>
 <li>La variable <code>month</code> est codée sous forme numérique dans le tableau de données. Il faudra la transformer en facteur avec la fonction <code>factor(month)</code> au moment de l’associer à un axe du graphique.</li>
 </ul>
-<!-- Pour le S4 : penser aux barres d'erreur -->
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-R-ggmosaic" class="csl-entry" role="listitem">
 Jeppson, Haley, Heike Hofmann, et Di Cook. 2021. <em>ggmosaic: Mosaic Plots in the ggplot2 Framework</em>. <a href="https://github.com/haleyjeppson/ggmosaic">https://github.com/haleyjeppson/ggmosaic</a>.
 </div>
@@ -2799,6 +3200,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -2867,13 +3295,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -2952,10 +3382,34 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2965,8 +3419,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2978,7 +3441,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -3022,6 +3608,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -3047,6 +3634,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -3104,37 +3717,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-          // target, if specified
-          link.setAttribute("target", "_blank");
-          // default icon
-          link.classList.add("external");
-      }
-    }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./02-Dataset.html" class="pagination-link">
+      <a href="./02-Dataset.html" class="pagination-link" aria-label="Explorez votre premier jeu de données">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Explorez votre premier jeu de données</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./04-TidyData.html" class="pagination-link">
+      <a href="./04-TidyData.html" class="pagination-link" aria-label="(Ar)ranger des données avec `tidyr`">
         <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

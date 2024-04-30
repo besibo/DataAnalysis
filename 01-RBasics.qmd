@@ -195,7 +195,7 @@ ggplot(data = airquality, mapping = aes(x = Temp, y = Ozone)) +
 ```
 
 
-### Les projets, ou `Rprojects`
+### Les projets, ou `Rprojects` {#sec-rproj}
 
 
 Pour travailler le plus efficacement possible avec `RStudio`, vous devriez créer, à l'intérieur de votre dossier de travail, un nouveau fichier très particulier, qui s'appelle, dans le jargon de `RStudio`, un **`Rproject`**.
@@ -261,7 +261,7 @@ Pour vous présenter les concepts de base et la terminologie de la programmation
 
 Avant de démarrer, quelques précisions :
 
-- pour chaque tutoriel que je vous demande de suivre, j'indique ci-dessous une liste des concepts de programmation qui sont couverts. N'hésitez pas à vous y référer (et à y revenir) tout au long du semestre si vous avez oublié certaines choses
+- pour chaque tutoriel que je vous demande de suivre, j'indique ci-dessous une liste des concepts de programmation qui sont couverts. N'hésitez pas à vous y référer et à y revenir tout au long du master (et au-delà !) si vous avez oublié certaines choses
 - ce tutoriel DataCamp contient 6 chapitres. Seuls les chapitres 1, 2, 4, et 5 doivent être suivis. Nous ne travaillerons pas sur les matrices ni sur les listes
 - à la fin de chaque chapitre du tutoriel, revenez à ce livre en ligne pour cliquer sur le lien direct ver le chapitre suivant. Procéder ainsi vous évitera de suivre des chapitres inutiles du tutoriel, et cela vous permettra également d'éviter les demandes d'inscriptions payantes à DataCamp
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -83,7 +83,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Pas de résultats",
     "search-matching-documents-text": "documents trouvés",
@@ -92,6 +98,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "correspondance de plus dans ce document",
     "search-more-matches-text": "correspondances de plus dans ce document",
     "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Annuler",
     "search-submit-button-title": "Envoyer",
     "search-label": "Recherche"
@@ -102,21 +109,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-sidebar floating">
 
-
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./09-OneSampleTests.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Comparaison de la moyenne d'une population à une valeur théorique</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./09-OneSampleTests.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Comparaison de la moyenne d’une population à une valeur théorique</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -142,13 +175,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Analyse de Données</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://github.com/besibo/DataAnalysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./Analyse-de-Données.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/besibo/DataAnalysis" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+    <a href="./Analyse-de-Données.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
 </div>
     </div>
@@ -265,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -300,6 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
+
 
 
 
@@ -343,13 +377,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <p>Avant de se lancer dans les tests d’hypothèses, il est <strong>toujours indispensable</strong> d’examiner les données dont on dispose à l’aide, d’une part de statistiques descriptives numériques, et d’autres part, de graphiques exploratoires.</p>
-<p>Nous avons vu dans <a href="06-EDA.html">les chapitres&nbsp;<span>6</span></a> et <a href="07-Incertitude.html"><span>7</span></a> quels indices statistiques il peut être utile de calculer, et dans <a href="03-Visualization.html">les chapitres&nbsp;<span>3</span></a> et <a href="08-ErrorBars.html"><span>8</span></a> quelles représentations graphiques il peut être utile de réaliser, afin de pouvoir se lancer dans des tests d’hypothèses sans risquer de grossières erreurs. N’hésitez pas à cliquer sur ces liens pour vous rafraîchir la mémoire !</p>
+<p>Nous avons vu dans <a href="06-EDA.html" class="quarto-xref">les chapitres&nbsp;<span>6</span></a> et <a href="07-Incertitude.html" class="quarto-xref"><span>7</span></a> quels indices statistiques il peut être utile de calculer, et dans <a href="03-Visualization.html" class="quarto-xref">les chapitres&nbsp;<span>3</span></a> et <a href="08-ErrorBars.html" class="quarto-xref"><span>8</span></a> quelles représentations graphiques il peut être utile de réaliser, afin de pouvoir se lancer dans des tests d’hypothèses sans risquer de grossières erreurs. N’hésitez pas à cliquer sur ces liens pour vous rafraîchir la mémoire !</p>
 </div>
 </div>
 </section>
 <section id="importation-et-mise-en-forme-des-données" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="importation-et-mise-en-forme-des-données"><span class="header-section-number">9.3</span> Importation et mise en forme des données</h2>
-<p>Nous allons travailler ici sur les données contenues dans le fichier <a href="data/Temperature.csv"><code>Temperature.csv</code></a>. Téléchargez ces données dans votre répertoire de travail (attention : ne les ouvrez pas avec Excel, les données pourraient s’en trouver modifiées !), puis importez les données dans <code>RStudio</code> grâce à l’assistant d’importation. Si vous ne savez plus comment faire, consultez la <a href="04-TidyData.html#sec-plaintext"><span>Section&nbsp;4.4.3</span></a>.</p>
+<p>Nous allons travailler ici sur les données contenues dans le fichier <a href="data/Temperature.csv"><code>Temperature.csv</code></a>. Téléchargez ces données dans votre répertoire de travail (attention : ne les ouvrez pas avec Excel, les données pourraient s’en trouver modifiées !), puis importez les données dans <code>RStudio</code> grâce à l’assistant d’importation. Si vous ne savez plus comment faire, consultez la <a href="04-TidyData.html#sec-plaintext" class="quarto-xref"><span>Section 4.4.3</span></a>.</p>
 <p>Vous stockerez les données dans un objet que vous nommerez <code>Temperature</code>. Après l’importation, tapez son nom dans la console de <code>RStudio</code> et vérifiez que vous obtenez bien exactement ce résultat :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Temperature</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -377,7 +411,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Cette commande ouvre un nouvel onglet présentant les données dans un tableur simplifié, en lecture seule. On constate ici 2 choses que nous allons modifier :</p>
 <ol type="1">
 <li>la première colonne, intitulée <code>individual</code>, n’est pas véritablement une variable. Cette colonne ne contient qu’un identifiant sans intérêt pour notre étude et est en fait identique au numéro de ligne. Nous allons donc supprimer cette colonne.</li>
-<li>les températures sont exprimées en degrés Fahrenheit, ce qui rend leur lecture difficile pour nous qui sommes habitués à utiliser le système métrique et les degrés Celsius. Grâce à la fonction <code>mutate()</code> décrite à la <a href="05-DataWrangling.html#sec-mutate"><span>Section&nbsp;5.6</span></a>, nous allons donc convertir les températures en degrés Celsius grâce à la formule que nous avons déjà vue dans les chapitres précédents :</li>
+<li>les températures sont exprimées en degrés Fahrenheit, ce qui rend leur lecture difficile pour nous qui sommes habitués à utiliser le système métrique et les degrés Celsius. Grâce à la fonction <code>mutate()</code> décrite à la <a href="05-DataWrangling.html#sec-mutate" class="quarto-xref"><span>Section 5.6</span></a>, nous allons donc convertir les températures en degrés Celsius grâce à la formule que nous avons déjà vue dans les chapitres précédents :</li>
 </ol>
 <p><span class="math display">\[ºC = \frac{ºF - 32}{1.8}\]</span></p>
 <div class="cell">
@@ -424,8 +458,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Quelle est la tendance centrale (moyenne ou médiane) ?</li>
 <li>Quelle est la dispersion des valeurs autour de la tendance centrale (écart-type, variance, intervalle interquartile…) ?</li>
 </ul>
-<p>Pour répondre à ces questions, on peut faire appel à de multiples fonctions déjà présentées dans le <a href="06-EDA.html"><span>Chapitre&nbsp;6</span></a>. Par exemple les fonctions <code>summarise()</code> et <code>reframe()</code>, en conjonction avec les fonctions <code>mean()</code>, <code>median()</code>, <code>sd()</code>, <code>var()</code>, <code>min()</code>, <code>max()</code> ou <code>quantile()</code>, ou les fonctions <code>summary()</code> ou <code>skim()</code> (du package <code>skimr</code>).</p>
-<p>Je prends ici un exemple simple, mais n’hésitez pas à expérimenter avec les méthodes décrites dans le <a href="06-EDA.html"><span>Chapitre&nbsp;6</span></a>.</p>
+<p>Pour répondre à ces questions, on peut faire appel à de multiples fonctions déjà présentées dans le <a href="06-EDA.html" class="quarto-xref"><span>Chapitre 6</span></a>. Par exemple les fonctions <code>summarise()</code> et <code>reframe()</code>, en conjonction avec les fonctions <code>mean()</code>, <code>median()</code>, <code>sd()</code>, <code>var()</code>, <code>min()</code>, <code>max()</code> ou <code>quantile()</code>, ou les fonctions <code>summary()</code> ou <code>skim()</code> (du package <code>skimr</code>).</p>
+<p>Je prends ici un exemple simple, mais n’hésitez pas à expérimenter avec les méthodes décrites dans le <a href="06-EDA.html" class="quarto-xref"><span>Chapitre 6</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Temp_clean)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -514,7 +548,7 @@ Group variables            None
 </section>
 <section id="sec-ic95" class="level3" data-number="9.4.2">
 <h3 data-number="9.4.2" class="anchored" data-anchor-id="sec-ic95"><span class="header-section-number">9.4.2</span> Incertitude</h3>
-<p>Outre les informations de position et de dispersion, nous avons vu <a href="https://besibo.github.io/BiometrieS4/02-incertitude.html#la-notion-dincertitude">au semestre 4</a> qu’il était également important d’avoir une idée de l’<strong>incertitude</strong> associée aux estimations de tendance centrale (erreur standard ou intervalle de confiance de la moyenne ou médiane). Ici, nous allons donc calculer l’intervalle de confiance à 95% de la moyenne. Si vous ne savez plus comment faire, ou que vous ne comprenez pas le code ci-dessous, consultez <a href="https://besibo.github.io/BiometrieS4/02-incertitude.html#sec-confint">le livre en ligne du semestre 4</a> :</p>
+<p>Outre les informations de position et de dispersion, nous avons vu dans la <a href="07-Incertitude.html#sec-incertitude" class="quarto-xref"><span>Section 7.3</span></a> qu’il était également important d’avoir une idée de l’<strong>incertitude</strong> associée aux estimations de tendance centrale (erreur standard ou intervalle de confiance de la moyenne ou médiane). Ici, nous allons donc calculer l’intervalle de confiance à 95% de la moyenne. Si vous ne savez plus comment faire, ou que vous ne comprenez pas le code ci-dessous, consultez la <a href="07-Incertitude.html#sec-confint" class="quarto-xref"><span>Section 7.5</span></a> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">|&gt;</span> </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_cl_normal</span>(temperature))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -545,11 +579,15 @@ Group variables            None
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Distribution des températures corporelles"</span>,</span>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"n = 25 adultes en bonne santé"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="09-OneSampleTests_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="09-OneSampleTests_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>Si vous ne vous rappelez-plus ce qu’est un histogramme ou comment le faire, ou la signification de l’argument <code>bins</code>, relisez <a href="https://besibo.github.io/DA/viz.html#histogram">la section consacrée aux histogrammes</a> du livre en ligne de Biométrie du semestre 3. Notez que j’ai ajouté une couleur de remplissage et de la transparence pour rendre le graphique plus facile à lire. J’ai également spécifié des titres pour les axes (en précisant l’unité de la variable numérique dont on représente la distribution) ainsi que le titre (et sous-titre) du graphique, qui précise ce qu’on a sous les yeux et la taille de l’échantillon. Il n’est pas toujours nécessaire de spécifier le titre (et le sous-titre) de cette façon : lorsque vous intégrez des graphiques dans un compte-rendu ou un rapport, le titre est en général précisé sous la figure, au début d’une légende qui la décrit. Enfin, j’ai ajouté <code>geom_rug()</code> pour faire apparaître sous le graphique, le long de l’axe des <code>x</code>, la position des données observées. Cela permet de visualiser les données brutes, et peut donc permettre de mieux comprendre pourquoi un histogramme présente telle ou telle forme.</p>
-<p>Ici, la forme de ce l’histogramme est assez proche de celle présentée plus tôt par l’histogramme très simplifié produit par la fonction <code>skim()</code>. Cet histogramme nous apprend qu’en dehors d’un “trou” autour de la température 36.75ºC, la distribution des données est proche d’une courbe en cloche. Il y a fort à parier qu’un test de normalité conclurait à la normalité des données de cet échantillon. C’est ce que nous verrons dans la <a href="#sec-norm"><span>Section&nbsp;9.6.1</span></a>.</p>
+</div>
+<p>Si vous ne vous rappelez-plus ce qu’est un histogramme ou comment le faire, ou la signification de l’argument <code>bins</code>, relisez la <a href="03-Visualization.html#sec-histo" class="quarto-xref"><span>Section 3.5.1</span></a> consacrée aux histogrammes. Notez que j’ai ajouté une couleur de remplissage et de la transparence pour rendre le graphique plus facile à lire. J’ai également spécifié des titres pour les axes (en précisant l’unité de la variable numérique dont on représente la distribution) ainsi que le titre (et sous-titre) du graphique, qui précise ce qu’on a sous les yeux et la taille de l’échantillon. Il n’est pas toujours nécessaire de spécifier le titre (et le sous-titre) de cette façon : lorsque vous intégrez des graphiques dans un compte-rendu ou un rapport, le titre est en général précisé sous la figure, au début d’une légende qui la décrit. Enfin, j’ai ajouté <code>geom_rug()</code> pour faire apparaître sous le graphique, le long de l’axe des <code>x</code>, la position des données observées. Cela permet de visualiser les données brutes, et peut donc permettre de mieux comprendre pourquoi un histogramme présente telle ou telle forme.</p>
+<p>Ici, la forme de ce l’histogramme est assez proche de celle présentée plus tôt par l’histogramme très simplifié produit par la fonction <code>skim()</code>. Cet histogramme nous apprend qu’en dehors d’un “trou” autour de la température 36.75ºC, la distribution des données est proche d’une courbe en cloche. Il y a fort à parier qu’un test de normalité conclurait à la normalité des données de cet échantillon. C’est ce que nous verrons dans la <a href="#sec-norm" class="quarto-xref"><span>Section 9.6.1</span></a>.</p>
 </section>
 <section id="diagramme-de-densité" class="level3" data-number="9.5.2">
 <h3 data-number="9.5.2" class="anchored" data-anchor-id="diagramme-de-densité"><span class="header-section-number">9.5.2</span> Diagramme de densité</h3>
@@ -564,7 +602,11 @@ Group variables            None
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Distribution des températures corporelles"</span>,</span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"n = 25 adultes en bonne santé"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="09-OneSampleTests_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="09-OneSampleTests_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Les informations apportées par ce graphique sont cohérentes avec celle de l’histogramme :</p>
@@ -722,20 +764,32 @@ Définition : la <span class="math inline">\(p-\)</span>value
 <p>Dans notre cas, l’écart entre la loi Normale et les données de notre échantillon peut être visualisé de la façon suivante :</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="09-OneSampleTests_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="09-OneSampleTests_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>La courbe de densité des données observées est en rouge, et la distribution Normale théorique correspond à la courbe en bleu. Il y a donc un écart entre la courbe en cloche parfaite de la loi Normale et les données observées. La <span class="math inline">\(p-\)</span>value du test de Shapiro-Wilk nous dit que si la température des adultes en bonne santé suit réellement la loi Normale dans la population générale, alors, l’écart que nous avons observé, ou un écart encore plus important, peut être observé simplement par hasard dans 70.1% des cas. Autrement dit, c’est très probable, et on peut donc considérer que l’écart à la loi Normale que nous avons observé est le fruit du hasard et que notre variable suit donc bien la Loi Normale.</p>
 <p>Pour bien comprendre cette notion importante, je simule ci-dessous 36 échantillons de 25 adultes dont les températures suivent parfaitement la loi Normale dans la population générale. Je me place donc dans la situation ou je sais que <span class="math inline">\(H_0\)</span> est vraie, pour illustrer la notion de <em>fluctuation d’échantillonnage</em>. En raison du seul hasard de l’échantillonnage, et alors même que les échantillons que je génère sont issus d’une population qui suit parfaitement la Normale, la distribution dans chaque échantillon s’écarte parfois fortement de la courbe en cloche théorique :</p>
-<div class="cell" data-fig.asp="1">
+<div class="cell">
 <div class="cell-output-display">
-<p><img src="09-OneSampleTests_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="09-OneSampleTests_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>On voit bien ici que certains échantillons s’écartent fortement de la distribution théorique alors même que tous les échantillons sont issus d’une population Normale. Et plus l’échantillon sera de taille réduite, plus les écarts à la courbe en cloche parfaite seront grands. La preuve ci-dessous avec des échantillons de n = 15 adultes au lieu de 25 :</p>
-<div class="cell" data-fig.asp="1">
+<div class="cell">
 <div class="cell-output-display">
-<p><img src="09-OneSampleTests_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="09-OneSampleTests_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Au final, la <span class="math inline">\(p-\)</span>value de 0.701 de notre test de Shapiro-Wilk nous indique que l’hypothèse de la Normalité n’est pas incompatible avec les données que nous avons observées.</p>
@@ -796,7 +850,7 @@ Sur la première ligne, <code>R</code> nous confirme que nous avons bien réalis
 </blockquote>
 <p>C’est de cette manière que vous devriez rapporter les résultats de ce test dans un compte-rendu ou un rapport à partir de maintenant.</p>
 <p>Dans les résultats du test, la ligne suivante (<code>alternative hypothesis: ...</code>) <strong>ne donne pas la conclusion du test</strong>. Il s’agit simplement d’un rappel concernant l’hypothèse alternative qui a été utilisée pour réaliser le test. Ici, l’hypothèse alternative utilisée est une hypothèse bilatérale (<span class="math inline">\(\mu \neq 37\)</span>). Nous verrons plus tard comment spécifier des hypothèses alternatives uni-latérales, même si la plupart du temps, mieux vaut s’abstenir de réaliser de tels tests (à moins bien sûr d’avoir une bonne raison de le faire).</p>
-<p>Les résultats fournis ensuite concernent, non plus le test statistique à proprement parler, mais l’estimation. Ici, la moyenne de l’échantillon est fournie. Il s’agit de la meilleure estimation possible de la moyenne de la population : <span class="math inline">\(\bar{x} = \hat{\mu} = 36.96\)</span>. Comme pour toutes les estimations, cette valeur est entachée d’incertitude liée à la fluctuation d’échantillonnage. L’intervalle de confiance à 95% de cette estimation de moyenne est donc également fourni : <span class="math inline">\([36.80 ; 37.11]\)</span>. Vous notez qu’il s’agit des mêmes valeurs que celles que nous avions calculées dans la <a href="#sec-ic95"><span>Section&nbsp;9.4.2</span></a>. Autrement dit, cet intervalle contient les valeurs les plus vraisemblables pour la véritable valeur de moyenne dans la population générale. Cela confirme bien que nous n’avons pas prouvé au sens strict que la moyenne de la population vaut 37ºC. Nous avons en réalité montré que nous ne pouvions pas exclure que la moyenne de la population générale soit de 37ºC. Puisque cette valeur est comprise dans l’intervalle de confiance, on ne peut donc pas l’exclure : nos données sont compatibles avec cette hypothèse. Mais beaucoup d’autres valeurs figurent aussi dans cet intervalle. Il est donc tout à fait possible que la moyenne soit en réalité différente de 37ºC (par exemple, 36.9ºC). Pour en être sûr, il faudrait probablement un échantillon de plus grande taille afin de limiter l’incertitude, d’augmenter la puissance statistique de notre test, et ainsi d’être en mesure de détecter des différences subtiles.</p>
+<p>Les résultats fournis ensuite concernent, non plus le test statistique à proprement parler, mais l’estimation. Ici, la moyenne de l’échantillon est fournie. Il s’agit de la meilleure estimation possible de la moyenne de la population : <span class="math inline">\(\bar{x} = \hat{\mu} = 36.96\)</span>. Comme pour toutes les estimations, cette valeur est entachée d’incertitude liée à la fluctuation d’échantillonnage. L’intervalle de confiance à 95% de cette estimation de moyenne est donc également fourni : <span class="math inline">\([36.80 ; 37.11]\)</span>. Vous notez qu’il s’agit des mêmes valeurs que celles que nous avions calculées dans la <a href="#sec-ic95" class="quarto-xref"><span>Section 9.4.2</span></a>. Autrement dit, cet intervalle contient les valeurs les plus vraisemblables pour la véritable valeur de moyenne dans la population générale. Cela confirme bien que nous n’avons pas prouvé au sens strict que la moyenne de la population vaut 37ºC. Nous avons en réalité montré que nous ne pouvions pas exclure que la moyenne de la population générale soit de 37ºC. Puisque cette valeur est comprise dans l’intervalle de confiance, on ne peut donc pas l’exclure : nos données sont compatibles avec cette hypothèse. Mais beaucoup d’autres valeurs figurent aussi dans cet intervalle. Il est donc tout à fait possible que la moyenne soit en réalité différente de 37ºC (par exemple, 36.9ºC). Pour en être sûr, il faudrait probablement un échantillon de plus grande taille afin de limiter l’incertitude, d’augmenter la puissance statistique de notre test, et ainsi d’être en mesure de détecter des différences subtiles.</p>
 </section>
 </section>
 <section id="lalternative-non-paramétrique" class="level2" data-number="9.7">
@@ -925,7 +979,7 @@ Important
 </section>
 <section id="exercice-dapplication" class="level2" data-number="9.10">
 <h2 data-number="9.10" class="anchored" data-anchor-id="exercice-dapplication"><span class="header-section-number">9.10</span> Exercice d’application</h2>
-<p><a href="data/Temperature2.csv">Le fichier <code>Temperature2.csv</code></a> contient les données brutes d’une seconde étude similaire, réalisée à plus grande échelle. Importez ces données et analysez-les afin de vérifier si la température corporelle moyenne des adultes en bonne santé vaut bien 37ºC. Comme toujours, avant de vous lancer dans la réalisation des tests statistiques, prenez le temps d’examiner vos données comme nous l’avons décrit dans la <a href="#sec-eda"><span>Section&nbsp;9.4</span></a> et la <a href="#sec-edagraph"><span>Section&nbsp;9.5</span></a>, afin de savoir où vous allez, et de repérer les éventuelles données manquantes ou aberrantes. Enfin, interprétez les résultats à la lumière des notions que nous avons abordées ici (en particulier la notion de puissance statistique).</p>
+<p><a href="data/Temperature2.csv">Le fichier <code>Temperature2.csv</code></a> contient les données brutes d’une seconde étude similaire, réalisée à plus grande échelle. Importez ces données et analysez-les afin de vérifier si la température corporelle moyenne des adultes en bonne santé vaut bien 37ºC. Comme toujours, avant de vous lancer dans la réalisation des tests statistiques, prenez le temps d’examiner vos données comme nous l’avons décrit dans la <a href="#sec-eda" class="quarto-xref"><span>Section 9.4</span></a> et la <a href="#sec-edagraph" class="quarto-xref"><span>Section 9.5</span></a>, afin de savoir où vous allez, et de repérer les éventuelles données manquantes ou aberrantes. Enfin, interprétez les résultats à la lumière des notions que nous avons abordées ici (en particulier la notion de puissance statistique).</p>
 
 
 </section>
@@ -972,6 +1026,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -1040,13 +1121,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1125,10 +1208,34 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1138,8 +1245,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1151,7 +1267,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1195,6 +1434,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1220,6 +1460,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1277,37 +1543,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-          // target, if specified
-          link.setAttribute("target", "_blank");
-          // default icon
-          link.classList.add("external");
-      }
-    }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./08-ErrorBars.html" class="pagination-link">
+      <a href="./08-ErrorBars.html" class="pagination-link" aria-label="Visualiser l'incertitude et la dispersion">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Visualiser l’incertitude et la dispersion</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./10-TwoSamplePairedTests.html" class="pagination-link">
+      <a href="./10-TwoSamplePairedTests.html" class="pagination-link" aria-label="Comparaison de moyennes : deux échantillons appariés">
         <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

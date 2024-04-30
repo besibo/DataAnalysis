@@ -2,7 +2,7 @@
 
 ## Pré-requis {#sec-packages2}
 
-Pour ce nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez [le livre en ligne du semestre 3](https://besibo.github.io/BiometrieS3/01-R-basics.html#sec-code) si vous ne savez plus comment faire.
+Pour ce nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vous pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire.
 
 Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser les mêmes packages que précédemment :
 
@@ -73,7 +73,12 @@ Testo <- read_csv("data/Testosterone.csv")
 Testo
 ```
 
-Visiblement, il n'y a pas de données manquantes mais certaines variables sont inutiles. En effet, nous aurons besoin des variables transformées en logarithmes, mais pas des 2 colonnes `beforeImplant` et `afterImplant`. Nous allons donc les retirer avec la fonction `select()`. Par ailleurs, la variable `blackbird` est importante puisque chaque individu a fourni 2 valeurs de production d'anticorps : 1 avant et 1 après l'opération chirurgicale. Il sera donc important de conserver cet identifiant individuel. Toutefois, il apparaît ici sous la forme d'une variable numérique alors qu'il s'agit d'un identifiant, d'un code. Il faut donc le transformer en facteur car cela n'aurait pas de sens calculer une moyenne des identifiants par exemple. Pour cela, nous utiliserons la fonction `factor()` à l'intérieur de `mutate()`. Enfin, nous renommerons les colonnes avec `rename()` pour avoir des noms plus courts et plus faciles à utiliser. Si vous ne vous rappelez plus comment utilisez ces fonctions, consulter ces chapitres du livre en ligne de biométrie du semestre 3 : [`select()` et `rename()`](https://besibo.github.io/BiometrieS3/04-DataWrangling.html#sélectionner-des-variables-avec-select), [`mutate()` et `factor()`](https://besibo.github.io/BiometrieS3/04-DataWrangling.html#mutate). Enfin, nous donnerons le nom `Testo_large`  au tableau modifié :
+Visiblement, il n'y a pas de données manquantes mais certaines variables sont inutiles. En effet, nous aurons besoin des variables transformées en logarithmes, mais pas des 2 colonnes `beforeImplant` et `afterImplant`. Nous allons donc les retirer avec la fonction `select()`. Par ailleurs, la variable `blackbird` est importante puisque chaque individu a fourni 2 valeurs de production d'anticorps : 1 avant et 1 après l'opération chirurgicale. Il sera donc important de conserver cet identifiant individuel. Toutefois, il apparaît ici sous la forme d'une variable numérique alors qu'il s'agit d'un identifiant, d'un code. Il faut donc le transformer en facteur car cela n'aurait pas de sens calculer une moyenne des identifiants par exemple. Pour cela, nous utiliserons la fonction `factor()` à l'intérieur de `mutate()`. Enfin, nous renommerons les colonnes avec `rename()` pour avoir des noms plus courts et plus faciles à utiliser. Si vous ne vous rappelez plus comment utiliser ces fonctions, consultez ces sections du @sec-wrangling : 
+
+- Pour `select()` et `rename()`, la @sec-select
+- Pour `mutate()` et `factor()`, la @sec-mutate
+
+Enfin, nous donnerons le nom `Testo_large`  au tableau modifié :
 
 ```{r}
 Testo_large <- Testo %>% 
@@ -113,7 +118,7 @@ Testo_long
 Ce nouvel objet contient les mêmes données que précédemment, mais sous un format différent (il contient maintenant 26 lignes et non plus 13) : il s'agit d'un tableau rangé.
 
 La plupart du temps, on a besoin de ces 2 formats de tableaux quand nous traitons des données. Le tableau au format long est à privilégier pour les représentations graphiques et les tests statistiques, et le format court sert souvent à présenter des résultats sous une forme synthétique. Mais parfois (et c'est justement le cas quand on dispose de données appariées comme pour notre exemple de lien entre testostérone et immunocompétence), le tableau au format large permettra de faire certains graphiques, certains tests ou certaines manipulations plus facilement que le tableau rangé au format long.  
-Si on ne dispose que d'un tableau au format large, on peut passer au format long, comme nous venons de le faire, grâce à la fonction `pivot_longer()`. Et si on ne dispose que d'un tableau au format long, on peut passer au format large grâce à la fonction `pivot_wider()`. Nous avons déjà d'ailleurs évoqué cette fonction dans le livre en ligne de biométrie du semestre 4 pour mettre en forme des résultats obtenus avec `summarise()` ([par exemple ici](https://besibo.github.io/BiometrieS4/01-dispersion.html#grouper-par-plus-dune-variable)) ou `reframe()` ([ou là](https://besibo.github.io/BiometrieS4/01-dispersion.html#créer-des-résumés-avec-la-fonction-reframe)), et je vous encourage à y jeter un œil à nouveau pour vous remémorer la syntaxe. Car il est important que vous maîtrisiez ces 2 fonctions dont vous aurez très souvent besoin.
+Si on ne dispose que d'un tableau au format large, on peut passer au format long, comme nous venons de le faire, grâce à la fonction `pivot_longer()`. Et si on ne dispose que d'un tableau au format long, on peut passer au format large grâce à la fonction `pivot_wider()`. Nous avons déjà décrit cette fonction en détail à la @sec-spread, et nous avons aussi vu plusieurs exemples de son utilisation notamment pour mettre en forme des résultats obtenus avec les fonctions `summarise()` (@sec-summarise) ou `reframe()` (@sec-reframe). Je vous encourage à y jeter un œil à nouveau pour vous remémorer la syntaxe, car il est important que vous maîtrisiez ces 2 fonctions dont vous aurez très souvent besoin.
 
 Maintenant que nous disposons de ces 2 tableaux, `Testo_large` et `Testo_long`, nous pouvons commencer à décrire nos données.
 
@@ -150,7 +155,7 @@ Par rapport aux résultats fournis par la fonction `summary()`, la fonction `ski
 
 ## Exploration graphique des données
 
-Ici, c'est le tableau rangé au format long qui sera le plus adapté. Lorsque nous avions une unique série de données, nous avons utilisé 2 types de représentations graphiques très similaires pour visualiser les données (les histogrammes et les graphiques de densités). Ici, nous allons utiliser ces mêmes types de graphiques mais "facettés". Les graphiques facettés ont été abordés dans [le livre en ligne de biométrie du semestre 3](https://besibo.github.io/BiometrieS3/03-visualization.html#diagrammes-bâtons-facettés). Ils permettent de  faire des sous-graphiques pour chaque catégorie d'un facteur. Ici, le facteur `Moment` contient 2 catégories. Les facets nous permettrons donc de comparer les 2 distributions de densités optiques.  
+Ici, c'est le tableau rangé au format long qui sera le plus adapté. Lorsque nous avions une unique série de données, nous avons utilisé 2 types de représentations graphiques très similaires pour visualiser les données (les histogrammes et les graphiques de densités). Ici, nous allons utiliser ces mêmes types de graphiques mais "facettés". Les graphiques facettés ont été abordés dans la @sec-facet et nous en avons vu une autre utilisation dans la @sec-factorhisto. D'une façon générale, quand on dispose d'un facteur et d'une autre variable (quelle que soit sa nature), les facets sont très toujours très utiles puisqu'ils permettent de  faire des sous-graphiques pour chaque catégorie d'un facteur. Ici, le facteur `Moment` contient 2 catégories. Les facets nous permettrons donc de comparer les 2 distributions de densités optiques.  
 
 Outre ces graphiques, nous utiliserons aussi les stripcharts et les boites à moustaches pour comparer les 2 catégories. Ces 2 types de graphiques sont particulièrement adaptés pour ce genre de tâche, et seront aussi très utiles pour l'ANOVA lorsque nous aurons plus de 2 catégories à comparer. 
 
@@ -159,7 +164,7 @@ D'une façon générale, nous disposons :
 - d'une variable numérique, `DO` : la mesure de densité optique qui rend compte de l'immunocompétence des carouges à épaulettes
 - d'une variable catégorielle, le facteur `Moment` : indique si les valeurs d'immunocompétences ont été mesurées avant ou après l'opération chirurgicale d'implantation de la capsule de testostérone.
 
-Tous les graphiques présentés dans [le chapitre consacré à cette situation précise](https://besibo.github.io/BiometrieS3/03-visualization.html#une-variable-de-chaque-type) dans le livre en ligne de biométrie du semestre  3, peuvent être réalisés. N'hésitez pas à le relire, en particulier la section expliquant comment faire apparaître et interpréter les encoches d'incertitudes sur des boiites à moustaches.
+Tous les graphiques présentés dans la @sec-oneeach (précisément consacrée à la situation où l'on dispose d'une variable numérique et d'une variable catégorielle), peuvent être réalisés. N'hésitez pas à le relire, en particulier la section expliquant comment faire apparaître et interpréter les encoches d'incertitudes sur des boîtes à moustaches.
 
 ### Avec un stripchart
 

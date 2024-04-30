@@ -24,7 +24,7 @@ Comme expliqué à la @sec-vardisp, les **indices de dispersion** nous renseigne
 
 Nous avons vu au @sec-EDA comment calculer des indices de position et de dispersion. Tout ceci devrait donc être clair pour vous à ce stade.
 
-## La notion d'incertitude
+## La notion d'incertitude {#sec-incertitude}
 
 Par ailleurs, puisqu'on ne sait jamais avec certitude si nos estimations (de moyennes ou d'écarts-types ou de tout autre paramètre) reflètent fidèlement ou non les vraies valeurs de la population, nous devons quantifier à quel point nos estimations s'écartent de celles de la population générale. C'est tout l'intérêt des statistiques et c'est ce que permettent les **indices d'incertitude** : on ne connaîtra jamais la vraie valeur de moyenne ou d'écart-type de la population, mais on peut quantifier à quel point nos estimations (basées sur un échantillon) sont précises ou imprécises.  
 Les deux indices d'incertitude les plus connus (et les plus utilisés) sont :

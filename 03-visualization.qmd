@@ -854,7 +854,7 @@ penguins %>%
 ```
 
 
-## Deux variables numériques
+## Deux variables numériques {#sec-deuxnum}
 
 La représentation graphique la plus adaptée à la visualisation des relations entre deux variables numériques est aussi l'une des plus simples : il s'agit des nuages de points que nous avons déjà évoqués. Ici dépendant, puisque nous disposons de 2 variables numériques, nous allons en associer une à l'axe des `x` et l'autre à l'axe des `y`. Si l'on pressent que l'une des deux variables pourrait "expliquer" la seconde, ou être en partie responsable de ses variations, on l'appelle **variable explicative** et on la placera alors sur l'axe des `x`. L'autre variable, celle que l'on suppose influencée par la première est appelée **variable expliquée**, et sera associée à l'axe des `y`.
 
@@ -1021,7 +1021,7 @@ Ici, l'argument `position` prend une valeur plus complexe puisque nous faisons a
 
 Le choix d'une méthode ou de l'autre dépend de ce que l'on souhaite montrer : il n'y a pas une façon de faire meilleure ou moins bonne que l'autre. Tout dépend de l'objectif poursuivi par l'auteur du graphique.
 
-### Diagrammes bâtons "facettés"
+### Diagrammes bâtons "facettés" {#sec-facet}
 
 Dans le jargon de `ggplot2`, les `facet`s sont simplement des sous-graphiques. Typiquement, une variable catégorielle peut être utilisée pour représenter un sous-graphique pour chaque modalité de cette variable. Ici, on peut par exemple produire un diagramme bâton pour chaque espèce, et l'axe des `x` de chaque graphique portera la variable `sex` :
 
@@ -1098,7 +1098,7 @@ Comme pour les diagrammes en bâtons empilés pour lesquels on spécifie `positi
 
 Au final, le choix d'un graphique doit vous permettre de mettre en évidence les relations qui vous paraissent importantes de la façon la plus visuelle et évidente possible pour une personne ne connaissant pas vos données. Votre choix dépendra donc des données disponibles et de votre objectif (p. ex. comparaisons de proportions ou de valeurs absolues, nombreuses modalités ou seulement quelques unes, etc.).
 
-## Une variable de chaque type
+## Une variable de chaque type {#sec-oneeach}
 
 Les représentations graphiques réalisables et pertinentes lorsque l'on dispose d'une variable numérique et d'un facteur sont souvent des adaptations des graphiques précédents. Globalement, trois choix s'offrent à nous :
 
@@ -2068,20 +2068,3 @@ Quelques indices :
 - Les couleurs utilisées sont celles de la palettes `Accent` du package `RColorBrewer`.
 - Les variables utilisées sont `month`, `carrier` et `origin`.
 - La variable `month` est codée sous forme numérique dans le tableau de données. Il faudra la transformer en facteur avec la fonction `factor(month)` au moment de l'associer à un axe du graphique.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Pour le S4 : penser aux barres d'erreur -->

@@ -245,7 +245,7 @@ identical(adel_small, adel_small2)
 
 
 
-## Sélectionner des variables avec `select()`
+## Sélectionner des variables avec `select()` {#sec-select}
 
 ```{r}
 #| label: fig-selectfig

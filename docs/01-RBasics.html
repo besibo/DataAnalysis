@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -85,7 +85,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Pas de résultats",
     "search-matching-documents-text": "documents trouvés",
@@ -94,6 +100,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "correspondance de plus dans ce document",
     "search-more-matches-text": "correspondances de plus dans ce document",
     "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Annuler",
     "search-submit-button-title": "Envoyer",
     "search-label": "Recherche"
@@ -106,17 +113,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <body class="nav-sidebar floating">
 
-
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-RBasics.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">`R` et `RStudio` : les bases</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-RBasics.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><code>R</code> et <code>RStudio</code> : les bases</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -142,13 +148,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Analyse de Données</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://github.com/besibo/DataAnalysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./Analyse-de-Données.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/besibo/DataAnalysis" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+    <a href="./Analyse-de-Données.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
 </div>
     </div>
@@ -265,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -282,7 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#la-console" id="toc-la-console" class="nav-link" data-scroll-target="#la-console"><span class="header-section-number">1.3.1</span> La console</a></li>
   <li><a href="#sec-script" id="toc-sec-script" class="nav-link" data-scroll-target="#sec-script"><span class="header-section-number">1.3.2</span> Les scripts</a></li>
-  <li><a href="#les-projets-ou-rprojects" id="toc-les-projets-ou-rprojects" class="nav-link" data-scroll-target="#les-projets-ou-rprojects"><span class="header-section-number">1.3.3</span> Les projets, ou <code>Rprojects</code></a></li>
+  <li><a href="#sec-rproj" id="toc-sec-rproj" class="nav-link" data-scroll-target="#sec-rproj"><span class="header-section-number">1.3.3</span> Les projets, ou <code>Rprojects</code></a></li>
   <li><a href="#concepts-de-base-en-programmation-et-terminologie" id="toc-concepts-de-base-en-programmation-et-terminologie" class="nav-link" data-scroll-target="#concepts-de-base-en-programmation-et-terminologie"><span class="header-section-number">1.3.4</span> Concepts de base en programmation et terminologie</a></li>
   </ul></li>
   <li><a href="#sec-packages" id="toc-sec-packages" class="nav-link" data-scroll-target="#sec-packages"><span class="header-section-number">1.4</span> Les packages additionels</a>
@@ -300,6 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+
 <section id="préambule" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="préambule"><span class="header-section-number">1.1</span> Préambule</h2>
 <p>Avant de commencer à explorer des données dans <code>R</code>, il y a plusieurs concepts clés qu’il faut comprendre en premier lieu :</p>
@@ -308,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Comment s’y prend-on pour coder dans <code>R</code> ?</li>
 <li>Que sont les <code>packages</code> ?</li>
 </ol>
-<p>Même si vous pensez être déjà à l’aise avec ces concepts, lisez attentivement ce chapitre et faites les exercices demandés. Cela vous rafraîchira probablement la mémoire, et il n’est pas impossible que vous appreniez une chose ou deux au passage. Une bonne maîtrise des éléments présentés dans ce chapitre est indispensable pour aborder sereinement les chapitres suivants, à commencer par le <a href="02-Dataset.html"><span>Chapitre&nbsp;2</span></a>, qui présente un jeu de données que nous explorerons en détail un peu plus tard. Lisez donc attentivement ce chapitre et faites bien tous les exercices demandés.</p>
+<p>Même si vous pensez être déjà à l’aise avec ces concepts, lisez attentivement ce chapitre et faites les exercices demandés. Cela vous rafraîchira probablement la mémoire, et il n’est pas impossible que vous appreniez une chose ou deux au passage. Une bonne maîtrise des éléments présentés dans ce chapitre est indispensable pour aborder sereinement les chapitres suivants, à commencer par le <a href="02-Dataset.html" class="quarto-xref"><span>Chapitre 2</span></a>, qui présente un jeu de données que nous explorerons en détail un peu plus tard. Lisez donc attentivement ce chapitre et faites bien tous les exercices demandés.</p>
 <p>Ce chapitre est en grande partie basé sur les 3 ressources suivantes que je vous encourage à consulter si vous souhaitez obtenir plus de détails :</p>
 <ol type="1">
 <li>L’ouvrage intitulé <a href="https://moderndive.com/index.html">ModernDive</a>, de Chester Ismay et Albert Y. Kim. Une bonne partie de ce livre est très largement inspirée de cet ouvrage. C’est en anglais, mais c’est un très bon texte d’introduction aux statistiques sous <code>R</code> et <code>RStudio</code>.</li>
@@ -371,7 +378,7 @@ Avertissement
 </section>
 <section id="utiliser-r-depuis-rstudio" class="level3" data-number="1.2.2">
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="utiliser-r-depuis-rstudio"><span class="header-section-number">1.2.2</span> Utiliser <code>R</code> depuis <code>RStudio</code></h3>
-<p>Puisqu’il est beaucoup plus facile d’utiliser <code>Rstudio</code> pour interagir avec <code>R</code>, nous utiliserons exclusivement l’interface de <code>RStudio.</code> Après les installations réalisées à la <a href="#sec-install"><span>Section&nbsp;1.2.1</span></a>, vous disposez de 2 nouveaux logiciels sur votre ordinateur. <code>RStudio</code> ne peut fonctionner sans <code>R</code>, mais nous travaillerons exclusivement dans <code>RStudio</code> :</p>
+<p>Puisqu’il est beaucoup plus facile d’utiliser <code>Rstudio</code> pour interagir avec <code>R</code>, nous utiliserons exclusivement l’interface de <code>RStudio.</code> Après les installations réalisées à la <a href="#sec-install" class="quarto-xref"><span>Section 1.2.1</span></a>, vous disposez de 2 nouveaux logiciels sur votre ordinateur. <code>RStudio</code> ne peut fonctionner sans <code>R</code>, mais nous travaillerons exclusivement dans <code>RStudio</code> :</p>
 <ul>
 <li><code>R</code>, ne pas ouvrir ceci : <img src="images/Rlogo.png" class="img-fluid"> <br> <br></li>
 <li><code>RStudio</code>, ouvrir cela : <img src="images/RStudio-Ball.png" class="img-fluid" data-fig-width="28%"></li>
@@ -511,23 +518,27 @@ Où sauvegarder vos scripts ? <span style="color:red"><i class="fa-regular fa-sa
  $ Day    : int  1 2 3 4 5 6 7 8 9 10 ...</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="01-RBasics_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="01-RBasics_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
-<section id="les-projets-ou-rprojects" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="les-projets-ou-rprojects"><span class="header-section-number">1.3.3</span> Les projets, ou <code>Rprojects</code></h3>
+<section id="sec-rproj" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="sec-rproj"><span class="header-section-number">1.3.3</span> Les projets, ou <code>Rprojects</code></h3>
 <p>Pour travailler le plus efficacement possible avec <code>RStudio</code>, vous devriez créer, à l’intérieur de votre dossier de travail, un nouveau fichier très particulier, qui s’appelle, dans le jargon de <code>RStudio</code>, un <strong><code>Rproject</code></strong>.</p>
 <p>Pour le créer, cliquez simplement dans le Menu “File &gt; New Project…”. Cette boîte de dialogue devrait apparaître :</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/Rproj1.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p><img src="images/Rproj1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
 </figure>
 </div>
 <p>Choisissez “Existing Directory”, puis, dans la boîte de dialogue suivante :</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/Rproj2.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p><img src="images/Rproj2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
 </figure>
 </div>
 <p>cliquez sur “Browse…”, naviguez jusqu’au dossier que vous avez créé plus tôt sur votre disque dur et qui contient votre script, puis cliquez sur “Create Project”. La fenêtre de <code>RStudio</code> se ferme, puis une nouvelle fenêtre vierge apparaît. En apparence, rien n’a changé ou presque. Pourtant :</p>
@@ -535,21 +546,24 @@ Où sauvegarder vos scripts ? <span style="color:red"><i class="fa-regular fa-sa
 <li>en haut à droite de la fenêtre de <code>RStudio</code>, le logiciel indique maintenant que vous êtes bel et bien à l’intérieur d’un <code>Rproject</code>. Au lieu de <code>Project: (None)</code>, on lit maintenant le nom du <code>Rproject</code> (chez moi, <code>Data_Analysis</code>)</li>
 <li>dans le quart inférieur droit de l’interface, l’onglet “Files” ne présente plus le même aspect. Avant de créer le <code>Rproject</code>, cet onglet présentait le chemin vers le dossier utilisé par défaut par le logiciel, ainsi que son contenu. Il s’agissait d’un dossier système auquel il vaut mieux ne pas toucher pour éviter les problèmes. Après la création du <code>Rproject</code>, l’onglet “Files” indique le contenu du dossier contenant le projet. Autrement dit, c’est ici que vous trouverez vos scripts, tableaux de données dans différents formats, figures sauvegardées, etc. Dans cet onglet, vous pouvez donc cliquer sur le nom de votre script pour l’ouvrir à nouveau, le modifier, l’exécuter…</li>
 </ol>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Avant.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Sans <code>Rproject</code></figcaption>
+<figcaption>Sans <code>Rproject</code></figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Après.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Avec <code>RProject</code></figcaption>
+<figcaption>Avec <code>RProject</code></figcaption>
 </figure>
 </div>
 </div>
@@ -560,14 +574,14 @@ Où sauvegarder vos scripts ? <span style="color:red"><i class="fa-regular fa-sa
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/Rproj3.png" class="img-fluid figure-img" style="width:20.0%"></p>
+<p><img src="images/Rproj3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:20.0%"></p>
 </figure>
 </div>
 <p>Pour vérifier que tout s’est bien passé jusqu’ici, tapez la commande suivante dans votre script puis envoyez-la dans la console en pressant les touches <code>ctrl + entrée</code> (ou <code>command + entrée</code> sous MacOS).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>RStudio</code> doit vous afficher, dans la console, le chemin jusqu’à votre <span style="color:red">répertoire de travail</span> ou “Working Directory” en anglais (<code>getwd()</code> est l’abréviation de “GET Working Directory”). Si tout s’est bien passé, ce chemin doit être celui du dossier qui contient votre script et le fichier <code>.Rproj</code> que vous venez de créer. Si ce n’est pas le cas, reprenez calmement toutes les étapes décrites depuis le début de la <a href="#sec-script"><span>Section&nbsp;1.3.2</span></a>. Si ça ne fonctionne toujours pas, contactez-moi sur Slack.</p>
+<p><code>RStudio</code> doit vous afficher, dans la console, le chemin jusqu’à votre <span style="color:red">répertoire de travail</span> ou “Working Directory” en anglais (<code>getwd()</code> est l’abréviation de “GET Working Directory”). Si tout s’est bien passé, ce chemin doit être celui du dossier qui contient votre script et le fichier <code>.Rproj</code> que vous venez de créer. Si ce n’est pas le cas, reprenez calmement toutes les étapes décrites depuis le début de la <a href="#sec-script" class="quarto-xref"><span>Section 1.3.2</span></a>. Si ça ne fonctionne toujours pas, contactez-moi sur Slack.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -598,10 +612,10 @@ Pour résumer… <i class="fa-solid fa-laptop-code" aria-label="laptop-code"></i
 <p>Après ces considérations techniques sur l’utilisation et les réglages de <code>RStudio</code>, nous entrons maintenant dans le vif du sujet avec la découverte des premiers éléments de syntaxe du langage <code>R</code>.</p>
 <section id="sec-objects" class="level4" data-number="1.3.4.1">
 <h4 data-number="1.3.4.1" class="anchored" data-anchor-id="sec-objects"><span class="header-section-number">1.3.4.1</span> Objets, types, vecteurs, facteurs et tableaux de données</h4>
-<p>Pour vous présenter les concepts de base et la terminologie de la programmation dont nous aurons besoin, vous allez suivre des tutoriels en ligne sur le site de DataCamp. Pour cette première prise en main, tout va maintenant se passer dans votre navigateur internet, et vous pouvez donc mettre de côté <code>RStudio</code> pour l’instant. Vous allez voir que l’interface de DataCamp ressemble à une version simplifiée de l’éditeur de script et de la console de <code>RStudio</code> : vous n’aurez pas à vous soucier des réglages, de <code>Rprojects</code> ou de sauvegarder quoi que ce soit. Si vous avez correctement créé votre compte gratuit DataCamp comme indiqué au tout début de la <a href="#sec-basics"><span>Chapitre&nbsp;1</span></a>, votre progression sera sauvegardée automatiquement. Il vous suffit de cliquer sur les liens direct ci-dessous pour démarrer les tutoriels en ligne.</p>
+<p>Pour vous présenter les concepts de base et la terminologie de la programmation dont nous aurons besoin, vous allez suivre des tutoriels en ligne sur le site de DataCamp. Pour cette première prise en main, tout va maintenant se passer dans votre navigateur internet, et vous pouvez donc mettre de côté <code>RStudio</code> pour l’instant. Vous allez voir que l’interface de DataCamp ressemble à une version simplifiée de l’éditeur de script et de la console de <code>RStudio</code> : vous n’aurez pas à vous soucier des réglages, de <code>Rprojects</code> ou de sauvegarder quoi que ce soit. Si vous avez correctement créé votre compte gratuit DataCamp comme indiqué au tout début de la <a href="#sec-basics" class="quarto-xref"><span>Chapitre 1</span></a>, votre progression sera sauvegardée automatiquement. Il vous suffit de cliquer sur les liens direct ci-dessous pour démarrer les tutoriels en ligne.</p>
 <p>Avant de démarrer, quelques précisions :</p>
 <ul>
-<li>pour chaque tutoriel que je vous demande de suivre, j’indique ci-dessous une liste des concepts de programmation qui sont couverts. N’hésitez pas à vous y référer (et à y revenir) tout au long du semestre si vous avez oublié certaines choses</li>
+<li>pour chaque tutoriel que je vous demande de suivre, j’indique ci-dessous une liste des concepts de programmation qui sont couverts. N’hésitez pas à vous y référer et à y revenir tout au long du master (et au-delà !) si vous avez oublié certaines choses</li>
 <li>ce tutoriel DataCamp contient 6 chapitres. Seuls les chapitres 1, 2, 4, et 5 doivent être suivis. Nous ne travaillerons pas sur les matrices ni sur les listes</li>
 <li>à la fin de chaque chapitre du tutoriel, revenez à ce livre en ligne pour cliquer sur le lien direct ver le chapitre suivant. Procéder ainsi vous évitera de suivre des chapitres inutiles du tutoriel, et cela vous permettra également d’éviter les demandes d’inscriptions payantes à DataCamp</li>
 </ul>
@@ -624,7 +638,7 @@ Pour résumer… <i class="fa-solid fa-laptop-code" aria-label="laptop-code"></i
 </ul></li>
 <li><a href="https://campus.datacamp.com/courses/introduction-a-r/chapitre-5-les-jeux-de-donnees?ex=1">Chapitre 5 : les jeux de données ou <code>data.frame</code></a>
 <ul>
-<li>Les <code>data.frame</code>s sont similaires aux feuilles de calcul rectangulaires que l’on peut produire dans un tableur. Dans <code>R</code>, ce sont des objets rectangulaires (des tableaux !) contenant des jeux de données : les lignes correspondent aux observations et les colonnes aux variables décrivant les observations. La plupart du temps, c’est le format de données que nous utiliserons. Plus de détails dans le <a href="02-Dataset.html"><span>Chapitre&nbsp;2</span></a></li>
+<li>Les <code>data.frame</code>s sont similaires aux feuilles de calcul rectangulaires que l’on peut produire dans un tableur. Dans <code>R</code>, ce sont des objets rectangulaires (des tableaux !) contenant des jeux de données : les lignes correspondent aux observations et les colonnes aux variables décrivant les observations. La plupart du temps, c’est le format de données que nous utiliserons. Plus de détails dans le <a href="02-Dataset.html" class="quarto-xref"><span>Chapitre 2</span></a></li>
 </ul></li>
 </ul>
 <p>Avant de passer à la suite, il nous reste 2 grandes notions à découvrir dans le domaine du code et de la syntaxe afin de pouvoir travailler efficacement dans <code>R</code> : les opérateurs de comparaison d’une part, et les fonctions d’autre part. Pour les découvrir et expérimenter, et puisque vous avez terminé les tutoriels DataCamp, reprenez maintenant <code>RStudio</code> et travaillez dans votre script.</p>
@@ -913,8 +927,8 @@ Erreur ou avertissement ? <i class="fa-solid fa-bomb" aria-label="bomb"></i> ou 
 <h2 data-number="1.4" class="anchored" data-anchor-id="sec-packages"><span class="header-section-number">1.4</span> Les packages additionels</h2>
 <p>Une source de confusion importante pour les nouveaux utilisateurs de <code>R</code> est la notion de package. Les packages étendent les fonctionnalités de <code>R</code> en fournissant des fonctions, des données et de la documentation supplémentaires et peuvent être téléchargés gratuitement sur Internet. Ils sont écrits par une communauté mondiale d’utilisateurs de <code>R</code>. Par exemple, parmi les plus de 18000 packages disponibles à l’heure actuelle, nous utiliseront fréquemment :</p>
 <ul>
-<li>Le package <code>ggplot2</code> pour la visualisation des données dans le <a href="03-Visualization.html"><span>Chapitre&nbsp;3</span></a></li>
-<li>Le package <code>dplyr</code> pour manipuler des tableaux de données dans le <a href="05-DataWrangling.html"><span>Chapitre&nbsp;5</span></a></li>
+<li>Le package <code>ggplot2</code> pour la visualisation des données dans le <a href="03-Visualization.html" class="quarto-xref"><span>Chapitre 3</span></a></li>
+<li>Le package <code>dplyr</code> pour manipuler des tableaux de données dans le <a href="05-DataWrangling.html" class="quarto-xref"><span>Chapitre 5</span></a></li>
 </ul>
 <p>Une bonne analogie pour les packages <code>R</code> : ils sont comme les apps que vous téléchargez sur un téléphone portable. <code>R</code> est comme un nouveau téléphone mobile. Il est capable de faire certaines choses lorsque vous l’utilisez pour la première fois, mais il ne sait pas tout faire. Les packages sont comme les apps que vous pouvez télécharger dans l’App Store et Google Play. Pour utiliser un package, comme pour utiliser Instagram, vous devez :</p>
 <ol type="1">
@@ -1039,6 +1053,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -1105,13 +1146,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1190,10 +1233,34 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1203,8 +1270,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1216,7 +1292,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1260,6 +1459,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1285,6 +1485,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1342,37 +1568,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-          // target, if specified
-          link.setAttribute("target", "_blank");
-          // default icon
-          link.classList.add("external");
-      }
-    }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link">
+      <a href="./index.html" class="pagination-link" aria-label="Introduction">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02-Dataset.html" class="pagination-link">
+      <a href="./02-Dataset.html" class="pagination-link" aria-label="Explorez votre premier jeu de données">
         <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Explorez votre premier jeu de données</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

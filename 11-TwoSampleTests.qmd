@@ -2,7 +2,7 @@
 
 ## Pré-requis {#sec-packages3}
 
-Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez [le livre en ligne du semestre 3](https://besibo.github.io/BiometrieS3/01-R-basics.html#sec-code) si vous ne savez plus comment faire.
+Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire.
 
 Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser :
 

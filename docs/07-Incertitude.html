@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -102,7 +103,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Pas de résultats",
     "search-matching-documents-text": "documents trouvés",
@@ -111,6 +118,7 @@ div.csl-indent {
     "search-more-match-text": "correspondance de plus dans ce document",
     "search-more-matches-text": "correspondances de plus dans ce document",
     "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Annuler",
     "search-submit-button-title": "Envoyer",
     "search-label": "Recherche"
@@ -121,21 +129,47 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-sidebar floating">
 
-
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-Incertitude.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dispersion et incertitude</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-Incertitude.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dispersion et incertitude</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -161,13 +195,13 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Analyse de Données</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://github.com/besibo/DataAnalysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./Analyse-de-Données.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/besibo/DataAnalysis" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+    <a href="./Analyse-de-Données.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
 </div>
     </div>
@@ -284,7 +318,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -293,7 +327,7 @@ div.csl-indent {
   <ul>
   <li><a href="#pré-requis" id="toc-pré-requis" class="nav-link active" data-scroll-target="#pré-requis"><span class="header-section-number">7.1</span> Pré-requis</a></li>
   <li><a href="#la-notion-de-dispersion" id="toc-la-notion-de-dispersion" class="nav-link" data-scroll-target="#la-notion-de-dispersion"><span class="header-section-number">7.2</span> La notion de dispersion</a></li>
-  <li><a href="#la-notion-dincertitude" id="toc-la-notion-dincertitude" class="nav-link" data-scroll-target="#la-notion-dincertitude"><span class="header-section-number">7.3</span> La notion d’incertitude</a></li>
+  <li><a href="#sec-incertitude" id="toc-sec-incertitude" class="nav-link" data-scroll-target="#sec-incertitude"><span class="header-section-number">7.3</span> La notion d’incertitude</a></li>
   <li><a href="#sec-errstd" id="toc-sec-errstd" class="nav-link" data-scroll-target="#sec-errstd"><span class="header-section-number">7.4</span> Calcul de l’erreur standard de la moyenne</a></li>
   <li><a href="#sec-confint" id="toc-sec-confint" class="nav-link" data-scroll-target="#sec-confint"><span class="header-section-number">7.5</span> Calculs d’intervalles de confiance à 95%</a></li>
   </ul>
@@ -301,6 +335,7 @@ div.csl-indent {
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
+
 
 
 
@@ -318,11 +353,11 @@ div.csl-indent {
 </section>
 <section id="la-notion-de-dispersion" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="la-notion-de-dispersion"><span class="header-section-number">7.2</span> La notion de dispersion</h2>
-<p>Comme expliqué à la <a href="06-EDA.html#sec-vardisp"><span>Section&nbsp;6.3.1</span></a>, les <strong>indices de dispersion</strong> nous renseignent sur la variabilités des données autour de la valeur centrale (moyenne ou médiane) d’une population ou d’un échantillon. L’écart-type, la variance et l’intervalle interquartile sont 3 exemples d’indices de dispersion. Prenons l’exemple de l’écart-type. Un écart-type faible indique que la majorité des observations ont des valeurs proches de la moyenne. À l’inverse, un écart-type important indique que la plupart des points sont éloignés de la moyenne. L’écart-type est une caractéristique de la population que l’on étudie grâce à un échantillon, au même titre que la moyenne. En travaillant sur un échantillon, on espère accéder aux vraies grandeurs de la population. Même si ces vraies grandeurs sont à jamais inaccessibles (on ne connaîtra jamais parfaitement quelle est la vraie valeur de moyenne <span class="math inline">\(\mu\)</span> ou d’écart-type <span class="math inline">\(\sigma\)</span> de la population), on espère qu’avec un échantillonnage réalisé correctement, la moyenne de l’échantillon (<span class="math inline">\(\bar{x}\)</span> ou <span class="math inline">\(m\)</span>) et l’écart-type (<span class="math inline">\(s\)</span>) de l’échantillon reflètent assez fidèlement les valeurs de la population générale. C’est la notion d’estimateur, intimement liée à la notion d’<strong>inférence statistique</strong> : la moyenne de l’échantillon, que l’on connait avec précision, est un estimateur de la moyenne <span class="math inline">\(\mu\)</span> de la population qui restera à jamais inconnue. C’est la raison pour laquelle la moyenne de l’échantillon est parfois notée <span class="math inline">\(\hat{\mu}\)</span> (en plus de <span class="math inline">\(\bar{x}\)</span> ou <span class="math inline">\(m\)</span>). De même, l’écart-type <span class="math inline">\(s\)</span> et la variance <span class="math inline">\(s^2\)</span> d’un échantillon sont des estimateurs de l’écart-type <span class="math inline">\(\sigma\)</span> et de la variance <span class="math inline">\(\sigma^2\)</span> de la population générale. C’est la raison pour laquelle on les note parfois <span class="math inline">\(\hat{\sigma}\)</span> et <span class="math inline">\(\hat{\sigma}^2\)</span> respectivement. L’accent circonflexe se prononce “chapeau”. On dit donc que <span class="math inline">\(\hat{\sigma}\)</span> (sigma chapeau, l’écart-type de l’échantillon) est un estimateur de l´écart-type de la population générale. Comme nous l’avons vu, les indices de dispersion doivent accompagner les indices de position lorsque l’on décrit des données, car présenter une valeur de moyenne, ou de médiane seule n’a pas de sens : il faut savoir à quel point les données sont proches ou éloignées de la tendance centrale pour savoir si, dans la population générale, les indicateurs de position correspondent ou non, aux valeurs portées par la majorité des individus.</p>
-<p>Nous avons vu au <a href="06-EDA.html"><span>Chapitre&nbsp;6</span></a> comment calculer des indices de position et de dispersion. Tout ceci devrait donc être clair pour vous à ce stade.</p>
+<p>Comme expliqué à la <a href="06-EDA.html#sec-vardisp" class="quarto-xref"><span>Section 6.3.1</span></a>, les <strong>indices de dispersion</strong> nous renseignent sur la variabilités des données autour de la valeur centrale (moyenne ou médiane) d’une population ou d’un échantillon. L’écart-type, la variance et l’intervalle interquartile sont 3 exemples d’indices de dispersion. Prenons l’exemple de l’écart-type. Un écart-type faible indique que la majorité des observations ont des valeurs proches de la moyenne. À l’inverse, un écart-type important indique que la plupart des points sont éloignés de la moyenne. L’écart-type est une caractéristique de la population que l’on étudie grâce à un échantillon, au même titre que la moyenne. En travaillant sur un échantillon, on espère accéder aux vraies grandeurs de la population. Même si ces vraies grandeurs sont à jamais inaccessibles (on ne connaîtra jamais parfaitement quelle est la vraie valeur de moyenne <span class="math inline">\(\mu\)</span> ou d’écart-type <span class="math inline">\(\sigma\)</span> de la population), on espère qu’avec un échantillonnage réalisé correctement, la moyenne de l’échantillon (<span class="math inline">\(\bar{x}\)</span> ou <span class="math inline">\(m\)</span>) et l’écart-type (<span class="math inline">\(s\)</span>) de l’échantillon reflètent assez fidèlement les valeurs de la population générale. C’est la notion d’estimateur, intimement liée à la notion d’<strong>inférence statistique</strong> : la moyenne de l’échantillon, que l’on connait avec précision, est un estimateur de la moyenne <span class="math inline">\(\mu\)</span> de la population qui restera à jamais inconnue. C’est la raison pour laquelle la moyenne de l’échantillon est parfois notée <span class="math inline">\(\hat{\mu}\)</span> (en plus de <span class="math inline">\(\bar{x}\)</span> ou <span class="math inline">\(m\)</span>). De même, l’écart-type <span class="math inline">\(s\)</span> et la variance <span class="math inline">\(s^2\)</span> d’un échantillon sont des estimateurs de l’écart-type <span class="math inline">\(\sigma\)</span> et de la variance <span class="math inline">\(\sigma^2\)</span> de la population générale. C’est la raison pour laquelle on les note parfois <span class="math inline">\(\hat{\sigma}\)</span> et <span class="math inline">\(\hat{\sigma}^2\)</span> respectivement. L’accent circonflexe se prononce “chapeau”. On dit donc que <span class="math inline">\(\hat{\sigma}\)</span> (sigma chapeau, l’écart-type de l’échantillon) est un estimateur de l´écart-type de la population générale. Comme nous l’avons vu, les indices de dispersion doivent accompagner les indices de position lorsque l’on décrit des données, car présenter une valeur de moyenne, ou de médiane seule n’a pas de sens : il faut savoir à quel point les données sont proches ou éloignées de la tendance centrale pour savoir si, dans la population générale, les indicateurs de position correspondent ou non, aux valeurs portées par la majorité des individus.</p>
+<p>Nous avons vu au <a href="06-EDA.html" class="quarto-xref"><span>Chapitre 6</span></a> comment calculer des indices de position et de dispersion. Tout ceci devrait donc être clair pour vous à ce stade.</p>
 </section>
-<section id="la-notion-dincertitude" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="la-notion-dincertitude"><span class="header-section-number">7.3</span> La notion d’incertitude</h2>
+<section id="sec-incertitude" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="sec-incertitude"><span class="header-section-number">7.3</span> La notion d’incertitude</h2>
 <p>Par ailleurs, puisqu’on ne sait jamais avec certitude si nos estimations (de moyennes ou d’écarts-types ou de tout autre paramètre) reflètent fidèlement ou non les vraies valeurs de la population, nous devons quantifier à quel point nos estimations s’écartent de celles de la population générale. C’est tout l’intérêt des statistiques et c’est ce que permettent les <strong>indices d’incertitude</strong> : on ne connaîtra jamais la vraie valeur de moyenne ou d’écart-type de la population, mais on peut quantifier à quel point nos estimations (basées sur un échantillon) sont précises ou imprécises.<br>
 Les deux indices d’incertitude les plus connus (et les plus utilisés) sont :</p>
 <ol type="1">
@@ -404,10 +439,14 @@ Autrement dit…
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">number_format</span>()) <span class="sc">+</span></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Femelles"</span>, <span class="st">"Mâles"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-meanmass" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="07-Incertitude_files/figure-html/fig-meanmass-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;7.1: Comparison des tailles moyennes observées chez les mâles et les femelles de 3 espèces de manchots</figcaption>
+<div id="fig-meanmass" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-meanmass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="07-Incertitude_files/figure-html/fig-meanmass-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-meanmass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.1: Comparison des tailles moyennes observées chez les mâles et les femelles de 3 espèces de manchots
+</figcaption>
 </figure>
 </div>
 </div>
@@ -423,7 +462,7 @@ Autrement dit…
 <li>avec <code>scale_y_continuous()</code>, je modifie l’échelle (continue) de l’axe des ordonnées. Je fais appel à la fonction <code>number_format()</code> du package <code>scales</code> afin d’ajouter un séparateur des milliers aux chiffres de l’axe.</li>
 <li>avec <code>scale_x_discrete()</code>, le modifie les termes qui apparaissent sur l’axe des abscisses (qui est un axe discontinu, ou catégoriel, ou discret). Les catégories <code>female</code> et <code>male</code> de la variable <code>sex</code> du tableau <code>penguins</code> sont transformées en <code>Femelles</code> et <code>Mâles</code> respectivement</li>
 </ul>
-<p>Puisque chaque barre de la <a href="#fig-meanmass">Figure&nbsp;<span>7.1</span></a> correspond à une valeur de moyenne, il nous faut présenter également <strong>l’incertitude associée à ces calculs de moyennes</strong>. Pour cela, nous devons calculer l’erreur standard des moyennes :</p>
+<p>Puisque chaque barre de la <a href="#fig-meanmass" class="quarto-xref">Figure&nbsp;<span>7.1</span></a> correspond à une valeur de moyenne, il nous faut présenter également <strong>l’incertitude associée à ces calculs de moyennes</strong>. Pour cela, nous devons calculer l’erreur standard des moyennes :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span> </span>
@@ -478,11 +517,11 @@ Autrement dit…
 <li>la colonne <code>ymax</code> contient la valeur de moyenne plus une fois l’erreur standard (<span class="math inline">\(\bar{x} + se\)</span>)</li>
 </ul>
 <p>Notez également que contrairement aux fonctions <code>mean()</code> ou <code>sd()</code>, la fonction <code>mean_se()</code> n’a pas besoin qu’on lui précise <code>na.rm = TRUE</code> : par défaut, elle ignore les valeurs manquantes.</p>
-<p>Il ne nous restera plus qu’à ajouter des barres d’erreur sur notre graphique pour visualiser l’incertitude associée à chaque valeur de moyenne. C’est ce que nous verrons au <a href="08-ErrorBars.html"><span>Chapitre&nbsp;8</span></a>.</p>
+<p>Il ne nous restera plus qu’à ajouter des barres d’erreur sur notre graphique pour visualiser l’incertitude associée à chaque valeur de moyenne. C’est ce que nous verrons au <a href="08-ErrorBars.html" class="quarto-xref"><span>Chapitre 8</span></a>.</p>
 </section>
 <section id="sec-confint" class="level2" data-number="7.5">
 <h2 data-number="7.5" class="anchored" data-anchor-id="sec-confint"><span class="header-section-number">7.5</span> Calculs d’intervalles de confiance à 95%</h2>
-<p>Comme pour les erreurs standard, il est possible de calculer des intervalles de confiance de n’importe quel estimateur calculé à partir d’un échantillon, pour déterminer la gamme des valeurs les plus probables pour les paramètres équivalents dans la population générale. Nous nous concentrerons ici sur le calcul des intervalles de confiance à 95% de la moyenne, mais nous serons amenés à examiner également l’intervalle de confiance de la médiane, puis au <a href="11-TwoSampleTests.html"><span>Chapitre&nbsp;11</span></a>, l’intervalle de confiance à 95% d’une différence de moyennes.</p>
+<p>Comme pour les erreurs standard, il est possible de calculer des intervalles de confiance de n’importe quel estimateur calculé à partir d’un échantillon, pour déterminer la gamme des valeurs les plus probables pour les paramètres équivalents dans la population générale. Nous nous concentrerons ici sur le calcul des intervalles de confiance à 95% de la moyenne, mais nous serons amenés à examiner également l’intervalle de confiance de la médiane, puis au <a href="11-TwoSampleTests.html" class="quarto-xref"><span>Chapitre 11</span></a>, l’intervalle de confiance à 95% d’une différence de moyennes.</p>
 <p>Contrairement à l’erreur standard, il n’y a pas qu’une bonne façon de calculer l’intervalle de confiance à 95% d’une moyenne. Plusieurs formules existent et le choix de la formule dépend en partie de la distribution des données (la distribution suit-elle une loi Normale ou non) et de la taille de l’échantillon dont nous disposons (<span class="math inline">\(n\)</span> est-il supérieur à 30 ou non ?). Dans la situation idéale d’une variable qui suit la distribution Normale, les bornes inférieures et supérieures de l’intervalle de confiance à 95% sont obtenues grâce à cette formule</p>
 <p><span class="math display">\[\bar{x} - 1.96 \cdot \frac{s}{\sqrt{n}} &lt; \mu &lt; \bar{x} + 1.96 \cdot \frac{s}{\sqrt{n}}\]</span> Autrement dit, la vraie moyenne <span class="math inline">\(\mu\)</span> d’une population a de bonnes chances de se trouver dans un intervalle de plus ou moins 1.96 fois l’erreur standard de la moyenne. En première approximation, l’intervalle de confiance est donc la moyenne de l’échantillon <span class="math inline">\(\bar{x}\)</span> plus ou moins 2 fois l’erreur standard (que nous avons appris à calculer à la main un peu plus tôt). On peut donc calculer à la main les bornes inférieures et supérieures de l’intervalle de confiance ainsi :</p>
 <div class="cell">
@@ -617,12 +656,11 @@ Autrement dit…
 </div>
 </div>
 <p>Maintenant, si l’on compare les 2 tableaux contenant les calculs d’intervalles de confiance de la moyenne, on constate que les résultats sont très proches :</p>
-<div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>masses_ci_approx</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>masses_ci</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <pre><code># A tibble: 6 × 5
   species   sex    moyenne ci_borne_inf ci_borne_sup
   &lt;fct&gt;     &lt;fct&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
@@ -633,7 +671,7 @@ Autrement dit…
 5 Chinstrap female   3527.        3431.        3623.
 6 Chinstrap male     3939.        3817.        4061.</code></pre>
 </div>
-<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <pre><code># A tibble: 6 × 5
   species   sex    moyenne ci_borne_inf ci_borne_sup
   &lt;fct&gt;     &lt;fct&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
@@ -646,11 +684,10 @@ Autrement dit…
 </div>
 </div>
 </div>
-</div>
 <p>Les bornes inférieures et supérieures des intervalles de confiance à 95% des moyennes ne sont pas égales quand on les calcule manuellement de façon approchée et quand on les calcule de façon exacte, mais les différences sont minimes.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-R-scales" class="csl-entry" role="listitem">
 Wickham, Hadley, Thomas Lin Pedersen, et Dana Seidel. 2023. <em>scales: Scale Functions for Visualization</em>. <a href="https://CRAN.R-project.org/package=scales">https://CRAN.R-project.org/package=scales</a>.
 </div>
@@ -699,6 +736,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -767,13 +831,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -852,10 +918,34 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -865,8 +955,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -878,7 +977,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -922,6 +1144,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -947,6 +1170,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1004,37 +1253,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-          // target, if specified
-          link.setAttribute("target", "_blank");
-          // default icon
-          link.classList.add("external");
-      }
-    }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./06-EDA.html" class="pagination-link">
+      <a href="./06-EDA.html" class="pagination-link" aria-label="Exploration statistique des données">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploration statistique des données</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./08-ErrorBars.html" class="pagination-link">
+      <a href="./08-ErrorBars.html" class="pagination-link" aria-label="Visualiser l'incertitude et la dispersion">
         <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Visualiser l’incertitude et la dispersion</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

@@ -2,7 +2,7 @@
 
 ## Pré-requis {#sec-packages4}
 
-Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez [le livre en ligne du semestre 3](https://besibo.github.io/BiometrieS3/01-R-basics.html#sec-code) si vous ne savez plus comment faire.
+Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire.
 
 Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser :
 
@@ -452,7 +452,7 @@ tidy(post_hoc2) %>%
   theme_bw()
 ```
 
-Notez ici l'utilisation de `geom_linerange`, pour afficher les intervalles de confiance à 95% des différences de moyennes. Il s'agit d'une alternative à `geom_errorbar()` dont nous avons déjà parlé [dans ce chapitre](https://besibo.github.io/BiometrieS4/03-graphiques.html#visualiser-lincertitude-les-barres-derreur) du livre en ligne du semestre 4. La fonction `geom_hline()` permet de faire apparaître des lignes horizontales sur un graphique. Ici, avec `y = 0`, cette fonction fait apparaître un axe horizontal (axe des abscisses). Enfin, la fonction `coord_flip()` permet d'inverser les axes du graphique : l'axe des `x` bascule à la verticale, et l'axe des `y` à l'horizontale. Cela permet d'obtenir un graphique dont l'apparence est typique de ce genre de graphique produit avec les résultats du test de Tukey HSD.
+Notez ici l'utilisation de `geom_linerange`, pour afficher les intervalles de confiance à 95% des différences de moyennes. Il s'agit d'une alternative à `geom_errorbar()` dont nous avons déjà parlé à la @sec-errorbar. La fonction `geom_hline()` permet de faire apparaître des lignes horizontales sur un graphique. Ici, avec `y = 0`, cette fonction fait apparaître un axe horizontal (axe des abscisses). Enfin, la fonction `coord_flip()` permet d'inverser les axes du graphique : l'axe des `x` bascule à la verticale, et l'axe des `y` à l'horizontale. Cela permet d'obtenir un graphique dont l'apparence est typique de ce genre de graphique produit avec les résultats du test de Tukey HSD.
 
 Ce graphique montre bien que pour la comparaison `knee - control`, le zéro est compris dans l'intervalle de confiance à 95% de la différence de moyennes, ce qui confirme l'absence de différence significative de décalage de phase entre ces 2 groupes. À l'inverse, pour les 2 autres comparaisons (`eyes - knee` d'une part, et `eyes - control` d'autre part), les intervalles de confiance à 95% des différences de moyennes ne coupent pas le zéro. Cela indique une différence de moyenne significative : dans la population générale, le zéro ne fait pas partie des valeurs les plus probables pour la différence de décalage de phase entre ces groupes.
 
