@@ -33,6 +33,7 @@ bibliography: all.bib
 lang: fr
 title-block-banner: true
 reference-location: margin
+number-sections: true
 
 language:
   title-block-author-single: "Auteur"

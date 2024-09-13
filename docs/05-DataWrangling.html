@@ -2320,12 +2320,10 @@ Figure&nbsp;5.16: Schéma de la fonction <code>inner_join()</code> tiré de la �
 <pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1244 rows containing non-finite outside the scale range
-(`stat_smooth()`).</code></pre>
+<pre><code>Warning: Removed 1244 rows containing non-finite values (`stat_smooth()`).</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1244 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
+<pre><code>Warning: Removed 1244 rows containing missing values (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -2428,12 +2426,10 @@ Figure&nbsp;5.17: Schéma de la fonction <code>left_join()</code> tiré de la �
 <pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1244 rows containing non-finite outside the scale range
-(`stat_smooth()`).</code></pre>
+<pre><code>Warning: Removed 1244 rows containing non-finite values (`stat_smooth()`).</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1244 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
+<pre><code>Warning: Removed 1244 rows containing missing values (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -2582,20 +2578,20 @@ Figure&nbsp;5.17: Schéma de la fonction <code>left_join()</code> tiré de la �
 <div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
-      r      s
-  &lt;int&gt;  &lt;dbl&gt;
-1    10  0.660
-2     9  1.04 
-3     8 -0.944</code></pre>
+      r       s
+  &lt;int&gt;   &lt;dbl&gt;
+1    10  0.0222
+2     9 -0.947 
+3     8 -0.263 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
-      x     y z         r      s
-  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;  &lt;dbl&gt;
-1     1     2 TRUE     10  0.660
-2     2     4 FALSE     9  1.04 
-3     3     6 FALSE     8 -0.944</code></pre>
+      x     y z         r       s
+  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;   &lt;dbl&gt;
+1     1     2 TRUE     10  0.0222
+2     2     4 FALSE     9 -0.947 
+3     3     6 FALSE     8 -0.263 </code></pre>
 </div>
 </div>
 <p>Ici, puisque <code>a</code> et <code>b</code> ont le même nombre de lignes, il est possible de les accoler. Cela n’a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.</p>
