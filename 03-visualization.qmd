@@ -204,7 +204,7 @@ ggplot(data = penguins, mapping = aes(x = body_mass_g, y = bill_length_mm)) +
   geom_point()
 ```
 
-Au moment de produire ce graphique, `R` nous indique que 2 lignes du tableau `penguins` ne figurent pas sur ce graphique car elles possèdent des données manquantes (`NA`), pour l'une et/ou l'autre des variables que nous avons sélectionnées. La fonction `geom-point()` est donc incapable de les placer sur le graphique.
+Au moment de produire ce graphique, `R` nous indique que 2 lignes du tableau `penguins` ne figurent pas sur ce graphique car elles possèdent des données manquantes (`NA`), pour l'une et/ou l'autre des variables que nous avons sélectionnées. La fonction `geom_point()` est donc incapable de les placer sur le graphique.
 
 Vous avez donc ici un premier exemple de graphique très simple. Il est loin d'être parfait (à minima, le titre des axes devrait être modifié), mais il a le mérite de vous présenter la syntaxe que vous devrez utiliser pour produire presque tous les graphiques qui vous seront utiles avec `ggplot2`. En outre, on peut percevoir qu'il semble exister une relation positive (mais imparfaite) entre longueur des becs et masse des individus. Il faut toutefois être prudent car nous avons ici utilisé toutes les données disponibles (donc les données des 3 espèces à la fois), ce qui est loin d'être pertinent.
 

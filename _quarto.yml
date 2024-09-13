@@ -28,6 +28,9 @@ book:
     - 14-Regression.qmd
     - 15-PropTests.qmd
     - references.qmd
+  
+crossref:
+  chapters: true
 
 bibliography: all.bib
 lang: fr
