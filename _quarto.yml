@@ -6,7 +6,7 @@ book:
   title: "Analyse de Données"
   author: "Benoît Simon-Bouhet"
   date: now
-  date-format: "dddd D MMMM YYYY"
+  date-format: "D MMMM YYYY"
   search: true
   downloads: pdf
   repo-url: "https://github.com/besibo/DataAnalysis"
