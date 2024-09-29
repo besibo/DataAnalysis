@@ -4,7 +4,7 @@
 
 Pour ce nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vous pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire.
 
-Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser les mêmes packages que précédemment :
+Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser les packages suivants :
 
 - le `tidyverse` [@R-tidyverse], qui comprend notamment le package `readr` [@R-readr], pour importer facilement des fichiers `.csv` au format `tibble`, le package `dplyr` [@R-dplyr], pour manipuler des tableaux, et le package `ggplot2` [@R-ggplot2] pour les représentations graphiques.
 <!-- - `readxl` [@R-readxl], pour importer facilement des fichiers Excel au format `tibble`. -->
@@ -432,8 +432,6 @@ Ici, la conclusion de ce test est :
 Le package `rstatix` permet de réaliser tous ces tests avec une syntaxe compatible avec le pipe et la philosophie du tidyverse.
 
 ```{r}
-library(rstatix)
-
 Testo_large |> 
   shapiro_test(Difference)
 
