@@ -1130,7 +1130,7 @@ Cette syntaxe évite de dupliquer le code inutilement, elle évite d'avoir à cr
 
 ### Un exemple avec `mutate()`
 
-Pour bien enfoncer le clou, voici un autre exemple, impliquant la fonction `mutate()`. Imaginez que nous ayons besoin d'identifier, toujours dans le tableau `penguins`, les individus de chaque espèce dont la longueur du bec est supérieure à la moyenne de l'espèce. Il nous faut donc calculer, pour chaque espèce, la moyenne des longueur de bec, puis créer une nouvelle colonne de vrais/faux pour chaque individu de chaque espèce : ceux dont le bec est supérieur à la moyenne auront `TRUE` dans cette nouvelle colonne, les autres auront `FALSE`. Voilà comment nous pourrions procéder grâce à l'argument `.by` :
+Pour bien enfoncer le clou, voici un autre exemple, impliquant la fonction `mutate()`. Imaginez que nous ayons besoin d'identifier, toujours dans le tableau `penguins`, les individus de chaque espèce dont la longueur du bec est supérieure à la moyenne de l'espèce. Il nous faut donc calculer, pour chaque espèce, la moyenne des longueurs de bec, puis créer une nouvelle colonne de vrais/faux pour chaque individu de chaque espèce : ceux dont le bec est supérieur à la moyenne auront `TRUE` dans cette nouvelle colonne, les autres auront `FALSE`. Voilà comment nous pourrions procéder grâce à l'argument `.by` :
 
 ```{r}
 becs <- penguins |> 
@@ -1413,7 +1413,7 @@ late_flights |>
   theme_bw()
 ```
 
-Attention toutefois : le fait que `left_join()` et `inner_join()` fournisse le même résultat n'est pas systématique. Ici, c'est bien le choix de la question d'intérêt qui fait que nous pouvons choisir l'une ou l'autre de ces fonctions de façon interchangeable. Mais ça ne sera pas toujours le cas. Quand on a besoin de conserver toutes les lignes du tableau de départ (ce qui est souvent lecas), il faudra utiliser `left_join()`.
+Attention toutefois : le fait que `left_join()` et `inner_join()` fournisse le même résultat n'est pas systématique. Ici, c'est bien le choix de la question d'intérêt qui fait que nous pouvons choisir l'une ou l'autre de ces fonctions de façon interchangeable. Mais ça ne sera pas toujours le cas. Quand on a besoin de conserver toutes les lignes du tableau de départ (ce qui est souvent le cas), il faudra utiliser `left_join()`.
 
 
 Il y aurait bien plus à dire sur les jointures :

@@ -9,6 +9,7 @@ Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté pui
 - le `tidyverse` [@R-tidyverse], qui comprend notamment le package `readr` [@R-readr], pour importer facilement des fichiers `.csv` au format `tibble`, le package `dplyr` [@R-dplyr], pour manipuler des tableaux, et le package `ggplot2` [@R-ggplot2] pour les représentations graphiques.
 <!-- - `readxl` [@R-readxl], pour importer facilement des fichiers Excel au format `tibble`. -->
 - `skimr` [@R-skimr], qui permet de calculer des résumés de données très informatifs.
+- `rstatix` [@R-rstatix], qui permet de réaliser des tests statistiques avec des syntaxes compatibles avec le `tidyverse` et le `pipe`.
 <!-- - `car` [@R-car], qui permet d'effectuer le test de comparaison des variances de Levene. -->
 <!-- - les packages `palmerpenguins` [@R-palmerpenguins] et `nycflights13` [@R-nycflights13], pour accéder à plusieurs jeux de données que nous utiliserons en guise d'exemples ou pour les exercices (`penguins`, `flights`, `weather`...). -->
 
@@ -18,6 +19,7 @@ Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté pui
 
 library(tidyverse)
 library(skimr)
+library(rstatix)
 ```
 
 Vous aurez également besoin des jeux de données suivants que vous pouvez dès maintenant télécharger dans votre répertoire de travail :
@@ -343,18 +345,38 @@ Le test de Student sur données appariées peut se faire de 3 façons distinctes
 - H$_0$ : le changement moyen de production d'anticorps après la pose chirurgicale de l'implant de testostérone est nul ($\mu_{Diff} = 0$). La procédure chirurgicale n'a pas d'effet sur l'immunocompétence. Les variations observées ne sont que le fruit du hasard de l'échantillonnage.
 - H$_1$ : le changement moyen de production d'anticorps après la pose chirurgicale de l'implant de testostérone n'est pas nul ($\mu_{Diff} \neq 0$). La procédure chirurgicale a effet significatif sur l'immunocompétence. Les variations observées ne sont pas uniquement dues à la fluctuation d'échantillonnage.
 
+<!-- #### Première syntaxe -->
+
+<!-- ```{r} -->
+<!-- # Méthode nº1 : avec une formule et le tableau au format long -->
+<!-- t.test(DO ~ Moment, data = Testo_long, paired = TRUE) -->
+<!-- ``` -->
+
+<!-- Plusieurs remarques concernant cette première syntaxe : -->
+
+<!-- 1. On utilise le symbole "`~`" pour indiquer une formule. On cherche à regarder l'effet du `Moment` sur la `DO` qui traduit l'immunocompétence. Le "`~`" se lit : "en fonction de". -->
+<!-- 2. Avec la syntaxe utilisant les formules, on doit spécifier l'argument `data = Testo_long` pour indiquer à `RStudio` que les variables `DO` et `Moment` sont des colonnes de ce tableau. -->
+<!-- 3. Enfin, il est important d'indiquer `paired = TRUE` puisque nous réalisons un test de Student sur données appariées. Si on ne mets pas cet argument, on réalise un test de Student sur échantillons indépendants, ce qui peut grandement fausser les résultats. -->
+
+
+<!-- :::{.callout-warning} -->
+<!-- ## Point de vigilance -->
+
+<!-- Avec cette première syntaxe, la différence qui est calculée n'est pas `After - Before` comme nous l'avons fait manuellement dans le tableau `Testo_large`, mais `Before - After`. En effet, dans le facteur `Moment` du tableau `Testo-Long`, la première modalité est `Before`, et la seconde modalité est `After`. Par défaut, le test de Student calcule toujours la différence dans le même sens : première modalité moins seconde modalité. -->
+
+<!-- Cela explique pourquoi la différence calculée ici vaut -0.056, alors qu'elle valait +0.056 quand nous l'avions calculée manuellement plus haut. C'est important d'en prendre conscience pour ne pas interpréter à l'envers les résultats du test statistique.  -->
+
+<!-- Pour la même raison, les signes et l'ordre des bornes de l'intervalle de confiance à 95% de la moyenne des différences est également inversé. Manuellement, nous avions calculé un intervalle de confiance de [-0.04 ; +0.15], ici, il vaut [-0.15 ; +0.04]. -->
+<!-- ::: -->
+
 #### Première syntaxe
 
 ```{r}
-# Méthode nº1 : avec une formule et le tableau au format long
-t.test(DO ~ Moment, data = Testo_long, paired = TRUE)
+# Méthode nº2 : avec les 2 séries de données et le tableau au format large
+t.test(Testo_large$Before, Testo_large$After, paired = TRUE)
 ```
 
-Plusieurs remarques concernant cette première syntaxe :
-
-1. On utilise le symbole "`~`" pour indiquer une formule. On cherche à regarder l'effet du `Moment` sur la `DO` qui traduit l'immunocompétence. Le "`~`" se lit : "en fonction de".
-2. Avec la syntaxe utilisant les formules, on doit spécifier l'argument `data = Testo_long` pour indiquer à `RStudio` que les variables `DO` et `Moment` sont des colonnes de ce tableau.
-3. Enfin, il est important d'indiquer `paired = TRUE` puisque nous réalisons un test de Student sur données appariées. Si on ne mets pas cet argument, on réalise un test de Student sur échantillons indépendants, ce qui peut grandement fausser les résultats.
+Avec cette première syntaxe, on indique le nom des 2 colonnes du tableau `Testo_large` qui contiennent les 2 séries de données. Il nous faut taper spécifiquement "`Testo_large$Before`" et "`Testo_large$After`", et non pas simplement "`Before`" et "`After`" car la fonction `t.test` n'a aucun moyen de savoir que "`Before`" et "`After`" sont des colonnes du tableau `Testo-large`. Nous devons donc être explicites. Il est en outre indispensable d'indiquer "`paired = TRUE`" pour faire un test de Student sur données appariées. Omettre cet argument reviendrait à faire un test de Student sur données indépendantes, qui est moins puissant que le test sur données appariées. Ça n'est donc pas souhaitable avec les données dont nous disposons et ça pourrait même conduire à des conclusions fausses.
 
 Ici, voilà la conclusion de ce test :
 
@@ -362,26 +384,7 @@ Ici, voilà la conclusion de ce test :
 
 Donc visiblement, une forte production de testostérone n'est pas significativement associée à une baisse de l'immunocompétence.
 
-:::{.callout-warning}
-## Point de vigilance
-
-Avec cette première syntaxe, la différence qui est calculée n'est pas `After - Before` comme nous l'avons fait manuellement dans le tableau `Testo_large`, mais `Before - After`. En effet, dans le facteur `Moment` du tableau `Testo-Long`, la première modalité est `Before`, et la seconde modalité est `After`. Par défaut, le test de Student calcule toujours la différence dans le même sens : première modalité moins seconde modalité.
-
-Cela explique pourquoi la différence calculée ici vaut -0.056, alors qu'elle valait +0.056 quand nous l'avions calculée manuellement plus haut. C'est important d'en prendre conscience pour ne pas interpréter à l'envers les résultats du test statistique. 
-
-Pour la même raison, les signes et l'ordre des bornes de l'intervalle de confiance à 95% de la moyenne des différences est également inversé. Manuellement, nous avions calculé un intervalle de confiance de [-0.04 ; +0.15], ici, il vaut [-0.15 ; +0.04].
-:::
-
-#### Deuxième syntaxe
-
-```{r}
-# Méthode nº2 : avec les 2 séries de données et le tableau au format large
-t.test(Testo_large$Before, Testo_large$After, paired = TRUE)
-```
-
-Cette deuxième syntaxe est différente de la première puisque nous n'utilisons plus le format `formule`. Ici, on indique le nom des 2 colonnes du tableau `Testo_large` qui contiennent les 2 séries de données. Puisque nous n'utilisons plus de formule, l'argument "`data = ...`" n'existe plus. C'est pourquoi il nous faut taper spécifiquement "`Testo_large$Before`" et "`Testo_large$After`", et non pas simplement le nom des colonnes. En revanche, comme pour le test précédent, il est indispensable d'indiquer "`paired = TRUE`" pour faire un test de Student sur données appariées.
-
-Les résultats fournis et leur interprétation sont identiques à ceux de la syntaxe précédente. Vous notez aussi que les résultats et leurs interprétation dépendent de l'ordre dans lequel les 2 séries de données sont indiquées dans la fonction `t.test()`. Pour vous en convaincre, regardez ce que donne cette commande :
+Notez bien que les résultats et leurs interprétation dépendent de l'ordre dans lequel les 2 séries de données sont indiquées dans la fonction `t.test()`. Pour vous en convaincre, regardez ce que donne cette commande :
 
 ```{r}
 #| eval: false
@@ -391,14 +394,14 @@ t.test(Testo_large$After, Testo_large$Before, paired = TRUE)
 
 Qu'est-ce qui change ? Et qu'est-ce qui reste inchangé ?
 
-#### Troisième syntaxe
+#### Deuxième syntaxe
 
 ```{r}
 # Méthode nº3 : avec la variable Diff, mu = 0, et le tableau au format large
 t.test(Testo_large$Difference, mu = 0)
 ```
 
-Enfin, comme expliqué plus haut, le test de Student sur données appariées est strictement équivalent à un test de Student à un échantillon pour lequel on compare la moyenne des différences individuelles à 0. Là encore, les résultats produits et leur interprétation sont identiques aux deux tests précédents. La seule différence concerne les signes puisque les deux premiers tests regardaient la différence "Before - After" alors que ce troisième test regarde la différence "After - Before" (que nous avons calculée manuellement).
+Comme expliqué plus haut, le test de Student sur données appariées est strictement équivalent à un test de Student à un échantillon pour lequel on compare la moyenne des différences individuelles à 0. Là encore, les résultats produits et leur interprétation sont identiques aux deux tests précédents. La seule différence concerne les signes puisque le premier test regardait la différence "Before - After" alors que ce test regarde la différence "After - Before" (que nous avons calculée manuellement).
 
 À vous donc de choisir la syntaxe qui vous paraît la plus parlante ou celle que vous avez le plus de facilité à retenir et à interpréter.
 
@@ -412,10 +415,9 @@ Il s'agit là encore du **test de Wilcoxon des rangs signés** qui s'intéresse 
 - H$_0$ : le changement **médian** de production d'anticorps après la pose chirurgicale de l'implant de testostérone est nul ($med_{Diff} = 0$).
 - H$_1$ : le changement **médian** de production d'anticorps après la pose chirurgicale de l'implant de testostérone n'est pas nul ($med_{Diff} \neq 0$).
 
-Comme pour le test de Student, 3 syntaxes sont possibles et strictement équivalentes. Il est important de ne pas oublier l'argument `paired = TRUE` pour les 2 premières syntaxes afin de s'assurer que l'on réalise bien un test sur données appariées. Enfin, l'argument `conf.int = TRUE` doit être ajouté pour les 3 syntaxes afin que la (pseudo-) médiane et son intervalle de confiance à 95% soient calculés et affichés.
+Comme pour le test de Student, 2 syntaxes sont possibles et strictement équivalentes. Il est important de ne pas oublier l'argument `paired = TRUE` afin de s'assurer que l'on réalise bien un test sur données appariées. Enfin, l'argument `conf.int = TRUE` doit être ajouté afin que la (pseudo-) médiane et son intervalle de confiance à 95% soient calculés et affichés.
 
 ```{r}
-wilcox.test(DO ~ Moment, data = Testo_long, paired = TRUE, conf.int = TRUE)
 wilcox.test(Testo_large$Before, Testo_large$After, paired = TRUE,
             conf.int = TRUE)
 wilcox.test(Testo_large$Difference, mu = 0, conf.int = TRUE)
@@ -424,6 +426,35 @@ wilcox.test(Testo_large$Difference, mu = 0, conf.int = TRUE)
 Ici, la conclusion de ce test est :
 
 > Le test de Wilcoxon des rangs signés n'a pas permis de montrer de changement d'immunocompétence suite à l'intégration de l'implant chirurgical de testostérone. On ne peut pas rejeter l'hypothèse nulle au seuil $\alpha = 0.05$ ($V = 61$, $p = 0.305$). La médiane des différences de densités optiques observées entre après et avant l'intervention chirurgicale vaut 0.055 (intervalle de confiance à 95% de cette différence : [-0.040 ; 0.145]).
+
+## Le package `rstatix`
+
+Le package `rstatix` permet de réaliser tous ces tests avec une syntaxe compatible avec le pipe et la philosophie du tidyverse.
+
+```{r}
+library(rstatix)
+
+Testo_large |> 
+  shapiro_test(Difference)
+
+Testo_long |>
+  t_test(DO ~ Moment, paired = TRUE, detailed = TRUE)
+
+Testo_long |>
+  wilcox_test(DO ~ Moment, paired = TRUE, detailed = TRUE)
+```
+
+Plusieurs choses importantes sont à noter ici :
+
+1. le nom des fonctions contient des `_` plutôt que des `.`
+2. le premier argument de toutes ces fonctions est toujours le nom d'un tableau. C'est la raison pour laquelle il est possible d'utiliser la syntaxe qui repose sur le pipe (`|>`)
+3. les fonctions `t_test()` et `wilcox_test()` utilisent nécessairement un tableau au format long. Il est donc impossible d'utiliser la syntaxe qui repose sur la colonne `Difference` du tableau `Testo_large`.
+4. les fonctions `t_test()` et `wilcox_test()` utilisent nécessairement la notation `formule`. Avec ce type de syntaxe, on place la variable expliquée à gauche du `~` et la variable explicative à droite. Ici, la variable expliquée est `DO` et la variable explicative est `Moment`. C'est la raison pour laquelle on utilise `DO ~ Moment` dans ces fonctions. Le `~` se lit toujours "en fonction de". On essaie don ici de comparer les différences de densité optique en fonction du moment de la mesure.
+5. l'argument `paired = TRUE` est indispensable pour réaliser un test sur données appariées. Sans cet argument, les tests réalisés seraient des tests sur données indépendantes, ce qui ne serait pas correct. De ce point de vue, il n'y a pas de différences par rapport à l'utilisation des fonctions classiques `t.test()` et `wilcox.test()`.
+6. l'argument `detailed = TRUE` permet d'obtenir les informations supplémentaires utiles : l'estimation de la moyenne des différences et les bornes de son intervalle de confiance.
+7. les résultats sont fournis dans un tableau plutôt que sous forme de liste hétérogène. C'est donc plus lisible, et lorsque nous ferons des tests multiples, cela permettra de stocker les résultats dans un objet unique.
+
+Au final, à vous de choisir si vous préférer utiliser les fonction classiques ou les fonctions du package `rstatix`. Elles fournissent strictement les mêmes résultats, et il s'agit donc d'une question de préférence uniquement.
 
 
 ## Exercice d'application

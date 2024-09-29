@@ -1954,7 +1954,7 @@ Figure&nbsp;5.13: Fonctionnement de l’argument <code>.by</code> travaillant de
 </section>
 <section id="un-exemple-avec-mutate" class="level3" data-number="5.9.2">
 <h3 data-number="5.9.2" class="anchored" data-anchor-id="un-exemple-avec-mutate"><span class="header-section-number">5.9.2</span> Un exemple avec <code>mutate()</code></h3>
-<p>Pour bien enfoncer le clou, voici un autre exemple, impliquant la fonction <code>mutate()</code>. Imaginez que nous ayons besoin d’identifier, toujours dans le tableau <code>penguins</code>, les individus de chaque espèce dont la longueur du bec est supérieure à la moyenne de l’espèce. Il nous faut donc calculer, pour chaque espèce, la moyenne des longueur de bec, puis créer une nouvelle colonne de vrais/faux pour chaque individu de chaque espèce : ceux dont le bec est supérieur à la moyenne auront <code>TRUE</code> dans cette nouvelle colonne, les autres auront <code>FALSE</code>. Voilà comment nous pourrions procéder grâce à l’argument <code>.by</code> :</p>
+<p>Pour bien enfoncer le clou, voici un autre exemple, impliquant la fonction <code>mutate()</code>. Imaginez que nous ayons besoin d’identifier, toujours dans le tableau <code>penguins</code>, les individus de chaque espèce dont la longueur du bec est supérieure à la moyenne de l’espèce. Il nous faut donc calculer, pour chaque espèce, la moyenne des longueurs de bec, puis créer une nouvelle colonne de vrais/faux pour chaque individu de chaque espèce : ceux dont le bec est supérieur à la moyenne auront <code>TRUE</code> dans cette nouvelle colonne, les autres auront <code>FALSE</code>. Voilà comment nous pourrions procéder grâce à l’argument <code>.by</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>becs <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
 <span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">long_bill =</span> bill_length_mm <span class="sc">&gt;=</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -2320,10 +2320,12 @@ Figure&nbsp;5.16: Schéma de la fonction <code>inner_join()</code> tiré de la �
 <pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1244 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>Warning: Removed 1244 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1244 rows containing missing values (`geom_point()`).</code></pre>
+<pre><code>Warning: Removed 1244 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -2426,10 +2428,12 @@ Figure&nbsp;5.17: Schéma de la fonction <code>left_join()</code> tiré de la �
 <pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1244 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>Warning: Removed 1244 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1244 rows containing missing values (`geom_point()`).</code></pre>
+<pre><code>Warning: Removed 1244 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -2439,7 +2443,7 @@ Figure&nbsp;5.17: Schéma de la fonction <code>left_join()</code> tiré de la �
 </div>
 </div>
 </div>
-<p>Attention toutefois : le fait que <code>left_join()</code> et <code>inner_join()</code> fournisse le même résultat n’est pas systématique. Ici, c’est bien le choix de la question d’intérêt qui fait que nous pouvons choisir l’une ou l’autre de ces fonctions de façon interchangeable. Mais ça ne sera pas toujours le cas. Quand on a besoin de conserver toutes les lignes du tableau de départ (ce qui est souvent lecas), il faudra utiliser <code>left_join()</code>.</p>
+<p>Attention toutefois : le fait que <code>left_join()</code> et <code>inner_join()</code> fournisse le même résultat n’est pas systématique. Ici, c’est bien le choix de la question d’intérêt qui fait que nous pouvons choisir l’une ou l’autre de ces fonctions de façon interchangeable. Mais ça ne sera pas toujours le cas. Quand on a besoin de conserver toutes les lignes du tableau de départ (ce qui est souvent le cas), il faudra utiliser <code>left_join()</code>.</p>
 <p>Il y aurait bien plus à dire sur les jointures :</p>
 <ul>
 <li>Quelles sont les autres possibilités de jointures (<code>right_join()</code>, <code>outer_join()</code>, <code>full_join()</code>, <code>semi_join()</code>, <code>cross_join()</code>, <code>nest_join()</code>, etc…) ?</li>
@@ -2580,18 +2584,18 @@ Figure&nbsp;5.17: Schéma de la fonction <code>left_join()</code> tiré de la �
 <pre><code># A tibble: 3 × 2
       r      s
   &lt;int&gt;  &lt;dbl&gt;
-1    10  0.485
-2     9 -0.285
-3     8 -0.609</code></pre>
+1    10  0.408
+2     9 -1.27 
+3     8 -0.260</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
       x     y z         r      s
   &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;  &lt;dbl&gt;
-1     1     2 TRUE     10  0.485
-2     2     4 FALSE     9 -0.285
-3     3     6 FALSE     8 -0.609</code></pre>
+1     1     2 TRUE     10  0.408
+2     2     4 FALSE     9 -1.27 
+3     3     6 FALSE     8 -0.260</code></pre>
 </div>
 </div>
 <p>Ici, puisque <code>a</code> et <code>b</code> ont le même nombre de lignes, il est possible de les accoler. Cela n’a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.</p>

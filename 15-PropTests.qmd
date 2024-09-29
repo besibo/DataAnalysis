@@ -1,31 +1,31 @@
 # Comparaison de proportions {#sec-prop}
 
-## Pré-requis {#sec-packages6}
+<!-- ## Pré-requis {#sec-packages7} -->
 
-Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire.
+<!-- Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire. -->
 
-Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser :
+<!-- Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser : -->
 
-- le `tidyverse` [@R-tidyverse], qui comprend notamment le package `readr` [@R-readr], pour importer facilement des fichiers `.csv` au format `tibble`, le package `dplyr` [@R-dplyr], pour manipuler des tableaux, et le package `ggplot2` [@R-ggplot2] pour les représentations graphiques.
-- `skimr` [@R-skimr], qui permet de calculer des résumés de données très informatifs.
+<!-- - le `tidyverse` [@R-tidyverse], qui comprend notamment le package `readr` [@R-readr], pour importer facilement des fichiers `.csv` au format `tibble`, le package `dplyr` [@R-dplyr], pour manipuler des tableaux, et le package `ggplot2` [@R-ggplot2] pour les représentations graphiques. -->
+<!-- - `skimr` [@R-skimr], qui permet de calculer des résumés de données très informatifs. -->
 
-```{r}
-#| message: false
-#| warning: false
-#| results: false
+<!-- ```{r} -->
+<!-- #| message: false -->
+<!-- #| warning: false -->
+<!-- #| results: false -->
 
-library(tidyverse)
-library(skimr)
-```
+<!-- library(tidyverse) -->
+<!-- library(skimr) -->
+<!-- ``` -->
 
-Vous aurez également besoin des jeux de données suivants, qu'il vous faut donc télécharger dans votre répertoire de travail :
+<!-- Vous aurez également besoin des jeux de données suivants, qu'il vous faut donc télécharger dans votre répertoire de travail : -->
 
-- [`plantbiomass.csv`](data/plantbiomass.csv)
-- [`hockey.csv`](data/hockey.csv)
+<!-- - [`plantbiomass.csv`](data/plantbiomass.csv) -->
+<!-- - [`hockey.csv`](data/hockey.csv) -->
 
 
-```{r}
-theme_set(theme_bw())
-```
+<!-- ```{r} -->
+<!-- theme_set(theme_bw()) -->
+<!-- ``` -->
 
-species
+En cours de préparation...
