@@ -67,9 +67,9 @@ Le tableau obtenu est-il au format long ou au format court/large ? Pourquoi un t
 
 ```{r}
 #| echo: false
-Light %>%
-  mutate(ID = factor(c(1:8, 1:7, 1:7))) %>%
-  spread(treatment, shift) %>%
+Light |>
+  mutate(ID = factor(c(1:8, 1:7, 1:7))) |>
+  spread(treatment, shift) |>
   select(-ID)
 ```
 
@@ -78,7 +78,7 @@ Lorsque l'on réalise une analyse de variance, puisque les effectifs ne sont pas
 Ici, le tableau de données est très simple (et de petite taille). Il n'y a pas de données manquantes et aucune création de nouvelle variable n'est nécessaire. La seule modification que nous devrions faire est de transformer la variable `treatment` en facteur :
 
 ```{r}
-Light <- Light %>%
+Light <- Light |>
   mutate(treatment = factor(treatment))
 ```
 
@@ -91,7 +91,7 @@ levels(Light$treatment)
 Pour les statistiques descriptives et les graphiques qui viendront après, nous souhaitons indiquer l'ordre suivant : `control`, puis `knee`, puis `eyes` :
 
 ```{r}
-Light <- Light %>%
+Light <- Light |>
   mutate(treatment = fct_relevel(treatment, "control", "knee", "eyes"))
 
 Light
@@ -107,15 +107,15 @@ Attention à bien respecter la casse (le respect des majuscules/minuscules est t
 Comme toujours, et maintenant que nos données sont au bon format, il est nécessaire d'examiner quelques statistiques descriptives pour chaque catégorie étudiée. On peut tout d'abord commencer par examiner la taille de chaque échantillon :
 
 ```{r}
-Light %>%
+Light |>
   count(treatment)
 ```
 
 Nous avons ici la confirmation que le design expérimental n'est pas équilibré, puisque le groupe `control` compte un individu de plus. Nous pouvons ensuite utiliser la fonction `skim` du package `skimr` pour obtenir un résumé des données :
 
 ```{r, render = knitr::normal_print, size = 'small'}
-Light %>%
-  group_by(treatment) %>%
+Light |>
+  group_by(treatment) |>
   skim()
 ```
 
@@ -133,7 +133,7 @@ Enfin, les histogrammes présentés pour chaque groupe semblent très éloignés
 Il semble donc que seul le groupe `eyes` soit véritablement différent du groupe témoin. Pour le vérifier, on peut calculer les intervalles de confiance à 95% des moyennes. Nous examinerons ensuite quelques  graphiques, puis nous ferons un test d'hypothèses.
 
 ```{r}
-Light %>% 
+Light |> 
   reframe(mean_cl_normal(shift), .by = treatment)
 ```
 
@@ -144,7 +144,7 @@ Là encore, le groupe `eyes` semble assez différent des 2 autres. L'intervalle 
 Comme toujours, il est indispensable de regarder à quoi ressemblent les données brutes sur un ou des graphiques. Les statistiques descriptives ne racontent en effet pas toujours toute l'histoire. Ici, nous allons superposer les données brutes, sous forme de nuage de points, aux boites à moustaches :
 
 ```{r}
-Light %>%
+Light |>
   ggplot(aes(x = treatment, y = shift, fill = treatment)) +
   geom_boxplot(notch = TRUE, show.legend = FALSE, 
                alpha = 0.3, outlier.colour = NA) +
@@ -156,7 +156,7 @@ Light %>%
 Puisqu'il y a peu de données, les intervalles de confiance à 95% sont très larges. Ils dépassent d'ailleurs presque systématiquement les quartiles, ce qui explique l'apparence bizarre des boîtes à moustaches et les messages d'avertissement affichés lors de la création du graphique. Il vaudait donc mieux représenter cette figure sans ces intervalles de confiance. Toutefois, avant de les retirer, on peut constater ici que les IC 95% se chevauchent complètement pour les séries `control` et `knee`. En revanche, il n'y a aucun chevauchement de l'IC 95% du groupe `eyes` avec les 2 autres groupes. Ces réslutats sont très légèrement différents de ceux obtenus plus haut, car on examine ici les intervalles de confiance à 95% des médianes, alors qu'on regardait les intervalles de confiance à 95% des moyennes dans la section précédente. Les conclusions sont toutefois les mêmes : on s'attend donc à trouver une différence de moyenne significative entre le groupe `eyes` d'une part, et les groupes `control` et `knee` d'autre part, mais pas de différence de moyenne entre les groupes `control` et `knee`.
 
 ```{r}
-Light %>%
+Light |>
   ggplot(aes(x = treatment, y = shift, fill = treatment)) +
   geom_boxplot(show.legend = FALSE, 
                alpha = 0.3, outlier.colour = NA) +
@@ -172,7 +172,7 @@ L'examen d'un graphique de densité facetté donne les mêmes informations :
 ```{r}
 #| fig-asp: 1
 
-Light %>% 
+Light |> 
   ggplot(aes(x = shift, fill = treatment)) +
   geom_density(show.legend = FALSE, alpha = 0.5) +
   geom_rug() +
@@ -185,7 +185,7 @@ Un package utile lorsque l'on dispose d'un grand nombre de groupes que l'on souh
 
 ```{r}
 library(ggridges)
-Light %>% 
+Light |> 
   ggplot(aes(x = shift, y = treatment, fill = treatment)) +
   geom_density_ridges(show.legend = FALSE, alpha = 0.5) +
   scale_fill_brewer(palette = "Accent") +
@@ -441,7 +441,7 @@ En revanche, les lignes 2 et 3 de ce tableau montrent des différences significa
 En utilisant le tableau ci-dessus, nous pouvons synthétiser graphiquement ces résultats :
 
 ```{r}
-tidy(post_hoc2) %>%
+tidy(post_hoc2) |>
   ggplot(aes(x = contrast, y = estimate)) +
   geom_point() +
   geom_linerange(aes(ymin = conf.low, ymax = conf.high)) +
@@ -546,11 +546,19 @@ Avec ces résultats on progresse un peu, car outre les $p-$values pour chaque co
 
 ```{r}
 # Comparaisons entre les groupes `knee` et `eyes` (dans cet ordre)
-Light %>%
-  filter(treatment %in% c("knee", "eyes")) %>%
-  wilcox.test(shift ~ treatment, data = ., conf.int = TRUE) %>%
+Light |>
+  filter(treatment %in% c("knee", "eyes")) |>
+  wilcox.test(shift ~ treatment, data = _, conf.int = TRUE) |>
   tidy()
 ```
+
+:::{.callout-note}
+## `data = _`
+
+La syntaxe `_` est un raccourci qui permet de désigner l'objet transmis par le pipe `|>`.  Ici, cela signifie que nous utilisons les données du tableau `Light` filtrées grâce à la fonction `filter()` pour réaliser le test de Wilcoxon. Cela évite de devoir réécrire `Light` dans la fonction `wilcox.test()`.
+
+Attention toutefois, cette syntaxe ne fonctionne que si le pipe **natif** est utilisé (ce pipe : `|>`). Si vous utilisez le pipe du tidyverse (`%>%`), vous ne pouvez pas utiliser `_` de cette manière : il faut utiliser le point à la place.
+:::
 
 
 Pour le décalage de phase de ces 2 groupes, la différence de médiane estimée vaut donc 1.19, avec un intervalle de confiance à 95% de $[0.3 ; 2.21]$. Toutes les valeurs comprises dans cet intervalle de confiance sont strictement positives. Il y a donc très peu de chances pour que la différence de médiane entre ces deux groupes soit nulle. Le test de Dunn ci-dessus, qui montre une différence significative entre ces groupes, est donc confirmé.
@@ -560,7 +568,7 @@ Pour le décalage de phase de ces 2 groupes, la différence de médiane estimée
 
 ### *Cardamine pensylvanica*
 
-En biologie de la conservation, la question de l'existence d'un lien entre la capacité de dispersion des organismes et le maintien durable des populations dans le temps est étudié de près, notamment en raison de l'anthropisation des milieux qui conduit très souvent à la fragmentation des habitats. Cette question a été étudiée par 2 chercheurs [@Molofsky2005] chez *Cardamine pensylvanica*, une [plante annuelle d'Amérique du Nord](https://en.wikipedia.org/wiki/Cardamine_pensylvanica) qui produit des graines qui sont dispersées de façon explosive. Quatre traitements ont été utilisés pour modifier expérimentalement la dispersion des graines. La distance entre populations contigües a été définie comme suit :
+En biologie de la conservation, la question de l'existence d'un lien entre la capacité de dispersion des organismes et le maintien durable des populations dans le temps est étudié de près, notamment en raison de l'anthropisation des milieux qui conduit très souvent à la fragmentation des habitats. Cette question a été étudiée par 2 chercheurs [@Molofsky2005] chez *Cardamine pensylvanica*, une [plante annuelle d'Amérique du Nord](https://en.wikipedia.org/wiki/Cardamine_pensylvanica) qui produit des graines qui sont dispersées de façon explosive. Quatre traitements ont été utilisés pour modifier expérimentalement la dispersion des graines. La distance entre populations contiguës a été définie comme suit :
 
 - Traitement 1 : `continu`. Les plants sont conservés au contact les uns des autres.
 - Traitement 2 : `medium`. Les plants sont séparés de 23.2 centimètres.

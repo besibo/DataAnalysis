@@ -84,9 +84,9 @@ On constate ici 3 choses :
 
 Nous pouvons facilement réaliser les 3 modifications d'un coup, et stokcer le résultat dans un nouveau tableau `Lizard` :
 ```{r}
-Lizard <- Lizard_raw %>%
-  mutate(Survival = factor(Survival)) %>%
-  rename(Horn_len = squamosalHornLength) %>%
+Lizard <- Lizard_raw |>
+  mutate(Survival = factor(Survival)) |>
+  rename(Horn_len = squamosalHornLength) |>
   filter(!is.na(Horn_len))
 
 Lizard
@@ -107,8 +107,8 @@ Lorsque vous disposez de données appartenant à des groupes indépendants, il f
 Comme dans le @sec-moy2 sur les données appariées, les statistiques descriptives doivent ici être réalisées pour chaque groupe d'individus, et non tous groupes confondus. Ici, le plus simple est d'utiliser la fonction `skim()` sur les données groupées par niveau du facteur `Survival` (avec la fonction `group_by()`) :
 
 ```{r, render = knitr::normal_print, size = 'small'}
-Lizard %>%
-  group_by(Survival) %>%
+Lizard |>
+  group_by(Survival) |>
   skim()
 ```
 
@@ -119,14 +119,14 @@ Enfin, les histogrammes très simplifiés fournis laissent penser que les donné
 Outre ces informations sur les ordres de grandeurs observés dans chaque groupe de lézards pour les indices de **position** (moyennes, médianes et quartiles), et de **dispersion** (écarts-types et histogrammes), la fonction `skim()` ne fournit pas les effectifs observés dans chaque groupe. On sait qu'il y a en tout 184 individus, mais on ne sait pas comment ils se répartissent dans les 2 groupes de lézards. Pour le déterminer, on peut utiliser une fonction décrite plus tôt, la fonction `count()` :
 
 ```{r}
-Lizard %>%
+Lizard |>
   count(Survival)
 ```
 
 On peut obtenir la même information avec la fonction `summarise()` et son argument `.by`, et la fonction `n()` :
 
 ```{r}
-Lizard %>% 
+Lizard |> 
   summarize(Effectif = n(), .by = Survival)
 ```
 
@@ -135,7 +135,7 @@ On constate ici que les tailles d'échantillons sont très différentes. C'est n
 Enfin, on peut calculer des indices d'incertitude. C'est d'autant plus important qu'il est difficile de se faire une idée de la signification d'une différence moyenne de longueur de cornes de 2 millimètres. Est-ce important ou négligeable ? Est-ce que ces estimations sont précises ou non ? Comme dans les chapitres précédents, nous allons calculer les intervalles de confiance à 95% de la moyenne de chaque groupe :
 
 ```{r}
-Lizard %>% 
+Lizard |> 
   reframe(mean_cl_normal(Horn_len), .by = Survival)
 ```
 
@@ -153,7 +153,7 @@ Comme toujours, nous pouvons réaliser plusieurs types de graphiques pour en app
 #| out-width: '50%'
 #| fig-align: 'center'
 
-Lizard %>%
+Lizard |>
   ggplot(aes(x = Survival, y = Horn_len)) +
   geom_jitter(height = 0, width = 0.2, alpha = 0.5) +
   labs(x = "Groupe de lézards",
@@ -166,7 +166,7 @@ Ce premier graphique permet de visualiser très clairement les différences de t
 ### Avec des histogrammes facettés {#sec-histofacet}
 
 ```{r}
-Lizard %>%
+Lizard |>
   ggplot(aes(x = Horn_len)) +
   geom_histogram(bins = 15, fill = "firebrick2", color = "grey20", alpha = 0.5)+
   geom_rug() +
@@ -184,7 +184,7 @@ Cette visualisation nous montre que les données doivent suivre à peu près une
 ### Avec des diagrammes de densité facettés {#sec-densfacet}
 
 ```{r}
-Lizard %>%
+Lizard |>
   ggplot(aes(x = Horn_len)) +
   geom_density(fill = "firebrick2", alpha = 0.5) +
   geom_rug() +
@@ -207,7 +207,7 @@ En général, il est donc inutile de faire à la fois les histogrammes et les di
 #| out-width: '50%'
 #| fig-align: 'center'
 
-Lizard %>%
+Lizard |>
   ggplot(aes(x = Survival, y = Horn_len)) +
   geom_boxplot(notch = TRUE) +
   labs(x = "Groupe de lézards",
@@ -226,7 +226,7 @@ Enfin, il est tout à fait possible de représenter sur le même graphique les b
 #| out-width: '50%'
 #| fig-align: 'center'
 
-Lizard %>%
+Lizard |>
   ggplot(aes(x = Survival, y = Horn_len, fill = Survival)) +
   geom_boxplot(notch = TRUE, color = "grey20", alpha = 0.2,
                outlier.color = NA, show.legend = FALSE) +
@@ -283,9 +283,9 @@ Nous commençons donc par tester la Normalité des 2 populations dont sont issus
 - H$_1$ : la taille des cornes ne suit pas une distribution Normale dans la population des lézards cornus morts.
 
 ```{r}
-Lizard %>%
-  filter(Survival == "killed") %>%
-  pull(Horn_len) %>%
+Lizard |>
+  filter(Survival == "killed") |>
+  pull(Horn_len) |>
   shapiro.test()
 ```
 
@@ -297,9 +297,9 @@ Pour les individus vivants :
 - H$_1$ : la taille des cornes ne suit pas une distribution Normale dans la population des lézards cornus vivants.
 
 ```{r}
-Lizard %>%
-  filter(Survival == "living") %>%
-  pull(Horn_len) %>%
+Lizard |>
+  filter(Survival == "living") |>
+  pull(Horn_len) |>
   shapiro.test()
 ```
 
@@ -417,18 +417,18 @@ Dans le jeu de données `penguins` du package `palmerpenguins`, récupérez les 
 ```{r}
 #| include: false
 
-adel <- penguins %>% 
-  filter(species == "Adelie") %>% 
+adel <- penguins |> 
+  filter(species == "Adelie") |> 
   filter(!is.na(sex)) 
 
-adel %>% 
-  group_by(sex) %>% 
+adel |> 
+  group_by(sex) |> 
   skim(bill_length_mm)
 
-adel %>% 
+adel |> 
   count(sex)
 
-adel %>% 
+adel |> 
   ggplot(aes(x = sex, y = bill_length_mm, fill = sex)) +
   geom_boxplot(notch = TRUE, show.legend = FALSE, 
                outlier.color = NA, alpha = 0.2) +
@@ -440,7 +440,7 @@ adel %>%
     scale_fill_brewer(palette = "Accent")
 
 
-adel %>% 
+adel |> 
   ggplot(aes(x = bill_depth_mm, fill = sex)) +
   geom_density(alpha = 0.5, show.legend = FALSE) +
   geom_rug() +
@@ -451,8 +451,8 @@ adel %>%
   scale_fill_brewer(palette = "Accent")
 
 
-adel %>% 
-  group_by(sex) %>% 
+adel |> 
+  group_by(sex) |> 
   rstatix::shapiro_test(bill_length_mm)
 
 leveneTest(bill_length_mm ~ sex, data = adel)
@@ -582,7 +582,7 @@ t.test(Horn_len ~ Survival, data = Lizard, var.equal = TRUE,
 Faites donc toujours attention à l'ordre des catégories de vos facteurs pour ne pas vous tromper. Une façon simple de vérifier cet ordre et d'observer vos graphiques (par exemple, les boîtes à moustaches). L'ordre dans lequel les catégories apparaissent sur l'axe des `x` reflète l'ordre des catégorie du facteur porté par cet axe :
 
 ```{r}
-Lizard %>% 
+Lizard |> 
   ggplot(aes(x = Survival, y = Horn_len)) +
   geom_boxplot()
 ```

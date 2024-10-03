@@ -78,8 +78,8 @@ skim(plant)
 Ce premier examen nous montre que nous n'avons aucune données manquantes et que l'indice de stabilité a une distribution à peu près symétrique et qu'il varie d'un peu plus de 0.3 à près de 2.8. Pour en apprendre un peu plus, nous pouvons examiner les données en groupes. Ici, la variable `nSpecies` est bien une variable numérique, mais elle prend seulement quelques valeurs entières (1, 2, 4, 8 ou 16 espèces). Il est donc possible de regarder les valeurs de stabilité de biomasse pour chaque nombre d'espèces dans les parcelles:
 
 ```{r, render = knitr::normal_print}
-plant %>%
-  group_by(nSpecies) %>%
+plant |>
+  group_by(nSpecies) |>
   skim()
 ```
 
@@ -91,7 +91,7 @@ Comme pour la corrélation, il est inutile ici de calculer des indices d'impréc
 
 Visualiser les données est toujours aussi indispensable. Ici, comme pour la corrélation, on commence par un nuage de points pour visualiser les données et la forme de leur relation :
 ```{r}
-plant %>%
+plant |>
   ggplot(aes(x = nSpecies, y = biomassStability)) +
   geom_point(alpha = 0.5) +
   labs(x = "Nombre d'espèces par parcelle",
@@ -101,7 +101,7 @@ plant %>%
 Ce graphique nous apprend que contrairement à la plupart des méthodes statistiques vues jusqu'ici, il n'est pas nécessaire que les données des variables soient distribuées selon une loi Normale. Ici, nous avons des données qui sont tout sauf normales pour la variable explicative puisque nous avons seulement les entiers 1, 2, 4, 8 et 16. Un histogramme ou une courbe de densité montre que la distribution de cette variable est très loin de la Normalité :
 
 ```{r}
-plant %>%
+plant |>
   ggplot(aes(x = nSpecies)) +
   geom_density(fill = "firebrick2", adjust = 0.2) +
   labs(x = "Nombre d'espèces par parcelle", 
@@ -113,7 +113,7 @@ Cela n'est pas du tout problématique : comme pour l'ANOVA, les conditions d'app
 On peut visualiser dès maintenant la droite de régression linéaire qui permet de lier ces deux variables grâce à la fonction `geom_smooth(method = "lm", se = FALSE`)` :
 
 ```{r}
-plant %>%
+plant |>
   ggplot(aes(x = nSpecies, y = biomassStability)) +
   geom_point(alpha = 0.3) +
   geom_smooth(method = "lm", se = FALSE) +
@@ -205,7 +205,7 @@ set.seed(6542)
 no_rel <- tibble(x = rnorm(50, 10, 2),
                  y = rnorm(50, 15, 3))
 
-no_rel %>% 
+no_rel |> 
   ggplot(aes(x, y)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
@@ -223,7 +223,7 @@ added <- tibble(x = 25, y = 72)
 
 bad_rel <- bind_rows(no_rel, added)
 
-bad_rel %>% 
+bad_rel |> 
   ggplot(aes(x, y)) +
   geom_point(aes(color = x > 20), show.legend = FALSE) +
   expand_limits(x = c(0, 25), y = c(0, 80)) +
@@ -241,7 +241,7 @@ added <- tibble(x = 25, y = 72)
 
 bad_rel <- bind_rows(no_rel, added)
 
-bad_rel %>% 
+bad_rel |> 
   ggplot(aes(x, y)) +
   geom_point(aes(color = x > 20), show.legend = FALSE) +
   geom_smooth(method = "lm", se = FALSE) +
@@ -317,7 +317,7 @@ Ces résultats nous indiquent que les valeurs d'ordonnées à l'origine les plus
 Il est possible de visualiser cette incertitude grâce à la fonction `geom_smooth()` utilisée plus tôt, en spécifiant `se = TRUE` :
 
 ```{r}
-plant %>%
+plant |>
   ggplot(aes(x = nSpecies, y = biomassStability)) +
   geom_point(alpha = 0.3) +
   geom_smooth(method = "lm", se = TRUE) +
@@ -345,8 +345,8 @@ Exécutez les commandes suivantes :
 ```{r, eval = FALSE}
 library(datasauRus)
 
-datasaurus_dozen %>%
-    group_by(dataset) %>%
+datasaurus_dozen |>
+    group_by(dataset) |>
     summarize(
       moy_x    = mean(x),
       moy_y    = mean(y),
@@ -364,7 +364,7 @@ Si on s'en tient à ces calculs d'indices synthétiques, on pourrait croire que 
 
 ```{r, fig.asp = 1, echo = -1}
 library(datasauRus)
-datasaurus_dozen %>%
+datasaurus_dozen |>
   ggplot(aes(x, y, color = dataset)) +
   geom_point(show.legend = FALSE) +
   facet_wrap(~dataset, ncol = 3) +
@@ -396,7 +396,7 @@ hockey <- read_csv("data/hockey.csv")
 
 skim(hockey)
 
-hockey %>%
+hockey |>
   ggplot(aes(x = FaceWidthHeightRatio, y = PenaltyMinutes)) +
   geom_point() +
   geom_smooth(method = "lm")

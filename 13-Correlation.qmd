@@ -154,7 +154,7 @@ La première colonne de ce tableau indique, pour chaque individu suivi, le nombr
 Il manque à ce tableau une variable indiquant le code des individus. Elle n'est pas indispensable, mais la rajouter est une bonne habitude à prendre pour toujours travailler avec des "données rangées". Puisqu'on dispose de 24 individus, on leur assigne donc un code de 1 à 24 :
 
 ```{r}
-birds <- birds %>%
+birds <- birds |>
   mutate(ID = factor(1:24))
 birds
 ```
@@ -185,8 +185,8 @@ Comme toujours, la fonction `skim()` nous renseigne sur la tendance centrale, ou
 D'habitude, on calcule à ce stade des indices d'**incertitude** : l'erreur standard de la moyenne ou l'intervalle de confiance de la moyenne. Ici, ça n'est pas utile car les moyennes en elles-mêmes ne nous intéressent pas, et donc leurs incertitudes non plus. C'est en revanche la relation entre les 2 variables numériques qui nous intéresse, en particulier l'intensité et le sens de cette relation. On calcule donc maintenant le coefficient de corrélation linéaire entre les 2 variables :
 
 ```{r}
-birds %>%
-  select(nVisitsNestling, futureBehavior) %>%
+birds |>
+  select(nVisitsNestling, futureBehavior) |>
   cor()
 ```
 
@@ -206,7 +206,7 @@ Afin de savoir si la valeur de $r$ calculée précédemment dans notre échantil
 #| label: fig-rel
 
 
-birds %>%
+birds |>
   ggplot(aes(x = nVisitsNestling, y = futureBehavior)) +
   geom_point() +
   labs(x = "Nombre de visites reçues par le poussin",
@@ -223,14 +223,14 @@ Si visualiser la distribution des données n'est pas indispensable pour se faire
 #| fig-asp: 0.8
 
 
-birds %>% 
+birds |> 
   ggplot(aes(x = nVisitsNestling)) +
   geom_density(fill = "firebrick2", alpha = 0.5) +
   geom_rug() +
   labs(x = "Visites reçues par le poussin",
        y = "Densité")
 
-birds %>% 
+birds |> 
   ggplot(aes(x = futureBehavior)) +
   geom_density(fill = "firebrick2", alpha = 0.5) +
   geom_rug() +
@@ -305,8 +305,8 @@ p5 <- ggplot(ex5, aes(sort(x), w)) +
   labs(x = "x", y = "y")
 
 
-p6 <- ex5 %>%
-  arrange(x) %>%
+p6 <- ex5 |>
+  arrange(x) |>
   ggplot(aes(x, z)) +
   geom_point() +
   geom_label(aes(x = 0, y = -5, label = "Non linéaire")) +
@@ -326,16 +326,16 @@ Dans notre cas, le graphique @fig-rel semble indiquer que les 2 premières condi
 - $H_1$ : les données ne suivent pas une distribution Normale dans la population générale.
 
 ```{r}
-birds %>% 
-  pull(nVisitsNestling) %>% 
+birds |> 
+  pull(nVisitsNestling) |> 
   shapiro.test()
 ```
 
 Contrairement à ce que pouvait laisser croire le graphique de densité, la variable `nVisitsNestling` suit bien une distribution Normale (test de Shapiro-Wilk, $p = 0.397$).
 
 ```{r}
-birds %>% 
-  pull(futureBehavior) %>% 
+birds |> 
+  pull(futureBehavior) |> 
   shapiro.test()
 ```
 
@@ -468,18 +468,18 @@ On souhaite déterminer si le coefficient de consanguinité est associé à la p
 
 ```{r include=FALSE, render = knitr::normal_print}
 loups <- read_csv("data/loups.csv")
-loups %>%
+loups |>
   ggplot(aes(x = inbreedCoef, y = nPups)) +
   geom_point()
 
 skim(loups)
-loups %>%
-  pull(inbreedCoef) %>%
-  shapiro.test
+loups |>
+  pull(inbreedCoef) |>
+  shapiro.test()
 
-loups %>%
-  pull(nPups) %>%
-  shapiro.test
+loups |>
+  pull(nPups) |>
+  shapiro.test()
 
 cor.test(loups$inbreedCoef, loups$nPups)
 ```
@@ -498,18 +498,18 @@ Les données de @wiseman1996 sont disponibles dans le fichier [`ropetrick.csv`](
 
 ```{r include=FALSE, render = knitr::normal_print}
 rope <- read_csv("data/ropetrick.csv")
-rope %>%
+rope |>
   ggplot(aes(x = years, y = impressiveness)) +
   geom_point()
 
 skim(rope)
-rope %>%
-  pull(years) %>%
-  shapiro.test
+rope |>
+  pull(years) |>
+  shapiro.test()
 
-rope %>%
-  pull(impressiveness) %>%
-  shapiro.test
+rope |>
+  pull(impressiveness) |>
+  shapiro.test()
 
 cor.test(rope$impressiveness, rope$years,
          method = "spearman")

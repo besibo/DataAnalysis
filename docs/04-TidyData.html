@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.6.20">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Analyse de Données - 4&nbsp; (Ar)ranger des données avec tidyr</title>
+<title>4&nbsp; (Ar)ranger des données avec tidyr – Analyse de Données</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -71,11 +71,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37b28c73a5b33615122fb4bc0571bf08.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-37b28c73a5b33615122fb4bc0571bf08.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ebb3f15226333999ced7353b00cc7c51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
@@ -115,13 +115,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-TidyData.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -364,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-tidyschema" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-tidyschema" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tidyschema-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/tidy.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
@@ -398,7 +398,7 @@ Figure&nbsp;4.1: La définition des ‘données rangées’, d’après <a href=
 <p>Autrement dit, les variables peuvent être visualisées de la façon suivante :</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-gather" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-gather" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gather-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/gather.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
@@ -460,7 +460,7 @@ Figure&nbsp;4.2: Position des variables dans le tableau <code>cases</code> du pa
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Évolution du nombre de cas de tuberculose entre 2011 et 2013"</span>,</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"DE : Allemagne, FR : France, US : États-Unis"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-casesbarplot" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-casesbarplot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-casesbarplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="04-TidyData_files/figure-html/fig-casesbarplot-1.png" class="img-fluid figure-img" width="672">
@@ -812,7 +812,7 @@ Différence de philosophie
 <p>Dans <code>RStudio</code>, localisez l’onglet <code>Files</code> situé dans le panneau en bas à droite de l’interface du logiciel. Dans ce panneau, naviguez jusqu’à votre répertoire de travail, qui doit maintenant contenir le fichier <code>daupin.xls</code> que vous avez téléchargé. Cliquez sur son nom, puis, dans le menu qui s’affiche, choisissez <code>Import Dataset...</code> :</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-import" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-import" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-import-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/import.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
@@ -827,7 +827,7 @@ Figure&nbsp;4.4: L’option <code>Import Dataset...</code> dans la fenêtre <cod
 <p>La nouvelle fenêtre qui s’ouvre est celle de l’<em>assistant d’importation</em> (<a href="#fig-import2" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>).</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-import2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-import2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-import2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/import2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
@@ -849,7 +849,7 @@ Figure&nbsp;4.5: L’assistant d’importation de <code>RStudio</code>.
 <p>Ici, nous constatons que les données ne sont pas au bon format. La première chose que nous pouvons faire est d’indiquer à <code>R</code> que nous souhaitons ignorer les 9 premières lignes du fichier. Ensuite, nous précisons à RStudio que l’étoile “<code>*</code>” a été utilisée pour indiquer des données manquantes (<a href="#fig-import3" class="quarto-xref">Figure&nbsp;<span>4.6</span></a>) :</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-import3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-import3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-import3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/import3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
@@ -936,7 +936,7 @@ Figure&nbsp;4.6: Les bons réglages pour ce fichier.
 <p>On commence par cliquer sur <code>dauphin.csv</code> dans l’onglet <code>Files</code> de <code>RStudio.</code> On sélectionne ensuite <code>Import Dataset...</code> :</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-importcsv1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-importcsv1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-importcsv1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/importcsv1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
@@ -951,7 +951,7 @@ Figure&nbsp;4.7: Importer un fichier <code>.csv</code> depuis l’onglet <code>F
 <p>La fenêtre qui s’ouvre est en tous points identique à celle obtenue pour l’importation de fichiers tableurs (<a href="#fig-importcsv2" class="quarto-xref">Figure&nbsp;<span>4.8</span></a>).</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-importcsv2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-importcsv2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-importcsv2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/importcsv2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
@@ -967,7 +967,7 @@ Figure&nbsp;4.8: Importer un fichier <code>.csv</code> depuis l’onglet <code>F
 <p>À ce stade, chaque variable est maintenant reconnue comme telle, chaque variable occupe donc une colonne distincte. Mais les colonnes <code>Cd</code>, <code>Cu</code> et <code>Hg</code> ne contiennent pas les bonnes valeurs (vous pouvez le vérifier en consultant l’onglet <code>dauphin.csv</code> que vous avez ouvert un peu plus tôt à côté de votre script). La cause est simple : <code>R</code> s’attend à ce que les nombres décimaux utilisent le point en guise de symbole des décimales. Or, notre fichier <code>.csv</code> utilise la virgule. C’est une convention qui dépend du pays dans lequel vous vous trouvez, et de la langue de votre système d’exploitation (en langage technique, on parle de <code>Locale</code>). Le fichier <code>dauphin.csv</code> ayant été créé sur un ordinateur français, la virgule a été utilisée en guise de symbole des décimales. Pour l’indiquer à <code>R</code>, cliquez sur <code>Locale &gt; Configure...</code>, changez le <code>.</code> en <code>,</code> dans le champ <code>Decimal Mark</code> et validez en cliquant sur <code>Configure</code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-importcsv3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-importcsv3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-importcsv3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/importcsv3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
@@ -982,7 +982,7 @@ Figure&nbsp;4.9: Changement du symbole utilisé pour les décimales.
 <p>Les données sont maintenant au bon format, prêtes à être importées dans <code>RStudio.</code> Afin de ne pas écraser l’objet <code>dauphin</code> que nous avons créé à partir du fichier tableur un peu plus tôt, nous stockerons ces nouvelles données dans un objet nommé <code>dauphin2</code>. Pour cela, ajoutez un <code>2</code> au nom <code>dauphin</code> dans le champ <code>Name</code> en bas à gauche :</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-importcsv4" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-importcsv4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-importcsv4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/importcsv4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
@@ -1210,7 +1210,7 @@ dbl (6): Id, Taille, Age, Cd, Cu, Hg
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-exercicedauphin" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-exercicedauphin" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-exercicedauphin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="04-TidyData_files/figure-html/fig-exercicedauphin-1.png" class="img-fluid figure-img" width="672">
@@ -1426,18 +1426,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1469,7 +1458,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1477,7 +1488,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

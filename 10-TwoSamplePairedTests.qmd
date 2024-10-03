@@ -40,7 +40,7 @@ theme_set(theme_bw())
 
 On s'intéresse ici à la comparaison de 2 séries de données dont les observations sont liées 2 à 2. C'est par exemple le cas lorsque l'on fait subir un traitement à différents sujets et que l'on souhaite comparer les mesures obtenues avant et après le traitement.
 
-Autrement dit, dans les plans d'expériences appariés, **les deux traitements** ou modalités **sont appliqués à chaque unité d'échantillonnage** : chaque sujet ou unité d'échantillonnage fournit plusieurs valeurs. Ça n'était pas le cas du chapitre précédent (@#sec-moy1) où chaque adulte n'avait fourni qu'une unique valeur de température.
+Autrement dit, dans les plans d'expériences appariés, **les deux traitements** ou modalités **sont appliqués à chaque unité d'échantillonnage** : chaque sujet ou unité d'échantillonnage fournit plusieurs valeurs. Ça n'était pas le cas du chapitre précédent (@sec-moy1) où chaque adulte n'avait fourni qu'une unique valeur de température.
 
 Voici quelques exemples de situations qui devraient être traitées avec des tests sur données appariées :
 
@@ -83,9 +83,9 @@ Visiblement, il n'y a pas de données manquantes mais certaines variables sont i
 Enfin, nous donnerons le nom `Testo_large`  au tableau modifié :
 
 ```{r}
-Testo_large <- Testo %>% 
-  select(-beforeImplant, -afterImplant) %>%  # Suppression des colonnes inutiles
-  mutate(blackbird = factor(blackbird)) %>%  # Transformation en facteur 
+Testo_large <- Testo |> 
+  select(-beforeImplant, -afterImplant) |>  # Suppression des colonnes inutiles
+  mutate(blackbird = factor(blackbird)) |>  # Transformation en facteur 
   rename(ID = blackbird,                     # Changement des noms de variables
          Before = logBeforeImplant,
          After = logAfterImplant)
@@ -108,10 +108,10 @@ Pour effectuer cette transformation, nous utiliserons la fonction `pivot_longer(
 
 
 ```{r}
-Testo_long <- Testo_large %>%
+Testo_long <- Testo_large |>
   pivot_longer(cols = c(Before, After),   # Les colonnes qu'on veut réorganiser
                names_to = "Moment",   # Quel nom donner à la variable qui contiendra les noms des anciennes colonnes
-               values_to = "DO") %>%      # Quel nom donner à la variable qui contiendra le contenu des anciennes colonnes
+               values_to = "DO") |>      # Quel nom donner à la variable qui contiendra le contenu des anciennes colonnes
   mutate(Moment = factor(Moment, levels = c("Before", "After")))
 
 Testo_long
@@ -146,8 +146,8 @@ skim(Testo_large)
 On arrive toutefois aux mêmes résultats avec le tableau long, à condition de grouper les données par traitement (variable `Traitement`) avec `group_by()` :
 
 ```{r, render = knitr::normal_print, size = 'small'}
-Testo_long %>%
-  group_by(Moment) %>%
+Testo_long |>
+  group_by(Moment) |>
   skim(DO)
 ```
 
@@ -176,7 +176,7 @@ Tous les graphiques présentés dans la @sec-oneeach (précisément consacrée �
 #| out-width: '50%'
 #| fig-align: 'center'
 
-Testo_long %>%
+Testo_long |>
   ggplot(aes(x = Moment, y = DO)) +
   geom_jitter(height = 0, width = 0.25) +
   labs(y = "immunocompétence (log DO / minute)",
@@ -188,7 +188,7 @@ Testo_long %>%
 
 Nous allons faire un histogramme pour chaque série de données en utilisant des facettes :
 ```{r}
-Testo_long %>%
+Testo_long |>
   ggplot(aes(x = DO)) +
   geom_histogram(bins = 10, fill = "firebrick2", color = "grey20", alpha = 0.5)+
   geom_rug() +
@@ -202,7 +202,7 @@ Testo_long %>%
 ### Avec des diagrammes de densité facettés
 
 ```{r}
-Testo_long %>%
+Testo_long |>
   ggplot(aes(x = DO)) +
   geom_density(fill = "firebrick2", alpha = 0.5) +
   geom_rug() +
@@ -221,7 +221,7 @@ Testo_long %>%
 #| out-width: '50%'
 #| fig-align: 'center'
 
-Testo_long %>%
+Testo_long |>
   ggplot(aes(x = Moment, y = DO)) +
   geom_boxplot(notch = TRUE) +
   expand_limits(y = 5.2) +
@@ -243,7 +243,7 @@ Toutes ces représentations graphiques sont certes utiles, mais elles masquent u
 #| fig-align: 'center'
 
 
-Testo_long %>%
+Testo_long |>
   ggplot(aes(x = Moment, y = DO, group = ID, color = ID)) +
   geom_line() +
   geom_point() +
@@ -259,14 +259,14 @@ Une façon d'estimer si les changements d'immunocompétence sont majoritairement
 
 ```{r}
 # Calcul de la différence de DO (After - Before)
-Testo_large <- Testo_large %>% 
+Testo_large <- Testo_large |> 
   mutate(Difference = After - Before)
 
 # Affichage du tableau
 Testo_large
 
 # Calcul de la moyenne des différences et de son IC95%
-Testo_large %>% 
+Testo_large |> 
   reframe(mean_cl_normal(Difference))
 ```
 
@@ -306,7 +306,7 @@ Testo_large
 Il nous faut donc tester la Normalité de la nouvelle variable `Difference`. Commençons par en faire un graphique :
 
 ```{r}
-Testo_large %>%
+Testo_large |>
   ggplot(aes(x = Difference)) +
   geom_density(fill = "firebrick2", alpha = 0.5) +
   geom_rug() +
@@ -322,8 +322,8 @@ Compte tenu du faible nombre d'individus (n = 13), la forme de cette courbe de d
 - H$_1$ : la différence d'immunocompétence des individus ne suit pas une distribution Normale.
 
 ```{r}
-Testo_large %>%
-  pull(Difference) %>%
+Testo_large |>
+  pull(Difference) |>
   shapiro.test()
 ```
 
@@ -334,13 +334,13 @@ Les conditions d'application du test paramétrique sont donc réunies.
 :::{.callout-warning}
 ## Attention !
 
-Pour ce test, la Normalité doit bien être verifiée sur la différence entre les 2 groupes de valeurs, et non sur chaque groupe de valeur pris séparément. C'est une source d'erreur fréquente. Ici, les données de départ (DO avant et DO après) ne suivaient pas du tout une distribution Normale. Pourtant, la différence de DO suit bel et bien la distribution Normale, nous permettant de faire le test paramétrique.
+Pour ce test, la Normalité doit bien être vérifiée sur la différence entre les 2 groupes de valeurs, et non sur chaque groupe de valeur pris séparément. C'est une source d'erreur fréquente. Ici, les données de départ (DO avant et DO après) ne suivaient pas du tout une distribution Normale. Pourtant, la différence de DO suit bel et bien la distribution Normale, nous permettant de faire le test paramétrique.
 :::
 
 
 ### Réalisation du test et interprétation
 
-Le test de Student sur données appariées peut se faire de 3 façons distinctes. Les 3 méthodes fournissent exactement les mêmes résultats, seule la syntaxe utilisée change. Quelle que soit la méthode utilisée, les hypothèses nulles et alternatives sont toujours les mêmes :
+Le test de Student sur données appariées peut se faire de 2 façons distinctes. Les 2 méthodes fournissent exactement les mêmes résultats, seule la syntaxe utilisée change. Quelle que soit la méthode utilisée, les hypothèses nulles et alternatives sont toujours les mêmes :
 
 - H$_0$ : le changement moyen de production d'anticorps après la pose chirurgicale de l'implant de testostérone est nul ($\mu_{Diff} = 0$). La procédure chirurgicale n'a pas d'effet sur l'immunocompétence. Les variations observées ne sont que le fruit du hasard de l'échantillonnage.
 - H$_1$ : le changement moyen de production d'anticorps après la pose chirurgicale de l'implant de testostérone n'est pas nul ($\mu_{Diff} \neq 0$). La procédure chirurgicale a effet significatif sur l'immunocompétence. Les variations observées ne sont pas uniquement dues à la fluctuation d'échantillonnage.

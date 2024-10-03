@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.6.20">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Analyse de Données - 5&nbsp; Manipuler des tableaux avec dplyr</title>
+<title>5&nbsp; Manipuler des tableaux avec dplyr – Analyse de Données</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -71,11 +71,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37b28c73a5b33615122fb4bc0571bf08.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-37b28c73a5b33615122fb4bc0571bf08.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ebb3f15226333999ced7353b00cc7c51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
@@ -106,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -144,13 +144,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-DataWrangling.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler des tableaux avec <code>dplyr</code></span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -369,7 +369,7 @@ window.Quarto = {
 <div class="cell fig-cap-location-top page-columns page-full">
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<div id="fig-pipepref" class="quarto-figure quarto-figure-center quarto-float anchored" data-cap-location="top">
+<div id="fig-pipepref" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="top">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-pipepref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5.1: Pour que ces raccourcis fonctionnent, assurez-vous que l’option <code>Use native pipe operator</code> est bien cochée dans les préférences de <code>RStudio</code>.
@@ -472,7 +472,7 @@ Figure&nbsp;5.1: Pour que ces raccourcis fonctionnent, assurez-vous que l’opti
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="principe"><span class="header-section-number">5.4.1</span> Principe</h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-filterfig" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-filterfig" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-filterfig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/filter.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
@@ -643,7 +643,7 @@ Figure&nbsp;5.2: Schéma de la fonction <code>filter()</code> tiré de la ‘che
 <h2 data-number="5.5" class="anchored" data-anchor-id="sec-select"><span class="header-section-number">5.5</span> Sélectionner des variables avec <code>select()</code></h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-selectfig" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-selectfig" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-selectfig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/select.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
@@ -808,7 +808,7 @@ Figure&nbsp;5.3: Schéma de la fonction <code>select()</code> tiré de la ‘che
 <h3 data-number="5.6.1" class="anchored" data-anchor-id="principe-1"><span class="header-section-number">5.6.1</span> Principe</h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-mutatefig" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-mutatefig" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mutatefig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/mutate.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
@@ -981,7 +981,7 @@ Levels: imm mat pnl pl l repos</code></pre>
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
 <span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-bxpltcol" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-bxpltcol" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bxpltcol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="05-DataWrangling_files/figure-html/fig-bxpltcol-1.png" class="img-fluid figure-img" width="672">
@@ -1003,7 +1003,7 @@ Figure&nbsp;5.5: Un exemple de figure avec 2 facteurs et des modalités ordonné
 <span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
 <span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-bxpltcol2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-bxpltcol2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bxpltcol2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="05-DataWrangling_files/figure-html/fig-bxpltcol2-1.png" class="img-fluid figure-img" width="672">
@@ -1024,7 +1024,7 @@ Figure&nbsp;5.6: La même figure mais avec les modalités des 2 facteurs ordonn�
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-bxpltcol3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-bxpltcol3" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bxpltcol3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="05-DataWrangling_files/figure-html/fig-bxpltcol3-1.png" class="img-fluid figure-img" width="672">
@@ -1072,7 +1072,7 @@ Figure&nbsp;5.7: La même figure mais avec les modalités des 2 facteurs invers�
 <span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Organe"</span>, <span class="at">fill =</span> <span class="st">"Sexe"</span>, <span class="at">y =</span> <span class="st">"Concentration en cuivre (µg/g de poids sec)"</span>) <span class="sc">+</span></span>
 <span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-bxpltcol4" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-bxpltcol4" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bxpltcol4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="05-DataWrangling_files/figure-html/fig-bxpltcol4-1.png" class="img-fluid figure-img" width="672">
@@ -1177,7 +1177,7 @@ Figure&nbsp;5.8: La même figure mais avec les modalités plus claires pour le f
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-consommation" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-consommation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-consommation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="05-DataWrangling_files/figure-html/fig-consommation-1.png" class="img-fluid figure-img" width="672">
@@ -1194,7 +1194,7 @@ Figure&nbsp;5.9: Consommation en fonction de la cylindrée
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-consommation2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-consommation2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-consommation2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="05-DataWrangling_files/figure-html/fig-consommation2-1.png" class="img-fluid figure-img" width="672">
@@ -1212,7 +1212,7 @@ Figure&nbsp;5.10: Consommation en fonction de la cylindrée
 <h2 data-number="5.7" class="anchored" data-anchor-id="sec-arrange"><span class="header-section-number">5.7</span> Trier des lignes avec <code>arrange()</code></h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-arrangefig" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-arrangefig" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-arrangefig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/arrange.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:40.0%">
@@ -1353,7 +1353,7 @@ Lien avec les statistiques descriptives
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-summarise2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-summarise2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-summarise2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/summarize.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:40.0%">
@@ -1440,7 +1440,7 @@ Figure&nbsp;5.12: Schéma de la fonction <code>summarise()</code> tiré de la �
 <p>La fonction <code>summarise()</code> devient particulièrement puissante lorsqu’on y ajoute l’argument <code>.by</code> :</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-groupby" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-groupby" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-groupby-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/groupby.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:65.0%">
@@ -2012,7 +2012,7 @@ Figure&nbsp;5.13: Fonctionnement de l’argument <code>.by</code> travaillant de
 <span id="cb127-7"><a href="#cb127-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb127-8"><a href="#cb127-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"purple"</span>, <span class="st">"orange"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Court"</span>, <span class="st">"Long"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-billlength" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-billlength" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-billlength-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="05-DataWrangling_files/figure-html/fig-billlength-1.png" class="img-fluid figure-img" width="672">
@@ -2035,7 +2035,7 @@ Figure&nbsp;5.14: Masse en gramme des mâles et des femelles des 3 espèces de m
 <span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb128-8"><a href="#cb128-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"purple"</span>, <span class="st">"orange"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Court"</span>, <span class="st">"Long"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-billlength2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-billlength2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-billlength2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="05-DataWrangling_files/figure-html/fig-billlength2-1.png" class="img-fluid figure-img" width="672">
@@ -2159,7 +2159,7 @@ Figure&nbsp;5.15: Masse en gramme des mâles et des femelles des 3 espèces de m
 <h3 data-number="5.10.2" class="anchored" data-anchor-id="inner_join"><span class="header-section-number">5.10.2</span> <code>inner_join()</code></h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-inner" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-inner" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-inner-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/innerjoin.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
@@ -2341,7 +2341,7 @@ Figure&nbsp;5.16: Schéma de la fonction <code>inner_join()</code> tiré de la �
 <h3 data-number="5.10.3" class="anchored" data-anchor-id="sec-leftjoin"><span class="header-section-number">5.10.3</span> <code>left_join()</code></h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-left" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-left" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-left-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/leftjoin.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
@@ -2582,20 +2582,20 @@ Figure&nbsp;5.17: Schéma de la fonction <code>left_join()</code> tiré de la �
 <div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
-      r      s
-  &lt;int&gt;  &lt;dbl&gt;
-1    10  1.01 
-2     9 -0.831
-3     8  0.355</code></pre>
+      r     s
+  &lt;int&gt; &lt;dbl&gt;
+1    10 0.393
+2     9 2.60 
+3     8 0.341</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
-      x     y z         r      s
-  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;  &lt;dbl&gt;
-1     1     2 TRUE     10  1.01 
-2     2     4 FALSE     9 -0.831
-3     3     6 FALSE     8  0.355</code></pre>
+      x     y z         r     s
+  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt; &lt;dbl&gt;
+1     1     2 TRUE     10 0.393
+2     2     4 FALSE     9 2.60 
+3     3     6 FALSE     8 0.341</code></pre>
 </div>
 </div>
 <p>Ici, puisque <code>a</code> et <code>b</code> ont le même nombre de lignes, il est possible de les accoler. Cela n’a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.</p>
@@ -2812,18 +2812,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -2855,7 +2844,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -2863,7 +2874,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
