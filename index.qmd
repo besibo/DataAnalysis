@@ -52,7 +52,7 @@ Ces travaux pratiques ont essentiellement 4 objectifs :
 
 4.  **Vous apprendre comment calculer des statistiques descriptives simples**, sur plusieurs types de variables ([Chapitres @sec-EDA] et [-@sec-disp]), et **comment mettre en œuvre, dans `RStudio`, les procédures statistiques décrites en cours** ([Chapitres @sec-moy1], [-@sec-moy2], [-@sec-moy3], [-@sec-anova], [-@sec-correlation], [-@sec-regression] et [-@sec-prop]), afin de vous mettre dans les meilleures conditions possibles pour aborder d'une part les comptes-rendus de TP et rapports de stage que vous aurez à produire dans ce cursus de master et d'autre part les statistiques plus avancées que vous découvrirez lors des semestres 2 et 3. Vos enseignants attendent de vous la plus grande rigueur lorsque vous analysez et présentez des résultats d'analyses statistiques. Ces TP ont pour objectifs de vous fournir les bases nécessaires pour satisfaire ce niveau d'exigence.
 
-À l'issue de ces TP et TEA, vous devriez donc être suffisamment à l'aise avec le logiciel `RStudio` pour y importer des données issues de tableurs, les manipuler pour les mettre dans un format permettant les représentations graphiques et les analyses statistiques, pour produire des graphiques pertinents, adaptés aux données dont vous disposez, et d'une qualité vous permettant de les intégrer sans honte à vos compte-rendus de TP et rapports de stages, et de réaliser les tests et analyses statistiques les plus adaptés aux questions auxquelles vous tenterez de répondre.
+À l'issue de ces TP, vous devriez donc être suffisamment à l'aise avec le logiciel `RStudio` pour y importer des données issues de tableurs, les manipuler pour les mettre dans un format permettant les représentations graphiques et les analyses statistiques, pour produire des graphiques pertinents, adaptés aux données dont vous disposez, et d'une qualité vous permettant de les intégrer sans honte à vos compte-rendus de TP et rapports de stages, et de réaliser les tests et analyses statistiques les plus adaptés aux questions auxquelles vous tenterez de répondre.
 
 Les données que vous serez amenés à traiter lors de vos stages, ou plus tard, lorsque vous serez en poste, ont souvent été acquises à grands frais, et au prix d'efforts importants. Il est donc de votre responsabilité d'en tirer le maximum. Et ça commence toujours (ou presque), par la manipulation de données dans `RStudio` et la réalisation de visualisations graphiques parlantes. Se lancer dans les tests statistiques sans avoir une idée claire de la structure des données dont on dispose est toujours une erreur. C'est pourquoi les chapitres consacrés aux statistiques n'arrivent que dans la seconde partie de ce livre en ligne. En règle générale, face à une question scientifique précise, lorsque l'on traite des données, **environ 80% du temps est consacré à la mise en forme et l'exploration (statistique et graphique) des données.** La réalisation des tests et leur interprétation ne prend que rarement plus de 20% du temps. Cela souligne l'importance des 5 premiers chapitres de ce livre en ligne : plus vous serez à l'aise avec les notions et concepts décrits dans ces chapitres, plus vous serez efficaces et plus vous gagnerez du temps par la suite.
 
@@ -66,9 +66,8 @@ Les données que vous serez amenés à traiter lors de vos stages, ou plus tard,
 
 Au total, la partie *analyse de données* de l'EC "Stratégie d'échantillonnage et analyse de données" contient :
 
--   15 heures de cours magistraux
+-   19h30 heures de cours magistraux
 -   9 heures de travaux pratiques (pour chaque groupe)
--   16 heures de TEA
 
 ### Les cours magistraux {.unnumbered}
 
@@ -78,9 +77,9 @@ Les cours magistraux sont globalement découpés en 2 blocs à peu près indépe
 
 2.  un bloc de 5 heures consacrées aux statistiques multivariées telles que l'Analyse en Composantes Principales (ACP) et l'Analyse Factorielle des Correspondances (AFC).
 
-Mon objectif n'est pas de survoler l'ensemble du matériel dans ce faible volume horaire : s'il n'est pas suffisant, nous ajouterons quelques séances afin de traiter correctement l'ensemble du matériel. Je suis convaincu que tout le monde est capable de comprendre les grands principes des statistiques, et de réaliser des analyses dans un logiciel tel que `R`, y compris les plus réfractaires aux mathématiques et à l'informatique. Mais il est nécessaire de démystifier cette discipline essentielle, et si certains ont besoin de plus de temps que d'autres, nous prendrons ce temps. Les TP et TEA, décrits plus bas, sont justement organisés pour permettre à chacun d'avancer à son rythme. Mais ne vous y trompez pas, cela vous demandera **beaucoup** de travail pendant ces 3 semaines.
+Mon objectif n'est pas de survoler l'ensemble du matériel dans ce faible volume horaire : s'il n'est pas suffisant, nous ajouterons quelques séances afin de traiter correctement l'ensemble du matériel. Je suis convaincu que tout le monde est capable de comprendre les grands principes des statistiques, et de réaliser des analyses dans un logiciel tel que `R`, y compris les plus réfractaires aux mathématiques et à l'informatique. Mais il est nécessaire de démystifier cette discipline essentielle, et si certains ont besoin de plus de temps que d'autres, nous prendrons ce temps. Les TP, décrits plus bas, sont justement organisés pour permettre à chacun d'avancer à son rythme. Mais ne vous y trompez pas, cela vous demandera **beaucoup** de travail pendant ces 3 semaines.
 
-Tous les aspects vus en cours seront en effet développés lors des séances de TP et de TEA. Vous aurez, pour chaque partie, des exercices à préparer et nous les corrigerons ensemble lors des séances de TP et/ou de TEA. ils doivent d'une part vous préparer aux évaluations (voir plus bas) mais surtout, vous permettre d'acquérir des compétences en analyse de données, compétences qui seront attendues de vous lorsque vous sortirez diplômé·e de ce master.
+Tous les aspects vus en cours seront en effet développés lors des séances de TP. Vous aurez, pour chaque partie, des exercices à préparer et nous les corrigerons ensemble lors des séances de TP. ils doivent d'une part vous préparer aux évaluations (voir plus bas) mais surtout, vous permettre d'acquérir des compétences en analyse de données, compétences qui seront attendues de vous lorsque vous sortirez diplômé·e de ce master.
 
 ### Les Travaux pratiques {.unnumbered}
 
@@ -110,7 +109,7 @@ Ce fonctionnement très souple a de nombreux avantages :
 -   vous travaillez sur vos ordinateurs
 -   les effectifs étant réduits, les conditions de travail sont idéales
 
-Toutefois, pour que cette organisation fonctionne, cela demande de la rigueur de votre part, en particulier sur la régularité du travail que vous devez fournir. Si la présence en salle de TP n'est pas requise, le travail demandé est bel et bien obligatoire ! Si vous attendez la 3e semaine pour vous y mettre, vous irez droit dans le mur. Outre les heures de TP/TEA prévues dans vos emplois du temps, vous devez donc prévoir du travail personnel supplémentaire, chaque jour ou presque (voir plus bas).
+Toutefois, pour que cette organisation fonctionne, cela demande de la rigueur de votre part, en particulier sur la régularité du travail que vous devez fournir. Si la présence en salle de TP n'est pas requise, le travail demandé est bel et bien obligatoire ! Si vous attendez la 3e semaine pour vous y mettre, vous irez droit dans le mur. Outre les heures de TP prévues dans vos emplois du temps, vous devez donc prévoir du travail personnel supplémentaire, chaque jour ou presque (voir plus bas).
 
 ### Utilisation de Slack {.unnumbered}
 
@@ -124,23 +123,15 @@ Slack facilite la communication des équipes et permet de travailler ensemble. C
 
 Vous verrez que 3 "chaînes" sont disponibles :
 
--   `#organisation` : c'est là que les questions liées à l'organisation du cours, des TP et TEA doivent être posées. Si vous ne savez pas si une séance de permanence a lieu, posez la question ici.
+-   `#organisation` : c'est là que les questions liées à l'organisation du cours, des TP doivent être posées. Si vous ne savez pas si une séance de permanence a lieu, posez la question ici.
 -   `#rstudio` : c'est ici que toutes les questions pratiques liées à l'utilisation de `R` et `RStudio` devront êtres posées. Problèmes de syntaxe, problèmes liés à l'interface, à l'installation des packages ou à l'utilisation des fonctions... Tout ce qui concerne `R` ou `RStudio` mais pas directement les statistiques sera traité ici. Vous êtes libres de poser des questions, de poster des captures d'écran, des morceaux de code, des messages d'erreur. Et vous êtes bien entendus vivement encouragés à vous entraider et à répondre aux questions de vos collègues. Je n'interviendrai ici que pour répondre aux questions laissées sans réponse ou si les réponses apportées sont inexactes. Le fonctionnement est celui d'un forum de discussion instantané. Vous en tirerez le plus grand bénéfice en participant et en n'ayant pas peur de poser des questions, même si elles vous paraissent idiotes. Rappelez-vous toujours que si vous vous posez une question, d'autres se la posent aussi probablement.
 -   `#statistiques` : c'est ici que toutes les questions liées aux méthodes statistiques devront être posées. Comme pour la chaîne `#rstudio`, vous êtes encouragés à poster des questions mais aussi des réponses. Le fonctionnement de l'ensemble se veut participatif.
 
-Ainsi, quand vous travaillerez à vos TP ou TEA, prenez l'habitude de garder Slack ouvert sur votre ordinateur. Même si vous n'avez pas de question à poser, votre participation active pour répondre à vos collègues est souhaitable et souhaitée. Votre niveau de participation sur Slack pourra faire partie de votre note finale.
+Ainsi, quand vous travaillerez à vos TP, prenez l'habitude de garder Slack ouvert sur votre ordinateur. Même si vous n'avez pas de question à poser, votre participation active pour répondre à vos collègues est souhaitable et souhaitée. Votre niveau de participation sur Slack pourra faire partie de votre note finale.
 
 Si toutes les questions posées sur Slack ont trouvé une réponse, alors, inutile d'organiser une permanence. Si en revanche, certains n'ont pas compris, si les mêmes questions reviennent fréquemment, ou si des explications "en direct" sont plus efficaces qu'un long message sur Slack, alors une permanence aura lieu.
 
-### Le TEA {.unnumbered}
 
-Les séances de TEA auront toutes lieu "à distance". Je ne suis pas tenu d'être présent lors des séances de TEA, même si une salle banalisée est systématiquement réservée pour vous permettre de vous retrouver et de travailler ensemble. Je m'engage en revanche à être disponible sur Slack pour répondre rapidement aux questions posées lors des TEA. Et si certaines questions n'ont pas trouvé de réponse pendant les séances de TEA, nous y répondrons lors du TP suivant.
-
-Généralement, l'organisation de votre journée sera la suivante :
-
-1.  En début de matinée, 1h30 ou 3h de cours magistraux
-2.  En milieu de journée du temps libre ou pour avancer sur ce document, les exercices, la prise en main de `R` et `RStudio`, etc.
-3.  En fin de journée une séance de TEA et/ou de TP/permanence non obligatoire de 90 minutes pour ceux qui en ont besoin et se manifestent.
 
 ## Progression conseillée {.unnumbered}
 
@@ -157,6 +148,28 @@ Que vous veniez aux séances de permanence ou non, j'insiste sur l'importance de
 :::
 
 Une fois cette UE terminée, vous pourrez évidemment consulter ce livre quand bon vous semblera, et dans n'importe quel ordre. Le champ de recherche situé en haut à gauche est d'ailleurs très utile pour (re)trouver les passages que vous recherchez. Ce livre restera en ligne et vous pourrez y accéder même après avoir quitté l'université de La Rochelle. Vos prédécesseurs me confirment régulièrement à quel point il leur est resté utile bien après le master. Soyez toutefois prévenu que les contenus de ce livre peuvent évoluer avec le temps : j'essaie en effet de remettre à jour tout ce qui doit l'être le plus régulièrement possible. Et cela signifie parfois que des sections peuvent disparaître ou être remplacées si des façons de procéder plus modernes sont préférables.
+
+
+## Quelques mots sur les IA génératives
+
+J'attire votre attention sur l'utilisation des IA génératives. La plupart des modèles conversationnels (Large Language Models, LLMs) tels que ChatGPT, Gemini, Claude... sont très bons pour générer du code. Je vous mets néanmoins en garde : si vous ne comprenez pas ce qui est expliqué dans ces pages, vous ne pourrez pas juger de la pertinence du code que les IA pourraient vous fournir. Vous pouvez donc vous faire aider par l'IA pour corriger votre code par exemple, ou pour obtenir des suggestions, mais **il est de votre responsabilité de comprendre ce que vous faites et ce que l'IA fait pour vous** ! Non seulement c'est ce qui vous fera gagner du temps à terme (acceptez de passer du temps maintenant, pour comprendre les notions et concepts, afin de gagner beaucoup de temps plus tard), mais surtout, c'est ce qui vous évitera de faire beaucoup d'erreurs ! Encore cette année, la plupart de nos étudiants de M1 ont utilisé l'IA pour calculer un indice statistique un peu exotique. Presque aucun ne s'est rendu compte que le code produit par l'IA ne faisait pas ce qui était demandé. Par conséquent, toute une partie de leur compte-rendu de TP n'avait aucun sens et ils ont donc été lourdement pénalisés à cause de leur confiance aveugle en l'IA. Produire soi-même un code, et demander l'aide de l'IA pour corriger un bug ou demander des améliorations précises, c'est très différents de ne produire aucun code et de demander à l'IA de tout faire. Dans un cas, on fait travailler son cerveau, et l'IA joue le rôle d'un partenaire qui fournit des suggestions souvent pertinentes. Dans l'autre, le cerveau reste au repos, on n'apprend rien, et donc, on perd son temps...
+
+Vous devez donc faire preuve d'esprit critique vis-à-vis de ces outils, qui peuvent êtres très utiles, mais qui demandent la plus grande vigilence et qui se trompent régulièrement. Or, pour faire preuve d'esprit critique, vous devez être en mesure de comprendre le code fourni par ces IA. Si ça n'est pas le cas, reprennez les explications de ce livre en ligne : tout ce dont vous avez besoin s'y trouve noir sur blanc.
+
+Par ailleurs, **si vous utilisez l'IA pour générer du code, vous devez l'indiquer clairement**, et ça doit rester relativement rare. Quelle(s) partie(s) de vos scripts sont réellement de vous, et quelles parties ont été générées par une IA ? À votre niveau, je vous assure qu'il m'est très facile de savoir si du code a été produit par une IA ou par vous. Si vous n'indiquez pas que du code que vous intégrez à vos scripts n'est pas de vous, c'est de la fraude qui peut faire l'objet de sanctions importantes (passage devant le conseil de discipline de l'établissement par exemple). Donc encore une fois, vous pouvez utiliser ces outils, mais à la double condition que (i) ça soit fait à bon escient (assurez-vous que ce qui est produit par l'IA est pertinent, que ça a du sens, et que ça reste rare), et (ii), vous indiquiez clairement dans vos scripts quelles lignes ont été produite à l'aide d'une IA (et laquelle).
+
+Enfin, je me permets une dernière mise en garde. De plus en plus d'études démontrent un effet négatif de l'utilisation excessive des LLMs sur la qualité des apprentissages chez les étudiant·es. Par exemple, [cet article (Stadler et al. 2024)](https://www.sciencedirect.com/science/article/pii/S0747563224002541) montre que
+
+> Bien que les LLM puissent réduire la charge cognitive associée à la collecte d’informations au cours d’une tâche d’apprentissage, ils ne favorisent pas un engagement profond avec le contenu étudié, pourtant nécessaire à un apprentissage durable et de qualité.
+
+De même, [Kosmyna et al. (2025)](https://arxiv.org/abs/2506.08872) ont étudié, par électro-encéphalogramme, les performances cognitives de 3 groupes de participants lors d'exercices de productions écrites (rédaction de synthèses scientifiques). Un groupe avait le droit d'utiliser les AI, un groupe était limité à l'utilisation de Google, un autre groupe n'avait aucun accès à ces outils numériques. Globalement, les participants du groupe LLM sont de loin ceux qui obtiennent les moins bons résultats, qui comprennent et retiennent le moins bien ce qu'ils ont fait. Ceux qui n'avaient droit à aucun outils sont ceux qui ont le plus appris car ils ont dû s'investir pleinement dans l'exercice. En particulier, les auteurs soulignent ceci :
+
+> Les utilisateur d'un LLM ont eu du mal à citer correctement leurs propres travaux. Si les LLM offrent une facilité immédiate, nos résultats mettent en évidence des coûts cognitifs potentiels. Sur une période de quatre mois, les utilisateurs d'un LLM ont systématiquement enregistré des résultats inférieurs aux niveaux neuronal, linguistique et comportemental.
+
+Bref, ces outils sont puissants, ils sont parfois très utiles (et ils vont continuer de s'améliorer), mais ils doivent être utilisés intelligemment pour éviter des conséquences très contre-productives pour vos apprentissages. Là encore, c'est à vous de faire preuve de maturité pour en tirer le meilleur !
+
+
+
 
 ## L'évaluation {.unnumbered}
 
