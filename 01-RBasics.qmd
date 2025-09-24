@@ -11,15 +11,15 @@ Avant de commencer à explorer des données dans `R`, il y a plusieurs concepts 
 
 Même si vous pensez être déjà à l'aise avec ces concepts, lisez attentivement ce chapitre et faites les exercices demandés. Cela vous rafraîchira probablement la mémoire, et il n'est pas impossible que vous appreniez une chose ou deux au passage. Une bonne maîtrise des éléments présentés dans ce chapitre est indispensable pour aborder sereinement les chapitres suivants, à commencer par le @sec-dataset, qui présente un jeu de données que nous explorerons en détail un peu plus tard. Lisez donc attentivement ce chapitre et faites bien tous les exercices demandés. 
 
-Ce chapitre est en grande partie basé sur les 3 ressources suivantes que je vous encourage à consulter si vous souhaitez obtenir plus de détails :
+Ce chapitre est en grande partie basé sur les 2 ressources suivantes que je vous encourage à consulter si vous souhaitez obtenir plus de détails :
 
 1. L'ouvrage intitulé [ModernDive](https://moderndive.com/index.html), de Chester Ismay et Albert Y. Kim. Une bonne partie de ce livre est très largement inspirée de cet ouvrage. C'est en anglais, mais c'est un très bon texte d'introduction aux statistiques sous `R` et `RStudio`.
 2. L'ouvrage intitulé [Getting used to R, RStudio, and R Markdown](https://ismayc.github.io/rbasics-book/) de Chester Ismay, comprend des podcasts (en anglais toujours) que vous pouvez suivre en apprenant.
-3. Les tutoriels en ligne de [DataCamp](https://datacamp.com/). DataCamp est une plateforme de e-learning accessible depuis n'importe quel navigateur internet et dont la priorité est l'enseignement des "data sciences". Leurs tutoriels vous aideront à apprendre certains des concepts de développés dans ce livre. 
+<!-- 3. Les tutoriels en ligne de [DataCamp](https://datacamp.com/). DataCamp est une plateforme de e-learning accessible depuis n'importe quel navigateur internet et dont la priorité est l'enseignement des "data sciences". Leurs tutoriels vous aideront à apprendre certains des concepts de développés dans ce livre. 
 
 :::{.callout-important}
 Avant d'aller plus loin, rendez-vous sur [le site de DataCamp](https://www.datacamp.com/), créez-vous un compte gratuit, et reprenez la lecture de ce livre.
-:::
+::: -->
 
 
 
@@ -251,39 +251,513 @@ Si le chemin qui s'affiche est celui du dossier contenant votre `Rproject` et vo
 
 
 
-### Concepts de base en programmation et terminologie
+## Objets et concepts de base {#sec-objects}
 
-Après ces considérations techniques sur l'utilisation et les réglages de `RStudio`, nous entrons maintenant dans le vif du sujet avec la découverte des premiers éléments de syntaxe du langage `R`. 
+Après ces considérations techniques sur l'utilisation et les réglages de `RStudio`, nous entrons maintenant dans le vif du sujet avec la découverte des premiers éléments de syntaxe du langage `R`. Pour la suite de ce chapitre, vous devriez travailler dans un Rproject comme expliqué plus haut, et avoir créé un script vierge dans lequel vous taperez les commandes `R` que je vous demande d'exécuter, et ajouterez les commentaires qui vous semblent utiles.
 
-#### Objets, types, vecteurs, facteurs et tableaux de données {#sec-objects}
+Dans les 3 sections ci-dessous, nous allons commencer par travailler avec un jeu de données de taille suffisamment modeste pour pouvoir le saisir à la main dans `RStudio`. Nous utiliserons une petite partie d'un jeu de données de Chris Elphick de l'université du Connecticut qui contient en tout 7 mesures différentes sur plus de 1100 individus du Bruant à queue aigüe, *Ammodramus caudacutus*, un passereau de la famille des Passerelidae classé comme "Vulnérable" par l'IUCN. Nous n'utiliserons ici que 4 variables biométriques et une variable catégorielle mesurées chez 8 individus : 
 
-Pour vous présenter les concepts de base et la terminologie de la programmation dont nous aurons besoin, vous allez suivre des tutoriels en ligne sur le site de DataCamp. Pour cette première prise en main, tout va maintenant se passer dans votre navigateur internet, et vous pouvez donc mettre de côté `RStudio` pour l'instant. Vous allez voir que l'interface de DataCamp ressemble à une version simplifiée de l'éditeur de script et de la console de `RStudio` : vous n'aurez pas à vous soucier des réglages, de `Rprojects` ou de sauvegarder quoi que ce soit. Si vous avez correctement créé votre compte gratuit DataCamp comme indiqué au tout début du @sec-basics, votre progression sera sauvegardée automatiquement. Il vous suffit de cliquer sur les liens direct ci-dessous pour démarrer les tutoriels en ligne. 
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| tbl-cap: "Mesures biométriques de 8 individus du Bruant à queue aigüe (*Ammodramus caudacutus*). Les variables correspondent à la longueur des ailes, la longueur du tarse, la longueur de la tête, la masse  et le sexe des individus."
+#| label: tbl-bruant
 
-Avant de démarrer, quelques précisions :
+library(kableExtra)
+bruant <- data.frame(
+  ailes = c(59, 55, 53.5, 55, 52.5, 57.5, 53, 55),
+  tarse = c(22.3, 19.7, 20.8, 20.3, 20.8, 21.5, 20.6, 21.5),
+  tete = c(31.2, 30.4, 30.6, 30.3, 30.3, 30.8, 32.5, NA),
+  masse = c(9.5, 13.8, 14.8, 15.2, 15.5, 15.6, 15.6, 15.7),
+  sexe = factor(c("femelle", "mâle", "mâle", "mâle", "femelle", "mâle", "femelle", "femelle"))
+)
+kable(bruant)
+```
 
-- pour chaque tutoriel que je vous demande de suivre, j'indique ci-dessous une liste des concepts de programmation qui sont couverts. N'hésitez pas à vous y référer et à y revenir tout au long du master (et au-delà !) si vous avez oublié certaines choses
-- ce tutoriel DataCamp contient 6 chapitres. Seuls les chapitres 1, 2, 4, et 5 doivent être suivis. Nous ne travaillerons pas sur les matrices ni sur les listes
-- à la fin de chaque chapitre du tutoriel, revenez à ce livre en ligne pour cliquer sur le lien direct ver le chapitre suivant. Procéder ainsi vous évitera de suivre des chapitres inutiles du tutoriel, et cela vous permettra également d'éviter les demandes d'inscriptions payantes à DataCamp
+### Les scalaires {#sec-scalaires}
 
-Il est important de noter que, bien que ces tutoriels sont d'excellentes introductions, une lecture seule, même attentive, est insuffisante pour un apprentissage en profondeur et une rétention à long terme. Il faut pour cela **pratiquer** et **répéter**. Outre les exercices demandés dans DataCamp, que vous devez effectuer directement dans votre navigateur, je vous encourage à prendre des notes, à multiplier les essais, directement dans la console de `RStudio`, ou, de préférence, dans un script que vous annoterez, pour vous assurer que vous avez bien compris chaque partie.
+La méthode la plus simple, mais aussi la plus laborieuse, pour entrer ces données dans `RStudio` est de les saisir sous forme de scalaires, c'est-à-dire des variables ne contenant qu'une valeur. Ainsi, pour les 5 premières observation de longueur d'ailes, nous pourrions taper :
 
-Allez maintenant découvrir [le cours d'introduction à R](https://app.datacamp.com/learn/courses/introduction-a-r) sur DataCamp, et cliquez sur les liens des chapitres ci-dessous. Au fur et à mesure de votre travail, notez les termes importants et ce à quoi ils font référence.
+```{r}
+a <- 59
+b <- 55
+c <- 53.5
+d <- 55
+e <- 52.5
+```
 
-- [Chapitre 1 : introduction](https://campus.datacamp.com/courses/introduction-a-r/chapitre-1-introduction?ex=1)
-    - La console : l'endroit où vous tapez des commandes
-    - Les objets : où les valeurs sont stockées, comment assigner des valeurs à des objets
-    - Les types de données : entiers, doubles/numériques, caractères et logiques
-- [Chapitre 2 : vecteurs](https://campus.datacamp.com/courses/introduction-a-r/chapitre-2-les-vecteurs?ex=1)
-    - Les vecteurs : des collections de valeurs du même type
-- [Chapitre 4 : les facteurs](https://campus.datacamp.com/courses/introduction-a-r/chapitre-4-facteurs?ex=1)
-    - Des données catégorielles (et non pas *numériques*) représentées dans `R` sous forme de `factor`s
-- [Chapitre 5 : les jeux de données ou `data.frame`](https://campus.datacamp.com/courses/introduction-a-r/chapitre-5-les-jeux-de-donnees?ex=1)
-    - Les `data.frame`s sont similaires aux feuilles de calcul rectangulaires que l'on peut produire dans un tableur. Dans `R`, ce sont des objets rectangulaires (des tableaux !) contenant des jeux de données : les lignes correspondent aux observations et les colonnes aux variables décrivant les observations. La plupart du temps, c'est le format de données que nous utiliserons. Plus de détails dans le @sec-dataset
-    
+Si vous tapez ceci dans votre script et que vous envoyez ces lignes dans la console, vous ne verrez rien de particulier se passer. Pourtant, 5 nouveaux objets ont été créés en mémoire : leur nom doit apparaître dans l'onglet "Environment" du panneau supérieur droit de l'interface de `RStudio`. Pour vérifier que ces objets existent et qu'ils contiennent les bonnes valeurs, il suffit de taper leur nom dans votre script et de l'envoyer dans la console :
 
-Avant de passer à la suite, il nous reste 2 grandes notions à découvrir dans le domaine du code et de la syntaxe afin de pouvoir travailler efficacement dans `R` : les opérateurs de comparaison d'une part, et les fonctions d'autre part. Pour les découvrir et expérimenter, et puisque vous avez terminé les tutoriels DataCamp, reprenez maintenant `RStudio` et travaillez dans votre script.
+```{r}
+a
+b
+```
 
-#### Opérateurs de comparaison {#sec-comparaison}
+Nous avons donc bien réussi à créer 5 objets, grâce à l'**opérateur d'assignation** `<-` qui permet de stocker une valeur dans un objet. Cet opérateur permet donc de créer une variable (ou objet) dont on indique le nom à gauche de la flèche et d'y stocker la ou les valeurs indiquées à droite de la flèche. En tapant le nom de l'objet dans la console, nous demandons à `R` de nous afficher la valeur qu'il contient.
+
+Le problème avec cette approche c'est que si nous avons une grande quantité de données, on va vite tomber à cours de caractères. En outre, les noms a, b, c, etc, ne sont pas très utiles pour nous rappeler l'information que contiennent Le problème avec cette approche c'est que si nous avons une grande quantité de données, on va vite tomber à cours de caractères. En outre, les noms a, b, c, etc, ne sont pas très utiles pour nous rappeler l'information que contiennent les variables. On pourrait du coup utiliser les notations suivantes :
+
+```{r}
+
+aile1 <- 59
+aile2 <- 55
+aile3 <- 53.5
+aile4 <- 55
+aile5 <- 52.5
+```
+
+Cette approche est un peu meilleure que la précédente, mais elle n'est pas idéale non plus. Imaginez que nous devions saisir les 1100 lignes du jeu de données complet ! En outre, si nous voulons faire des calculs sur toutes les longueurs d'ailes, nous allons devoir taper le nom de chaque variable. Par exemple, pour calculer la moyenne des longueurs d'ailes des 5 premiers individus, nous devrions taper :
+
+```{r}
+(aile1 + aile2 + aile3 + aile4 + aile5) / 5
+```
+
+On imagine bien qu'avec un grand nombre d'observations (par exemple, les 1100 lignes du tableau de données original de Chris Elphick), cette approche n'est pas tenable.
+
+Avant de voir quelles méthodes plus efficaces nous pourrions utiliser pour saisir les données, voyons ce que nous pouvons faire de ces variables. Une fois que nous avons défini une variable et que nous lui avons attribué une valeur, on peut s'en servir pour effectuer toutes sortes de calculs. Ainsi, les commandes suivantes sont toutes valides :
+
+```{r}
+sqrt(aile1)
+2 * aile1
+aile1 + aile2
+aile1 + aile2 + aile3 + aile4 + aile5
+(aile1 + aile2 + aile3 + aile4 + aile5) / 5
+```
+
+La fonction `sqrt()` permet de calculer la racine carrée d'un nombre (c'est l'abréviation de "square root"). Nous verrons plus en détail ce que sont les fonctions un peu plus loin dans ce chapitre. Pour l'instant, retenez simplement que les fonctions prennent en entrée une ou plusieurs valeurs, et produisent une ou plusieurs valeurs en sortie.
+
+Bien que `R` fasse les calculs, il ne garde pas les résultats en mémoire. Il est certainement mieux de définir de nouvelles variables si nous souhaitons réutiliser les résultats des calculs précédents :
+
+```{r}
+rac_aile1 <- sqrt(aile1)
+prod_a1 <- 2 * aile1
+somme_12 <-aile1 + aile2
+somme_12345 <- aile1 + aile2 + aile3 + aile4 + aile5
+moy <- (aile1 + aile2 + aile3 + aile4 + aile5) / 5
+```
+
+Ces 5 lignes vous montrent que l'on peut utiliser n'importe quel nom pour les variables. Notez que le tiret bas fait ici partie du nom des variables. Je vous conseille fortement d'utiliser des noms courts et parlants, c'est-à-dire des noms qui vous permettront de vous souvenir ce que contient la variable. Par exemple, la variable `rac_._aile1` contient la racine carrée de la longueur de l'aile pour l'individu 1. Vous devrez donc faire preuve d'imagination et de creativité : trouver des noms courts et parlants n'est pas toujours évident ! Il vous faudra en outre éviter d'utiliser des noms contenant des caractères speciaux tels que `$`, `%`, `&`, `*`, `^`, `+`, `-`, `#`, `()`, `[]`, `{}`, `<`, `>`, `?`, `!`, `@`, `~`, etc. Ces caractères ont en effet un sens particulier pour `R` et conduiraient inévitablement à des erreurs. Certains mots sont également réservés par `R` et ne peuvent pas être utilisés comme noms de variables. C'est le cas par exemple des mots `if`, `else`, `repeat`, `while`, `function`, `for`, `in`, `next`, `break`, `TRUE`, `FALSE`, `NULL`, `Inf`, `NaN`, `NA`, etc. Il est donc tr`´s fortement déconseillé d'utiliser ces noms pour vos variables.
+
+
+### Les vecteurs {#sec-vectors}
+
+#### Création et manipulations simples
+
+Avec la méthode des scalaires décrite ci-dessous, pour 8 individus et 5 variables, nous aurions besoin de 40 noms d'objets différents. Une meilleure façon de procéder est de stocker plusieurs valeurs dans un même objet. Pour cela, nous avons besoin de la fonction `c()`, qui permet de `c`ombiner ou `c`oncaténer plusieurs valeurs au sein dun unique **vecteur** :
+
+```{r}
+ailes <- c(59, 55, 53.5, 55, 52.5, 57.5, 53, 55)
+```
+
+Il est important ici de bien utiliser les parenthèses et non les crochets ou les accolades qui ont une autre signification. D'une façon générale, dans `R`, un nom de fonction est toujours suivi de parenthèses. C'est par exemple le cas des fonctions `log()`, `log10()`, `getwd()` que nous connaissons déjà.
+
+Comme précédemment, écrire la commande ci-dessus dans votre script et l'envoyer dans la console ne fait que créer l'objet `ailes`. Pour afficher son contenu, envoyez simplement le nom de l'objet dans la console :
+
+```{r}
+ailes
+```
+
+On constate que l'objet `ailes` contient bien les 8 valeurs que nous avons saisies. Nous pouvons également vérifier le type de cet objet avec la fonction `class()` :
+
+```{r}
+class(ailes)
+```
+
+Il s'agit bien ici d'un vecteur qui contient des données numériques. La fonction `c()` a créé un unique vecteur contientant 8 éléments qui sont tous du même type. On dit qu'il est "de longueur 8". Pour déterminer la longueur d'un vecteur quelconque, il suffit de taper :
+
+```{r}
+length(ailes)
+```
+
+#### L'indexation
+
+Le terme "indexation" désigne l'ensemble des méthodes qui permettent d'accéder à des éléments spécifiques au sein d'un objets qui en contient plusieurs. Les vecteurs sont les objets les plus simples qui contiennent plusieurs éléments. Nous allons donc ici découvrir comment accéder à des éléments specifiques au sein des vecteurs.
+
+Pour cela, la méthode historique qui fonctionnera toujours consiste à utiliser les crochets. Par exemple, pour voir uniquement la première valeur du vecteur `ailes`, tapez :
+
+```{r}
+ailes[1]
+```
+
+Notez bien que l'indice 1 correspond au premier élément du vecteur. Dans d'autres langages de programmation (comme en Python), le premier élément d'un vecteur porte l'indice 0.
+
+Nous ne sommes pas limités à aficher une unique valeur à la fois. Ainsi, pour afficher les éléments situés à la première, troisième et quatrième position de `ailes`, on tape :
+
+```{r}
+ailes[c(1, 4, 3)]
+```
+
+Il est également possible de fournir un ou des indices négatifs entre crochets afin de retirer des valeurs. Pour afficher toutes les valeurs de `ailes` sauf la deuxième, on tape :
+
+```{r}
+ailes[-2]
+```
+
+Ces méthodes qui permettent d'accéder à des éléments spécifiques au sein d'un vecteur relèvent toutes de ce que l'on appelle l'**indexation par position**. Elles supposent en effet de connaître à l'avance la position des éléments que l'on souhaite récupérer à l'intérieur de l'objet manipulé. Malheureusement, ça n'est pas toujours le cas. On peut par exemple avoir besoin d'aficher uniquement les longueur d'ailes qui dépassent une valeur donnée. Si le vecteur contient de nombreuses valeurs, il est impossible de taper manuellement les indices pertinents. On utilise alors plutôt l'**indexation par comparaison**. Par exemple, pour récupérer toutes les ailes dont les longueurs sont supérieures à 56 mm, on tape ceci :
+
+```{r}
+ailes[ailes > 56]
+```
+
+On constate qu'il n'y en a que 2. Vous verrez dans le @sec-wrangling plusieurs méthodes modernes permettant de faire la même chose de façon plus intuitive. À ce stade, vous pouvez retenir que :
+
+- l'objet dont on fournit le nom à gauche des crochets est l'objet dans lequel on veut récupérer des valeurs
+- l'objet dont le nom apparaît à l'intérieur des crochets est l'objet sur lequel on fait porter une condition. 
+
+Ici, il s'agit du même objet, mais ça n'est pas obligatoire. Si on disposait d'un vecteur `masse` contenant les masses des 8 oiseaux du tableau étudié, on pourrait demander à `R` de nous afficher les masses des oiseaux dont la longueur des ailes dépasse 56 mm :
+
+```{r}
+# Création du vecteur des masses
+masse <- c(9.5, 13.8, 14.8, 15.2, 15.5, 15.6, 15.6, 15.7)
+
+# Affichage des masses des oiseaux dont la longueur des ailes dépasse 56 mm
+masse[ailes > 56]
+```
+
+Ici, on crée le vecteur `masse`, puis on va chercher dans ce vecteur (son nom est à gauche des crochets) les valeurs de masses des oiseaux, dont la longueur des ailes dépasse 56 mm (cette condition est indiquée à l'intérieur des crochets). On constate que ces oiseaux sont également les plus lourds.
+
+Avec ce type de syntaxe simple, il est possible de faire des comparaisons relativement élaborées et donc d'accéder à des données qui respecent plusieurs conditions à la fois. Quelques exemples sont fournis plus bas, dans la @sec-comparaison.
+
+#### Autres fonctions utiles pour les vecteurs
+
+Si la fonction `c()` est certainement de très loin celle que vous utiliserez le plus souvent pour créer des vecteurs quelconques, il existe d'autres façons de créer des vecteurs. Par exemple, l'operateur `:` permet de créer des vecteurs contenant des séquences de nombres entiers. Par exemple, pour créer un vecteur contenant les nombres allant de 1 à 10, on tape :
+
+```{r}
+1:10
+```
+
+Cette notation a le merite d'être très concise, mais elle n'est pas très flexible. En effet, on ne peut pas modifier le pas entre chaque valeur : on crée obligatoirement des suites d'entiers, avec un pas de 1. Pour plus de souplesses, on peut utiliser la fonction `seq()`. On fournit un point de départ, un point d'arrivée, et un pas entre chaque valeur, et la fonction s'occupe du reste. Par exemple, pour créer un vecteur contenant les nombres allant de 1 à 10 avec un pas de 2 entre chaque valeur, on tape :
+
+```{r}
+seq(from = 1, to = 10, by = 2)
+```
+
+Notez qu'en partant de 1, on n'atteint pas 10 avec un pas de 2. La dernière valeur du vecteur est donc 9. 
+De même, pour créer un vecteur décroissant, qui va de 100 à 0 de 5 en 5, on tape :
+
+```{r}
+seq(from = 100, to = 0, by = -5)
+```
+
+Faites bien attention au signe de l'argument `by` : il doit être négatif si la séquence est décroissante.
+
+Un autre syntaxe de la fonction `seq()` est également possible. On peut en effet fournir un point de départ, un point d'arrivée et le nombre de valeurs que l'on souhaite dans le vecteur grâce à l'argument `length.out`. Par exemple, pour créer un vecteur contenant 12 valeurs allant de 1 à 100, on peut taper :
+
+```{r}
+seq(from = 1, to = 100, length.out = 13)
+```
+
+En précisant le nombre de valeurs que l'on souhaite pour le vecteur, on charge la fonction de calculer automatiquement le pas entre chaque valeur.
+
+Une autre fonction très utile pour créer des vecteurs est la fonction `rep()`, qui permet de répéter une ou plusieurs valeurs un certain nombre de fois. Par exemple, pour créer un vecteur contenant 10 fois la valeur 5, on tape :
+
+```{r}
+rep(x = 5, times = 10)
+```
+
+Pour créer un vecteur contenant les valeurs 1, 2 et 3, chacune répétée 4 fois, on tape :
+
+```{r}
+rep(x = 1:3, times = 4)
+```
+
+On peut également créer un vecteur contenant les valeurs 1, 2 et 3, en répétant chacune de ces valeurs 4 fois avant de passer à la suivante. Pour cela, on utilise l'argument `each` :
+
+```{r}
+rep(x = 1:3, each = 4)
+```
+
+Prises separément, toutes ces methodes sont simples, mais elles deviennent très puissantes lorsqu'elles sont combinées et vous ne devriez pas avoir besoin de beaucoup d'autres fonctions que `c()`, `seq()`, `rep()` et `:` pour créer des vecteurs.
+
+#### Autres types de vecteurs
+
+Nous n'avons jusqu'ici travaillé qu'avec des vecteurs numériques. Pourtant, `R` permet de créer des vecteurs contenant d'autres types de données. Par exemple, pour créer un vecteur contenant des chaînes de caractères (des mots ou des phrases), on utilise la fonction `c()` en mettant les chaînes de caractères entre guillemets simples ou doubles :
+
+```{r}
+animaux <- c("chat", "chien", "souris", "hamster", "baleine")
+animaux
+```
+
+Évidemment, il n'est pas possible de faire des calculs avec de tels vecteurs, contrairement aux vecteurs numeriques :
+
+```{r}
+# Calcul de la moyenne des longueurs d'ailes
+mean(ailes)
+
+# un calcul de moyenne qui n'a pas de sens...
+mean(animaux)
+```
+
+Outre les types numériques et caractères, `R` permet aussi de créer des vecteurs logiques, c'est-à-dire des vecteurs ne contenant que les valeurs `TRUE` (vrai) ou `FALSE` (faux). Attention, `TRUE` et `FALSE` doivent être écrits en majuscules et sans guillemets : 
+
+```{r}
+vf <- c(TRUE, FALSE, TRUE, TRUE, FALSE)
+vf
+```
+
+Des variables logiques (vrais/faux) seront souvent présentes dans vos tableaux de données, par exemple pour indiquer quels individus ont une taille ou une masse qui dépasse un certain seuil. Grâce au vecteur `masse` créé plus tôt, on peut ainsi créer un vecteur logique indiquant quels individus ont une masse supérieure à 15 g par exemple :
+
+```{r}
+masse_sup_15 <- masse > 15
+masse_sup_15
+```
+
+Contrairement aux vecteurs de caractères, il est possible de faire des calculs avec des vecteurs logiques. En effet, dans `R`, la valeur `TRUE` est équivalente à 1 et la valeur `FALSE` est équivalente à 0. Ainsi, en calculant la somme d'un vecteur logique, on obtient le nombre de valeurs `TRUE` qu'il contient, et en calculant la moyenne, on obtient la proportion de vrais :
+
+```{r}
+# Nombre de valeurs TRUE dans le vecteur logique masse_sup_15
+sum(masse_sup_15)
+
+# Proportion de valeurs TRUE dans le vecteur logique masse_sup_15
+mean(masse_sup_15)
+```
+
+Nous avons vu que des vecteurs pouvaient contenir des données numériques, des chaînes de caractères, des valeurs logiques (vrais/faux). Mais il existe de nombreux autres types de variables que vous serez peut-être amenés à rencontrer (par exemple, des dates, des heures, des latitudes, des longitudes et d'autres données plus complexes). Pour savoir quel est le type d'un vecteur quelconque, on peut utiliser la fonction `class()` :
+
+```{r}
+class(ailes)
+class(animaux)
+class(vf)
+```
+
+Les vecteurs sont omniprésents dans `R` et vous serez amenés à en créer et à en manipuler très souvent. En particulier, les tableaux de données sont la plupart du temps une simple juxtaposition de vecteurs de plusieurs types : chaque colonne est un vecteur (ou un facteur, voir plus bas). Il est donc important que vous vous familiarisiez avec ces objets dès maintenant. Nous verrons dans le @sec-wrangling plusieurs fonctions très utiles pour manipuler des vecteurs, des facteurs et des tableaux.
+
+Avant d'aller plus loin, créez les autres vecteurs correspondant aux autres variables du tableau de données. Vous devriez ainsi créer les vecteurs `tarse`, `tete`, et `sexe`, en plus des vecteurs `ailes` et `masse` que vous avez déjà créés. Si vous y parvenez, les commandes suivantes devraient afficher exactement ces résultats :
+
+```{r}
+#| echo: false
+tarse <- c(22.3, 19.7, 20.8, 20.3, 20.8, 21.5, 20.6, 21.5)
+tete <- c(31.2, 30.4, 30.6, 30.3, 30.3, 30.8, 32.5, NA)
+sexe <-c("femelle", "mâle", "mâle", "mâle", "femelle", "mâle", "femelle", "femelle")
+```
+
+```{r}
+ailes
+tarse
+tete
+masse
+sexe
+```
+
+
+### Les facteurs {#sec-factors}
+
+Dans `R`, les vecteurs sont des collections d'éléments qui sont tous du même type. Ils sont très largement utilisés, et servent notamment à stocker les valeurs de variables numériques comme nous l'avons vu plus haut. Cependant, dans les sciences de la vie, on manipule très souvent des variables catégorielles, c'est-à-dire des variables qui ne sont pas numériques. Par exemple, le sexe des individus, leur statut de survie (mort/vivant), leur habitat (forêt, prairie, zone humide, étage de l'estran, ...), leur espèce, *etc.* Dans `R`, les variables catégorielles sont stockées sous forme de **facteurs** (ou `factor`s en anglais). Pour créer un facteur, on utilise la fonction `factor()`. 
+
+Pour illustrer cela, nous allons nous concentrer sur la variable `sexe` du tableau de données. Nous avons déjà créé un vecteur `sexe` contenant les valeurs "femelle" et "mâle" dans le bon ordre :
+
+```{r}
+sexe
+```
+
+Pour transformer ce vecteur en facteur, il suffit de taper :
+
+```{r}
+sexe <- factor(sexe)
+```
+
+L'objet `sexe` est maintenant un facteur. Pour vérifier cela, on peut utiliser la fonction `class()` :
+
+```{r}
+class(sexe)
+```
+
+Lorsqu'on affiche le contenu d'un facteur, `R` affiche non seulement le contenu de l'objet (ici, les 8 valeurs de "femelle" et "mâle" que nous avions saisies initialement dans le vecteur), mais en plus, il affiche un attribut supplementaire, qui n'existe que por les facteurs (donc qui n'existe pas pour les vecteurs) nommé `Levels`. Les "niveaux" ou "levels", correspndent aux **modalités** (ou catégories possibles) d'une variable catégorielle.
+
+```{r}
+sexe
+```
+
+Ici, il n'y a donc que 2 niveaux, 2 catégories possibles pour la variable `sexe` : "femelle" ou "mâle". 
+
+L'intérêt de travailler avec des facteurs plutôt qu'avec des vecteurs pour les variables categorielles est que nous aurons la possibilité de modifier manuellement à notre guise les niveaux d'un facteur. Ainsi, si on souhaite inverser l'ordre des niveaux du facteur `sexe`, par exemple pour que les mâles apparaissent à gauche des femelles sur un graphique, on tape :
+
+```{r}
+sexe <- factor(sexe, levels = c("mâle", "femelle"))
+sexe
+```
+
+Vous pouvez constater ici que l'ordre des données n'a pas changé (les femelles sont toujours en position 1, 5, 7 et 8), mais que l'ordre des niveaux a bien été modifié (le niveau "mâle" est maintenant le premier niveau). Nous verrons dans le @sec-viz comment cet ordre des niveaux influence l'affichage des données sur un graphique.
+
+Cette réorganisation manuelle des niveaux d'un facteur est très utile, car par défaut, `R` organise les niveaux d'un facteur par ordre alphabétique. Si on dispose par exemple d'un facteur `mois` contenant les noms des mois de l'année ("janvier", "février", "mars", ...), par défaut, les niveaux seront organisés dans l'ordre alphabétique ("avril", "août", "décembre", "février", ...), ce qui n'a pas de sens. Pour faire des graphiques qui ont du sens, et faire apparaitre les mois dans l'ordre chronologique, il nous faudrait réorganiser les niveaux manuellement grâce à l'argument `levels` de la fonction `factor()`.
+
+Enfin, outre la fonction `factor()` qui possède un **argument** `levels`, il existe aussi une **fonction** nommée `levels()`. Cette fonction permet de faire 2 choses. tout d'abord, elle permet d'afficher les niveaux d'un facteur :
+
+```{r}
+levels(sexe)
+```
+
+Notez que les niveaux sont ici présentés dans l'ordre que j'ai imposé précédemment, et non pas dans l'ordre alphabétique. La fonction `levels()` permet par ailleurs de modifier les niveaux d'un facteur. Par exemple, pour renommer les niveaux du facteur `sexe` en `"Fe"` et `"Ma"`, on tape ceci :
+
+```{r}
+levels(sexe) <- c("Ma", "Fe")
+sexe
+```
+
+:::{.callout-important}
+## Attention à l'ordre des niveaux ! 
+
+Il est essentiel de respecter [l'ordre des niveaux]{.red} lorsque l'on renomme les niveaux d'un facteur. 
+
+Ici, le niveau `"mâle"` était placé avant le niveau `"femelle"` dans le facteur `sexe`. En renommant les niveaux, j'ai donc dû respecter cet ordre, et taper `c("Ma", "Fe")` et non pas `c("Fe", "Ma")`. Si j'avais tapé `c("Fe", "Ma")`, j'aurais involontairement inversé les niveaux du facteur : les mâles seraient devenus des femelles, et les femelles des mâles ! Faites donc très attention à l'ordre des niveaux lorsque vous renommez les niveaux d'un facteur, que ce soit avec la fonction `factor()` ou avec la fonction `levels()`.
+:::
+
+
+### Les data.frames {#sec-dataframe}
+
+Un **data.frame** (ou tableau de données) est une structure de données rectangulaire, c'est-à-dire un tableau à deux dimensions, qui peut contenir plusieurs types de variables. Chaque colonne d'un `data.frame` est un vecteur (ou un facteur) contenant les valeurs d'une variable, et chaque ligne correspond aux différentes valeurs mesurées pour une observation. Les `data.frame`s sont très largement utilisés dans `R`, car ils permettent de stocker des jeux de données complets, avec plusieurs variables de différents types (numériques, catégorielles, logiques, *etc.*). Pour créer un `data.frame`, on utilise la fonction `data.frame()`, en fournissant les différents vecteurs (ou facteurs) que l'on souhaite inclure dans le tableau de données. Par exemple, pour créer un `data.frame` contenant les variables `ailes`, `tarse`, `tete`, `masse` et `sexe` que nous avons créées précédemment, on tape :
+
+```{r}
+# Création d'un data.frame
+Bruant <- data.frame(
+  Ailes = ailes,
+  Tarse = tarse,
+  Tete = tete,
+  Masse = masse,
+  Sexe = sexe
+)
+
+# Affichage de son contenu
+Bruant
+```
+
+Notez que pour les nommer les colonnes (à gauche des signes `=` dans le code ci-dessus), j'ai choisi des noms avec une majuscule pour les distinguer des noms de vecteurs et facteurs créés au préalable sans majuscule. Ça n'est évidemment pas obligatoire et vous pouvez choisir les noms que vous souhaitez pour les colonnes d'un `data.frame`. Je vous conesille toutefois d'éviter simplement les caractères spéciaux et les mots réservés par `R` comme expliqué plus haut. Choisissez des noms courts et parlants pour les colonnes de vos tableaux de données car vous aurez besoin de les taper souvent pour accéder au contenu de chaque variable.
+
+#### Dimensions et indexation par position
+
+Comme pour les vecteurs et les facteurs, il est possible d'accéder à des éléments spécifiques au sein d'un `data.frame`. Pour cela, on peut utiliser les crochets. Cependant, comme un `data.frame` est une structure à deux dimensions (lignes et colonnes), il faut cette fois fournir deux indices entre crochets : le premier indice correspond à la ligne, et le second indice correspond à la colonne. Par exemple, pour accéder à la valeur de la première ligne et de la deuxième colonne du `data.frame` `Bruant`, on tape :
+
+
+```{r}
+# Accéder à la valeur de la première ligne et de la deuxième colonne du data.frame Bruant
+Bruant[1, 2]
+```
+
+On peut également accéder à une ligne entière ou à une colonne entière en omettant l'un des deux indices. Par exemple, pour accéder à la première ligne entière du `data.frame` `Bruant`, on tape :
+
+```{r}
+Bruant[1, ]
+```
+
+De même, pour accéder à la deuxième colonne entière du `data.frame` `Bruant`, on tape :
+
+```{r}
+Bruant[, 2]
+```
+
+Omettre l'indice des lignes (ou des colonnes) revient donc à demander à `R` de nous afficher toutes les lignes (ou toutes les colonnes respectivement).
+
+On peut aussi demander plusieurs lignes et/ou plusieurs colonnes en fournissant des indices entre crochets. Par exemple, pour afficher les lignes 1, 3 et 5 du `data.frame` `Bruant`, on tape :
+
+```{r}
+Bruant[c(1, 3, 5), ]
+```
+
+Enfin, il est aussi possible, comme pour les vecteurs, de fournir des indices négatifs entre crochets afin de retirer des lignes ou des colonnes. Par exemple, pour afficher toutes les colonnes du `data.frame` `Bruant` sauf la quatrième, on tape :
+
+```{r}
+Bruant[, -4]
+```
+
+Toutes ces commandes ne fonctionnent que si les indices fournis entre crochets ont un sens. Par exemple, ce code génère un message d'erreur :
+
+```{r}
+#| error: true
+Bruant[,10]
+```
+
+Ici, je demande à `R` d'afficher la dixième colonne du `data.frame` `Bruant`, mais ce tableau ne contient que 5 variables. Il n'y a donc pas de dixième colonne à afficher, et `R` le fait savoir avec un message d'erreur. Pour travailler efficacement avec des `data.frame`, il est donc important de connaître leurs dimensions. Pour cela, on peut utiliser la fonction `dim()`, qui affiche le nombre de lignes et le nombre de colonnes d'un `data.frame`, ou les fonctions `nrow()` et `ncol()`, qui affichent respectivement le nombre de lignes et le nombre de colonnes :
+
+```{r}
+# Dimensions du data.frame Bruant
+dim(Bruant)
+# Nombre de lignes du data.frame Bruant
+nrow(Bruant)
+# Nombre de colonnes du data.frame Bruant
+ncol(Bruant)
+```
+
+On peut aussi utiliser la fonction `str()` pour afficher la structure d'un `data.frame`, c'est-à-dire le nombre de lignes et de colonnes, ainsi que le type de chaque variable (numérique, facteur, *etc.*) et les premières valeurs de chaque variable :
+
+```{r}
+str(Bruant)
+```
+
+Enfin, on peut aussi regarder dans l'onget "Environment" du panneau supérieur droit de l'interface de `RStudio` pour voir les dimensions du `data.frame` `Bruant`, ainsi que le type de chaque variable créée depuis le début de la session de travail.
+
+Il est possible d'accéder aux colonnes d'un `data.frame` en utilisant le signe `$`. Par exemple, pour accéder à la colonne `Masse` du `data.frame` `Bruant`, on peut taper :
+
+```{r}
+Bruant$Masse
+
+# équivalent à 
+Bruant[, "Masse"]
+
+# ou à 
+Bruant[, 4]
+```
+
+Vous le voyez, il y a très souvent plusieurs façons de faire la même chose dans `R`. C'est souvent une source de confusion pour les débutants, mais c'est aussi une force du langage : avec l'expérience, vous apprendrez à choisir la méthode qui vous convient le mieux.
+
+#### Indexation par comparaison
+
+Comme pour les vecteurs, on souhaite souvent accéder à certaines lignes d'un tableau de données sans connaître à l'avance leur position. Par exemple, on peut vouloir afficher toutes les lignes du `data.frame` `Bruant` où le sexe est "Fe", ou encore, les lignes pour lesquelles la masse des individus est supérieure à 15 g. Voilà ce qu' il faudrait taper dans l'un et l'autre cas :
+
+```{r}
+# Afficher les lignes du data.frame Bruant où le sexe est "Fe"
+Bruant[Bruant$Sexe == "Fe", ]
+
+# Afficher les lignes du data.frame Bruant où la masse est supérieure à 15 g
+Bruant[Bruant$Masse > 15, ]
+```
+
+Il s'agit bien ici d'indexation par comparaison. La syntaxe est similaire à celle que nous avons vue pour les vecteurs, mais cette fois, l'objet sur lequel porte la condition (à l'intérieur des crochets) est une colonne du `data.frame` (par exemple, `Bruant$Sexe` ou `Bruant$Masse`), et l'objet dont on fournit le nom à gauche des crochets est le `data.frame` lui-même (`Bruant`). COmme pour l'indexation par position, tout ce qui se trouve à gauche de la virgule entre les crochets correspond aux lignes, et tout ce qui se trouve à droite de la virgule correspond aux colonnes. Ici, on omet l'indice des colonnes pour afficher toutes les colonnes.
+
+Pour expliquer concrètement ce qui se passe, prenons l'exemple de la commande `Bruant[Bruant$Masse > 15, ]`. La partie `Bruant$Masse > 15` produit un vecteur logique (de longueur 8, comme le nombre de lignes du `data.frame` `Bruant`) contenant des valeurs `TRUE` et `FALSE` selon que la masse de chaque individu est supérieure à 15 g ou non. Ce vecteur logique est ensuite utilisé pour sélectionner les lignes du `data.frame` `Bruant` car on place cette commande entre crochets, mais à gauche de la virgule : seules les lignes pour lesquelles la condition est `TRUE` sont affichées, les autres sont ignorées :
+
+```{r}
+Bruant$Masse > 15
+```
+
+Jusqu'ici, nous n'avons qu'affiché le résultat des commandes dans la console. Si on souhaite pouvoir réutiliser ces données filtrées plus tard, il faut les stocker dans un nouvel objet. Par exemple, pour créer un nouveau `data.frame` nommé `Bruant_lourd` contenant uniquement les individus dont la masse est supérieure à 15 g, on tape :
+
+```{r}
+Bruant_lourd <- Bruant[Bruant$Masse > 15, ]
+```
+
+On peut maintenant travailer avec ce nouvel objet et le anipuler comme n'importe quel tableau de données :
+
+```{r}
+# Affichage du nouveau tableau
+Bruant_lourd
+
+# Affichage de ses dimensions
+dim(Bruant_lourd)
+```
+
+Pour finir sur ces questions d'indexation (mais nous y reviendront plus en détail dans le @sec-wrangling, à l'aide de packages spécifiques qui rendent les choses plus simples), sachez que ces notations avec des crochets, des dollars, des indices positifs ou négatifs sont souvent difficiles à maitriser pour les débutants. C'est normal : il s'agit de notation peu parlantes et peu intuitives. Il est toutefois important de les comprendre, car il s'agit de la méthode d'indexation historique, toujours très utilisées dans `R` (ainsi que sur les forums d'entraide sur internet et par les IA génératives). Être capables de déchiffrer, comprendre et manipuler ces notations sera donc important pour la suite. 
+
+Toutefois, il existe une alternative plus "moderne" et intuitive à ces notations, qui repose sur l'utilisation de fonctions spécifiques, notamment grâce au package `dplyr`. Vous en verrez plusieurs exemples détaillés dans le @sec-wrangling. Dans l'immédiat, voilà un exemple d'utilisation de la fonction `subset()` (du package `base`), qui permet de faire des sous-ensembles de tableaux de données sans recourrir aux notations alambiquées vues plus haut. Par exemple, pour créer le même tableau `Bruant_lourd` que précédemment, on peut taper :
+
+```{r}
+Bruant_lourd <- subset(Bruant, Masse > 15)
+Bruant_lourd
+```
+
+De même, pour créer un tableau `Bruant_femelle` contenant uniquement les individus de sexe "Fe", on peut taper :
+
+```{r}
+Bruant_femelle <- subset(Bruant, Sexe == "Fe")
+Bruant_femelle
+```
+
+Vous remarquez qu'il n'y ap lus de crochets, il n'y a plus non plus de dollar, et qu'il n'y a plus besoin de préciser de quel objet proviennent les variables `Masse` et `Sexe`. 
+
+
+
+
+### Opérateurs de comparaison {#sec-comparaison}
 
 Comme leur nom l'indique, ils permettent de comparer des valeurs ou des objets. Les principaux opérateurs de comparaison sont :
 
@@ -392,7 +866,7 @@ D'une façon générale, le point d'exclamation permet de signifier à `R` que n
 Cette fonction nous sera très utile plus tard pour éliminer toutes les lignes d'un tableau contenant des valeurs manquantes.
 
 
-#### L'utilisation des fonctions {#sec-functions}
+## L'utilisation des fonctions {#sec-functions}
 
 Dans `R`, les fonctions sont des objets particuliers qui permettent d'effectuer des tâches très variées. Du calcul d'une moyenne à la création d'un graphique, en passant par la réalisation d'analyses statistiques complexes ou simplement l'affichage du chemin du répertoire de travail, tout, dans `R`, repose sur l'utilisation de fonctions. Vous en avez déjà vu un certain nombre :
 
