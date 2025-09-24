@@ -401,7 +401,7 @@ Figure&nbsp;5.1: Pour que ces raccourcis fonctionnent, assurez-vous que l’opti
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -420,7 +420,7 @@ Figure&nbsp;5.1: Pour que ces raccourcis fonctionnent, assurez-vous que l’opti
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -434,7 +434,7 @@ Figure&nbsp;5.1: Pour que ces raccourcis fonctionnent, assurez-vous que l’opti
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1710,7 +1710,7 @@ Figure&nbsp;5.13: Fonctionnement de l’argument <code>.by</code> travaillant de
 <li><code>mean()</code> : calcul de la moyenne</li>
 <li><code>median()</code> : calcul de la médiane</li>
 <li><code>min()</code> : affichage de la valeur minimale</li>
-<li><code>max()</code> : affichage de la valeur minimale</li>
+<li><code>max()</code> : affichage de la valeur maximale</li>
 <li><code>n_distinct()</code> : calcul du nombre de valeurs différentes</li>
 <li><code>n()</code> : calcul du nombre d’observations</li>
 <li><code>var()</code> : calcul de la variance</li>
@@ -2330,7 +2330,7 @@ Figure&nbsp;5.16: Schéma de la fonction <code>inner_join()</code> tiré de la �
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-80-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2438,7 +2438,7 @@ Figure&nbsp;5.17: Schéma de la fonction <code>left_join()</code> tiré de la �
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-101-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="05-DataWrangling_files/figure-html/unnamed-chunk-85-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2582,20 +2582,20 @@ Figure&nbsp;5.17: Schéma de la fonction <code>left_join()</code> tiré de la �
 <div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
-      r     s
-  &lt;int&gt; &lt;dbl&gt;
-1    10 0.393
-2     9 2.60 
-3     8 0.341</code></pre>
+      r        s
+  &lt;int&gt;    &lt;dbl&gt;
+1    10  1.04   
+2     9  0.290  
+3     8 -0.00216</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(a,b)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
-      x     y z         r     s
-  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt; &lt;dbl&gt;
-1     1     2 TRUE     10 0.393
-2     2     4 FALSE     9 2.60 
-3     3     6 FALSE     8 0.341</code></pre>
+      x     y z         r        s
+  &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;int&gt;    &lt;dbl&gt;
+1     1     2 TRUE     10  1.04   
+2     2     4 FALSE     9  0.290  
+3     3     6 FALSE     8 -0.00216</code></pre>
 </div>
 </div>
 <p>Ici, puisque <code>a</code> et <code>b</code> ont le même nombre de lignes, il est possible de les accoler. Cela n’a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.</p>

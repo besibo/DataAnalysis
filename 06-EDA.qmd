@@ -84,41 +84,36 @@ Il peut être très utile de calculer ces différentes valeurs pour plusieurs va
 
 ```{r}
 #| error: true
-penguins |> 
-  summarise(Indices = quantile(bill_length_mm, na.rm = TRUE), 
-            .by = species)
+penguins |>
+  summarise(Indices = quantile(bill_length_mm, na.rm = TRUE), .by = species)
 ```
 
 C'est dans ces situations que la fonction `reframe()` est utile. Elle joue le même rôle que `summarise()`, mais dans les situation où les fonctions statistiques renvoient plus d'une valeur à la fois :
 
 ```{r}
-penguins |> 
-  reframe(Indices = quantile(bill_length_mm, na.rm = TRUE), 
-          .by = species)
+penguins |>
+  reframe(Indices = quantile(bill_length_mm, na.rm = TRUE), .by = species)
 ```
 
 Au contraire de `summarise()`, `reframe()` ne renvoie pas de message d'avertissement dans cette situation. Dans cet exemple, on ne sait malheureusement pas à quoi correspondent les chiffres renvoyés puisque l'information des quartiles a disparu (quelles valeurs correspondent aux médianes ou aux premiers quartiles par exemple). Pour y remédier, on doit transformer le vecteur renvoyé par `quantile()` en tibble. Nous avons déjà vu comment le faire grâce à la fonction `enframe()`. Par ailleurs, puisque la fonction va maintenant renvoyer un tableau, on n'a pas besoin de lui fournir de nom de colonnes (je retire donc `Indices = ` de mon code) :
 
 ```{r}
-penguins |> 
-  reframe(enframe(quantile(bill_length_mm, na.rm = TRUE)), 
-          .by = species)
+penguins |>
+  reframe(enframe(quantile(bill_length_mm, na.rm = TRUE)), .by = species)
 ```
 
 Enfin, comme décrit à la @sec-spread, il est possible de modifier la forme de ce tableau avec `pivot_wider()`, pour le lire plus facilement et éventuellement l'intégrer dans un rapport ou compte-rendu :
 
 ```{r}
 penguins |>
-  reframe(enframe(quantile(bill_length_mm, na.rm = TRUE)), 
-          .by = species) |> 
-  pivot_wider(names_from = species,
-              values_from = value)
+  reframe(enframe(quantile(bill_length_mm, na.rm = TRUE)), .by = species) |>
+  pivot_wider(names_from = species, values_from = value)
 ```
 
 Ces statistiques nous permettent de constater que les manchots de l'espèce Adélie semblent avoir des becs plus courts que les 2 autres espèces (les 5 quantiles le confirment). Les manchots Gentoo et Chinstrap ont en revanche des becs de longueur à peu près similaires, bien que ceux des Chinstrap soient peut-être très légèrement plus longs (Q1, médiane et Q3 supérieurs à ceux des Gentoo). On peut vérifier tout ça graphiquement avec des boîtes à moustaches, puisque les 5 valeurs de quantiles sont justement celles qui sont utilisées pour tracer les boîtes à moustaches :
 
 ```{r}
-penguins |> 
+penguins |>
   ggplot(aes(x = species, y = bill_length_mm)) +
   geom_boxplot() +
   labs(x = "Espèce", y = "Longueur du bec (mm)") +
@@ -128,7 +123,7 @@ penguins |>
 Ou avec un graphique de densité :
 
 ```{r}
-penguins |> 
+penguins |>
   ggplot(aes(x = bill_length_mm, fill = species)) +
   geom_density(alpha = 0.5, show.legend = FALSE) +
   geom_rug() +
@@ -165,6 +160,7 @@ Commençons par fournir un vecteur numérique à la fonction `summary()`. Nous a
 ```{r}
 penguins$body_mass_g
 ```
+
 Nous avons donc `r length(penguins$body_mass_g)` valeurs de masses en grammes qui correspondent aux 344 manchots du jeu de données. La fonction `summary()` renvoie le résumé suivant lorsqu'on lui fournit ces valeurs :
 
 ```{r}
@@ -200,16 +196,23 @@ Les différents indices statistiques fournis nous renseignent à la fois sur la 
 #| fig-align: center
 #| label: fig-distri-masses
 
-penguins |> 
+penguins |>
   ggplot(aes(body_mass_g)) +
   geom_histogram(bins = 25, fill = "steelblue", color = "grey20", alpha = 0.7) +
-  geom_vline(xintercept = mean(penguins$body_mass_g, na.rm = TRUE), 
-             color = "firebrick", size = 1.5) +
-  geom_vline(xintercept = median(penguins$body_mass_g, na.rm = TRUE), 
-             color = "orange", size = 1.5) +
+  geom_vline(
+    xintercept = mean(penguins$body_mass_g, na.rm = TRUE),
+    color = "firebrick",
+    size = 1.5
+  ) +
+  geom_vline(
+    xintercept = median(penguins$body_mass_g, na.rm = TRUE),
+    color = "orange",
+    size = 1.5
+  ) +
   labs(x = "Masse (g)", y = "Nombre") +
   theme_bw()
 ```
+
 L'histogramme de la @fig-distri-masses montre la distribution de la taille des manchots (toutes espèces confondues). Cette distribution présente une asymétrie à droite. Cela signifie que la distribution n'est pas symétrique et que la "queue de distribution" est plus longue à droite qu'à gauche. La plupart des individus ont une masse comprise entre 3500 et 3700 grammes, au niveau du pic principal du graphique. La médiane, en orange et qui vaut 4050 grammes est plus proche du pic que la moyenne, en rouge, qui vaut 4202 grammes. Ici, la différence entre moyenne et médiane n'est pas énorme, mais elle peut le devenir si la distribution est vraiment très asymétrique, par exemple, si quelques individus seulement avaient une masse supérieure à 7000 grammes, la moyenne serait tirée vers la droite du graphique alors que la médiane ne serait presque pas affectée. La moyenne représenterait alors encore moins fidèlement la tendance centrale.
 
 Si l'on revient à la fonction `summary()`, observer des valeurs proches pour la moyenne et la médiane nous indique donc le degré de symétrie de la distribution.
@@ -224,15 +227,21 @@ Si l'on revient à la fonction `summary()`, observer des valeurs proches pour la
 #| label: fig-distri-masses2
 
 set.seed(54)
-tmp <- tibble(a = c(rnorm(150, 3500, 300), rnorm(150, 5000, 300))) 
+tmp <- tibble(a = c(rnorm(150, 3500, 300), rnorm(150, 5000, 300)))
 
-tmp |> 
+tmp |>
   ggplot(aes(a)) +
   geom_histogram(bins = 25, fill = "steelblue", color = "grey20", alpha = 0.7) +
-  geom_vline(xintercept = mean(tmp$a, na.rm = TRUE), 
-             color = "firebrick", size = 1.5) +
-  geom_vline(xintercept = median(tmp$a, na.rm = TRUE), 
-             color = "orange", size = 1.5) +
+  geom_vline(
+    xintercept = mean(tmp$a, na.rm = TRUE),
+    color = "firebrick",
+    size = 1.5
+  ) +
+  geom_vline(
+    xintercept = median(tmp$a, na.rm = TRUE),
+    color = "orange",
+    size = 1.5
+  ) +
   labs(x = "Masse (g)", y = "Nombre") +
   theme_bw()
 ```
@@ -240,15 +249,17 @@ tmp |>
 On comprend donc l'importance de considérer les indices de dispersion en plus des indices de position pour caractériser et comprendre une série de données numériques. L'intervalle interquartile est toujours utile pour connaître l'étendue des données qui correspondent aux 50% des observations les plus centrales. Les autres indices de dispersion très fréquemment utilisés, mais qui ne sont pas proposés par défaut par la fonction `summary()`, sont la variance et l'écart-type. Il est possible de calculer tous les indices renvoyés par la fonction `summary()` et ceux qui nous manquent grâce à la fonction `summarise()` :
 
 ```{r}
-penguins |> 
-  summarise(min = min(body_mass_g, na.rm = TRUE),
-            Q1 = quantile(body_mass_g, 0.25, na.rm = TRUE),
-            med = median(body_mass_g, na.rm = TRUE),
-            moy = mean(body_mass_g, na.rm = TRUE),
-            Q3 = quantile(body_mass_g, 0.75, na.rm = TRUE),
-            max = max(body_mass_g, na.rm = TRUE),
-            var = var(body_mass_g, na.rm = TRUE),
-            et = sd(body_mass_g, na.rm = TRUE))
+penguins |>
+  summarise(
+    min = min(body_mass_g, na.rm = TRUE),
+    Q1 = quantile(body_mass_g, 0.25, na.rm = TRUE),
+    med = median(body_mass_g, na.rm = TRUE),
+    moy = mean(body_mass_g, na.rm = TRUE),
+    Q3 = quantile(body_mass_g, 0.75, na.rm = TRUE),
+    max = max(body_mass_g, na.rm = TRUE),
+    var = var(body_mass_g, na.rm = TRUE),
+    et = sd(body_mass_g, na.rm = TRUE)
+  )
 ```
 
 Vous notez que le code est beaucoup plus long, et qu'utiliser `summary()` peut donc faire gagner beaucoup de temps, même si cette fonction ne nous fournit ni la variance ni l'écart-type. Mais comme souvent dans `R`, il est possible de calculer à la main toutes ces valeurs si besoin. N'oubliez pas non plus qu'avec `summarise()`, on pourrait utiliser l'argument `.by` ou la fonction `group_by()` pour calculer très rapidement ces indices pour chaque espèce de manchot, ou pour chaque espèce et chaque sexe. Comme indiqué plus haut, les fonctions suivantes peuvent être utilisées :
@@ -288,7 +299,7 @@ summary(penguins$sex)
 Pour les facteurs, la fonction `summary()` est donc tout à fait équivalente à la fonction `count()` :
 
 ```{r}
-penguins |> 
+penguins |>
   count(species)
 ```
 
@@ -307,8 +318,8 @@ Ici, on obtient un résumé pour chaque colonne du tableau. Les colonnes numéri
 On constate au passage que la variable `year` est considérée ici comme une variable numérique, alors qu'elle devrait plutôt être considérée comme un facteur, ce qui nous permettrait de savoir combien d'individus ont été échantillonnés chaque année :
 
 ```{r}
-penguins |> 
-  mutate(year = factor(year)) |> 
+penguins |>
+  mutate(year = factor(year)) |>
   summary()
 ```
 
@@ -342,7 +353,7 @@ Ensuite, un bloc apporte des informations sur chaque facteur présent dans le ta
 
 En un coup d'œil, on sait donc que 3 espèces sont présentes (et on connait leurs effectifs), on sait que les manchots ont été échantillonnées sur 3 îles, et on sait que le sexe de 11 individus sur 344 (soit 3%) est inconnu. Pour le reste, il y a presque autant de femelles que de mâles.
 
-Le dernier bloc renseigne sur les variables numériques. Pour chaque d'elle, on a :
+Le dernier bloc renseigne sur les variables numériques. Pour chacune d'elle, on a :
 
 - le nom de la variable numérique (`skim_variable`)
 - le nombre de données manquantes (`n_missing`) et le taux de "données complètes" (`complete_rate`)
@@ -357,12 +368,10 @@ Là encore, en un coup d'œil, on dispose donc de toutes les informations pertin
 La fonction `skim()`, déjà très pratique, le devient encore plus lorsque l'on choisit de lui fournir seulement certaines variables, et qu'on fait certains regroupements. Par exemple, on peut sélectionner les variables relatives aux dimensions du bec (`bill_length_mm` et `bill_depth_mm`) avec la fonction `select()` que nous connaissons déjà, et demander un résumé des données pour chaque espèce grâce à la fonction `group_by()` que nous connaissons également :
 
 ```{r}
-penguins |>                     # Avec le tableau penguins...
-  select(species, 
-         bill_length_mm,
-         bill_depth_mm) |>      # Je sélectionne les variables d'intérêt...
-  group_by(species) |>          # Je regroupe par espèce...
-  skim()                        # Et je produis un résumé des données
+penguins |> # Avec le tableau penguins...
+  select(species, bill_length_mm, bill_depth_mm) |> # Je sélectionne les variables d'intérêt...
+  group_by(species) |> # Je regroupe par espèce...
+  skim() # Et je produis un résumé des données
 ```
 
 On constate ici que pour chaque variable numérique sélectionnée, des statistiques descriptives détaillées nous sont fournies pour chacune des 3 espèces. Ce premier examen semble montrer que :
@@ -385,19 +394,19 @@ En utilisant les fonctions de résumé abordées jusqu'ici et le tableau `weathe
 
 ```{r}
 #| include: false
-weather |> 
-  filter(wind_speed < 500) |> 
-  select(origin, precip, wind_speed, wind_gust) |> 
-  group_by(origin) |> 
+weather |>
+  filter(wind_speed < 500) |>
+  select(origin, precip, wind_speed, wind_gust) |>
+  group_by(origin) |>
   skim()
 ```
 
 ```{r}
 #| include: false
-weather |> 
-  filter(wind_speed < 500) |> 
-  select(temp, month) |> 
-  group_by(month) |> 
+weather |>
+  filter(wind_speed < 500) |>
+  select(temp, month) |>
+  group_by(month) |>
   skim()
 ```
 

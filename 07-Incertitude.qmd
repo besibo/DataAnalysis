@@ -71,19 +71,17 @@ Contrairement aux indices de position et de dispersion, il n'existe pas de fonct
 Par exemple, reprenons les données de masse corporelle des 3 espèces de manchots dans le tableau `penguins`. Imaginons que nous souhaitions étudier les différences de masses corporelles des 3 espèces, en tenant compte du sexe des individus. Pour chaque espèce et chaque sexe, nous allons calculer la masse moyenne des individus en grammes (variable `body_mass_g`). Nous prendrons soin au préalable d'éliminer les lignes pour lesquelles le sexe des individus est inconnu :
 
 ```{r}
-penguins |> 
-  filter(!is.na(sex)) |> 
-  summarise(moyenne = mean(body_mass_g, na.rm = TRUE),
-            .by = c(species, sex))
+penguins |>
+  filter(!is.na(sex)) |>
+  summarise(moyenne = mean(body_mass_g, na.rm = TRUE), .by = c(species, sex))
 ```
 
 Pour pouvoir réutiliser ce tableau, je lui donne un nom : 
 
 ```{r}
-masses <- penguins |> 
-  filter(!is.na(sex)) |> 
-  summarise(moyenne = mean(body_mass_g, na.rm = TRUE),
-            .by = c(species, sex))
+masses <- penguins |>
+  filter(!is.na(sex)) |>
+  summarise(moyenne = mean(body_mass_g, na.rm = TRUE), .by = c(species, sex))
 ```
 
 Au final, on peut faire un graphique avec ces données. Puisqu'on dispose d'une variable numérique et 2 variables catégorielles, je fais le cjoix de produire un diagramme bâtons facettés :
@@ -92,7 +90,7 @@ Au final, on peut faire un graphique avec ces données. Puisqu'on dispose d'une 
 #| label: fig-meanmass
 #| fig-cap: "Comparison des tailles moyennes observées chez les mâles et les femelles de 3 espèces de manchots"
 
-masses |> 
+masses |>
   ggplot(aes(x = sex, y = moyenne, fill = species)) +
   geom_col(color = "grey20", alpha = 0.5) +
   facet_wrap(~species, nrow = 1) +
@@ -115,12 +113,14 @@ Vous remarquerez que :
 Puisque chaque barre de la @fig-meanmass correspond à une valeur de moyenne, il nous faut présenter également **l'incertitude associée à ces calculs de moyennes**. Pour cela, nous devons calculer l'erreur standard des moyennes :
 
 ```{r}
-penguins |> 
-  filter(!is.na(sex)) |> 
-  summarise(moyenne = mean(body_mass_g, na.rm = TRUE),
-            N_obs = n(),
-            erreur_standard = sd(body_mass_g, na.rm = TRUE) / sqrt(N_obs),
-            .by = c(species, sex))
+penguins |>
+  filter(!is.na(sex)) |>
+  summarise(
+    moyenne = mean(body_mass_g, na.rm = TRUE),
+    N_obs = n(),
+    erreur_standard = sd(body_mass_g, na.rm = TRUE) / sqrt(N_obs),
+    .by = c(species, sex)
+  )
 ```
 
 Notre tableau de statistiques descriptives possède maintenant 2 colonnes supplémentaires : le nombre d'observations (que j'ai nommé `N_obs`), et l'erreur standard associée à chaque moyenne, calculée grâce à la formule vue plus haut $se_{\bar{x}} = \frac{s}{\sqrt{n}}$ (la fonction `sqrt()` permet de calculer la racine carrée). On constate que l'erreur standard, qui s'exprime dans la même unité que la moyenne, varie du simple au double selon les groupes. Ainsi, pour les mâles de l'espèce Chinstrap, l'incertitude est deux fois plus importante que pour les femelles de l'espèce Adélie. Cela est probablement dû en partie à des différences de tailles d'échantillons importantes entre ces 2 catégories (73 femelles Adélie contre 34 mâles Chinstrap), mais ça n'est certainement pas la seule explications. Sinon, les femelles Chinstrap auraient elles aussi une incertitude plus grande. L'incertitude reflète aussi, de façon indirecte, la variabilité de la variable étudiée.
@@ -128,21 +128,22 @@ Notre tableau de statistiques descriptives possède maintenant 2 colonnes suppl�
 Une fois de plus, je donne un nom à ce tableau de données pour pouvoir le réutiliser plus tard :
 
 ```{r}
-masses_se <- penguins |> 
-  filter(!is.na(sex)) |> 
-  summarise(moyenne = mean(body_mass_g, na.rm = TRUE),
-            N_obs = n(),
-            erreur_standard = sd(body_mass_g, na.rm = TRUE) / sqrt(N_obs),
-            .by = c(species, sex))
+masses_se <- penguins |>
+  filter(!is.na(sex)) |>
+  summarise(
+    moyenne = mean(body_mass_g, na.rm = TRUE),
+    N_obs = n(),
+    erreur_standard = sd(body_mass_g, na.rm = TRUE) / sqrt(N_obs),
+    .by = c(species, sex)
+  )
 ```
 
 Notez que le package `ggplot2` contient une fonction permettant de calculer à la fois la moyenne et erreur standard de la moyenne d'un échantillon : `mean_se()`. Puisque cette fonction renvoie 3 valeurs ($\bar{x}$, $\bar{x} - se$ et $\bar{x} + se$), on utilise `reframe()` :
 
 ```{r}
-penguins |> 
-  filter(!is.na(sex)) |> 
-  reframe(mean_se(body_mass_g), 
-          .by = c(species, sex))
+penguins |>
+  filter(!is.na(sex)) |>
+  reframe(mean_se(body_mass_g), .by = c(species, sex))
 ```
 
 Les résultats obtenus ne sont pas exactement au même format :
@@ -166,10 +167,9 @@ $$\bar{x} - 1.96 \cdot \frac{s}{\sqrt{n}} < \mu < \bar{x} + 1.96 \cdot \frac{s}{
 Autrement dit, la vraie moyenne $\mu$ d'une population a de bonnes chances de se trouver dans un intervalle de plus ou moins 1.96 fois l'erreur standard de la moyenne. En première approximation, l'intervalle de confiance est donc la moyenne de l'échantillon $\bar{x}$ plus ou moins 2 fois l'erreur standard (que nous avons appris à calculer à la main un peu plus tôt). On peut donc calculer à la main les bornes inférieures et supérieures de l'intervalle de confiance ainsi :
 
 ```{r}
-penguins |> 
-  filter(!is.na(sex)) |> 
-  reframe(mean_se(body_mass_g, mult = 1.96), 
-          .by = c(species, sex))
+penguins |>
+  filter(!is.na(sex)) |>
+  reframe(mean_se(body_mass_g, mult = 1.96), .by = c(species, sex))
 ```
 
 Ici, grâce à l'argument `mult = 1.96` de la fonction `mean_se()` :
@@ -180,15 +180,14 @@ Ici, grâce à l'argument `mult = 1.96` de la fonction `mean_se()` :
 Dans la pratique, puisque cette méthode reste approximative et dépend de la nature des données dont on dispose, on utilisera plutôt des fonctions spécifiques qui calculeront pour nous les intervalles de confiance à 95% de nos estimateurs. C'est ce que permet en particulier la fonction `mean_cl_normal()` du package `ggplot2`. Il est toutefois important de bien comprendre qu'il y a un lien étroit entre l'erreur standard (l'incertitude associées à l'estimation d'un paramètre d'une population à partir des données d'un échantillon), et l'intervalle de confiance à 95% de ce paramètre.
 
 ```{r}
-penguins |> 
-  filter(!is.na(sex)) |> 
-  reframe(mean_cl_normal(body_mass_g), 
-          .by = c(species, sex))
+penguins |>
+  filter(!is.na(sex)) |>
+  reframe(mean_cl_normal(body_mass_g), .by = c(species, sex))
 ```
 
 Comme dans les tableaux précédents, 3 nouvelles colonnes ont été crées :
 
-- `y` contient toujours la moyenne des températures mensuelles pour chaque aéroport
+- `y` contient toujours la moyenne des masses corporelles pour chaque espèce et chaque sexe
 - `ymin` contient maintenant les bornes inférieures de l'intervalle à 95% des moyennes
 - `ymax` contient maintenant les bornes supérieures de l'intervalle à 95% des moyennes
 
@@ -203,13 +202,10 @@ masses_se
 Ensuite, nous avons produit un tableau presque équivalent que nous allons nommer `masses_se_bornes` et pour lequel nous allons modifier le nom des colonnes `y`, `ymin` et `ymax` :
 
 ```{r}
-masses_se_bornes <- penguins |> 
-  filter(!is.na(sex)) |> 
-  reframe(mean_se(body_mass_g),
-            .by = c(species, sex)) |> 
-  rename(moyenne = y,
-         moyenne_moins_se = ymin,
-         moyenne_plus_se = ymax)
+masses_se_bornes <- penguins |>
+  filter(!is.na(sex)) |>
+  reframe(mean_se(body_mass_g), .by = c(species, sex)) |>
+  rename(moyenne = y, moyenne_moins_se = ymin, moyenne_plus_se = ymax)
 
 masses_se_bornes
 ```
@@ -217,13 +213,10 @@ masses_se_bornes
 Nous avons ensuite calculé manuellement des intervalles de confiance approximatifs, avec la fonction `mean_se()` et son argument `mult = 1.96`. Là encore, nous allons stocker cet objet dans un tableau nommé `masses_ci_approx`, et nous allons modifier le nom des colonnes `y`, `ymin`, et `ymax` :
 
 ```{r}
-masses_ci_approx <- penguins |> 
-  filter(!is.na(sex)) |> 
-  reframe(mean_se(body_mass_g, mult = 1.96), 
-          .by = c(species, sex)) |> 
-  rename(moyenne = y,
-         ci_borne_inf = ymin,
-         ci_borne_sup = ymax)
+masses_ci_approx <- penguins |>
+  filter(!is.na(sex)) |>
+  reframe(mean_se(body_mass_g, mult = 1.96), .by = c(species, sex)) |>
+  rename(moyenne = y, ci_borne_inf = ymin, ci_borne_sup = ymax)
 
 masses_ci_approx
 ```
@@ -231,13 +224,10 @@ masses_ci_approx
 Enfin, nous avons calculé les intervalles de confiance avec une fonction spécialement dédiée à cette tâche : la fonction `mean_cl_normal()`. Nous allons stocker cet objet dans un tableau nommé `masses_ci`, et nous allons modifier le nom des colonnes `y`, `ymin`, et `ymax` :
 
 ```{r}
-masses_ci <- penguins |> 
-  filter(!is.na(sex)) |> 
-  reframe(mean_cl_normal(body_mass_g), 
-          .by = c(species, sex)) |> 
-  rename(moyenne = y,
-         ci_borne_inf = ymin,
-         ci_borne_sup = ymax)
+masses_ci <- penguins |>
+  filter(!is.na(sex)) |>
+  reframe(mean_cl_normal(body_mass_g), .by = c(species, sex)) |>
+  rename(moyenne = y, ci_borne_inf = ymin, ci_borne_sup = ymax)
 
 masses_ci
 ```

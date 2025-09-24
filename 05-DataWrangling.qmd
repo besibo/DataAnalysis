@@ -999,7 +999,7 @@ Vous connaissez maintenant plusieurs méthodes pour calculer à la main des stat
 - `mean()` : calcul de la moyenne
 - `median()` : calcul de la médiane
 - `min()` : affichage de la valeur minimale
-- `max()` : affichage de la valeur minimale
+- `max()` : affichage de la valeur maximale
 - `n_distinct()` : calcul du nombre de valeurs différentes
 - `n()` : calcul du nombre d'observations
 - `var()` : calcul de la variance

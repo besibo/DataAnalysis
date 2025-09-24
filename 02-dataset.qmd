@@ -64,7 +64,7 @@ Cette façon d'afficher le contenu d'un tableau permet d'y voir (beaucoup) plus 
 Parmi les nombreuses façons d'avoir une idée des données contenues dans un `data.frame` tel que `penguins`, on présente ici 3 fonctions qui prennent le nom du `data.frame` en guise d'argument, et un opérateur :
 
 - la fonction `View()` intégrée à `RStudio`. C'est celle que vous utiliserez le plus souvent. Attention, elle s'écrit avec un "V" majuscule
-- la fonction `glimpse()` chargée avec le package `dplyr`. Elle est très similaire à la fonction `str()` découverte dans les tutoriels de DataCamp
+- la fonction `glimpse()` chargée avec le package `dplyr`. Elle est très similaire à la fonction `str()` découverte dans le chapitre précedent
 - l'opérateur `$` permet d'accéder à une unique variable d'un `data.frame`
 - la fonction `skim()` du package `skimr` permet d'obtenir un résumé complet mais très synthétique et visuel des variables d'un `data.frame`
 
