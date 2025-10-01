@@ -1062,17 +1062,37 @@ ggplot(penguins, aes(x = sex, fill = species)) +
 
 ### Mosaïc plots {#sec-mosa}
 
-Les graphiques en mosaïque sont une alternative aux diagrammes bâtons en tous genre. Ils permettent de visualiser à la fois les effectifs et de comparer les proportions. La difficulté de ce genre de graphique est qu'il n'existe pas d'objet géométrique permettant de les représenter simplement dans le package `ggplot2`. Le package `ggmosaic` de @R-ggmosaic est toutefois entièrement dédié à ce type de graphique. Installez ce package puis chargez-le en mémoire :
+
+Les graphiques en mosaïque sont une alternative aux diagrammes bâtons en tous genre. Ils permettent de visualiser à la fois les effectifs et de comparer les proportions. La difficulté de ce genre de graphique est qu'il n'existe pas d'objet géométrique permettant de les représenter simplement dans le package `ggplot2`. Le package `ggmosaic` de @R-ggmosaic est toutefois entièrement dédié à ce type de graphique. Pour installer ce packages, il faut procéder un peu différemment de d'habitude car nous devons installer sa version de développement (c'est une version plus récente que celle qui est disponible sur les serveurs officiels du CRAN). Pour cela, nous allons utiliser le package `remotes`. Si vous ne l'avez pas encore installé, faites-le maintenant :
 
 ```{r}
 #| eval: false
 
-install.packages("ggmosaic")
-library(ggmosaic)
+install.packages("remotes")
 ```
 
+Attention, il est possible que `R` vous propose d'installer d'autres packages dont `remotes` dépend. Si c'est le cas, vous devrez l'indiquer dans la console quand `R` vous posera la question en tapant la réponse appropriée (par exemple, le chiffre `1` pour installer toutes les dependances conseillées). Il est également possible que l'instalation de certaines de ces dependances ne soit pas possible tant que `R` n'aura pas été redémarré. Si c'est le cas, redémarrez `R` (en cliquant dans le menu `Session > Restart R` dans RStudio). puis relancez la commande `install.packages("remotes")` jusqu'à ce que l'installation se fasse sans erreur. Vous pourrez alors installer la version de développement du package `ggmosaic` ainsi :
+
 ```{r}
-#| include: false
+#| eval: false
+
+remotes::install_github("haleyjeppson/ggmosaic")
+```
+
+Si vous avez dû redémarrer `R` pour installer le package `remotes`, n'oubliez pas de recharger l'ensemble des packages nécessaires pour ce chapitre :
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(palmerpenguins)
+library(nycflights13)
+library(gapminder)
+library(scales)
+```
+
+Ajoutez-y le package `ggmosaic` nouvellement installé :
+
+```{r}
 library(ggmosaic)
 ```
 
