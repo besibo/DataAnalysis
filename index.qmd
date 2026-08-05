@@ -29,7 +29,8 @@ list.of.packages <- c(
   "mixdist",
   "scales",
   "colorspace",
-  "rstatix"
+  "rstatix",
+  "janitor"
 )
 new.packages <- list.of.packages[
   !(list.of.packages %in% installed.packages()[, "Package"])
@@ -95,7 +96,8 @@ knitr::write_bib(
     "mixdist",
     "nycflights13",
     "datasauRus",
-    "rstatix"
+    "rstatix",
+    "janitor"
   ),
   'packages.bib'
 )
