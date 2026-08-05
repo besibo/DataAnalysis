@@ -3,7 +3,7 @@
 
 ## Pré-requis {#sec-packages6}
 
-Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire.
+Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vous pouvez tout à fait avoir plusieurs scripts dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire.
 
 Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser :
 
@@ -94,8 +94,10 @@ Visualiser les données est toujours aussi indispensable. Ici, comme pour la cor
 plant |>
   ggplot(aes(x = nSpecies, y = biomassStability)) +
   geom_point(alpha = 0.5) +
-  labs(x = "Nombre d'espèces par parcelle",
-       y = "Indice de stabilité de la biomasse")
+  labs(
+    x = "Nombre d'espèces par parcelle",
+    y = "Indice de stabilité de la biomasse"
+  )
 ```
 
 Ce graphique nous apprend que contrairement à la plupart des méthodes statistiques vues jusqu'ici, il n'est pas nécessaire que les données des variables soient distribuées selon une loi Normale. Ici, nous avons des données qui sont tout sauf normales pour la variable explicative puisque nous avons seulement les entiers 1, 2, 4, 8 et 16. Un histogramme ou une courbe de densité montre que la distribution de cette variable est très loin de la Normalité :
@@ -104,8 +106,7 @@ Ce graphique nous apprend que contrairement à la plupart des méthodes statisti
 plant |>
   ggplot(aes(x = nSpecies)) +
   geom_density(fill = "firebrick2", adjust = 0.2) +
-  labs(x = "Nombre d'espèces par parcelle", 
-       y = "Densité")
+  labs(x = "Nombre d'espèces par parcelle", y = "Densité")
 ```
 
 Cela n'est pas du tout problématique : comme pour l'ANOVA, les conditions d'application porteront sur les **résidus de la régression**, pas sur les variables elles-mêmes. Comme pour l'ANOVA, ce sont les résidus de la régression qui devront suivre une distribution Normale, pas les variables de départ.
@@ -117,8 +118,10 @@ plant |>
   ggplot(aes(x = nSpecies, y = biomassStability)) +
   geom_point(alpha = 0.3) +
   geom_smooth(method = "lm", se = FALSE) +
-  labs(x = "Nombre d'espèces par parcelle",
-       y = "Transformation log\n de l'indice de stabilité de la biomasse")
+  labs(
+    x = "Nombre d'espèces par parcelle",
+    y = "Transformation log\n de l'indice de stabilité de la biomasse"
+  )
 ```
 
 L'argument `method = "lm"` indique qu'on souhaite ajouter une droite de régression sur le graphique, et `se = FALSE` permet de ne faire apparaître que la droite de régression, sans son intervalle d'incertitude. Nous reviendrons sur la notion d'incertitude de la régression un peu plus loin.
@@ -202,10 +205,9 @@ Imaginez un jeu de données dans lequel absolument aucune tendance n'est présen
 #| warning: false
 
 set.seed(6542)
-no_rel <- tibble(x = rnorm(50, 10, 2),
-                 y = rnorm(50, 15, 3))
+no_rel <- tibble(x = rnorm(50, 10, 2), y = rnorm(50, 15, 3))
 
-no_rel |> 
+no_rel |>
   ggplot(aes(x, y)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
@@ -223,7 +225,7 @@ added <- tibble(x = 25, y = 72)
 
 bad_rel <- bind_rows(no_rel, added)
 
-bad_rel |> 
+bad_rel |>
   ggplot(aes(x, y)) +
   geom_point(aes(color = x > 20), show.legend = FALSE) +
   expand_limits(x = c(0, 25), y = c(0, 80)) +
@@ -241,7 +243,7 @@ added <- tibble(x = 25, y = 72)
 
 bad_rel <- bind_rows(no_rel, added)
 
-bad_rel |> 
+bad_rel |>
   ggplot(aes(x, y)) +
   geom_point(aes(color = x > 20), show.legend = FALSE) +
   geom_smooth(method = "lm", se = FALSE) +
@@ -257,7 +259,7 @@ Sans ce point supplémentaire, la droite de régression a une pente légèrement
 #| message: false
 #| warning: false
 
-reg2 <- lm(y~x, data = bad_rel)
+reg2 <- lm(y ~ x, data = bad_rel)
 
 plot(reg2, which = 5)
 ```
@@ -321,8 +323,10 @@ plant |>
   ggplot(aes(x = nSpecies, y = biomassStability)) +
   geom_point(alpha = 0.3) +
   geom_smooth(method = "lm", se = TRUE) +
-  labs(x = "Nombre d'espèces par parcelle",
-       y = "Transformation log\n de l'indice de stabilité de la biomasse") +
+  labs(
+    x = "Nombre d'espèces par parcelle",
+    y = "Transformation log\n de l'indice de stabilité de la biomasse"
+  ) +
   scale_y_continuous(breaks = seq(0, 3, 0.25))
 ```
 
@@ -346,16 +350,16 @@ Exécutez les commandes suivantes :
 library(datasauRus)
 
 datasaurus_dozen |>
-    group_by(dataset) |>
-    summarize(
-      moy_x    = mean(x),
-      moy_y    = mean(y),
-      ecart_type_x = sd(x),
-      ecart_type_y = sd(y),
-      correl_x_y  = cor(x, y),
-      pente = coef(lm(y~x))[2],
-      ordonnee_origine = coef(lm(y~x))[1]
-    )
+  group_by(dataset) |>
+  summarize(
+    moy_x = mean(x),
+    moy_y = mean(y),
+    ecart_type_x = sd(x),
+    ecart_type_y = sd(y),
+    correl_x_y = cor(x, y),
+    pente = coef(lm(y ~ x))[2],
+    ordonnee_origine = coef(lm(y ~ x))[1]
+  )
 ```
 
 Examinez attentivement les nombreux résultats produits par cette commande. Vous devriez remarquer que pour ces 13 jeux de données, 2 variables numériques `x` et `y` sont mises en relation. Pour tous ces jeux de données, on observe que la moyenne de tous les `x` est la même, la moyenne de tous les `y` est la même, les écarts-types des `x` sont identiques, les écarts-types des `y` aussi, la corrélation entre `x` et `y` est également extrêmement proche pour tous les jeux de données, et lorsque l'on effectue une régression linéaire de `y` en fonction de `x`, les ordonnées à l'origine et les pentes des droites de régression sont extrêmement proches pour les 13 jeux de données.
@@ -405,9 +409,9 @@ reg2 <- lm(PenaltyMinutes ~ FaceWidthHeightRatio, data = hockey)
 summary(reg2)
 confint(reg2)
 
-par(mfrow = c(2,2))
+par(mfrow = c(2, 2))
 plot(reg2)
-par(mfrow = c(1,1))
+par(mfrow = c(1, 1))
 ```
 
 

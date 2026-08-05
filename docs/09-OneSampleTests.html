@@ -71,12 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6002a56e31bc0883d18632c2e514cc75.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6002a56e31bc0883d18632c2e514cc75.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c1c17b1dd3a99fb2a4972b2f35c93fa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-2a0d91418fdc62e2999cf3e276df34df.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-9843e733b9aa8aad0a9bf3cffbc2a565.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-e41dddcb078eeacf3a37061dfb1b0db1.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -868,27 +868,18 @@ Sur la première ligne, <code>R</code> nous confirme que nous avons bien réalis
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Temp_clean <span class="sc">|&gt;</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(temperature) <span class="sc">|&gt;</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wilcox.test</span>(<span class="at">mu =</span> <span class="dv">37</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wilcox.test.default(pull(Temp_clean, temperature), mu = 37, conf.int
-= TRUE): impossible de calculer la p-value exacte avec des ex-aequos</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wilcox.test.default(pull(Temp_clean, temperature), mu = 37, conf.int
-= TRUE): impossible de calculer un intervalle de confiance exact avec des
-ex-aequos</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-    Wilcoxon signed rank test with continuity correction
+    Wilcoxon signed rank exact test
 
 data:  pull(Temp_clean, temperature)
-V = 143, p-value = 0.6077
+V = 143, p-value = 0.6084
 alternative hypothesis: true location is not equal to 37
-95 percent confidence interval:
- 36.77780 37.11114
+95.9 percent confidence interval:
+ 36.77778 37.11111
 sample estimates:
 (pseudo)median 
-      36.94446 </code></pre>
+      36.94444 </code></pre>
 </div>
 </div>
 <p>La syntaxe est identique à celle du test de Student à un échantillon à une exception près : l’ajout de l’argument <code>conf.int = TRUE</code> qui permet d’afficher la (pseudo)médiane de l’échantillon et son intervalle de confiance à 95%.</p>

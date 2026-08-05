@@ -20,7 +20,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -37,12 +91,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6002a56e31bc0883d18632c2e514cc75.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6002a56e31bc0883d18632c2e514cc75.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c1c17b1dd3a99fb2a4972b2f35c93fa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-2a0d91418fdc62e2999cf3e276df34df.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-9843e733b9aa8aad0a9bf3cffbc2a565.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-e41dddcb078eeacf3a37061dfb1b0db1.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,6 +126,35 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -237,8 +320,36 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#sec-packages7" id="toc-sec-packages7" class="nav-link active" data-scroll-target="#sec-packages7"><span class="header-section-number">15.1</span> Pré-requis</a></li>
+  <li><a href="#contexte" id="toc-contexte" class="nav-link" data-scroll-target="#contexte"><span class="header-section-number">15.2</span> Contexte</a></li>
+  <li><a href="#importation-et-mise-en-forme-des-données" id="toc-importation-et-mise-en-forme-des-données" class="nav-link" data-scroll-target="#importation-et-mise-en-forme-des-données"><span class="header-section-number">15.3</span> Importation et mise en forme des données</a></li>
+  <li><a href="#une-proportion-est-une-moyenne" id="toc-une-proportion-est-une-moyenne" class="nav-link" data-scroll-target="#une-proportion-est-une-moyenne"><span class="header-section-number">15.4</span> Une proportion est une moyenne</a></li>
+  <li><a href="#estimer-une-proportion-et-son-incertitude" id="toc-estimer-une-proportion-et-son-incertitude" class="nav-link" data-scroll-target="#estimer-une-proportion-et-son-incertitude"><span class="header-section-number">15.5</span> Estimer une proportion et son incertitude</a></li>
+  <li><a href="#exploration-graphique" id="toc-exploration-graphique" class="nav-link" data-scroll-target="#exploration-graphique"><span class="header-section-number">15.6</span> Exploration graphique</a></li>
+  <li><a href="#comparer-une-proportion-à-une-valeur-théorique" id="toc-comparer-une-proportion-à-une-valeur-théorique" class="nav-link" data-scroll-target="#comparer-une-proportion-à-une-valeur-théorique"><span class="header-section-number">15.7</span> Comparer une proportion à une valeur théorique</a>
+  <ul class="collapse">
+  <li><a href="#test-unilatéral" id="toc-test-unilatéral" class="nav-link" data-scroll-target="#test-unilatéral"><span class="header-section-number">15.7.1</span> Test unilatéral</a></li>
+  </ul></li>
+  <li><a href="#comparer-deux-proportions-indépendantes" id="toc-comparer-deux-proportions-indépendantes" class="nav-link" data-scroll-target="#comparer-deux-proportions-indépendantes"><span class="header-section-number">15.8</span> Comparer deux proportions indépendantes</a></li>
+  <li><a href="#exploration-graphique-préalable" id="toc-exploration-graphique-préalable" class="nav-link" data-scroll-target="#exploration-graphique-préalable"><span class="header-section-number">15.9</span> Exploration graphique préalable</a>
+  <ul class="collapse">
+  <li><a href="#avec-un-diagramme-bâtons-empilé-en-proportions" id="toc-avec-un-diagramme-bâtons-empilé-en-proportions" class="nav-link" data-scroll-target="#avec-un-diagramme-bâtons-empilé-en-proportions"><span class="header-section-number">15.9.1</span> Avec un diagramme bâtons empilé en proportions</a></li>
+  <li><a href="#avec-un-mosaic-plot" id="toc-avec-un-mosaic-plot" class="nav-link" data-scroll-target="#avec-un-mosaic-plot"><span class="header-section-number">15.9.2</span> Avec un mosaic plot</a></li>
+  <li><a href="#avec-des-intervalles-de-confiance" id="toc-avec-des-intervalles-de-confiance" class="nav-link" data-scroll-target="#avec-des-intervalles-de-confiance"><span class="header-section-number">15.9.3</span> Avec des intervalles de confiance</a></li>
+  </ul></li>
+  <li><a href="#le-test-de-comparaison-de-deux-proportions" id="toc-le-test-de-comparaison-de-deux-proportions" class="nav-link" data-scroll-target="#le-test-de-comparaison-de-deux-proportions"><span class="header-section-number">15.10</span> Le test de comparaison de deux proportions</a></li>
+  <li><a href="#du-test-de-deux-proportions-à-la-table-de-contingence" id="toc-du-test-de-deux-proportions-à-la-table-de-contingence" class="nav-link" data-scroll-target="#du-test-de-deux-proportions-à-la-table-de-contingence"><span class="header-section-number">15.11</span> Du test de deux proportions à la table de contingence</a></li>
+  <li><a href="#le-cas-des-petits-effectifs-test-exact-de-fisher" id="toc-le-cas-des-petits-effectifs-test-exact-de-fisher" class="nav-link" data-scroll-target="#le-cas-des-petits-effectifs-test-exact-de-fisher"><span class="header-section-number">15.12</span> Le cas des petits effectifs : test exact de Fisher</a></li>
+  <li><a href="#comment-choisir-le-bon-test" id="toc-comment-choisir-le-bon-test" class="nav-link" data-scroll-target="#comment-choisir-le-bon-test"><span class="header-section-number">15.13</span> Comment choisir le bon test ?</a></li>
+  <li><a href="#transition-vers-le-chapitre-suivant" id="toc-transition-vers-le-chapitre-suivant" class="nav-link" data-scroll-target="#transition-vers-le-chapitre-suivant"><span class="header-section-number">15.14</span> Transition vers le chapitre suivant</a></li>
+  <li><a href="#exercices-dapplication" id="toc-exercices-dapplication" class="nav-link" data-scroll-target="#exercices-dapplication"><span class="header-section-number">15.15</span> Exercices d’application</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -247,27 +358,861 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<!-- ## Pré-requis {#sec-packages7} -->
-<!-- Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire. -->
-<!-- Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser : -->
-<!-- - le `tidyverse` [@R-tidyverse], qui comprend notamment le package `readr` [@R-readr], pour importer facilement des fichiers `.csv` au format `tibble`, le package `dplyr` [@R-dplyr], pour manipuler des tableaux, et le package `ggplot2` [@R-ggplot2] pour les représentations graphiques. -->
-<!-- - `skimr` [@R-skimr], qui permet de calculer des résumés de données très informatifs. -->
-<!-- ```{r} -->
-<!-- #| message: false -->
-<!-- #| warning: false -->
-<!-- #| results: false -->
-<!-- library(tidyverse) -->
-<!-- library(skimr) -->
-<!-- ``` -->
-<!-- Vous aurez également besoin des jeux de données suivants, qu'il vous faut donc télécharger dans votre répertoire de travail : -->
-<!-- - [`plantbiomass.csv`](data/plantbiomass.csv) -->
-<!-- - [`hockey.csv`](data/hockey.csv) -->
-<!-- ```{r} -->
-<!-- theme_set(theme_bw()) -->
-<!-- ``` -->
-<p>En cours de préparation…</p>
+<section id="sec-packages7" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="sec-packages7"><span class="header-section-number">15.1</span> Pré-requis</h2>
+<p>Comme pour chaque nouveau chapitre, je vous conseille de démarrer une nouvelle session de travail (Menu <code>Session &gt; Restart R</code>), et de créer un nouveau script que vous placerez dans votre répertoire de travail. Inutile en revanche de créer un nouveau <code>Rproject</code> : vous pouvez tout à fait avoir plusieurs scripts dans le même répertoire de travail et pour un même <code>Rproject</code>. Comme toujours, consultez les chapitres précédents (en particulier <a href="01-RBasics.html#sec-script" class="quarto-xref">les sections&nbsp;<span>1.3.2</span></a> et <a href="01-RBasics.html#sec-rproj" class="quarto-xref"><span>1.3.3</span></a>) si vous ne savez plus comment faire.</p>
+<p>Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé <code>RStudio</code>), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d’utiliser :</p>
+<ul>
+<li>le <code>tidyverse</code> <span class="citation" data-cites="R-tidyverse">(<a href="references.html#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span>, qui comprend notamment <code>readr</code> <span class="citation" data-cites="R-readr">(<a href="references.html#ref-R-readr" role="doc-biblioref">Wickham, Hester, et Bryan 2026</a>)</span>, <code>dplyr</code> <span class="citation" data-cites="R-dplyr">(<a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al. 2026</a>)</span>, <code>tidyr</code> <span class="citation" data-cites="R-tidyr">(<a href="references.html#ref-R-tidyr" role="doc-biblioref">Wickham, Vaughan, et Girlich 2025</a>)</span> et <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al. 2026</a>)</span>.</li>
+<li><code>skimr</code> <span class="citation" data-cites="R-skimr">(<a href="references.html#ref-R-skimr" role="doc-biblioref">Waring et al. 2026</a>)</span>, qui permet de calculer des résumés de données très informatifs.</li>
+<li><code>binom</code> <span class="citation" data-cites="R-binom">(<a href="references.html#ref-R-binom" role="doc-biblioref">Dorai-Raj et Cascone 2026</a>)</span>, qui permet de calculer plusieurs types d’intervalles de confiance pour une proportion.</li>
+<li><code>ggmosaic</code> <span class="citation" data-cites="R-ggmosaic">(<a href="references.html#ref-R-ggmosaic" role="doc-biblioref">Jeppson, Hofmann, et Cook 2026</a>)</span>, pour réaliser des graphiques en mosaïque avec la syntaxe de <code>ggplot2</code>.</li>
+<li><code>janitor</code> <span class="citation" data-cites="R-janitor">(<a href="references.html#ref-R-janitor" role="doc-biblioref"><strong>R-janitor?</strong></a>)</span>, pour nettoyer facilement les noms de variables d’un tableau.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(binom)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggmosaic)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Attention
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si certains packages ne sont pas encore installés sur votre ordinateur (par exemple, <code>binom</code> et <code>ggmosaic</code>), vous devrez les installer avant de pouvoir les charger. Consultez la <a href="01-RBasics.html#sec-packages" class="quarto-xref"><span>Section 1.6</span></a> pour savoir comment faire.</p>
+</div>
+</div>
+<p>Vous aurez également besoin du jeu de données suivant que vous pouvez dès maintenant télécharger dans votre répertoire de travail :</p>
+<ul>
+<li><a href="data/squid.txt"><code>squid.txt</code></a></li>
+</ul>
+<p>Enfin, je spécifie ici une fois pour toutes le thème que j’utiliserai pour tous les graphiques de ce chapitre. Libre à vous de choisir un thème différent ou de vous contenter du thème proposé par défaut :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="contexte" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="contexte"><span class="header-section-number">15.2</span> Contexte</h2>
+<p>Jusqu’à présent, nous avons surtout comparé des <strong>moyennes</strong>. Pourtant, dans de très nombreuses études en biologie, en écologie, en médecine ou en agronomie, la variable mesurée n’est pas numérique continue, mais <strong>binaire</strong> :</p>
+<ul>
+<li>un individu est infecté ou non ;</li>
+<li>une graine germe ou ne germe pas ;</li>
+<li>un nid réussit ou échoue ;</li>
+<li>un animal est mâle ou femelle.</li>
+</ul>
+<p>Dans ce type de situation, ce n’est plus la moyenne d’une grandeur continue que l’on cherche à comparer, mais une <strong>proportion</strong>. Les questions posées sont alors du type :</p>
+<ul>
+<li>la proportion de femelles dans une population diffère-t-elle de 50 % ?</li>
+<li>la proportion d’individus infectés est-elle la même dans deux groupes ?</li>
+<li>le succès de germination est-il identique dans deux traitements ?</li>
+</ul>
+<p>Le cas le plus simple est celui d’une variable binaire observée sur chaque individu. Mais bientôt, des problèmes plus complexes pourront aussi être décrits sous la forme de <strong>tables de contingence</strong>, car les données issues de comptages sont souvent regroupées et ne sont pas toujours limitées à deux catégories. Les questions que nous abordons ici pourront donc être étendues aux facteurs possédant un nombre quelconque de modalités, et pas seulement deux. Dans l’immédiat, il faut donc comprendre à la fois :</p>
+<ol type="1">
+<li>comment passer des données brutes individuelles aux effectifs utiles pour les tests ;</li>
+<li>comment distinguer l’<strong>estimation</strong> d’une proportion du <strong>test</strong> d’une hypothèse ;</li>
+<li>comment choisir entre les principaux tests disponibles.</li>
+</ol>
+<p>Dans ce chapitre, nous allons voir successivement :</p>
+<ol type="1">
+<li>pourquoi une proportion est une moyenne ;</li>
+<li>comment estimer une proportion et son incertitude ;</li>
+<li>comment comparer une proportion observée à une valeur théorique ;</li>
+<li>comment comparer deux proportions dans deux groupes indépendants ;</li>
+<li>comment relier ces comparaisons aux tables de contingence ;</li>
+<li>quand utiliser un test exact plutôt qu’une approximation.</li>
+</ol>
+</section>
+<section id="importation-et-mise-en-forme-des-données" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="importation-et-mise-en-forme-des-données"><span class="header-section-number">15.3</span> Importation et mise en forme des données</h2>
+<p>Nous allons travailler ici sur le fichier <a href="data/squid.txt"><code>squid.txt</code></a>, qui contient des données sur des calmars échantillonnés dans plusieurs sites. Les variables disponibles sont :</p>
+<ul>
+<li><code>Sample</code> : identifiant de l’observation ;</li>
+<li><code>Year</code> et <code>Month</code> : date de collecte ;</li>
+<li><code>Location</code> : site d’échantillonnage ;</li>
+<li><code>Sex</code> : sexe de l’individu ;</li>
+<li><code>GSI</code> : gonado-somatic index (ou Indice Gonado-Somatique : c’est un rapport qui rend compte de la masse des gonades par rapport à la masse de l’individu et qui renseigne notamment sur le statut reproducteur des individus, leur maturité sexuelle, etc. Ici, il est exprimé en pourcents).</li>
+</ul>
+<p>Ici, nous n’utiliserons dans un premier temps que les variables <code>Location</code> et <code>Sex</code>, car ce chapitre est consacré aux proportions. Importez les données dans un objet nommé <code>squid_raw</code> (si vous ne savez plus comment faire, consultez la <a href="04-TidyData.html#sec-import" class="quarto-xref"><span>Section 4.4</span></a>) puis examinez le tableau obtenu :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>squid_raw</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,644 × 6
+   Sample  Year Month Location   Sex   GSI
+    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1      1     1     1        1     2 10.4 
+ 2      2     1     1        3     2  9.83
+ 3      3     1     1        1     2  9.74
+ 4      4     1     1        1     2  9.31
+ 5      5     1     1        1     2  8.99
+ 6      6     1     1        1     2  8.77
+ 7      7     1     1        1     2  8.26
+ 8      8     1     1        3     2  7.40
+ 9      9     1     1        3     2  7.22
+10     10     1     2        1     2  6.84
+# ℹ 2,634 more rows</code></pre>
+</div>
+</div>
+<p>Comme dans d’autres chapitres du livre, il est utile d’harmoniser ou de simplifier les intitulés des colonnes dès l’importation (par exemple, pour supprimer les majuscules ou les caractères spéciaux). Le package <code>janitor</code> permet de faire cela très facilement avec la fonction <code>clean_names()</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>squid_raw <span class="ot">&lt;-</span> squid_raw <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(squid_raw)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "sample"   "year"     "month"    "location" "sex"      "gsi"     </code></pre>
+</div>
+</div>
+<p>Les sexes sont ici codés <code>1</code> et <code>2</code>. Pour rendre le tableau plus lisible, nous allons transformer cette variable en facteur, et créer une variable logique <code>female</code> qui vaudra <code>TRUE</code> pour les femelles et <code>FALSE</code> pour les mâles :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>squid <span class="ot">&lt;-</span> squid_raw <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="fu">factor</span>(location),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">factor</span>(sex, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>)),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">female =</span> sex <span class="sc">==</span> <span class="st">"female"</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>squid</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,644 × 7
+   sample  year month location sex      gsi female
+    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;  &lt;dbl&gt; &lt;lgl&gt; 
+ 1      1     1     1 1        female 10.4  TRUE  
+ 2      2     1     1 3        female  9.83 TRUE  
+ 3      3     1     1 1        female  9.74 TRUE  
+ 4      4     1     1 1        female  9.31 TRUE  
+ 5      5     1     1 1        female  8.99 TRUE  
+ 6      6     1     1 1        female  8.77 TRUE  
+ 7      7     1     1 1        female  8.26 TRUE  
+ 8      8     1     1 3        female  7.40 TRUE  
+ 9      9     1     1 3        female  7.22 TRUE  
+10     10     1     2 1        female  6.84 TRUE  
+# ℹ 2,634 more rows</code></pre>
+</div>
+</div>
+<p>Nous disposons maintenant d’un tableau <strong>rangé</strong>, au format long :</p>
+<ul>
+<li>chaque ligne correspond à un individu ;</li>
+<li><code>location</code> et <code>sex</code> sont des variables qualitatives ;</li>
+<li><code>female</code> est une variable logique qui code le sexe de façon binaire.</li>
+</ul>
+<p>C’est ce type de tableau qui doit toujours constituer votre point de départ. Les tests sur proportions utilisent ensuite des <strong>effectifs agrégés</strong>, mais ces effectifs doivent être obtenus à partir de données individuelles correctement structurées.</p>
+</section>
+<section id="une-proportion-est-une-moyenne" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="une-proportion-est-une-moyenne"><span class="header-section-number">15.4</span> Une proportion est une moyenne</h2>
+<p>Avant même de parler de test statistique, il faut bien comprendre qu’une proportion est tout simplement la moyenne d’une variable codée <code>TRUE</code> / <code>FALSE</code> ou <code>1</code> / <code>0</code>.</p>
+<p>Prenons un premier exemple avec les calmars du site <code>3</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>squid_3 <span class="ot">&lt;-</span> squid <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(location <span class="sc">==</span> <span class="st">"3"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>squid_3</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 447 × 7
+   sample  year month location sex      gsi female
+    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;  &lt;dbl&gt; &lt;lgl&gt; 
+ 1      2     1     1 3        female  9.83 TRUE  
+ 2      8     1     1 3        female  7.40 TRUE  
+ 3      9     1     1 3        female  7.22 TRUE  
+ 4     17     1     6 3        female  5.78 TRUE  
+ 5     19     1     5 3        female  5.65 TRUE  
+ 6     21     1     5 3        female  5.60 TRUE  
+ 7     40     1     6 3        female  4.66 TRUE  
+ 8     45     1     5 3        female  4.49 TRUE  
+ 9     48     1     5 3        male    4.30 FALSE 
+10     56     1     5 3        female  3.91 TRUE  
+# ℹ 437 more rows</code></pre>
+</div>
+</div>
+<p>Le nombre de femelles et de mâles s’obtient facilement :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>squid_3 <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(sex)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  sex        n
+  &lt;fct&gt;  &lt;int&gt;
+1 male     261
+2 female   186</code></pre>
+</div>
+</div>
+<p>On peut également demander un résumé rapide du tableau :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(squid_3)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Data Summary ────────────────────────
+                           Values 
+Name                       squid_3
+Number of rows             447    
+Number of columns          7      
+_______________________           
+Column type frequency:            
+  factor                   2      
+  logical                  1      
+  numeric                  4      
+________________________          
+Group variables            None   
+
+── Variable type: factor ───────────────────────────────────────────────────────
+  skim_variable n_missing complete_rate ordered n_unique
+1 location              0             1 FALSE          1
+2 sex                   0             1 FALSE          2
+  top_counts              
+1 3: 447, 1: 0, 2: 0, 4: 0
+2 mal: 261, fem: 186      
+
+── Variable type: logical ──────────────────────────────────────────────────────
+  skim_variable n_missing complete_rate  mean count             
+1 female                0             1 0.416 FAL: 261, TRU: 186
+
+── Variable type: numeric ──────────────────────────────────────────────────────
+  skim_variable n_missing complete_rate   mean      sd     p0     p25    p50
+1 sample                0             1 819.   526.    2      352.    809   
+2 year                  0             1   1.75   0.676 1        1       2   
+3 month                 0             1   5.00   2.20  1        4       5   
+4 gsi                   0             1   2.06   2.16  0.0157   0.288   1.44
+      p75    p100 hist 
+1 1145    2468    ▇▇▆▂▁
+2    2       4    ▆▇▁▂▁
+3    7      12    ▅▇▇▁▁
+4    2.40    9.83 ▇▂▁▁▁</code></pre>
+</div>
+</div>
+<p>La proportion de femelles s’obtient alors en calculant la moyenne de la variable logique <code>female</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>squid_3 <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">proportion_femelles =</span> <span class="fu">mean</span>(female))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  proportion_femelles
+                &lt;dbl&gt;
+1               0.416</code></pre>
+</div>
+</div>
+<p>Et si l’on préfère, on peut présenter le résultat en pourcentage :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>squid_3 <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">pourcentage_femelles =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="fu">mean</span>(female))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  pourcentage_femelles
+                 &lt;dbl&gt;
+1                 41.6</code></pre>
+</div>
+</div>
+<p>Autrement dit, quand on code une variable binaire par <code>TRUE</code> et <code>FALSE</code>, calculer la moyenne revient à calculer la proportion de <code>TRUE</code>. C’est une idée essentielle, car elle permet de faire le lien entre les chapitres précédents consacrés aux moyennes et ce nouveau chapitre consacré aux proportions.</p>
+<p>Dernière chose, il est aussi possible de calculer les proportions de femelles et de mâles à partir du comptage des effectifs grâce aux fonctions <code>count()</code> et <code>mutate()</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>squid_3 <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">proportion =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  sex        n proportion
+  &lt;fct&gt;  &lt;int&gt;      &lt;dbl&gt;
+1 male     261      0.584
+2 female   186      0.416</code></pre>
+</div>
+</div>
+</section>
+<section id="estimer-une-proportion-et-son-incertitude" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="estimer-une-proportion-et-son-incertitude"><span class="header-section-number">15.5</span> Estimer une proportion et son incertitude</h2>
+<p>Comme pour une moyenne, une proportion observée dans un échantillon n’est qu’une <strong>estimation</strong> de la proportion réelle dans la population générale. Il faut donc s’intéresser à son incertitude.</p>
+<p>Ici, nous allons estimer la proportion de femelles parmi les calmars échantillonnés au site <code>3</code> à l’aide de la fonction <code>binom.test()</code>. Cette fonction réalise un test binomial exact, mais elle fournit aussi l’intervalle de confiance de la proportion observée :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">sum</span>(squid_3<span class="sc">$</span>female),</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">nrow</span>(squid_3)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Exact binomial test
+
+data:  sum(squid_3$female) and nrow(squid_3)
+number of successes = 186, number of trials = 447, p-value = 0.0004523
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.3699820 0.4633504
+sample estimates:
+probability of success 
+             0.4161074 </code></pre>
+</div>
+</div>
+<p>Plusieurs éléments nous intéressent :</p>
+<ul>
+<li><code>number of successes</code> correspond ici au nombre de femelles observées ;</li>
+<li><code>number of trials</code> correspond au nombre total de calmars échantillonnés au site <code>3</code> ;</li>
+<li><code>sample estimates</code> donne la proportion observée ;</li>
+<li><code>95 percent confidence interval</code> fournit un intervalle de confiance à 95 % pour cette proportion.</li>
+</ul>
+<p>La proportion observée de femelles vaut donc 0.416, soit environ 41.6 %. Cet intervalle de confiance nous indique quelles sont les valeurs plausibles de la proportion de femelles dans la population générale, compte tenu de notre échantillon. Ici, dans la population générale, la proportion de femelles a de bonnes chances d’être comprise entre 37 % et 46.3 %.</p>
+<p>La méthode utilisée ici est la méthode <strong>exacte</strong> (on parle aussi souvent d’intervalle exact binomial, ou intervalle de Clopper-Pearson). Elle n’est toutefois pas la seule possible. Le package <code>binom</code> permet de calculer facilement l’intervalle de confiance d’une proportion selon plusieurs méthodes de calcul :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.confint</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">sum</span>(squid_3<span class="sc">$</span>female),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">nrow</span>(squid_3)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          method   x   n      mean     lower     upper
+1  agresti-coull 186 447 0.4161074 0.3713117 0.4623328
+2     asymptotic 186 447 0.4161074 0.3704129 0.4618018
+3          bayes 186 447 0.4162946 0.3708289 0.4619696
+4        cloglog 186 447 0.4161074 0.3701677 0.4613510
+5          exact 186 447 0.4161074 0.3699820 0.4633504
+6          logit 186 447 0.4161074 0.3712528 0.4623958
+7         probit 186 447 0.4161074 0.3710776 0.4622673
+8        profile 186 447 0.4161074 0.3709891 0.4621846
+9            lrt 186 447 0.4161074 0.3710090 0.4621738
+10     prop.test 186 447 0.4161074 0.3702257 0.4634535
+11        wilson 186 447 0.4161074 0.3713172 0.4623272</code></pre>
+</div>
+</div>
+<p>La méthode <code>exact</code> correspond à celle que nous retrouvons dans les résultats de <code>binom.test()</code>. Les chiffres fournis sont donc strictement identiques à ceux fournis par <code>binom.test()</code>. En général, c’est la méthode recommandée. Toutefois, la méthode <code>ac</code> (pour méthode d’<strong>Agresti-Coull</strong>) peut être utile car c’est l’une des rares méthodes de la liste qui permet un calcul des bornes de l’intervalle de confiance à 95% à la main.</p>
+<p>L’intervalle d’Agresti-Coull à 95 % peut être calculé de façon approchée en ajoutant 2 succès et 2 échecs. Si <code>x</code> est le nombre de succès observés et <code>n</code> la taille de l’échantillon, on calcule d’abord :</p>
+<p><span class="math display">\[\tilde{p} = \frac{x + 2}{n + 4}\]</span></p>
+<p>Puis l’erreur standard associée à cette proportion ajustée :</p>
+<p><span class="math display">\[SE_{\tilde{p}} = \sqrt{\frac{\tilde{p}(1-\tilde{p})}{n+4}}\]</span></p>
+<p>Enfin, l’intervalle de confiance à 95 % est approximativement :</p>
+<p><span class="math display">\[\tilde{p} \pm 1.96 \times SE_{\tilde{p}}\]</span></p>
+<p>Voyons ce que cela donne pour nos calmars du site <code>3</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sum</span>(squid_3<span class="sc">$</span>female)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(squid_3)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>p_tilde <span class="ot">&lt;-</span> (x <span class="sc">+</span> <span class="dv">2</span>) <span class="sc">/</span> (n <span class="sc">+</span> <span class="dv">4</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>se_tilde <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(p_tilde <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p_tilde) <span class="sc">/</span> (n <span class="sc">+</span> <span class="dv">4</span>))</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_tilde =</span> p_tilde,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">IC95_inf =</span> p_tilde <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se_tilde,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">IC95_sup =</span> p_tilde <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se_tilde</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  p_tilde IC95_inf IC95_sup
+    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1   0.417    0.371    0.462</code></pre>
+</div>
+</div>
+<p>On retrouve des valeurs très proches de celles renvoyées par <code>binom.confint(..., methods = "ac")</code>. Autrement dit :</p>
+<ul>
+<li><code>binom.test()</code> fournit ici un <strong>intervalle exact</strong> ;</li>
+<li><code>binom.confint(methods = "exact")</code> retrouve ce même intervalle ;</li>
+<li><code>binom.confint(methods = "ac")</code> donne l’intervalle d’<strong>Agresti-Coull</strong> ;</li>
+<li>et cet intervalle d’Agresti-Coull peut être approximativement recalculé à la main à partir de la formule ci-dessus.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Estimer n’est pas tester
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Il faut bien distinguer deux opérations intellectuelles différentes :</p>
+<ul>
+<li><strong>estimer une proportion</strong>, c’est chercher quelle valeur du paramètre est plausible dans la population générale ;</li>
+<li><strong>tester une proportion</strong>, c’est chercher si une hypothèse précise sur ce paramètre peut être rejetée ou non.</li>
+</ul>
+<p>L’estimation répond à la question <strong>“combien ?”</strong>.<br>
+Le test répond à la question <strong>“compatible avec quoi ?”</strong>.</p>
+</div>
+</div>
+<p>Cette dernière remarque est très importante et elle aurait pu être faite dans les chapitres précédents consacrés aux moyennes. Il ne faut jamais confondre l’estimation d’une grandeur (moyenne, proportion, etc.) avec le test d’une hypothèse à son sujet. L’estimation doit toujours précéder le test, et elle doit être examinée attentivement avant de se lancer dans le test. Si un test rejette l’hypothèse nulle, cela ne nous dit absolument rien sur la valeur réelle du paramètre dans la population générale. De même, si un test ne rejette pas l’hypothèse nulle, cela ne signifie pas que l’hypothèse nulle est vraie. C’est pour cela que les estimations et leurs intervalles de confiance sont tout aussi importants que les <em>p</em>-values. Et c’est la raison pour laquelle pour la plupart des fonctions de test dans <code>R</code>, renvoient à la fois les résultats du test, les estimations et les intervalles de confiances pertinents pour l’interprétation des résultats.</p>
+</section>
+<section id="exploration-graphique" class="level2" data-number="15.6">
+<h2 data-number="15.6" class="anchored" data-anchor-id="exploration-graphique"><span class="header-section-number">15.6</span> Exploration graphique</h2>
+<p>Avant de faire un test, il est utile de visualiser les effectifs observés :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>squid_3 <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">color =</span> <span class="st">"grey30"</span>) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sexe"</span>, <span class="at">y =</span> <span class="st">"Effectif"</span>, <span class="at">title =</span> <span class="st">"Sexe des calmars du site 3"</span>) <span class="sc">+</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="15-PropTests_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ce graphique permet de voir immédiatement si l’on observe un déséquilibre marqué ou non entre les deux sexes. Mais un déséquilibre visuel ne suffit jamais à lui seul : il faut encore déterminer s’il peut être attribué au simple hasard de l’échantillonnage.</p>
+</section>
+<section id="comparer-une-proportion-à-une-valeur-théorique" class="level2" data-number="15.7">
+<h2 data-number="15.7" class="anchored" data-anchor-id="comparer-une-proportion-à-une-valeur-théorique"><span class="header-section-number">15.7</span> Comparer une proportion à une valeur théorique</h2>
+<p>Supposons maintenant que l’hypothèse théorique soit celle d’un sex-ratio équilibré, c’est-à-dire 50 % de femelles et 50 % de mâles. Nous voulons donc savoir si la proportion observée de femelles au site <code>3</code> est compatible avec cette hypothèse.</p>
+<p>Les hypothèses testées sont les suivantes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la proportion de femelles dans la population vaut 0.5.</li>
+<li>H<span class="math inline">\(_1\)</span> : la proportion de femelles dans la population est différente de 0.5.</li>
+</ul>
+<p>Le test adapté est le <strong>test binomial exact</strong> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>test_site3 <span class="ot">&lt;-</span> <span class="fu">binom.test</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">sum</span>(squid_3<span class="sc">$</span>female),</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">nrow</span>(squid_3),</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">p =</span> <span class="fl">0.5</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>test_site3</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Exact binomial test
+
+data:  sum(squid_3$female) and nrow(squid_3)
+number of successes = 186, number of trials = 447, p-value = 0.0004523
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.3699820 0.4633504
+sample estimates:
+probability of success 
+             0.4161074 </code></pre>
+</div>
+</div>
+<p>La p-value de ce test nous permet de décider si l’écart observé à 50 % est trop grand pour être attribué au seul hasard de l’échantillonnage.</p>
+<p>Le point important ici est le suivant : nous avons bien affaire à un <strong>échantillon unique</strong>, pour lequel nous comparons une proportion observée à une <strong>valeur théorique</strong>. C’est exactement la situation dans laquelle il faut penser à <code>binom.test()</code>.</p>
+<section id="test-unilatéral" class="level3" data-number="15.7.1">
+<h3 data-number="15.7.1" class="anchored" data-anchor-id="test-unilatéral"><span class="header-section-number">15.7.1</span> Test unilatéral</h3>
+<p>Dans certains cas, l’hypothèse de recherche n’est pas “différente de”, mais “supérieure à” ou “inférieure à”. On peut alors réaliser un test unilatéral.</p>
+<p>Par exemple, si nous avions de bonnes raisons biologiques de penser qu’au site <code>3</code> les femelles sont <strong>moins fréquentes</strong> que les mâles, nous pourrions formuler les hypothèses suivantes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : la proportion de femelles vaut 0.5.</li>
+<li>H<span class="math inline">\(_1\)</span> : la proportion de femelles est inférieure à 0.5.</li>
+</ul>
+<p>Le code devient :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">sum</span>(squid_3<span class="sc">$</span>female),</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">nrow</span>(squid_3),</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">p =</span> <span class="fl">0.5</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">alternative =</span> <span class="st">"less"</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Exact binomial test
+
+data:  sum(squid_3$female) and nrow(squid_3)
+number of successes = 186, number of trials = 447, p-value = 0.0002262
+alternative hypothesis: true probability of success is less than 0.5
+95 percent confidence interval:
+ 0.0000000 0.4559052
+sample estimates:
+probability of success 
+             0.4161074 </code></pre>
+</div>
+</div>
+<p>Un test unilatéral ne doit toutefois être utilisé que si l’hypothèse directionnelle a été formulée <strong>avant</strong> de regarder les données. Il ne faut jamais choisir après coup le sens du test qui arrange le mieux les résultats.</p>
+</section>
+</section>
+<section id="comparer-deux-proportions-indépendantes" class="level2" data-number="15.8">
+<h2 data-number="15.8" class="anchored" data-anchor-id="comparer-deux-proportions-indépendantes"><span class="header-section-number">15.8</span> Comparer deux proportions indépendantes</h2>
+<p>Passons maintenant à une situation encore plus fréquente : comparer une proportion entre deux groupes indépendants.</p>
+<p>Nous allons comparer ici la proportion de femelles entre les sites <code>1</code> et <code>3</code>. Biologiquement, la question est simple : les sex-ratios observés dans ces deux zones d’échantillonnage sont-ils compatibles avec une même proportion sous-jacente, ou bien les deux sites se distinguent-ils ?</p>
+<p>Le point important est le suivant : les données sont toujours observées <strong>individu par individu</strong>. Le tableau rangé reste donc notre point de départ.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>squid_13 <span class="ot">&lt;-</span> squid <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(location <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"3"</span>))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>squid_13</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,438 × 7
+   sample  year month location sex      gsi female
+    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;  &lt;dbl&gt; &lt;lgl&gt; 
+ 1      1     1     1 1        female 10.4  TRUE  
+ 2      2     1     1 3        female  9.83 TRUE  
+ 3      3     1     1 1        female  9.74 TRUE  
+ 4      4     1     1 1        female  9.31 TRUE  
+ 5      5     1     1 1        female  8.99 TRUE  
+ 6      6     1     1 1        female  8.77 TRUE  
+ 7      7     1     1 1        female  8.26 TRUE  
+ 8      8     1     1 3        female  7.40 TRUE  
+ 9      9     1     1 3        female  7.22 TRUE  
+10     10     1     2 1        female  6.84 TRUE  
+# ℹ 2,428 more rows</code></pre>
+</div>
+</div>
+<p>Chaque ligne correspond à un individu. Pour examiner les effectifs observés, on peut commencer par croiser le site et le sexe :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>squid_13 <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(location, sex)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  location sex        n
+  &lt;fct&gt;    &lt;fct&gt;  &lt;int&gt;
+1 1        male    1031
+2 1        female   960
+3 3        male     261
+4 3        female   186</code></pre>
+</div>
+</div>
+<p>À partir de ce tableau long, nous pouvons ensuite construire un résumé par site :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>sex_ratio <span class="ot">&lt;-</span> squid_13 <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">effectif =</span> <span class="fu">n</span>(),</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">femelles =</span> <span class="fu">sum</span>(female),</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">proportion_femelles =</span> <span class="fu">mean</span>(female),</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> location</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ci_low =</span> <span class="fu">binom.test</span>(femelles, effectif)<span class="sc">$</span>conf.int[<span class="dv">1</span>],</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ci_high =</span> <span class="fu">binom.test</span>(femelles, effectif)<span class="sc">$</span>conf.int[<span class="dv">2</span>]</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>sex_ratio</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 6
+  location effectif femelles proportion_femelles ci_low ci_high
+  &lt;fct&gt;       &lt;int&gt;    &lt;int&gt;               &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1 1            1991      960               0.482  0.460   0.504
+2 3             447      186               0.416  0.370   0.463</code></pre>
+</div>
+</div>
+<p>Nous avons donc ici effectué un passage fondamental :</p>
+<ol type="1">
+<li>nous partons de données <strong>individuelles</strong> au format long ;</li>
+<li>nous calculons les <strong>effectifs</strong> et <strong>proportions</strong> utiles pour chaque groupe ;</li>
+<li>nous ajoutons des <strong>intervalles de confiance</strong> pour visualiser l’incertitude.</li>
+</ol>
+<p>Autrement dit, le test de comparaison de proportions ne remplace pas le travail préalable de mise en forme et d’exploration des données. Il vient <strong>après</strong>.</p>
+</section>
+<section id="exploration-graphique-préalable" class="level2" data-number="15.9">
+<h2 data-number="15.9" class="anchored" data-anchor-id="exploration-graphique-préalable"><span class="header-section-number">15.9</span> Exploration graphique préalable</h2>
+<p>Avant de faire le test, il est utile de regarder les données sous plusieurs angles. Les <a href="03-Visualization.html#sec-empil">diagrammes bâtons empilés en proportions</a> et les <a href="03-Visualization.html#sec-mosa">mosaic plots</a> vus au chapitre 3 sont particulièrement adaptés à ce type de question.</p>
+<section id="avec-un-diagramme-bâtons-empilé-en-proportions" class="level3" data-number="15.9.1">
+<h3 data-number="15.9.1" class="anchored" data-anchor-id="avec-un-diagramme-bâtons-empilé-en-proportions"><span class="header-section-number">15.9.1</span> Avec un diagramme bâtons empilé en proportions</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>squid_13 <span class="sc">|&gt;</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> location, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">accuracy =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Site d'échantillonnage"</span>,</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proportion"</span>,</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Sexe"</span>,</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Sex-ratio observé dans deux sites de collecte"</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="15-PropTests_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ce graphique permet de comparer rapidement les proportions de femelles et de mâles entre les deux sites. Il montre bien les proportions, mais il ne donne pas directement accès aux effectifs absolus.</p>
+</section>
+<section id="avec-un-mosaic-plot" class="level3" data-number="15.9.2">
+<h3 data-number="15.9.2" class="anchored" data-anchor-id="avec-un-mosaic-plot"><span class="header-section-number">15.9.2</span> Avec un mosaic plot</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>squid_13 <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_mosaic</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">product</span>(location), <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"grey70"</span>, <span class="st">"firebrick2"</span>)) <span class="sc">+</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Site d'échantillonnage"</span>,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proportion"</span>,</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Sexe"</span>,</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Sexe des calmars selon le site"</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="15-PropTests_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Le graphique en mosaïque rappelle encore mieux qu’il s’agit d’un problème de <strong>table de contingence</strong> :</p>
+<ul>
+<li>la largeur des rectangles dépend des effectifs ;</li>
+<li>la hauteur des subdivisions dépend des proportions de chaque sexe dans chaque site.</li>
+</ul>
+<p>Il est donc particulièrement utile quand on veut garder en tête simultanément les proportions <strong>et</strong> les tailles d’échantillon.</p>
+</section>
+<section id="avec-des-intervalles-de-confiance" class="level3" data-number="15.9.3">
+<h3 data-number="15.9.3" class="anchored" data-anchor-id="avec-des-intervalles-de-confiance"><span class="header-section-number">15.9.3</span> Avec des intervalles de confiance</h3>
+<p>Enfin, comme pour toute estimation, il est utile de visualiser l’incertitude :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>sex_ratio <span class="sc">|&gt;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> location, <span class="at">y =</span> proportion_femelles, <span class="at">fill =</span> location)) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> ci_low, <span class="at">ymax =</span> ci_high), <span class="at">width =</span> <span class="fl">0.15</span>) <span class="sc">+</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">accuracy =</span> <span class="dv">1</span>),</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Site d'échantillonnage"</span>,</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proportion de femelles"</span>,</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Proportion de femelles et incertitude associée"</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="15-PropTests_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ce graphique est beaucoup plus informatif qu’une simple comparaison de hauteurs de barres. Il montre à la fois :</p>
+<ul>
+<li>la proportion observée de femelles dans chaque site ;</li>
+<li>l’incertitude associée à ces proportions ;</li>
+<li>l’importance ou non du chevauchement entre les intervalles de confiance.</li>
+</ul>
+<p>Ce n’est pas encore le test d’hypothèses, mais c’est déjà une étape indispensable pour raisonner correctement.</p>
+</section>
+</section>
+<section id="le-test-de-comparaison-de-deux-proportions" class="level2" data-number="15.10">
+<h2 data-number="15.10" class="anchored" data-anchor-id="le-test-de-comparaison-de-deux-proportions"><span class="header-section-number">15.10</span> Le test de comparaison de deux proportions</h2>
+<p>Le test le plus simple pour comparer deux proportions est la fonction <code>prop.test()</code>. Elle ne travaille plus à l’échelle individuelle, mais à l’échelle des <strong>effectifs agrégés</strong> :</p>
+<ul>
+<li><code>x</code> contient le nombre de succès dans chaque groupe ;</li>
+<li><code>n</code> contient la taille de chaque groupe.</li>
+</ul>
+<p>Les hypothèses testées sont :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : les proportions sont identiques dans les deux populations.</li>
+<li>H<span class="math inline">\(_1\)</span> : les proportions diffèrent entre les deux populations.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>test_squid <span class="ot">&lt;-</span> <span class="fu">prop.test</span>(</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sex_ratio<span class="sc">$</span>femelles,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> sex_ratio<span class="sc">$</span>effectif</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>test_squid</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    2-sample test for equality of proportions with continuity correction
+
+data:  sex_ratio$femelles out of sex_ratio$effectif
+X-squared = 6.133, df = 1, p-value = 0.01327
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ 0.01400025 0.11812452
+sample estimates:
+   prop 1    prop 2 
+0.4821698 0.4161074 </code></pre>
+</div>
+</div>
+<p>La fonction renvoie entre autres :</p>
+<ul>
+<li>une estimation de la proportion dans chaque groupe ;</li>
+<li>une p-value pour le test d’égalité des proportions ;</li>
+<li>un intervalle de confiance à 95 % pour la différence entre les proportions.</li>
+</ul>
+<p>Il faut noter ici un point de méthode important : contrairement à <code>binom.test()</code>, qui repose sur un calcul exact, <code>prop.test()</code> repose sur une <strong>approximation du <span class="math inline">\(\chi^2\)</span></strong> et applique par défaut une <strong>correction de continuité</strong>. Dans les grands échantillons, cela ne pose en général aucun problème. Avec de petits effectifs, en revanche, il faudra se tourner vers un test exact.</p>
+<p>Le point essentiel, ici, est de bien comprendre que le test porte sur des <strong>comptages agrégés</strong>, mais que ces comptages proviennent de données individuelles convenablement structurées. Si vous sautez directement à la table de comptage sans réfléchir au tableau de départ, vous vous privez d’une bonne partie du raisonnement statistique.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+À retenir !
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour comparer deux proportions, il ne faut pas partir d’un tableau résumé trouvé “tout fait” par hasard. Il faut raisonner dans l’ordre :</p>
+<ol type="1">
+<li>données individuelles au format long ;</li>
+<li>définition claire de ce qu’est un “succès” ;</li>
+<li>calcul des effectifs et proportions par groupe ;</li>
+<li>exploration graphique ;</li>
+<li>visualisation de l’incertitude ;</li>
+<li>test statistique adapté.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="du-test-de-deux-proportions-à-la-table-de-contingence" class="level2" data-number="15.11">
+<h2 data-number="15.11" class="anchored" data-anchor-id="du-test-de-deux-proportions-à-la-table-de-contingence"><span class="header-section-number">15.11</span> Du test de deux proportions à la table de contingence</h2>
+<p>Le même problème peut être présenté sous forme de <strong>table de contingence</strong> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>tab_squid <span class="ot">&lt;-</span> squid_13 <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(location, sex) <span class="sc">|&gt;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sex, <span class="at">values_from =</span> n) <span class="sc">|&gt;</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_to_rownames</span>(<span class="st">"location"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>tab_squid</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  male female
+1 1031    960
+3  261    186</code></pre>
+</div>
+</div>
+<p>Ce tableau croise deux variables qualitatives :</p>
+<ul>
+<li>le site d’échantillonnage ;</li>
+<li>le sexe.</li>
+</ul>
+<p>On peut alors utiliser un test du <span class="math inline">\(\chi^2\)</span> d’indépendance :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(tab_squid)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  tab_squid
+X-squared = 6.133, df = 1, p-value = 0.01327</code></pre>
+</div>
+</div>
+<p>Dans une table 2 x 2, <code>chisq.test()</code> et <code>prop.test()</code> sont très proches dans leur logique et conduisent en général aux mêmes conclusions.</p>
+<p>Le langage diffère légèrement :</p>
+<ul>
+<li>avec <code>prop.test()</code>, on raisonne en termes de <strong>comparaison de deux proportions</strong> ;</li>
+<li>avec <code>chisq.test()</code>, on raisonne en termes <strong>d’association entre deux variables qualitatives</strong>.</li>
+</ul>
+<p>Mais dans le cas présent, il s’agit de deux façons très voisines d’aborder le même problème.</p>
+<p>Il faut donc retenir l’idée suivante :</p>
+<ul>
+<li>le <strong>cas binaire simple</strong> (succès / échec dans deux groupes) peut être vu comme une <strong>table de contingence 2 x 2</strong> ;</li>
+<li>les tests sur proportions font donc partie d’un cadre plus général, celui de l’analyse des tableaux d’effectifs.</li>
+</ul>
+</section>
+<section id="le-cas-des-petits-effectifs-test-exact-de-fisher" class="level2" data-number="15.12">
+<h2 data-number="15.12" class="anchored" data-anchor-id="le-cas-des-petits-effectifs-test-exact-de-fisher"><span class="header-section-number">15.12</span> Le cas des petits effectifs : test exact de Fisher</h2>
+<p>Les fonctions <code>prop.test()</code> et <code>chisq.test()</code> reposent sur des approximations. Lorsque les effectifs sont faibles, ces approximations peuvent devenir médiocres. Dans ce cas, il est préférable d’utiliser le <strong>test exact de Fisher</strong>.</p>
+<p>Nous allons reprendre ici les données sur les calmars, mais en comparant cette fois les sites <code>3</code> et <code>4</code>. Le site <code>4</code> ne contient que 49 individus, ce qui en fait un bon exemple de situation où un test exact mérite d’être envisagé.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>squid_34 <span class="ot">&lt;-</span> squid <span class="sc">|&gt;</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(location <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"3"</span>, <span class="st">"4"</span>))</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>tab_squid_small <span class="ot">&lt;-</span> <span class="fu">table</span>(squid_34<span class="sc">$</span>location, squid_34<span class="sc">$</span>sex)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>tab_squid_small</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   
+    male female
+  1    0      0
+  2    0      0
+  3  261    186
+  4   22     27</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(tab_squid_small)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  tab_squid_small
+p-value = 0.09366
+alternative hypothesis: two.sided</code></pre>
+</div>
+</div>
+<p>Le test exact de Fisher repose, comme son nom l’indique, sur un calcul exact. Il est particulièrement utile lorsque :</p>
+<ul>
+<li>la taille totale de l’échantillon est faible ;</li>
+<li>certains effectifs attendus sont inférieurs à 5 ;</li>
+<li>la table de contingence contient des cases très peu remplies.</li>
+</ul>
+<p>Dans la pratique :</p>
+<ul>
+<li>pour des effectifs confortables, <code>prop.test()</code> ou <code>chisq.test()</code> conviennent très bien ;</li>
+<li>pour de petits effectifs, il faut penser à <code>fisher.test()</code>.</li>
+</ul>
+</section>
+<section id="comment-choisir-le-bon-test" class="level2" data-number="15.13">
+<h2 data-number="15.13" class="anchored" data-anchor-id="comment-choisir-le-bon-test"><span class="header-section-number">15.13</span> Comment choisir le bon test ?</h2>
+<p>On peut résumer les cas les plus fréquents de la façon suivante :</p>
+<ul>
+<li><strong>un seul échantillon</strong> et une proportion à comparer à une valeur théorique : <code>binom.test()</code></li>
+<li><strong>deux groupes indépendants</strong> et une variable binaire : <code>prop.test()</code></li>
+<li><strong>table de contingence</strong> entre deux variables qualitatives : <code>chisq.test()</code></li>
+<li><strong>petits effectifs</strong> dans une table de contingence : <code>fisher.test()</code></li>
+</ul>
+<p>Autrement dit, il faut d’abord se demander :</p>
+<ol type="1">
+<li>combien de groupes ou de variables sont en jeu ?</li>
+<li>est-ce que je compare une proportion à une valeur théorique, ou est-ce que je compare plusieurs groupes ?</li>
+<li>les effectifs sont-ils suffisamment grands pour une approximation, ou faut-il un test exact ?</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+À retenir !
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les comparaisons de proportions concernent toujours des variables binaires ou, plus généralement, des tableaux d’effectifs.</p>
+<p>Avant de lancer le test :</p>
+<ul>
+<li>identifiez clairement ce qu’est un “succès” et ce qu’est un “échec” ;</li>
+<li>partez des données individuelles quand vous les avez ;</li>
+<li>calculez les effectifs et les proportions observées ;</li>
+<li>examinez l’incertitude des proportions ;</li>
+<li>choisissez un test exact (<code>binom.test()</code> ou <code>fisher.test()</code>) lorsque les effectifs sont faibles.</li>
+</ul>
+<p>Comme pour les comparaisons de moyennes, l’interprétation ne doit jamais reposer uniquement sur la p-value. Les proportions observées, leurs différences, et leurs intervalles d’incertitude sont tout aussi importants.</p>
+</div>
+</div>
+</section>
+<section id="transition-vers-le-chapitre-suivant" class="level2" data-number="15.14">
+<h2 data-number="15.14" class="anchored" data-anchor-id="transition-vers-le-chapitre-suivant"><span class="header-section-number">15.14</span> Transition vers le chapitre suivant</h2>
+<p>Dans ce chapitre, nous nous sommes limités au cas où l’on observe une <strong>variable binaire</strong> ou une <strong>table de contingence simple</strong>. Autrement dit, nous avons comparé des <strong>proportions</strong>.</p>
+<p>Le chapitre suivant élargira ce cadre. Nous ne nous demanderons plus seulement si une proportion observée diffère d’une valeur théorique, ou si deux groupes présentent la même proportion. Nous examinerons cette fois si une <strong>distribution observée entière</strong> est compatible avec une distribution théorique attendue :</p>
+<ul>
+<li>un simple modèle proportionnel ;</li>
+<li>une distribution binomiale ;</li>
+<li>une distribution de Poisson.</li>
+</ul>
+<p>Nous passerons donc des comparaisons de proportions au <strong>test du <span class="math inline">\(\chi^2\)</span> de qualité de l’ajustement</strong> (<em>goodness of fit test</em>).</p>
+</section>
+<section id="exercices-dapplication" class="level2" data-number="15.15">
+<h2 data-number="15.15" class="anchored" data-anchor-id="exercices-dapplication"><span class="header-section-number">15.15</span> Exercices d’application</h2>
+<ol type="1">
+<li><p>À partir du jeu de données <code>squid</code>, testez si la proportion de femelles au site <code>2</code> diffère de 50 %.</p></li>
+<li><p>Comparez la proportion de femelles entre les sites <code>1</code> et <code>2</code>. Commencez impérativement par un tableau long, puis construisez le tableau de comptage utile au test.</p></li>
+<li><p>À partir du tableau <code>squid</code>, construisez une table de contingence croisant <code>location</code> et <code>sex</code>, puis commentez l’intérêt d’un mosaic plot pour représenter ce tableau.</p></li>
+<li><p>Pour la comparaison entre les sites <code>3</code> et <code>4</code>, comparez les résultats donnés par <code>prop.test()</code> et <code>fisher.test()</code>. Pourquoi est-il utile d’examiner les deux ici ?</p></li>
+</ol>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-R-binom" class="csl-entry" role="listitem">
+Dorai-Raj, Sundar, et Arianna D. Cascone. 2026. <em>binom: Binomial Confidence Intervals for Several Parameterizations</em>. <a href="https://doi.org/10.32614/CRAN.package.binom">https://doi.org/10.32614/CRAN.package.binom</a>.
+</div>
+<div id="ref-R-ggmosaic" class="csl-entry" role="listitem">
+Jeppson, Haley, Heike Hofmann, et Di Cook. 2026. <em>ggmosaic: Mosaic Plots in the ggplot2 Framework</em>. <a href="https://haleyjeppson.github.io/ggmosaic/">https://haleyjeppson.github.io/ggmosaic/</a>.
+</div>
+<div id="ref-R-skimr" class="csl-entry" role="listitem">
+Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, et Shannon Ellis. 2026. <em>skimr: Compact and Flexible Summaries of Data</em>. <a href="https://docs.ropensci.org/skimr/">https://docs.ropensci.org/skimr/</a>.
+</div>
+<div id="ref-R-tidyverse" class="csl-entry" role="listitem">
+Wickham, Hadley. 2023. <em>tidyverse: Easily Install and Load the Tidyverse</em>. <a href="https://tidyverse.tidyverse.org">https://tidyverse.tidyverse.org</a>.
+</div>
+<div id="ref-R-ggplot2" class="csl-entry" role="listitem">
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, Dewey Dunnington, et Teun van den Brand. 2026. <em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+</div>
+<div id="ref-R-dplyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, et Davis Vaughan. 2026. <em>dplyr: A Grammar of Data Manipulation</em>. <a href="https://dplyr.tidyverse.org">https://dplyr.tidyverse.org</a>.
+</div>
+<div id="ref-R-readr" class="csl-entry" role="listitem">
+Wickham, Hadley, Jim Hester, et Jennifer Bryan. 2026. <em>readr: Read Rectangular Text Data</em>. <a href="https://readr.tidyverse.org">https://readr.tidyverse.org</a>.
+</div>
+<div id="ref-R-tidyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Davis Vaughan, et Maximilian Girlich. 2025. <em>tidyr: Tidy Messy Data</em>. <a href="https://tidyr.tidyverse.org">https://tidyr.tidyverse.org</a>.
+</div>
+</div>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

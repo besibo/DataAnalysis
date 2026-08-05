@@ -91,12 +91,12 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6002a56e31bc0883d18632c2e514cc75.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6002a56e31bc0883d18632c2e514cc75.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c1c17b1dd3a99fb2a4972b2f35c93fa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-2a0d91418fdc62e2999cf3e276df34df.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-9843e733b9aa8aad0a9bf3cffbc2a565.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-e41dddcb078eeacf3a37061dfb1b0db1.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -361,14 +361,14 @@ window.Quarto = {
 
 <section id="sec-packages4" class="level2" data-number="12.1">
 <h2 data-number="12.1" class="anchored" data-anchor-id="sec-packages4"><span class="header-section-number">12.1</span> Pré-requis</h2>
-<p>Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu <code>Session &gt; Restart R</code>). Inutile en revanche de créer un nouveau <code>Rproject</code> : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même <code>Rproject</code>. Comme toujours, consultez les chapitres précédents (en particulier <a href="01-RBasics.html#sec-script" class="quarto-xref">les sections&nbsp;<span>1.3.2</span></a> et <a href="01-RBasics.html#sec-rproj" class="quarto-xref"><span>1.3.3</span></a>) si vous ne savez plus comment faire.</p>
+<p>Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu <code>Session &gt; Restart R</code>). Inutile en revanche de créer un nouveau <code>Rproject</code> : vous pouvez tout à fait avoir plusieurs scripts dans le même répertoire de travail et pour un même <code>Rproject</code>. Comme toujours, consultez les chapitres précédents (en particulier <a href="01-RBasics.html#sec-script" class="quarto-xref">les sections&nbsp;<span>1.3.2</span></a> et <a href="01-RBasics.html#sec-rproj" class="quarto-xref"><span>1.3.3</span></a>) si vous ne savez plus comment faire.</p>
 <p>Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé <code>RStudio</code>), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d’utiliser :</p>
 <ul>
-<li>le <code>tidyverse</code> <span class="citation" data-cites="R-tidyverse">(<a href="references.html#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span>, qui comprend notamment le package <code>readr</code> <span class="citation" data-cites="R-readr">(<a href="references.html#ref-R-readr" role="doc-biblioref">Wickham, Hester, et Bryan 2024</a>)</span>, pour importer facilement des fichiers <code>.csv</code> au format <code>tibble</code>, le package <code>dplyr</code> <span class="citation" data-cites="R-dplyr">(<a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham et al. 2023</a>)</span>, pour manipuler des tableaux, et le package <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham et al. 2025</a>)</span> pour les représentations graphiques.</li>
+<li>le <code>tidyverse</code> <span class="citation" data-cites="R-tidyverse">(<a href="references.html#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span>, qui comprend notamment le package <code>readr</code> <span class="citation" data-cites="R-readr">(<a href="references.html#ref-R-readr" role="doc-biblioref">Wickham, Hester, et Bryan 2026</a>)</span>, pour importer facilement des fichiers <code>.csv</code> au format <code>tibble</code>, le package <code>dplyr</code> <span class="citation" data-cites="R-dplyr">(<a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al. 2026</a>)</span>, pour manipuler des tableaux, et le package <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al. 2026</a>)</span> pour les représentations graphiques.</li>
 <li><code>readxl</code> <span class="citation" data-cites="R-readxl">(<a href="references.html#ref-R-readxl" role="doc-biblioref">Wickham et Bryan 2025</a>)</span>, pour importer facilement des fichiers Excel au format <code>tibble</code>.</li>
-<li><code>skimr</code> <span class="citation" data-cites="R-skimr">(<a href="references.html#ref-R-skimr" role="doc-biblioref">Waring et al. 2022</a>)</span>, qui permet de calculer des résumés de données très informatifs.</li>
-<li><code>car</code> <span class="citation" data-cites="R-car">(<a href="references.html#ref-R-car" role="doc-biblioref">Fox, Weisberg, et Price 2024</a>)</span>, qui permet d’effectuer le test de comparaison des variances de Levene.</li>
-<li><code>broom</code> <span class="citation" data-cites="R-broom">(<a href="references.html#ref-R-broom" role="doc-biblioref">Robinson, Hayes, et Couch 2025</a>)</span>, qui fait partie du <code>tidyverse</code> mais qu’il faut charger explicitement. La fonction <code>tidy()</code> de ce package nous permettra de “ranger” correctement les résultats de tests dans un <code>tibble</code>.</li>
+<li><code>skimr</code> <span class="citation" data-cites="R-skimr">(<a href="references.html#ref-R-skimr" role="doc-biblioref">Waring et al. 2026</a>)</span>, qui permet de calculer des résumés de données très informatifs.</li>
+<li><code>car</code> <span class="citation" data-cites="R-car">(<a href="references.html#ref-R-car" role="doc-biblioref">Fox, Weisberg, et Price 2026</a>)</span>, qui permet d’effectuer le test de comparaison des variances de Levene.</li>
+<li><code>broom</code> <span class="citation" data-cites="R-broom">(<a href="references.html#ref-R-broom" role="doc-biblioref">Robinson et al. 2026</a>)</span>, qui fait partie du <code>tidyverse</code> mais qu’il faut charger explicitement. La fonction <code>tidy()</code> de ce package nous permettra de “ranger” correctement les résultats de tests dans un <code>tibble</code>.</li>
 <li><code>DescTools</code> <span class="citation" data-cites="R-DescTools">(<a href="references.html#ref-R-DescTools" role="doc-biblioref">Signorell 2025</a>)</span>, afin de réaliser un test spécifique de comparaisons multiples. N’oubliez pas de l’installer si nécessaire, avant de le charger en mémoire.</li>
 <li>le package <code>palmerpenguins</code> <span class="citation" data-cites="R-palmerpenguins">(<a href="references.html#ref-R-palmerpenguins" role="doc-biblioref">Horst, Hill, et Gorman 2022</a>)</span> pour accéder au jeu de données <code>penguins</code> que nous utiliserons pour les exercices d’application.</li>
 </ul>
@@ -540,7 +540,7 @@ Group variables            treatment
 <p>Enfin, les histogrammes présentés pour chaque groupe semblent très éloignés d’une distribution Normale. C’est logique compte tenu des faibles effectifs dans chaque groupe. Nous verrons plus tard que cela n’a aucune importance puisque les conditions d’application de l’ANOVA portent sur les <strong>résidus de l’ANOVA</strong> (nous verrons plus loin de quoi il s’agit), et pas sur les données brutes.</p>
 <p>Il semble donc que seul le groupe <code>eyes</code> soit véritablement différent du groupe témoin. Pour le vérifier, on peut calculer les intervalles de confiance à 95% des moyennes. Nous examinerons ensuite quelques graphiques, puis nous ferons un test d’hypothèses.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="fu">mean_cl_normal</span>(shift), <span class="at">.by =</span> treatment)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
@@ -559,11 +559,15 @@ Group variables            treatment
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">|&gt;</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> shift, <span class="at">fill =</span> treatment)) <span class="sc">+</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">outlier.colour =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"traitement"</span>, <span class="at">y =</span> <span class="st">"Décalage de phase (sans unité)"</span>) <span class="sc">+</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">notch =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.colour =</span> <span class="cn">NA</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"traitement"</span>, <span class="at">y =</span> <span class="st">"Décalage de phase (sans unité)"</span>) <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Notch went outside hinges
 ℹ Do you want `notch = FALSE`?
@@ -584,11 +588,10 @@ Notch went outside hinges
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">|&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> shift, <span class="at">fill =</span> treatment)) <span class="sc">+</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">outlier.colour =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"traitement"</span>, <span class="at">y =</span> <span class="st">"Décalage de phase (sans unité)"</span>) <span class="sc">+</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">outlier.colour =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"traitement"</span>, <span class="at">y =</span> <span class="st">"Décalage de phase (sans unité)"</span>) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -600,7 +603,7 @@ Notch went outside hinges
 <p>On constate ici visuellement que les 3 séries ont une étendue à peu près similaire, et que le groupe <code>eyes</code> semble se distinguer des 2 autres par des valeurs plus faibles. Enfin, les boîtes contenant 50% des valeurs centrales (donc l’étendue des valeurs entre les premiers et troisièmes quartiles) recouvrent le 0 pour les 2 groupes <code>control</code> et <code>knee</code>, mais par pour <code>eyes</code>.</p>
 <p>L’examen d’un graphique de densité facetté donne les mêmes informations :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">|&gt;</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> shift, <span class="at">fill =</span> treatment)) <span class="sc">+</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
@@ -618,7 +621,7 @@ Notch went outside hinges
 <p>Un package utile lorsque l’on dispose d’un grand nombre de groupes que l’on souhaite comparer à l’aide de graphiques de densité est le package <code>ggridges</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Light <span class="sc">|&gt;</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> shift, <span class="at">y =</span> treatment, <span class="at">fill =</span> treatment)) <span class="sc">+</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Accent"</span>) <span class="sc">+</span></span>
@@ -704,12 +707,12 @@ Important
 <li>Être homogènes.</li>
 <li>Être distribués normalement.</li>
 </ol>
-<section id="indépendance-des-résidus" class="level4" data-number="12.6.2.1">
-<h4 data-number="12.6.2.1" class="anchored" data-anchor-id="indépendance-des-résidus"><span class="header-section-number">12.6.2.1</span> Indépendance des résidus</h4>
+<section id="indépendance-des-résidus" class="level4">
+<h4 class="anchored" data-anchor-id="indépendance-des-résidus">Indépendance des résidus</h4>
 <p>L’indépendance des résidus signifie que connaître la valeur d’un résidu ne permet pas de prédire la valeur d’un autre résidu. Si les données ont été collectées correctement (échantillonnage aléatoire simple, indépendance des observations), on considère généralement que cette condition est vérifiée. Les 2 autres conditions d’application se vérifient soit graphiquement, soit avec un test d’hypothèses.</p>
 </section>
-<section id="homogénéité-des-résidus" class="level4" data-number="12.6.2.2">
-<h4 data-number="12.6.2.2" class="anchored" data-anchor-id="homogénéité-des-résidus"><span class="header-section-number">12.6.2.2</span> Homogénéité des résidus</h4>
+<section id="homogénéité-des-résidus" class="level4">
+<h4 class="anchored" data-anchor-id="homogénéité-des-résidus">Homogénéité des résidus</h4>
 <p>L’homogénéité des résidus signifie que les résidus doivent avoir à peu près la même variance pour chacun des groupes comparés. On peut vérifier que cette condition d’application est vérifiée grâce à ce graphique, qui représente les résidus (<code>residuals</code>, sur l’axe des <code>y</code>) en fonction des valeurs ajustées (c’est-à-dire la moyenne de chaque groupe, <code>fitted values</code>, sur l’axe des <code>x</code>) :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -774,8 +777,8 @@ group  2  0.1586 0.8545
 <p>Ici, puisque <span class="math inline">\(p &gt; \alpha\)</span>, on ne peut pas rejeter l’hypothèse nulle. Les résidus sont donc bien homogènes.</p>
 <p>Reste à vérifier la normalité des résidus.</p>
 </section>
-<section id="normalité-des-résidus" class="level4" data-number="12.6.2.3">
-<h4 data-number="12.6.2.3" class="anchored" data-anchor-id="normalité-des-résidus"><span class="header-section-number">12.6.2.3</span> Normalité des résidus</h4>
+<section id="normalité-des-résidus" class="level4">
+<h4 class="anchored" data-anchor-id="normalité-des-résidus">Normalité des résidus</h4>
 <p>Comme pour l’homogénéité des résidus, leur normalité peut être examinée graphiquement ou avec un test statistique :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">which =</span> <span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -857,8 +860,8 @@ Les tests <em>post-hoc</em>
 <li>pour comparer k groupes 2 à 2, nous avons besoin de <span class="math inline">\(\frac{k(k-1)}{2}\)</span> tests.</li>
 </ul>
 <p>Ici, puisque pour chaque test, un risque <span class="math inline">\(\alpha\)</span> de 5% de rejeter à tort l’hypothèse nulle est commis, réaliser 3 tests ferait monter le risque de s’être trompé quelque part à 15%. C’est la raison pour laquelle des tests spécifiques existent. Nous en verrons 2 : le test de comparaisons multiples de Student et le test de Tukey (ou “Honestly Significant Difference Test”). Pour ces tests, des précautions sont prises qui garantissent que le risque <span class="math inline">\(\alpha\)</span> <strong>global</strong> (à l’issue de l’ensemble des tests) est maîtrisé et qu’il reste fixé à 5%, quel que soit le nombre de comparaisons effectuées.</p>
-<section id="comparaisons-multiples-de-student" class="level4" data-number="12.6.4.1">
-<h4 data-number="12.6.4.1" class="anchored" data-anchor-id="comparaisons-multiples-de-student"><span class="header-section-number">12.6.4.1</span> Comparaisons multiples de Student</h4>
+<section id="comparaisons-multiples-de-student" class="level4">
+<h4 class="anchored" data-anchor-id="comparaisons-multiples-de-student">Comparaisons multiples de Student</h4>
 <p>Le test de comparaisons multiples de Student est réalisé avec la fonction <code>pairwise.t.test()</code>. En réalité, ici, 3 tests de Student seront réalisés. Les <span class="math inline">\(p-\)</span>values des tests seront simplement modifiées afin que globalement, le risque <span class="math inline">\(\alpha\)</span> n’augmente pas. Pour chaque test réalisé, les hypothèses nulles et alternatives sont les mêmes que celles décrites à la <a href="11-TwoSampleTests.html#sec-student" class="quarto-xref"><span>Section 11.6.2</span></a> :</p>
 <ul>
 <li>H<span class="math inline">\(_0\)</span> : la moyenne des deux populations est égale (<span class="math inline">\(\mu_1 = \mu_2\)</span>, soit <span class="math inline">\(\mu_1 - \mu_2\)</span> = 0).</li>
@@ -899,8 +902,8 @@ P value adjustment method: holm </code></pre>
 <p>Nous avons donc la confirmation que les moyennes des groupes <code>knee</code> et <code>control</code> ne sont pas significativement différentes l’une de l’autre. En revanche, la moyenne du groupe <code>eyes</code> est différente de celle des 2 autres groupes (<span class="math inline">\(p = 0.009\)</span> pour les 2 tests).</p>
 <p>Nous avons donc appris des choses nouvelles, mais nous ne savons toujours pas quelle est la magnitude de la différence détectée entre le groupe <code>eyes</code> et les 2 autres. Le test de Tukey HSD nous permet de répondre à cette question.</p>
 </section>
-<section id="test-de-tukey" class="level4" data-number="12.6.4.2">
-<h4 data-number="12.6.4.2" class="anchored" data-anchor-id="test-de-tukey"><span class="header-section-number">12.6.4.2</span> Test de Tukey</h4>
+<section id="test-de-tukey" class="level4">
+<h4 class="anchored" data-anchor-id="test-de-tukey">Test de Tukey</h4>
 <p>Ce test est souvent plus avantageux que le test des comparaisons multiples de Student, car outre la <span class="math inline">\(p-\)</span>value de chaque comparaison deux à deux, il renvoie des informations concernant les différences de moyennes entre chaque paire de modalités du facteur étudié, et les intervalles de confiance à 95% de ces différences de moyennes. Donc en plus de savoir quels groupes ou traitements sont significativement différents les uns des autres, ce test nous indique l’importance des différences détectées.</p>
 <p>Pour effectuer ce test, on utilise la fonction <code>TukeyHSD()</code>, à laquelle on fournit simplement l’objet contenant les résultats de l’ANOVA :</p>
 <div class="cell">
@@ -943,10 +946,9 @@ eyes-knee    -1.21571429 -2.1716263 -0.2598022 0.0116776</code></pre>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high)) <span class="sc">+</span></span>
 <span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comparaison"</span>,</span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Différence de moyennes (et IC 95%)"</span>) <span class="sc">+</span></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comparaison"</span>, <span class="at">y =</span> <span class="st">"Différence de moyennes (et IC 95%)"</span>) <span class="sc">+</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1014,8 +1016,8 @@ Kruskal-Wallis chi-squared = 9.4231, df = 2, p-value = 0.008991</code></pre>
 <section id="tests-a-posteriori-ou-tests-post-hoc-1" class="level3" data-number="12.7.3">
 <h3 data-number="12.7.3" class="anchored" data-anchor-id="tests-a-posteriori-ou-tests-post-hoc-1"><span class="header-section-number">12.7.3</span> Tests <em>a posteriori</em> ou tests <em>post-hoc</em></h3>
 <p>Comme pour les tests <em>post-hoc</em> de l’ANOVA, nous allons voir ici 2 tests de comparaisons multiples non paramétriques.</p>
-<section id="comparaisons-multiples-de-wilcoxon" class="level4" data-number="12.7.3.1">
-<h4 data-number="12.7.3.1" class="anchored" data-anchor-id="comparaisons-multiples-de-wilcoxon"><span class="header-section-number">12.7.3.1</span> Comparaisons multiples de Wilcoxon</h4>
+<section id="comparaisons-multiples-de-wilcoxon" class="level4">
+<h4 class="anchored" data-anchor-id="comparaisons-multiples-de-wilcoxon">Comparaisons multiples de Wilcoxon</h4>
 <p>Le premier test est l’équivalent non paramétrique du test de comparaisons multiples de Student : le <strong>test de comparaisons multiples de la somme des rangs de Wilcoxon</strong>. Le principe est absolument le même que pour le test de comparaisons multiples de Student : toutes les comparaisons 2 à 2 sont effectuées au moyen d’un test de la somme des rangs de Wilcoxon. Les <span class="math inline">\(p-\)</span>values de ces tests sont corrigées afin de garantir que le risque d’erreur <span class="math inline">\(\alpha\)</span> global soit maintenu constant en dépit de l’augmentation du nombre de tests réalisés. Pour chaque comparaison, les hypothèses sont les suivantes :</p>
 <ul>
 <li>H<span class="math inline">\(_0\)</span> : la médiane des deux populations est égale.</li>
@@ -1055,8 +1057,8 @@ P value adjustment method: holm </code></pre>
 <p>Enfin, la <span class="math inline">\(p-\)</span>value du troisième test est supérieure (tout juste !) à <span class="math inline">\(\alpha\)</span>. La conclusion logique est donc qu’il n’y a pas de différence significative entre les médianes des groupes <code>knee</code> et <code>eyes</code>. On sait que ce n’est pas le cas puisque nous avons montré plus haut (avec les tests paramétriques), que la différence de moyennes entre ces deux populations était significative. Nous avons ici l’illustration parfaite de la faible puissance des tests non paramétriques : leur capacité à détecter un effet lorsqu’il y en a réellement un est plus faible que celle des tests paramétriques. En outre, les procédures de comparaisons multiples sont très conservatives, et font mécaniquement baisser la puissance des tests pour maintenir constante l’erreur <span class="math inline">\(\alpha\)</span>. Je ne peux donc que vous inciter à la prudence lorsque vous interprétez les résultats d’un test de comparaions multiples (<em>a fortiori</em> un test non paramétrique) pour lequel la <span class="math inline">\(p-\)</span>value obtenue est très proche du seuil <span class="math inline">\(\alpha\)</span>.</p>
 <p>Comme pour son homologue paramétrique, le test de comparaisons multiples de Wilcoxon nous permet de prendre une décision par rapport à H<span class="math inline">\(_0\)</span>, mais il ne nous dit rien de la magnitude des effets mesurés. Pour les connaître, il nous faut réaliser un autre test.</p>
 </section>
-<section id="le-test-de-dunn" class="level4" data-number="12.7.3.2">
-<h4 data-number="12.7.3.2" class="anchored" data-anchor-id="le-test-de-dunn"><span class="header-section-number">12.7.3.2</span> Le test de Dunn</h4>
+<section id="le-test-de-dunn" class="level4">
+<h4 class="anchored" data-anchor-id="le-test-de-dunn">Le test de Dunn</h4>
 <p>Le <strong>test de Dunn</strong> est au test de Kruskal-Wallis ce que le test de Tukey HSD est à l’ANOVA : un test post-hoc permettant de déterminer la magnitude des effets observés. Pour pouvoir le réaliser, le package <code>DescTools</code> doit être chargé. Sa syntaxe est la même que pour le test de Kruskal-Wallis ou l’ANOVA :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réalisation du test</span></span>
@@ -1142,7 +1144,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 Campbell, Scott S., et Patricia J. Murphy. 1998. <span>«&nbsp;Extraocular Circadian Phototransduction in Humans&nbsp;»</span>. <em>Science</em> 279 (5349): 396‑99. <a href="https://doi.org/10.1126/science.279.5349.396">https://doi.org/10.1126/science.279.5349.396</a>.
 </div>
 <div id="ref-R-car" class="csl-entry" role="listitem">
-Fox, John, Sanford Weisberg, et Brad Price. 2024. <em>car: Companion to Applied Regression</em>. <a href="https://r-forge.r-project.org/projects/car/">https://r-forge.r-project.org/projects/car/</a>.
+Fox, John, Sanford Weisberg, et Brad Price. 2026. <em>car: Companion to Applied Regression</em>. <a href="https://github.com/bprice2652/car_repo">https://github.com/bprice2652/car_repo</a>.
 </div>
 <div id="ref-R-palmerpenguins" class="csl-entry" role="listitem">
 Horst, Allison, Alison Hill, et Kristen Gorman. 2022. <em>palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://allisonhorst.github.io/palmerpenguins/">https://allisonhorst.github.io/palmerpenguins/</a>.
@@ -1151,13 +1153,13 @@ Horst, Allison, Alison Hill, et Kristen Gorman. 2022. <em>palmerpenguins: Palmer
 Molofsky, Jane, et Jean-Baptiste Ferdy. 2005. <span>«&nbsp;Extinction dynamics in experimental metapopulations&nbsp;»</span>. <em>Proceedings of the National Academy of Sciences</em> 102 (10): 3726‑31. <a href="https://doi.org/10.1073/pnas.0404576102">https://doi.org/10.1073/pnas.0404576102</a>.
 </div>
 <div id="ref-R-broom" class="csl-entry" role="listitem">
-Robinson, David, Alex Hayes, et Simon Couch. 2025. <em>broom: Convert Statistical Objects into Tidy Tibbles</em>. <a href="https://broom.tidymodels.org/">https://broom.tidymodels.org/</a>.
+Robinson, David, Alex Hayes, Simon Couch, et Emil Hvitfeldt. 2026. <em>broom: Convert Statistical Objects into Tidy Tibbles</em>. <a href="https://broom.tidymodels.org/">https://broom.tidymodels.org/</a>.
 </div>
 <div id="ref-R-DescTools" class="csl-entry" role="listitem">
 Signorell, Andri. 2025. <em>DescTools: Tools for Descriptive Statistics</em>. <a href="https://andrisignorell.github.io/DescTools/">https://andrisignorell.github.io/DescTools/</a>.
 </div>
 <div id="ref-R-skimr" class="csl-entry" role="listitem">
-Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, et Shannon Ellis. 2022. <em>skimr: Compact and Flexible Summaries of Data</em>. <a href="https://docs.ropensci.org/skimr/">https://docs.ropensci.org/skimr/</a>.
+Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, et Shannon Ellis. 2026. <em>skimr: Compact and Flexible Summaries of Data</em>. <a href="https://docs.ropensci.org/skimr/">https://docs.ropensci.org/skimr/</a>.
 </div>
 <div id="ref-R-tidyverse" class="csl-entry" role="listitem">
 Wickham, Hadley. 2023. <em>tidyverse: Easily Install and Load the Tidyverse</em>. <a href="https://tidyverse.tidyverse.org">https://tidyverse.tidyverse.org</a>.
@@ -1166,13 +1168,13 @@ Wickham, Hadley. 2023. <em>tidyverse: Easily Install and Load the Tidyverse</em>
 Wickham, Hadley, et Jennifer Bryan. 2025. <em>readxl: Read Excel Files</em>. <a href="https://readxl.tidyverse.org">https://readxl.tidyverse.org</a>.
 </div>
 <div id="ref-R-ggplot2" class="csl-entry" role="listitem">
-Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, Dewey Dunnington, et Teun van den Brand. 2025. <em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, Dewey Dunnington, et Teun van den Brand. 2026. <em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
 </div>
 <div id="ref-R-dplyr" class="csl-entry" role="listitem">
-Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, et Davis Vaughan. 2023. <em>dplyr: A Grammar of Data Manipulation</em>. <a href="https://dplyr.tidyverse.org">https://dplyr.tidyverse.org</a>.
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, et Davis Vaughan. 2026. <em>dplyr: A Grammar of Data Manipulation</em>. <a href="https://dplyr.tidyverse.org">https://dplyr.tidyverse.org</a>.
 </div>
 <div id="ref-R-readr" class="csl-entry" role="listitem">
-Wickham, Hadley, Jim Hester, et Jennifer Bryan. 2024. <em>readr: Read Rectangular Text Data</em>. <a href="https://readr.tidyverse.org">https://readr.tidyverse.org</a>.
+Wickham, Hadley, Jim Hester, et Jennifer Bryan. 2026. <em>readr: Read Rectangular Text Data</em>. <a href="https://readr.tidyverse.org">https://readr.tidyverse.org</a>.
 </div>
 <div id="ref-Wright2002" class="csl-entry" role="listitem">
 Wright, Kenneth P., et Charles A. Czeisler. 2002. <span>«&nbsp;Absence of Circadian Phase Resetting in Response to Bright Light Behind the Knees&nbsp;»</span>. <em>Science</em> 297 (5581): 571‑71. <a href="https://doi.org/10.1126/science.1071697">https://doi.org/10.1126/science.1071697</a>.

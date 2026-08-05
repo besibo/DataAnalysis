@@ -71,12 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6002a56e31bc0883d18632c2e514cc75.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6002a56e31bc0883d18632c2e514cc75.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c1c17b1dd3a99fb2a4972b2f35c93fa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-2a0d91418fdc62e2999cf3e276df34df.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-9843e733b9aa8aad0a9bf3cffbc2a565.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-e41dddcb078eeacf3a37061dfb1b0db1.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -766,8 +766,8 @@ Table&nbsp;1.1: Mesures biométriques de 8 individus du Bruant à queue aigüe (
 </section>
 <section id="sec-vectors" class="level3" data-number="1.4.2">
 <h3 data-number="1.4.2" class="anchored" data-anchor-id="sec-vectors"><span class="header-section-number">1.4.2</span> Les vecteurs</h3>
-<section id="création-et-manipulations-simples" class="level4" data-number="1.4.2.1">
-<h4 data-number="1.4.2.1" class="anchored" data-anchor-id="création-et-manipulations-simples"><span class="header-section-number">1.4.2.1</span> Création et manipulations simples</h4>
+<section id="création-et-manipulations-simples" class="level4">
+<h4 class="anchored" data-anchor-id="création-et-manipulations-simples">Création et manipulations simples</h4>
 <p>Avec la méthode des scalaires décrite ci-dessous, pour 8 individus et 5 variables, nous aurions besoin de 40 noms d’objets différents. Une meilleure façon de procéder est de stocker plusieurs valeurs dans un même objet. Pour cela, nous avons besoin de la fonction <code>c()</code>, qui permet de <code>c</code>ombiner ou <code>c</code>oncaténer plusieurs valeurs au sein dun unique <strong>vecteur</strong> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ailes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">59</span>, <span class="dv">55</span>, <span class="fl">53.5</span>, <span class="dv">55</span>, <span class="fl">52.5</span>, <span class="fl">57.5</span>, <span class="dv">53</span>, <span class="dv">55</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -795,8 +795,8 @@ Table&nbsp;1.1: Mesures biométriques de 8 individus du Bruant à queue aigüe (
 </div>
 </div>
 </section>
-<section id="lindexation" class="level4" data-number="1.4.2.2">
-<h4 data-number="1.4.2.2" class="anchored" data-anchor-id="lindexation"><span class="header-section-number">1.4.2.2</span> L’indexation</h4>
+<section id="lindexation" class="level4">
+<h4 class="anchored" data-anchor-id="lindexation">L’indexation</h4>
 <p>Le terme “indexation” désigne l’ensemble des méthodes qui permettent d’accéder à des éléments spécifiques au sein d’un objets qui en contient plusieurs. Les vecteurs sont les objets les plus simples qui contiennent plusieurs éléments. Nous allons donc ici découvrir comment accéder à des éléments specifiques au sein des vecteurs.</p>
 <p>Pour cela, la méthode historique qui fonctionnera toujours consiste à utiliser les crochets. Par exemple, pour voir uniquement la première valeur du vecteur <code>ailes</code>, tapez :</p>
 <div class="cell">
@@ -846,8 +846,8 @@ Table&nbsp;1.1: Mesures biométriques de 8 individus du Bruant à queue aigüe (
 <p>Ici, on crée le vecteur <code>masse</code>, puis on va chercher dans ce vecteur (son nom est à gauche des crochets) les valeurs de masses des oiseaux, dont la longueur des ailes dépasse 56 mm (cette condition est indiquée à l’intérieur des crochets). On constate que ces oiseaux sont également les plus lourds.</p>
 <p>Avec ce type de syntaxe simple, il est possible de faire des comparaisons relativement élaborées et donc d’accéder à des données qui respecent plusieurs conditions à la fois. Quelques exemples sont fournis plus bas, dans la <a href="#sec-comparaison" class="quarto-xref"><span>Section 1.4.5</span></a>.</p>
 </section>
-<section id="autres-fonctions-utiles-pour-les-vecteurs" class="level4" data-number="1.4.2.3">
-<h4 data-number="1.4.2.3" class="anchored" data-anchor-id="autres-fonctions-utiles-pour-les-vecteurs"><span class="header-section-number">1.4.2.3</span> Autres fonctions utiles pour les vecteurs</h4>
+<section id="autres-fonctions-utiles-pour-les-vecteurs" class="level4">
+<h4 class="anchored" data-anchor-id="autres-fonctions-utiles-pour-les-vecteurs">Autres fonctions utiles pour les vecteurs</h4>
 <p>Si la fonction <code>c()</code> est certainement de très loin celle que vous utiliserez le plus souvent pour créer des vecteurs quelconques, il existe d’autres façons de créer des vecteurs. Par exemple, l’operateur <code>:</code> permet de créer des vecteurs contenant des séquences de nombres entiers. Par exemple, pour créer un vecteur contenant les nombres allant de 1 à 10, on tape :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -903,8 +903,8 @@ Table&nbsp;1.1: Mesures biométriques de 8 individus du Bruant à queue aigüe (
 </div>
 <p>Prises separément, toutes ces methodes sont simples, mais elles deviennent très puissantes lorsqu’elles sont combinées et vous ne devriez pas avoir besoin de beaucoup d’autres fonctions que <code>c()</code>, <code>seq()</code>, <code>rep()</code> et <code>:</code> pour créer des vecteurs.</p>
 </section>
-<section id="autres-types-de-vecteurs" class="level4" data-number="1.4.2.4">
-<h4 data-number="1.4.2.4" class="anchored" data-anchor-id="autres-types-de-vecteurs"><span class="header-section-number">1.4.2.4</span> Autres types de vecteurs</h4>
+<section id="autres-types-de-vecteurs" class="level4">
+<h4 class="anchored" data-anchor-id="autres-types-de-vecteurs">Autres types de vecteurs</h4>
 <p>Nous n’avons jusqu’ici travaillé qu’avec des vecteurs numériques. Pourtant, <code>R</code> permet de créer des vecteurs contenant d’autres types de données. Par exemple, pour créer un vecteur contenant des chaînes de caractères (des mots ou des phrases), on utilise la fonction <code>c()</code> en mettant les chaînes de caractères entre guillemets simples ou doubles :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>animaux <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"chat"</span>, <span class="st">"chien"</span>, <span class="st">"souris"</span>, <span class="st">"hamster"</span>, <span class="st">"baleine"</span>)</span>
@@ -1102,8 +1102,8 @@ Attention à l’ordre des niveaux !
 </div>
 </div>
 <p>Notez que pour les nommer les colonnes (à gauche des signes <code>=</code> dans le code ci-dessus), j’ai choisi des noms avec une majuscule pour les distinguer des noms de vecteurs et facteurs créés au préalable sans majuscule. Ça n’est évidemment pas obligatoire et vous pouvez choisir les noms que vous souhaitez pour les colonnes d’un <code>data.frame</code>. Je vous conesille toutefois d’éviter simplement les caractères spéciaux et les mots réservés par <code>R</code> comme expliqué plus haut. Choisissez des noms courts et parlants pour les colonnes de vos tableaux de données car vous aurez besoin de les taper souvent pour accéder au contenu de chaque variable.</p>
-<section id="dimensions-et-indexation-par-position" class="level4" data-number="1.4.4.1">
-<h4 data-number="1.4.4.1" class="anchored" data-anchor-id="dimensions-et-indexation-par-position"><span class="header-section-number">1.4.4.1</span> Dimensions et indexation par position</h4>
+<section id="dimensions-et-indexation-par-position" class="level4">
+<h4 class="anchored" data-anchor-id="dimensions-et-indexation-par-position">Dimensions et indexation par position</h4>
 <p>Comme pour les vecteurs et les facteurs, il est possible d’accéder à des éléments spécifiques au sein d’un <code>data.frame</code>. Pour cela, on peut utiliser les crochets. Cependant, comme un <code>data.frame</code> est une structure à deux dimensions (lignes et colonnes), il faut cette fois fournir deux indices entre crochets : le premier indice correspond à la ligne, et le second indice correspond à la colonne. Par exemple, pour accéder à la valeur de la première ligne et de la deuxième colonne du <code>data.frame</code> <code>Bruant</code>, on tape :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Accéder à la valeur de la première ligne et de la deuxième colonne du data.frame Bruant</span></span>
@@ -1157,7 +1157,8 @@ Attention à l’ordre des niveaux !
 <div class="cell">
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>Bruant[,<span class="dv">10</span>]</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in `[.data.frame`(Bruant, , 10): colonnes non définies sélectionnées</code></pre>
+<pre><code>Error in `[.data.frame`:
+! colonnes non définies sélectionnées</code></pre>
 </div>
 </div>
 <p>Ici, je demande à <code>R</code> d’afficher la dixième colonne du <code>data.frame</code> <code>Bruant</code>, mais ce tableau ne contient que 5 variables. Il n’y a donc pas de dixième colonne à afficher, et <code>R</code> le fait savoir avec un message d’erreur. Pour travailler efficacement avec des <code>data.frame</code>, il est donc important de connaître leurs dimensions. Pour cela, on peut utiliser la fonction <code>dim()</code>, qui affiche le nombre de lignes et le nombre de colonnes d’un <code>data.frame</code>, ou les fonctions <code>nrow()</code> et <code>ncol()</code>, qui affichent respectivement le nombre de lignes et le nombre de colonnes :</p>
@@ -1210,8 +1211,8 @@ Attention à l’ordre des niveaux !
 </div>
 <p>Vous le voyez, il y a très souvent plusieurs façons de faire la même chose dans <code>R</code>. C’est souvent une source de confusion pour les débutants, mais c’est aussi une force du langage : avec l’expérience, vous apprendrez à choisir la méthode qui vous convient le mieux.</p>
 </section>
-<section id="indexation-par-comparaison" class="level4" data-number="1.4.4.2">
-<h4 data-number="1.4.4.2" class="anchored" data-anchor-id="indexation-par-comparaison"><span class="header-section-number">1.4.4.2</span> Indexation par comparaison</h4>
+<section id="indexation-par-comparaison" class="level4">
+<h4 class="anchored" data-anchor-id="indexation-par-comparaison">Indexation par comparaison</h4>
 <p>Comme pour les vecteurs, on souhaite souvent accéder à certaines lignes d’un tableau de données sans connaître à l’avance leur position. Par exemple, on peut vouloir afficher toutes les lignes du <code>data.frame</code> <code>Bruant</code> où le sexe est “Fe”, ou encore, les lignes pour lesquelles la masse des individus est supérieure à 15 g. Voilà ce qu’ il faudrait taper dans l’un et l’autre cas :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Afficher les lignes du data.frame Bruant où le sexe est "Fe"</span></span>

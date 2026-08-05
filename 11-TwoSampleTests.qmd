@@ -2,7 +2,7 @@
 
 ## Pré-requis {#sec-packages3}
 
-Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire.
+Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vous pouvez tout à fait avoir plusieurs scripts dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire.
 
 Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser :
 
@@ -126,7 +126,7 @@ Lizard |>
 On peut obtenir la même information avec la fonction `summarise()` et son argument `.by`, et la fonction `n()` :
 
 ```{r}
-Lizard |> 
+Lizard |>
   summarize(Effectif = n(), .by = Survival)
 ```
 
@@ -135,7 +135,7 @@ On constate ici que les tailles d'échantillons sont très différentes. C'est n
 Enfin, on peut calculer des indices d'incertitude. C'est d'autant plus important qu'il est difficile de se faire une idée de la signification d'une différence moyenne de longueur de cornes de 2 millimètres. Est-ce important ou négligeable ? Est-ce que ces estimations sont précises ou non ? Comme dans les chapitres précédents, nous allons calculer les intervalles de confiance à 95% de la moyenne de chaque groupe :
 
 ```{r}
-Lizard |> 
+Lizard |>
   reframe(mean_cl_normal(Horn_len), .by = Survival)
 ```
 
@@ -156,9 +156,11 @@ Comme toujours, nous pouvons réaliser plusieurs types de graphiques pour en app
 Lizard |>
   ggplot(aes(x = Survival, y = Horn_len)) +
   geom_jitter(height = 0, width = 0.2, alpha = 0.5) +
-  labs(x = "Groupe de lézards",
-       y = "Longueur des cornes (mm)",
-       title = "Visualisation des longueurs\nde cornes du lézard cornu")
+  labs(
+    x = "Groupe de lézards",
+    y = "Longueur des cornes (mm)",
+    title = "Visualisation des longueurs\nde cornes du lézard cornu"
+  )
 ```
 
 Ce premier graphique permet de visualiser très clairement les différences de tailles d'échantillons entre les deux groupes. Il permet également de voir que l'étendue des longueurs de cornes est plus importante dans le groupe des individus vivants que dans celui des individus morts. En outre, le nuage de points des vivants semble être plus haut sur l'axe des `y` que celui des morts, confirmant les statistiques descriptives qui montraient des tailles de cornes en moyenne plus importantes dans le groupe des vivants.
@@ -168,13 +170,20 @@ Ce premier graphique permet de visualiser très clairement les différences de t
 ```{r}
 Lizard |>
   ggplot(aes(x = Horn_len)) +
-  geom_histogram(bins = 15, fill = "firebrick2", color = "grey20", alpha = 0.5)+
+  geom_histogram(
+    bins = 15,
+    fill = "firebrick2",
+    color = "grey20",
+    alpha = 0.5
+  ) +
   geom_rug() +
   facet_wrap(~Survival, ncol = 1, scales = "free_y") +
-  labs(x = "Longueur des cornes (mm)",
-       y = "Fréquence",
-       title = "Distribution de la longueur des cornes dans 2 groupes de lézards cornus",
-       subtitle = "nb morts : 30, nb vivants : 154")
+  labs(
+    x = "Longueur des cornes (mm)",
+    y = "Fréquence",
+    title = "Distribution de la longueur des cornes dans 2 groupes de lézards cornus",
+    subtitle = "nb morts : 30, nb vivants : 154"
+  )
 ```
 
 Notez ici l'utilisation de l'argument `scales = "free_y"` dans la fonction `facet_wrap()`. Cet argument permet de ne pas imposer la même échelle pour l'axe des ordonnées des 2 graphiques. Ce choix est ici pertinent puisque les effectifs des 2 groupes sont très différents. Faîtes un essai sans cet argument pour voir la différence. Il est en revanche important de conserver le même axe des `x` afin de faciliter la comparaison des 2 groupes.
@@ -189,10 +198,12 @@ Lizard |>
   geom_density(fill = "firebrick2", alpha = 0.5) +
   geom_rug() +
   facet_wrap(~Survival, ncol = 1, scales = "free_y") +
-  labs(x = "Longueur des cornes (mm)",
-       y = "Densité",
-       title = "Distribution de la longueur des cornes dans 2 groupes de lézards cornus",
-       subtitle = "nb morts : 30, nb vivants : 154")
+  labs(
+    x = "Longueur des cornes (mm)",
+    y = "Densité",
+    title = "Distribution de la longueur des cornes dans 2 groupes de lézards cornus",
+    subtitle = "nb morts : 30, nb vivants : 154"
+  )
 ```
 
 Les diagrammes de densité ressemblent ici beaucoup aux histogrammes. C'est normal car la taille des échantillons est importante (30 et 154 pour les groupes `killed` et `living` respectivement). C'était moins vrais dans les chapitres précédents car les tailles d'échantillons étaient plus faibles, et la forme des histogrammes dépendait alors beaucoup du nombre de classes que l'on choisissait de représenter. Avec des échantillons de grande taille (n ≥ 30), c'est moins problématique.
@@ -210,10 +221,12 @@ En général, il est donc inutile de faire à la fois les histogrammes et les di
 Lizard |>
   ggplot(aes(x = Survival, y = Horn_len)) +
   geom_boxplot(notch = TRUE) +
-  labs(x = "Groupe de lézards",
-       y = "Longueur des cornes (mm)",
-       title = "Comparaison de 2 groupes\nde lézards cornus",
-       subtitle = "nb morts : 30, nb vivants : 154")
+  labs(
+    x = "Groupe de lézards",
+    y = "Longueur des cornes (mm)",
+    title = "Comparaison de 2 groupes\nde lézards cornus",
+    subtitle = "nb morts : 30, nb vivants : 154"
+  )
 ```
 
 Nous visualisons ici encore plus clairement que sur les histogrammes le fait que les longueurs de cornes des individus vivants sont légèrement plus longues que celles des individus morts. D'ailleurs, puisque les intervalles de confiance à 95% des médianes des 2 groupes (les encoches) ne se chevauchent pas, un test de comparaison des moyennes devrait logiquement conclure à une différence significative en faveur des individus vivants. On peut également noter que la largeur de l'encoche pour les individus morts est plus importante que celle des vivants. Cela traduit une incertitude plus grande autour de la médiane estimée dans le groupe des individus morts. C'est tout à fait logique compte tenu des effectifs plus faibles dans ce groupe.
@@ -228,14 +241,27 @@ Enfin, il est tout à fait possible de représenter sur le même graphique les b
 
 Lizard |>
   ggplot(aes(x = Survival, y = Horn_len, fill = Survival)) +
-  geom_boxplot(notch = TRUE, color = "grey20", alpha = 0.2,
-               outlier.color = NA, show.legend = FALSE) +
-  geom_jitter(height = 0, width = 0.2, alpha = 0.4, shape = 21,
-              show.legend = FALSE, size = 0.8) +
-  labs(x = "Groupe de lézards",
-       y = "Longueur des cornes (mm)",
-       title = "Comparaison de 2 groupes\nde lézards cornus",
-       subtitle = "nb morts : 30, nb vivants : 154") +
+  geom_boxplot(
+    notch = TRUE,
+    color = "grey20",
+    alpha = 0.2,
+    outlier.color = NA,
+    show.legend = FALSE
+  ) +
+  geom_jitter(
+    height = 0,
+    width = 0.2,
+    alpha = 0.4,
+    shape = 21,
+    show.legend = FALSE,
+    size = 0.8
+  ) +
+  labs(
+    x = "Groupe de lézards",
+    y = "Longueur des cornes (mm)",
+    title = "Comparaison de 2 groupes\nde lézards cornus",
+    subtitle = "nb morts : 30, nb vivants : 154"
+  ) +
   scale_fill_manual(values = c("purple3", "royalblue2"))
 ```
 
@@ -417,42 +443,57 @@ Dans le jeu de données `penguins` du package `palmerpenguins`, récupérez les 
 ```{r}
 #| include: false
 
-adel <- penguins |> 
-  filter(species == "Adelie") |> 
-  filter(!is.na(sex)) 
+adel <- penguins |>
+  filter(species == "Adelie") |>
+  filter(!is.na(sex))
 
-adel |> 
-  group_by(sex) |> 
+adel |>
+  group_by(sex) |>
   skim(bill_length_mm)
 
-adel |> 
+adel |>
   count(sex)
 
-adel |> 
+adel |>
   ggplot(aes(x = sex, y = bill_length_mm, fill = sex)) +
-  geom_boxplot(notch = TRUE, show.legend = FALSE, 
-               outlier.color = NA, alpha = 0.2) +
-  geom_jitter(width = 0.2, height = 0, shape = 21, show.legend = FALSE, 
-              alpha = 0.7) +
-  labs(x = "Sexe", y = "Longueur du bec (mm)",
-       title = "Longueur de bec chez les manchots Adélie",
-       subtitle = "nb femelles : 73, nb mâles : 73") +
-    scale_fill_brewer(palette = "Accent")
+  geom_boxplot(
+    notch = TRUE,
+    show.legend = FALSE,
+    outlier.color = NA,
+    alpha = 0.2
+  ) +
+  geom_jitter(
+    width = 0.2,
+    height = 0,
+    shape = 21,
+    show.legend = FALSE,
+    alpha = 0.7
+  ) +
+  labs(
+    x = "Sexe",
+    y = "Longueur du bec (mm)",
+    title = "Longueur de bec chez les manchots Adélie",
+    subtitle = "nb femelles : 73, nb mâles : 73"
+  ) +
+  scale_fill_brewer(palette = "Accent")
 
 
-adel |> 
+adel |>
   ggplot(aes(x = bill_depth_mm, fill = sex)) +
   geom_density(alpha = 0.5, show.legend = FALSE) +
   geom_rug() +
   facet_wrap(~sex, ncol = 1) +
-  labs(x = "Densité", x = "Longueur du bec (mm)",
-       title = "Distribution des longueurs de bec chez les manchots Adélie",
-       subtitle = "nb femelles : 73, nb mâles : 73") +
+  labs(
+    x = "Densité",
+    x = "Longueur du bec (mm)",
+    title = "Distribution des longueurs de bec chez les manchots Adélie",
+    subtitle = "nb femelles : 73, nb mâles : 73"
+  ) +
   scale_fill_brewer(palette = "Accent")
 
 
-adel |> 
-  group_by(sex) |> 
+adel |>
+  group_by(sex) |>
   rstatix::shapiro_test(bill_length_mm)
 
 leveneTest(bill_length_mm ~ sex, data = adel)
@@ -524,8 +565,12 @@ Comme l'indiquent les résultats fournis, l'hypothèse alternative utilisée pou
 Ce test est donc rigoureusement équivalent à celui-ci :
 
 ```{r}
-t.test(Horn_len ~ Survival, data = Lizard, var.equal = TRUE,
-       alternative = "two.sided")
+t.test(
+  Horn_len ~ Survival,
+  data = Lizard,
+  var.equal = TRUE,
+  alternative = "two.sided"
+)
 ```
 
 Ici, nous souhaitons en fait réaliser un **test unilatéral** avec les hypothèses suivantes :
@@ -534,8 +579,12 @@ Ici, nous souhaitons en fait réaliser un **test unilatéral** avec les hypothè
 - H$_1$ : la moyenne de longueur des cornes de la population des lézards morts est **inférieure** à celle des lézards vivants. Leur différence est inférieure à 0 ($\mu_{killed}-\mu_{living} < 0$).
 
 ```{r}
-t.test(Horn_len ~ Survival, data = Lizard, var.equal = TRUE,
-       alternative = "less")
+t.test(
+  Horn_len ~ Survival,
+  data = Lizard,
+  var.equal = TRUE,
+  alternative = "less"
+)
 ```
 
 Puisque la $p$-value de ce test est inférieure à $\alpha = 0.05$, on rejette l'hypothèse nulle de l'égalité des moyennes. On valide donc l'hypothèse alternative : les lézards cornus morts ont en moyenne des cornes plus courtes que les lézards vivants. Cette différence de longueur de cornes est en faveur des lézards vivants et vaut très probablement au moins $1.4$ millimètres (c'est l'intervalle de confiance à 95% de la différence de moyennes qui nous le dit).
@@ -548,8 +597,12 @@ Dernière chose importante : il ne faut pas se tromper dans le choix de l'hypoth
 Ce test est normalement exactement le même que précédemment. Toutefois, si on essaie de le réaliser, on rencontre un problème :
 
 ```{r}
-t.test(Horn_len ~ Survival, data = Lizard, var.equal = TRUE,
-       alternative = "greater")
+t.test(
+  Horn_len ~ Survival,
+  data = Lizard,
+  var.equal = TRUE,
+  alternative = "greater"
+)
 ```
 
 Ici, la $p$-value est très supérieure à $\alpha$ puisqu'elle vaut 1. Une $p$-value de 1 devrait toujours attirer votre attention. La conclusion devrait donc être que l'on ne peut pas rejeter H$_0$ : les lézards morts et vivants ont en moyenne des cornes de même longueur. Nous savons pourtant que c'est faux.
@@ -563,8 +616,12 @@ Lizard$Survival
 Par défaut, dans `RStudio`, les niveaux d'un facteur sont classés par ordre alphabétique sauf si on spécifie manuellement un ordre différent. Ici, le niveau "killed" est donc le premier niveau du facteur, et "living" le second. Attention, on parle bien ici des niveaux, ou modalités, et non des données elles-mêmes. Ici, le premier lézard mesuré appartient à la catégorie `living`. Ça n'est pas ça qui est important : c'est bien l'ordre des niveaux qui compte, et on peut le vour tout en bas, après `Levels: ...`. Lorsque l'on réalise un test de Student avec ces données (ou un test de Wilcoxon d'ailleurs), la différence de moyenne qui est examinée par le test est donc "moyenne des `killed` - moyenne des `living`". Lorsque nous avons tapé ceci :
 
 ```{r, eval = FALSE}
-t.test(Horn_len ~ Survival, data = Lizard, var.equal = TRUE,
-       alternative = "greater")
+t.test(
+  Horn_len ~ Survival,
+  data = Lizard,
+  var.equal = TRUE,
+  alternative = "greater"
+)
 ```
 
 nous avons donc en réalité posé les hypothèses suivantes :
@@ -575,14 +632,18 @@ nous avons donc en réalité posé les hypothèses suivantes :
 Ce test est donc erroné, ce qui explique qu'il nous renvoie un résultat faux et une $p$-value de 1. Ici, puisque l'ordre des catégories est "killed" d'abord et "living" ensuite, la seule façon correcte de faire un test unilatéral qui a du sens est donc celle que nous avons réalisée en premier :
 
 ```{r, eval = FALSE}
-t.test(Horn_len ~ Survival, data = Lizard, var.equal = TRUE,
-       alternative = "less")
+t.test(
+  Horn_len ~ Survival,
+  data = Lizard,
+  var.equal = TRUE,
+  alternative = "less"
+)
 ```
 
 Faites donc toujours attention à l'ordre des catégories de vos facteurs pour ne pas vous tromper. Une façon simple de vérifier cet ordre et d'observer vos graphiques (par exemple, les boîtes à moustaches). L'ordre dans lequel les catégories apparaissent sur l'axe des `x` reflète l'ordre des catégorie du facteur porté par cet axe :
 
 ```{r}
-Lizard |> 
+Lizard |>
   ggplot(aes(x = Survival, y = Horn_len)) +
   geom_boxplot()
 ```

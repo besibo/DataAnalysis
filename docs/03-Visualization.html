@@ -91,12 +91,12 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6002a56e31bc0883d18632c2e514cc75.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6002a56e31bc0883d18632c2e514cc75.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c1c17b1dd3a99fb2a4972b2f35c93fa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-2a0d91418fdc62e2999cf3e276df34df.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-9843e733b9aa8aad0a9bf3cffbc2a565.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-e41dddcb078eeacf3a37061dfb1b0db1.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -542,7 +542,7 @@ Figure&nbsp;3.1: Espérance de vie en fonction du PIB par habitant en 2007.
 </section>
 <section id="le-package-ggplot2" class="level3" data-number="3.3.4">
 <h3 data-number="3.3.4" class="anchored" data-anchor-id="le-package-ggplot2"><span class="header-section-number">3.3.4</span> Le package <code>ggplot2</code></h3>
-<p>Comme indiqué plus haut, le package <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham et al. 2025</a>)</span> permet de réaliser des graphiques dans <code>R</code> en respectant les principes de la grammaire des graphiques. Vous avez probablement remarqué que depuis le début de la section <a href="#sec-gggraph" class="quarto-xref"><span>Section 3.3</span></a>, beaucoup de termes sont écrits dans la police réservée au <code>code</code> informatique. C’est parce que les éléments de la grammaire des graphiques sont tous précisés dans la fonction <code>ggplot()</code> qui demande, au grand minimum, que les éléments suivants soient spécifiés :</p>
+<p>Comme indiqué plus haut, le package <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham et al. 2026</a>)</span> permet de réaliser des graphiques dans <code>R</code> en respectant les principes de la grammaire des graphiques. Vous avez probablement remarqué que depuis le début de la section <a href="#sec-gggraph" class="quarto-xref"><span>Section 3.3</span></a>, beaucoup de termes sont écrits dans la police réservée au <code>code</code> informatique. C’est parce que les éléments de la grammaire des graphiques sont tous précisés dans la fonction <code>ggplot()</code> qui demande, au grand minimum, que les éléments suivants soient spécifiés :</p>
 <ul>
 <li>le nom du <code>data.frame</code> contenant les variables qui seront utilisées pour le graphique. Ce nom correspond à l’argument <code>data</code> de la fonction <code>ggplot()</code>.</li>
 <li>l’association des variables à des attributs esthétiques. Cela se fait grâce à l’argument <code>mapping</code> et la fonction <code>aes()</code></li>
@@ -711,8 +711,8 @@ Objectifs
 <p>Les syntaxes et options pour ces 2 types de graphiques sont présentées ci-dessous.</p>
 <section id="sec-histo" class="level3" data-number="3.5.1">
 <h3 data-number="3.5.1" class="anchored" data-anchor-id="sec-histo"><span class="header-section-number">3.5.1</span> Les histogrammes</h3>
-<section id="syntaxe-élémentaire" class="level4" data-number="3.5.1.1">
-<h4 data-number="3.5.1.1" class="anchored" data-anchor-id="syntaxe-élémentaire"><span class="header-section-number">3.5.1.1</span> Syntaxe élémentaire</h4>
+<section id="syntaxe-élémentaire" class="level4">
+<h4 class="anchored" data-anchor-id="syntaxe-élémentaire">Syntaxe élémentaire</h4>
 <p>Imaginons que l’on s’intéresse à la variable <code>body_mass_g</code> du jeu de données <code>penguins</code>.</p>
 <p>La syntaxe permettant de produire un histogramme, sous sa forme la plus simple, est la suivante :</p>
 <div class="cell">
@@ -741,8 +741,8 @@ Objectifs
 <p>Sur ce graphique, l’axe des abscisses porte donc la variable continue “découpée” en classes de mêmes largeur, et l’axe des ordonnées renseigne sur le nombre (<code>count</code> ou fréquence absolue) d’individus observés dans chaque classe. Les zones du graphique où les barres sont les plus hautes indiquent donc les caractéristiques des individus observés le plus fréquemment. À l’inverse, les barres les plus courtes correspondent à des valeurs de masse rarement observées. Au final, ce type de graphique permet de visualiser <strong>la distribution des données pour une variable numérique continue</strong>.</p>
 <p>Ici, on constate qu’une majorité d’individus semble avoir des masses proches de 3500 grammes. Une autre portion non négligeable des individus (mais moins importante) semble avoir une masse légèrement supérieure à 4500 grammes. Enfin, les masses supérieures à 6000 grammes sont très rares. L’histogramme nous permet également de visualiser l’étendue des données : les manchots étudiés ici ont des masses qui s’étalent d’un peu plus de 2500 grammes à un peu moins de 6500 grammes.</p>
 </section>
-<section id="couleur" class="level4" data-number="3.5.1.2">
-<h4 data-number="3.5.1.2" class="anchored" data-anchor-id="couleur"><span class="header-section-number">3.5.1.2</span> Couleur</h4>
+<section id="couleur" class="level4">
+<h4 class="anchored" data-anchor-id="couleur">Couleur</h4>
 <p>Pour rendre ce graphique plus facilement lisible, on peut en modifier la couleur :</p>
 <ul>
 <li>la couleur de remplissage des barres peut-être spécifiée grâce à l’argument <code>fill =</code></li>
@@ -774,8 +774,8 @@ Objectifs
 </div>
 <p>Les 30 classes de masses sont maintenant plus facilement visibles et distingables.</p>
 </section>
-<section id="à-lintérieur-ou-à-lextérieur-de-aes" class="level4" data-number="3.5.1.3">
-<h4 data-number="3.5.1.3" class="anchored" data-anchor-id="à-lintérieur-ou-à-lextérieur-de-aes"><span class="header-section-number">3.5.1.3</span> À l’intérieur ou à l’extérieur de <code>aes()</code> ?</h4>
+<section id="à-lintérieur-ou-à-lextérieur-de-aes" class="level4">
+<h4 class="anchored" data-anchor-id="à-lintérieur-ou-à-lextérieur-de-aes">À l’intérieur ou à l’extérieur de <code>aes()</code> ?</h4>
 <p>Les couleurs de remplissage et de contour des barres d’un histogramme font partie des caractéristiques esthétiques du graphique. Pourtant, elles ne sont pas précisées à l’intérieur de la fonction <code>aes()</code>. La raison est simple mais importante :</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -833,8 +833,8 @@ Important
 <p>On constate que toutes les barres ont un contour noir, mais que plusieurs couleurs de remplissage apparaissent maintenant, selon le sexe des individus, dans chaque classe de masse. Une légende adaptée est aussi créée automatiquement à droite du graphique. On apprend ainsi que les individus les plus lourds sont tous des mâles. On constate également que le sexe de certains individus est inconnu.</p>
 <p>Au final, nous ne sommes déjà plus dans la situation où on examine une unique variable numérique. Nous avons en effet ici un graphique nous permettant de mettre en relation une variable numérique (la masse des individus en grammes) et une variable catégorielle (le sexe des individus). Nous reviendrons plus tard sur ce type de graphiques.</p>
 </section>
-<section id="la-largeur-des-classes" class="level4" data-number="3.5.1.4">
-<h4 data-number="3.5.1.4" class="anchored" data-anchor-id="la-largeur-des-classes"><span class="header-section-number">3.5.1.4</span> La largeur des classes</h4>
+<section id="la-largeur-des-classes" class="level4">
+<h4 class="anchored" data-anchor-id="la-largeur-des-classes">La largeur des classes</h4>
 <p>Comme évoqué plus haut, par défaut, <code>R</code> choisit arbitrairement de découper la variable numérique utilisée en 30 classes de même largeur afin de produire l’histogramme. Ça n’est que rarement un bon choix, et malheureusement, il n’y a pas de règle permettant de définir à coup sûr le bon nombre de classes pour visualiser au mieux la distribution d’une variable numérique. Il faut en effet presque toujours procéder par essais-erreurs successifs. Il est possible d’ajuster les caractéristiques (nombre et/ou largeur) des classes de l’histogramme de l’une des 3 façons suivantes :</p>
 <ol type="1">
 <li>En ajustant le nombre de classes avec <code>bins</code>.</li>
@@ -952,14 +952,14 @@ Important
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins<span class="sc">$</span>body_mass_g)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
    2700    3550    4050    4202    4750    6300       2 </code></pre>
 </div>
 </div>
 <p>On voit ici que les masses varient de 2700 à 6300 grammes. Les classes que nous avons définies couvrent une plage de masses plus large (de 2500 à 6500). Toutes les données sont donc bien intégrées à l’histogramme.</p>
 </section>
-<section id="sec-density" class="level4" data-number="3.5.1.5">
-<h4 data-number="3.5.1.5" class="anchored" data-anchor-id="sec-density"><span class="header-section-number">3.5.1.5</span> <code>geom_rug</code> et <code>geom_density</code></h4>
+<section id="sec-density" class="level4">
+<h4 class="anchored" data-anchor-id="sec-density"><code>geom_rug</code> et <code>geom_density</code></h4>
 <p>La fonction <code>geom_histogram()</code> n’est pas la seule qui permette de visualiser la distribution des données. Il est en effet possible d’utiliser d’autres objets géométriques, en plus ou à la place de <code>geom_histogram()</code> pour ajouter de l’information sur le graphique, ou pour visualiser différemment la distribution des mêmes données.</p>
 <p>La fonction <code>geom_rug()</code> permet d’ajouter les données réelles sous forme de segments, sous un histogramme. Cela prend souvent l’aspect d’une sorte de tapis, d’où le nom de la fonction (“rug” signifie “tapis” en anglais). Pour ajouter une couche supplémentaire au graphique, on ajoute simplement un <code>+</code> à la fin de la dernière ligne, et sur la ligne suivante, on ajoute un objet géométrique supplémentaire :</p>
 <div class="cell">
@@ -1054,8 +1054,8 @@ Important
 </div>
 <p>Notez l’utilisation des arguments <code>alpha</code>, <code>color</code> et <code>size</code>, pour modifier l’aspect de différents éléments du graphique. Assurez-vous d’avoir compris comment on les utilise, et faites vos propres expériences.</p>
 </section>
-<section id="un-mot-sur-la-position-de-la-fonction-aes" class="level4" data-number="3.5.1.6">
-<h4 data-number="3.5.1.6" class="anchored" data-anchor-id="un-mot-sur-la-position-de-la-fonction-aes"><span class="header-section-number">3.5.1.6</span> Un mot sur la position de la fonction <code>aes()</code></h4>
+<section id="un-mot-sur-la-position-de-la-fonction-aes" class="level4">
+<h4 class="anchored" data-anchor-id="un-mot-sur-la-position-de-la-fonction-aes">Un mot sur la position de la fonction <code>aes()</code></h4>
 <p>Sur le dernier exemple, vous constatez que la fonction <code>aes()</code> apparaît une fois à l’intérieur de la fonction <code>ggplot()</code>, et une autre fois à l’intérieur de <code>geom_histogram()</code>. Pourquoi ne pas avoir tapé, plus simplement :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
@@ -1379,8 +1379,8 @@ Figure&nbsp;3.6: Un exemple de stripchart
 </div>
 </div>
 <p>Les deux tableaux <code>panier</code> et <code>panier_counted</code> représentent exactement les mêmes données, mais sous deux formats différents. Du fait de ces deux formats possibles, deux objets géométriques distincts devront être utilisés pour représenter les données. Le graphique obtenu sera le même, mais à chaque format de tableau son <code>geom_...()</code>.</p>
-<section id="geom_bar-et-geom_col" class="level4" data-number="3.6.1.1">
-<h4 data-number="3.6.1.1" class="anchored" data-anchor-id="geom_bar-et-geom_col"><span class="header-section-number">3.6.1.1</span> <code>geom_bar()</code> et <code>geom_col()</code></h4>
+<section id="geom_bar-et-geom_col" class="level4">
+<h4 class="anchored" data-anchor-id="geom_bar-et-geom_col"><code>geom_bar()</code> et <code>geom_col()</code></h4>
 <p>Pour visualiser les données non pré-comptées, on utilise <code>geom_bar()</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(panier, <span class="fu">aes</span>(<span class="at">x =</span> fruit)) <span class="sc">+</span></span>
@@ -1439,8 +1439,8 @@ Diagrammes bâtons
 </div>
 <p>Enfin, notez que l’ordre des modalité (ou catégories) qui apparaissent sur l’axe des abscisses est l’ordre alphabétique : la modalité <code>banane</code> apparaît à gauche, puis la modalité <code>orange</code> et enfin la modalité <code>pomme</code>. Bien souvent, cet ordre alphabétique n’est pas pertinent. Nous verrons plus loin comment faire pour trier les catégories par ordre croissant ou décroissant. C’est en effet une possibilité intéressante qui est impossible pour les histogrammes (car l’axe des <code>x</code> porte une variable numérique continue qu’il est impossible de “mélanger”), mais souvent vivement recommandée pour les diagrammes bâtons.</p>
 </section>
-<section id="un-exemple-concret" class="level4" data-number="3.6.1.2">
-<h4 data-number="3.6.1.2" class="anchored" data-anchor-id="un-exemple-concret"><span class="header-section-number">3.6.1.2</span> Un exemple concret</h4>
+<section id="un-exemple-concret" class="level4">
+<h4 class="anchored" data-anchor-id="un-exemple-concret">Un exemple concret</h4>
 <p>Revenons aux manchots. Imaginons que nous souhaitions connaître le nombre d’individus étudiés pour chaque espèce. Dans le jeu de données <code>penguins</code>, la variable <code>species</code> indique à quelle espèce appartiennent chacun des 344 individus étudiés. Une façon simple de représenter ces données est donc la suivante :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span></span>
@@ -1555,8 +1555,8 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 </div>
 </div>
 </section>
-<section id="sec-exo-6" class="level4" data-number="3.6.1.3">
-<h4 data-number="3.6.1.3" class="anchored" data-anchor-id="sec-exo-6"><span class="header-section-number">3.6.1.3</span> Exercices</h4>
+<section id="sec-exo-6" class="level4">
+<h4 class="anchored" data-anchor-id="sec-exo-6">Exercices</h4>
 <ol type="1">
 <li>Quelle est la différence entre un histogramme et un diagramme bâtons ?</li>
 <li>Pourquoi les histogrammes sont-ils inadaptés pour visualiser des données catégorielles ?</li>
@@ -1611,8 +1611,8 @@ Figure&nbsp;3.12: Répartition des effectifs par espèce et par sexe
 <p>Les nuages de points de 2 variables numériques permettent donc de visualiser les relations (supposées ou réelles) entre deux variables.</p>
 <section id="nuage-de-points" class="level3" data-number="3.7.1">
 <h3 data-number="3.7.1" class="anchored" data-anchor-id="nuage-de-points"><span class="header-section-number">3.7.1</span> Nuage de points</h3>
-<section id="syntaxe-élémentaire-1" class="level4" data-number="3.7.1.1">
-<h4 data-number="3.7.1.1" class="anchored" data-anchor-id="syntaxe-élémentaire-1"><span class="header-section-number">3.7.1.1</span> Syntaxe élémentaire</h4>
+<section id="syntaxe-élémentaire-1" class="level4">
+<h4 class="anchored" data-anchor-id="syntaxe-élémentaire-1">Syntaxe élémentaire</h4>
 <p>Prenons un exemple : nous souhaitons examiner les relations qui existent entre la masse corporelle des individus et la longueur de leur nageoire. Une relation allométrique simple suppose en effet que plus un individu est grand et lourd, plus ses membres seront développés. La nature de la relation allométrique peut toutefois être radicalement différente selon les espèces. Pour l’instant, nous ne nous intéressons pas aux éventuelles différences entre espèces et nous examinerons donc l’ensemble des données, toutes espèces confondues.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
@@ -1632,8 +1632,8 @@ Figure&nbsp;3.12: Répartition des effectifs par espèce et par sexe
 <p>Ici, j’associe <code>body_mass_g</code> à l’axe des <code>x</code> car je suppose que c’est la variable explicative. Il est en effet plus logique de considérer que la masse corporelle influence la longueur des nageoires plutôt que le contraire. La variable expliquée, ici <code>flipper_length_mm</code> est associée à l’axe des <code>y</code>.</p>
 <p>La syntaxe est donc très simple, et le graphique obtenu permet de constater que plus les individus sont lourds, plus leurs nageoires sont longues.</p>
 </section>
-<section id="droite-de-tendance" class="level4" data-number="3.7.1.2">
-<h4 data-number="3.7.1.2" class="anchored" data-anchor-id="droite-de-tendance"><span class="header-section-number">3.7.1.2</span> Droite de tendance</h4>
+<section id="droite-de-tendance" class="level4">
+<h4 class="anchored" data-anchor-id="droite-de-tendance">Droite de tendance</h4>
 <p>Si l’on souhaite visualiser (modéliser !) cette association entre les deux variables, on peut ajouter sur ce graphique une courbe de tendance ou une droite de régression avec l’objet géométrique <code>geom_smooth()</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
@@ -1660,8 +1660,8 @@ Figure&nbsp;3.12: Répartition des effectifs par espèce et par sexe
 </div>
 <p>L’argument <code>method = "lm"</code> indique que nous souhaitons ajouter une droite de régression (<code>lm</code> est l’abréviation de “linear model”). L’intervalle grisé autour de la droite représente l’incertitude associée à la régression et indique que la “vraie” droite de régression, dans la population générale (et pas seulement dans notre échantillon de 344 individus) est probablement située dans cette zone grisée. Nous aurons l’occasion de revenir en détail sur la notion de régression linéaire et d’incertitude associée plus loin dans ce livre.</p>
 </section>
-<section id="autres-caractéristiques-esthétiques" class="level4" data-number="3.7.1.3">
-<h4 data-number="3.7.1.3" class="anchored" data-anchor-id="autres-caractéristiques-esthétiques"><span class="header-section-number">3.7.1.3</span> Autres caractéristiques esthétiques</h4>
+<section id="autres-caractéristiques-esthétiques" class="level4">
+<h4 class="anchored" data-anchor-id="autres-caractéristiques-esthétiques">Autres caractéristiques esthétiques</h4>
 <p>Comme pour tous les graphiques faisant apparaître des points, il est possible de modifier les caractéristiques esthétiques habituelles, soit en les associant à des variables du jeu de données (et en l’indiquant à l’intérieur de <code>aes()</code>), soit en les fixant à des valeurs constantes qui s’appliqueront à tous les points (et en l’indiquant alors en dehors de <code>aes()</code>). L’exemple ci-dessous illustre ces possibilités :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
@@ -1945,7 +1945,7 @@ Figure&nbsp;3.12: Répartition des effectifs par espèce et par sexe
 </section>
 <section id="sec-mosa" class="level3" data-number="3.8.4">
 <h3 data-number="3.8.4" class="anchored" data-anchor-id="sec-mosa"><span class="header-section-number">3.8.4</span> Mosaïc plots</h3>
-<p>Les graphiques en mosaïque sont une alternative aux diagrammes bâtons en tous genre. Ils permettent de visualiser à la fois les effectifs et de comparer les proportions. La difficulté de ce genre de graphique est qu’il n’existe pas d’objet géométrique permettant de les représenter simplement dans le package <code>ggplot2</code>. Le package <code>ggmosaic</code> de <span class="citation" data-cites="R-ggmosaic">Jeppson, Hofmann, et Cook (<a href="references.html#ref-R-ggmosaic" role="doc-biblioref">2025</a>)</span> est toutefois entièrement dédié à ce type de graphique. Pour installer ce packages, il faut procéder un peu différemment de d’habitude car nous devons installer sa version de développement (c’est une version plus récente que celle qui est disponible sur les serveurs officiels du CRAN). Pour cela, nous allons utiliser le package <code>remotes</code>. Si vous ne l’avez pas encore installé, faites-le maintenant :</p>
+<p>Les graphiques en mosaïque sont une alternative aux diagrammes bâtons en tous genre. Ils permettent de visualiser à la fois les effectifs et de comparer les proportions. La difficulté de ce genre de graphique est qu’il n’existe pas d’objet géométrique permettant de les représenter simplement dans le package <code>ggplot2</code>. Le package <code>ggmosaic</code> de <span class="citation" data-cites="R-ggmosaic">Jeppson, Hofmann, et Cook (<a href="references.html#ref-R-ggmosaic" role="doc-biblioref">2026</a>)</span> est toutefois entièrement dédié à ce type de graphique. Pour installer ce packages, il faut procéder un peu différemment de d’habitude car nous devons installer sa version de développement (c’est une version plus récente que celle qui est disponible sur les serveurs officiels du CRAN). Pour cela, nous allons utiliser le package <code>remotes</code>. Si vous ne l’avez pas encore installé, faites-le maintenant :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2124,8 +2124,8 @@ Figure&nbsp;3.13: Un exemple de stripchart
 <li>Les moustaches correspondent à des valeurs qui sont en dessous du premier quartile (pour la moustache du bas) et au-dessus du troisième quartile (pour la moustache du haut). La règle utilisée dans <code>R</code> est que ces moustaches s’étendent jusqu’aux valeurs minimales et maximales de l’échantillon, mais elles ne peuvent en aucun cas s’étendre au-delà de 1,5 fois la hauteur de la boîte (1,5 fois l’IQR) vers le haut et le bas. Si des points apparaissent au-delà des moustaches (vers le haut ou le bas), ces points sont appelés “outliers”. On peut en observer un pour l’espèce Adélie. Ce sont des points qui s’éloignent du centre de la distribution de façon importante puisqu’ils sont au-delà de 1,5 fois l’IQR de part et d’autre du premier ou du troisième quartile. Il peut s’agir d’anomalies de mesures, d’anomalies de saisie des données, ou tout simplement, d’enregistrements tout à fait valides mais atypiques ou extrêmes. J’attire votre attention sur le fait que la définition de ces outliers est relativement arbitraire. Nous pourrions faire le choix d’étendre les moustaches jusqu’à 1,8 fois l’IQR (ou 2, ou 2,5). Nous observerions alors beaucoup moins d’outliers. D’une façons générale, la longueur des moustaches renseigne sur la variabilité des données en dehors de la zone centrale. Plus elles sont longues, plus la variabilité est importante. Et dans tous les cas, l’examen attentif des outliers est utile car il nous permet d’en apprendre plus sur le comportement extrême de certaines observations.</li>
 </ul>
 <p>Lorsque les boîtes ont une forme à peu près symétrique de part et d’autre de la médiane (c’est le cas pour notre exemple), cela signifie qu’un histogramme des mêmes données serait symétrique également (on peut le vérifier avec les histogrammes de la <a href="#sec-factorhisto" class="quarto-xref"><span>Section 3.9.1</span></a>).</p>
-<section id="lintervalle-de-confiance-à-95-de-la-médiane" class="level4" data-number="3.9.3.1">
-<h4 data-number="3.9.3.1" class="anchored" data-anchor-id="lintervalle-de-confiance-à-95-de-la-médiane"><span class="header-section-number">3.9.3.1</span> L’intervalle de confiance à 95% de la médiane</h4>
+<section id="lintervalle-de-confiance-à-95-de-la-médiane" class="level4">
+<h4 class="anchored" data-anchor-id="lintervalle-de-confiance-à-95-de-la-médiane">L’intervalle de confiance à 95% de la médiane</h4>
 <p>On peut également ajouter une encoche autour de la valeur de médiane en ajoutant l’argument <code>notch = TRUE</code> à la fonction <code>geom_boxplot()</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
@@ -2539,8 +2539,8 @@ Figure&nbsp;3.16: Une figure correctement légendée
 <h3 data-number="3.11.2" class="anchored" data-anchor-id="les-échelles"><span class="header-section-number">3.11.2</span> Les échelles</h3>
 <p>Tous les détails des graphiques que vous produisez peuvent être édités. C’est notamment le cas des échelles. Qu’il s’agisse de modifier l’étendue des axes, la densité du quadrillage, la position des tirets sur les axes, le nom des catégories figurant sur les axes ou dans les légendes ou encore les couleurs utilisées pour différentes catégories d’objets géométriques, tout est possible dans <code>ggplot2</code>.</p>
 <p>Nous n’avons pas le temps ici d’aborder toutes ces questions en détail. Je vous encourage donc à consulter l’ouvrage en ligne intitulé <a href="http://r4ds.had.co.nz/">R for data science</a>, et en particulier <a href="http://r4ds.had.co.nz/graphics-for-communication.html#scales">son chapitre dédié aux échelles</a>, si vous avez besoin d’apporter des modifications à vos graphiques et que vous ne trouvez pas comment faire dans cet ouvrage.</p>
-<section id="la-gestion-des-couleurs" class="level4" data-number="3.11.2.1">
-<h4 data-number="3.11.2.1" class="anchored" data-anchor-id="la-gestion-des-couleurs"><span class="header-section-number">3.11.2.1</span> La gestion des couleurs</h4>
+<section id="la-gestion-des-couleurs" class="level4">
+<h4 class="anchored" data-anchor-id="la-gestion-des-couleurs">La gestion des couleurs</h4>
 <p>Nous allons néanmoins examiner quelques possibilités, à commencer par la façon de procéder pour modifier les couleurs choisies par défaut par <code>ggplot2</code>. Reprenons la figure <a href="#fig-label" class="quarto-xref">Figure&nbsp;<span>3.16</span></a>, et changeons le gradient de couleur proposé par défaut par <code>R</code>. Il est possible de modifier ces couleurs de plusieurs façons :</p>
 <ul>
 <li>soit en utilisant d’autres palettes de couleurs prédéfinies</li>
@@ -2870,8 +2870,8 @@ Figure&nbsp;3.16: Une figure correctement légendée
 </div>
 <p>Comme pour les fonctions <code>geom_XXX()</code>, les fonctions <code>scale_color_XXX()</code> et <code>scale_fill_XXX()</code> sont très nombreuses. Je vous encourage donc à explorer les fichiers d’aide et à faire des essais.</p>
 </section>
-<section id="les-autres-échelles" class="level4" data-number="3.11.2.2">
-<h4 data-number="3.11.2.2" class="anchored" data-anchor-id="les-autres-échelles"><span class="header-section-number">3.11.2.2</span> Les autres échelles</h4>
+<section id="les-autres-échelles" class="level4">
+<h4 class="anchored" data-anchor-id="les-autres-échelles">Les autres échelles</h4>
 <p>Les deux autres échelles que vous pourrez être couramment appelés à modifier sont les échelles des axes des <code>x</code> et des <code>y</code>. Les fonctions qui permettent de la faire sont construites comme ces des échelles de couleurs : <code>scale_x_XXX()</code> et <code>scale_y_XXX()</code>. La dernière partie du nom de la fonction sera, la plupart du temps, soit <code>discrete</code> si une variable catégorielle est associée à l’axe, soit <code>continuous</code> si une variable numérique y est associée.</p>
 <p>Reprenons l’exemple du stripchart suivant :</p>
 <div class="cell">
@@ -3178,10 +3178,10 @@ Figure&nbsp;3.16: Une figure correctement légendée
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-R-ggmosaic" class="csl-entry" role="listitem">
-Jeppson, Haley, Heike Hofmann, et Di Cook. 2025. <em>ggmosaic: Mosaic Plots in the ggplot2 Framework</em>. <a href="https://haleyjeppson.github.io/ggmosaic/">https://haleyjeppson.github.io/ggmosaic/</a>.
+Jeppson, Haley, Heike Hofmann, et Di Cook. 2026. <em>ggmosaic: Mosaic Plots in the ggplot2 Framework</em>. <a href="https://haleyjeppson.github.io/ggmosaic/">https://haleyjeppson.github.io/ggmosaic/</a>.
 </div>
 <div id="ref-R-ggplot2" class="csl-entry" role="listitem">
-Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, Dewey Dunnington, et Teun van den Brand. 2025. <em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, Dewey Dunnington, et Teun van den Brand. 2026. <em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
 </div>
 <div id="ref-wilkinson2005" class="csl-entry" role="listitem">
 Wilkinson, Leland. 2005. <em>The grammar of graphics</em>. 2nd éd. New-York: Springer-Verlag. <a href="https://www.springer.com/us/book/9780387245447">https://www.springer.com/us/book/9780387245447</a>.

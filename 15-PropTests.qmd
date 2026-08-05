@@ -1,31 +1,623 @@
 # Comparaison de proportions {#sec-prop}
 
-<!-- ## Pré-requis {#sec-packages7} -->
+## Pré-requis {#sec-packages7}
 
-<!-- Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire. -->
+Comme pour chaque nouveau chapitre, je vous conseille de démarrer une nouvelle session de travail (Menu `Session > Restart R`), et de créer un nouveau script que vous placerez dans votre répertoire de travail. Inutile en revanche de créer un nouveau `Rproject` : vous pouvez tout à fait avoir plusieurs scripts dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire.
 
-<!-- Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser : -->
+Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser :
 
-<!-- - le `tidyverse` [@R-tidyverse], qui comprend notamment le package `readr` [@R-readr], pour importer facilement des fichiers `.csv` au format `tibble`, le package `dplyr` [@R-dplyr], pour manipuler des tableaux, et le package `ggplot2` [@R-ggplot2] pour les représentations graphiques. -->
-<!-- - `skimr` [@R-skimr], qui permet de calculer des résumés de données très informatifs. -->
+- le `tidyverse` [@R-tidyverse], qui comprend notamment `readr` [@R-readr], `dplyr` [@R-dplyr], `tidyr` [@R-tidyr] et `ggplot2` [@R-ggplot2].
+- `skimr` [@R-skimr], qui permet de calculer des résumés de données très informatifs.
+- `binom` [@R-binom], qui permet de calculer plusieurs types d'intervalles de confiance pour une proportion.
+- `ggmosaic` [@R-ggmosaic], pour réaliser des graphiques en mosaïque avec la syntaxe de `ggplot2`.
+- `janitor` [@R-janitor], pour nettoyer facilement les noms de variables d'un tableau.
 
-<!-- ```{r} -->
-<!-- #| message: false -->
-<!-- #| warning: false -->
-<!-- #| results: false -->
+```{r}
+#| warning: false
+#| message: false
 
-<!-- library(tidyverse) -->
-<!-- library(skimr) -->
-<!-- ``` -->
-
-<!-- Vous aurez également besoin des jeux de données suivants, qu'il vous faut donc télécharger dans votre répertoire de travail : -->
-
-<!-- - [`plantbiomass.csv`](data/plantbiomass.csv) -->
-<!-- - [`hockey.csv`](data/hockey.csv) -->
+library(tidyverse)
+library(skimr)
+library(binom)
+library(ggmosaic)
+library(janitor)
+```
 
 
-<!-- ```{r} -->
-<!-- theme_set(theme_bw()) -->
-<!-- ``` -->
+:::{.callout-warning}
+## Attention
+Si certains packages ne sont pas encore installés sur votre ordinateur (par exemple, `binom` et `ggmosaic`), vous devrez les installer avant de pouvoir les charger. Consultez la [@sec-packages] pour savoir comment faire.
+:::
 
-En cours de préparation...
+Vous aurez également besoin du jeu de données suivant que vous pouvez dès maintenant télécharger dans votre répertoire de travail :
+
+- [`squid.txt`](data/squid.txt)
+
+ Enfin, je spécifie ici une fois pour toutes le thème que j'utiliserai pour tous les graphiques de ce chapitre. Libre à vous de choisir un thème différent ou de vous contenter du thème proposé par défaut :
+
+```{r}
+theme_set(theme_bw())
+```
+
+
+## Contexte
+
+Jusqu'à présent, nous avons surtout comparé des **moyennes**. Pourtant, dans de très nombreuses études en biologie, en écologie, en médecine ou en agronomie, la variable mesurée n'est pas numérique continue, mais **binaire** :
+
+- un individu est infecté ou non ;
+- une graine germe ou ne germe pas ;
+- un nid réussit ou échoue ;
+- un animal est mâle ou femelle.
+
+Dans ce type de situation, ce n'est plus la moyenne d'une grandeur continue que l'on cherche à comparer, mais une **proportion**. Les questions posées sont alors du type :
+
+- la proportion de femelles dans une population diffère-t-elle de 50 % ?
+- la proportion d'individus infectés est-elle la même dans deux groupes ?
+- le succès de germination est-il identique dans deux traitements ?
+
+Le cas le plus simple est celui d'une variable binaire observée sur chaque individu. Mais bientôt, des problèmes plus complexes pourront aussi être décrits sous la forme de **tables de contingence**, car les données issues de comptages sont souvent regroupées et ne sont pas toujours limitées à deux catégories. Les questions que nous abordons ici pourront donc être étendues aux facteurs possédant un nombre quelconque de modalités, et pas seulement deux. Dans l'immédiat, il faut donc comprendre à la fois :
+
+1. comment passer des données brutes individuelles aux effectifs utiles pour les tests ;
+2. comment distinguer l'**estimation** d'une proportion du **test** d'une hypothèse ;
+3. comment choisir entre les principaux tests disponibles.
+
+Dans ce chapitre, nous allons voir successivement :
+
+1. pourquoi une proportion est une moyenne ;
+2. comment estimer une proportion et son incertitude ;
+3. comment comparer une proportion observée à une valeur théorique ;
+4. comment comparer deux proportions dans deux groupes indépendants ;
+5. comment relier ces comparaisons aux tables de contingence ;
+6. quand utiliser un test exact plutôt qu'une approximation.
+
+
+## Importation et mise en forme des données
+
+Nous allons travailler ici sur le fichier [`squid.txt`](data/squid.txt), qui contient des données sur des calmars échantillonnés dans plusieurs sites. Les variables disponibles sont :
+
+- `Sample` : identifiant de l'observation ;
+- `Year` et `Month` : date de collecte ;
+- `Location` : site d'échantillonnage ;
+- `Sex` : sexe de l'individu ;
+- `GSI` : gonado-somatic index (ou Indice Gonado-Somatique : c'est un rapport qui rend compte de la masse des gonades par rapport à la masse de l'individu et qui renseigne notamment sur le statut reproducteur des individus, leur maturité sexuelle, etc. Ici, il est exprimé en pourcents).
+
+Ici, nous n'utiliserons dans un premier temps que les variables `Location` et `Sex`, car ce chapitre est consacré aux proportions. Importez les données dans un objet nommé `squid_raw` (si vous ne savez plus comment faire, consultez la [@sec-import]) puis examinez le tableau obtenu :
+
+```{r}
+#| echo: false
+#| message: false
+
+squid_raw <- read_tsv("data/squid.txt", show_col_types = FALSE)
+```
+
+```{r}
+squid_raw
+```
+
+Comme dans d'autres chapitres du livre, il est utile d'harmoniser ou de simplifier les intitulés des colonnes dès l'importation (par exemple, pour supprimer les majuscules ou les caractères spéciaux). Le package `janitor` permet de faire cela très facilement avec la fonction `clean_names()` :
+
+```{r}
+squid_raw <- squid_raw |>
+  clean_names()
+
+names(squid_raw)
+```
+
+Les sexes sont ici codés `1` et `2`. Pour rendre le tableau plus lisible, nous allons transformer cette variable en facteur, et créer une variable logique `female` qui vaudra `TRUE` pour les femelles et `FALSE` pour les mâles :
+
+```{r}
+squid <- squid_raw |>
+  mutate(
+    location = factor(location),
+    sex = factor(sex, labels = c("male", "female")),
+    female = sex == "female"
+  )
+
+squid
+```
+
+Nous disposons maintenant d'un tableau **rangé**, au format long :
+
+- chaque ligne correspond à un individu ;
+- `location` et `sex` sont des variables qualitatives ;
+- `female` est une variable logique qui code le sexe de façon binaire.
+
+C'est ce type de tableau qui doit toujours constituer votre point de départ. Les tests sur proportions utilisent ensuite des **effectifs agrégés**, mais ces effectifs doivent être obtenus à partir de données individuelles correctement structurées.
+
+
+## Une proportion est une moyenne
+
+Avant même de parler de test statistique, il faut bien comprendre qu'une proportion est tout simplement la moyenne d'une variable codée `TRUE` / `FALSE` ou `1` / `0`.
+
+Prenons un premier exemple avec les calmars du site `3` :
+
+```{r}
+squid_3 <- squid |>
+  filter(location == "3")
+
+squid_3
+```
+
+Le nombre de femelles et de mâles s'obtient facilement :
+
+```{r}
+squid_3 |>
+  count(sex)
+```
+
+On peut également demander un résumé rapide du tableau :
+
+```{r, render = knitr::normal_print, size = 'small'}
+skim(squid_3)
+```
+
+La proportion de femelles s'obtient alors en calculant la moyenne de la variable logique `female` :
+
+```{r}
+squid_3 |>
+  summarise(proportion_femelles = mean(female))
+```
+
+Et si l'on préfère, on peut présenter le résultat en pourcentage :
+
+```{r}
+squid_3 |>
+  summarise(pourcentage_femelles = 100 * mean(female))
+```
+
+Autrement dit, quand on code une variable binaire par `TRUE` et `FALSE`, calculer la moyenne revient à calculer la proportion de `TRUE`. C'est une idée essentielle, car elle permet de faire le lien entre les chapitres précédents consacrés aux moyennes et ce nouveau chapitre consacré aux proportions.
+
+Dernière chose, il est aussi possible de calculer les proportions de femelles et de mâles à partir du comptage des effectifs grâce aux fonctions `count()` et `mutate()` :
+
+```{r}
+squid_3 |>
+  count(sex) |>
+  mutate(proportion = n / sum(n))
+```
+
+## Estimer une proportion et son incertitude
+
+Comme pour une moyenne, une proportion observée dans un échantillon n'est qu'une **estimation** de la proportion réelle dans la population générale. Il faut donc s'intéresser à son incertitude.
+
+Ici, nous allons estimer la proportion de femelles parmi les calmars échantillonnés au site `3` à l'aide de la fonction `binom.test()`. Cette fonction réalise un test binomial exact, mais elle fournit aussi l'intervalle de confiance de la proportion observée :
+
+```{r}
+binom.test(
+  x = sum(squid_3$female),
+  n = nrow(squid_3)
+)
+```
+
+Plusieurs éléments nous intéressent :
+
+- `number of successes` correspond ici au nombre de femelles observées ;
+- `number of trials` correspond au nombre total de calmars échantillonnés au site `3` ;
+- `sample estimates` donne la proportion observée ;
+- `95 percent confidence interval` fournit un intervalle de confiance à 95 % pour cette proportion.
+
+La proportion observée de femelles vaut donc `r round(mean(squid_3$female), 3)`, soit environ `r round(100 * mean(squid_3$female), 1)` %. Cet intervalle de confiance nous indique quelles sont les valeurs plausibles de la proportion de femelles dans la population générale, compte tenu de notre échantillon. Ici, dans la population générale, la proportion de femelles a de bonnes chances d'être comprise entre `r round(100 * binom.test(sum(squid_3$female), nrow(squid_3))$conf.int[1], 1)` % et `r round(100 * binom.test(sum(squid_3$female), nrow(squid_3))$conf.int[2], 1)` %.
+
+La méthode utilisée ici est la méthode **exacte** (on parle aussi souvent d'intervalle exact binomial, ou intervalle de Clopper-Pearson). Elle n'est toutefois pas la seule possible. Le package `binom` permet de calculer facilement l'intervalle de confiance d'une proportion selon plusieurs méthodes de calcul :
+
+```{r}
+binom.confint(
+  x = sum(squid_3$female),
+  n = nrow(squid_3)
+)
+```
+
+La méthode `exact` correspond à celle que nous retrouvons dans les résultats de `binom.test()`. Les chiffres fournis sont donc strictement identiques à ceux fournis par `binom.test()`. En général, c'est la méthode recommandée. Toutefois, la méthode `ac` (pour méthode d'**Agresti-Coull**) peut être utile car c'est l'une des rares méthodes de la liste qui permet un calcul des bornes de l'intervalle de confiance à 95% à la main.
+
+L'intervalle d'Agresti-Coull à 95 % peut être calculé de façon approchée en ajoutant 2 succès et 2 échecs. Si `x` est le nombre de succès observés et `n` la taille de l'échantillon, on calcule d'abord :
+
+$$\tilde{p} = \frac{x + 2}{n + 4}$$
+
+Puis l'erreur standard associée à cette proportion ajustée :
+
+$$SE_{\tilde{p}} = \sqrt{\frac{\tilde{p}(1-\tilde{p})}{n+4}}$$
+
+Enfin, l'intervalle de confiance à 95 % est approximativement :
+
+$$\tilde{p} \pm 1.96 \times SE_{\tilde{p}}$$
+
+Voyons ce que cela donne pour nos calmars du site `3` :
+
+```{r}
+x <- sum(squid_3$female)
+n <- nrow(squid_3)
+
+p_tilde <- (x + 2) / (n + 4)
+se_tilde <- sqrt(p_tilde * (1 - p_tilde) / (n + 4))
+
+tibble(
+  p_tilde = p_tilde,
+  IC95_inf = p_tilde - 1.96 * se_tilde,
+  IC95_sup = p_tilde + 1.96 * se_tilde
+)
+```
+
+On retrouve des valeurs très proches de celles renvoyées par `binom.confint(..., methods = "ac")`. Autrement dit :
+
+- `binom.test()` fournit ici un **intervalle exact** ;
+- `binom.confint(methods = "exact")` retrouve ce même intervalle ;
+- `binom.confint(methods = "ac")` donne l'intervalle d'**Agresti-Coull** ;
+- et cet intervalle d'Agresti-Coull peut être approximativement recalculé à la main à partir de la formule ci-dessus.
+
+
+:::{.callout-important}
+## Estimer n'est pas tester
+
+Il faut bien distinguer deux opérations intellectuelles différentes :
+
+- **estimer une proportion**, c'est chercher quelle valeur du paramètre est plausible dans la population générale ;
+- **tester une proportion**, c'est chercher si une hypothèse précise sur ce paramètre peut être rejetée ou non.
+
+L'estimation répond à la question **"combien ?"**.  
+Le test répond à la question **"compatible avec quoi ?"**.
+:::
+
+Cette dernière remarque est très importante et elle aurait pu être faite dans les chapitres précédents consacrés aux moyennes. Il ne faut jamais confondre l'estimation d'une grandeur (moyenne, proportion, etc.) avec le test d'une hypothèse à son sujet. L'estimation doit toujours précéder le test, et elle doit être examinée attentivement avant de se lancer dans le test. Si un test rejette l'hypothèse nulle, cela ne nous dit absolument rien sur la valeur réelle du paramètre dans la population générale. De même, si un test ne rejette pas l'hypothèse nulle, cela ne signifie pas que l'hypothèse nulle est vraie. C'est pour cela que les estimations et leurs intervalles de confiance sont tout aussi importants que les *p*-values. Et c'est la raison pour laquelle pour la plupart des fonctions de test dans `R`, renvoient à la fois les résultats du test, les estimations et les intervalles de confiances pertinents pour l'interprétation des résultats.
+
+## Exploration graphique
+
+Avant de faire un test, il est utile de visualiser les effectifs observés :
+
+```{r}
+squid_3 |>
+  ggplot(aes(x = sex, fill = sex)) +
+  geom_bar(show.legend = FALSE, alpha = 0.7, color = "grey30") +
+  labs(x = "Sexe", y = "Effectif", title = "Sexe des calmars du site 3") +
+  scale_fill_viridis_d()
+```
+
+Ce graphique permet de voir immédiatement si l'on observe un déséquilibre marqué ou non entre les deux sexes. Mais un déséquilibre visuel ne suffit jamais à lui seul : il faut encore déterminer s'il peut être attribué au simple hasard de l'échantillonnage.
+
+
+## Comparer une proportion à une valeur théorique
+
+Supposons maintenant que l'hypothèse théorique soit celle d'un sex-ratio équilibré, c'est-à-dire 50 % de femelles et 50 % de mâles. Nous voulons donc savoir si la proportion observée de femelles au site `3` est compatible avec cette hypothèse.
+
+Les hypothèses testées sont les suivantes :
+
+- H$_0$ : la proportion de femelles dans la population vaut 0.5.
+- H$_1$ : la proportion de femelles dans la population est différente de 0.5.
+
+Le test adapté est le **test binomial exact** :
+
+```{r}
+test_site3 <- binom.test(
+  x = sum(squid_3$female),
+  n = nrow(squid_3),
+  p = 0.5
+)
+
+test_site3
+```
+
+La p-value de ce test nous permet de décider si l'écart observé à 50 % est trop grand pour être attribué au seul hasard de l'échantillonnage.
+
+Le point important ici est le suivant : nous avons bien affaire à un **échantillon unique**, pour lequel nous comparons une proportion observée à une **valeur théorique**. C'est exactement la situation dans laquelle il faut penser à `binom.test()`.
+
+
+### Test unilatéral
+
+Dans certains cas, l'hypothèse de recherche n'est pas "différente de", mais "supérieure à" ou "inférieure à". On peut alors réaliser un test unilatéral.
+
+Par exemple, si nous avions de bonnes raisons biologiques de penser qu'au site `3` les femelles sont **moins fréquentes** que les mâles, nous pourrions formuler les hypothèses suivantes :
+
+- H$_0$ : la proportion de femelles vaut 0.5.
+- H$_1$ : la proportion de femelles est inférieure à 0.5.
+
+Le code devient :
+
+```{r}
+binom.test(
+  x = sum(squid_3$female),
+  n = nrow(squid_3),
+  p = 0.5,
+  alternative = "less"
+)
+```
+
+Un test unilatéral ne doit toutefois être utilisé que si l'hypothèse directionnelle a été formulée **avant** de regarder les données. Il ne faut jamais choisir après coup le sens du test qui arrange le mieux les résultats.
+
+
+## Comparer deux proportions indépendantes
+
+Passons maintenant à une situation encore plus fréquente : comparer une proportion entre deux groupes indépendants.
+
+Nous allons comparer ici la proportion de femelles entre les sites `1` et `3`. Biologiquement, la question est simple : les sex-ratios observés dans ces deux zones d'échantillonnage sont-ils compatibles avec une même proportion sous-jacente, ou bien les deux sites se distinguent-ils ?
+
+Le point important est le suivant : les données sont toujours observées **individu par individu**. Le tableau rangé reste donc notre point de départ.
+
+```{r}
+squid_13 <- squid |>
+  filter(location %in% c("1", "3"))
+
+squid_13
+```
+
+Chaque ligne correspond à un individu. Pour examiner les effectifs observés, on peut commencer par croiser le site et le sexe :
+
+```{r}
+squid_13 |>
+  count(location, sex)
+```
+
+À partir de ce tableau long, nous pouvons ensuite construire un résumé par site :
+
+```{r}
+sex_ratio <- squid_13 |>
+  summarise(
+    effectif = n(),
+    femelles = sum(female),
+    proportion_femelles = mean(female),
+    .by = location
+  ) |>
+  rowwise() |>
+  mutate(
+    ci_low = binom.test(femelles, effectif)$conf.int[1],
+    ci_high = binom.test(femelles, effectif)$conf.int[2]
+  ) |>
+  ungroup()
+
+sex_ratio
+```
+
+Nous avons donc ici effectué un passage fondamental :
+
+1. nous partons de données **individuelles** au format long ;
+2. nous calculons les **effectifs** et **proportions** utiles pour chaque groupe ;
+3. nous ajoutons des **intervalles de confiance** pour visualiser l'incertitude.
+
+Autrement dit, le test de comparaison de proportions ne remplace pas le travail préalable de mise en forme et d'exploration des données. Il vient **après**.
+
+
+## Exploration graphique préalable
+
+Avant de faire le test, il est utile de regarder les données sous plusieurs angles. Les [diagrammes bâtons empilés en proportions](03-Visualization.html#sec-empil) et les [mosaic plots](03-Visualization.html#sec-mosa) vus au chapitre 3 sont particulièrement adaptés à ce type de question.
+
+### Avec un diagramme bâtons empilé en proportions
+
+```{r}
+squid_13 |>
+  ggplot(aes(x = location, fill = sex)) +
+  geom_bar(position = "fill") +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  labs(
+    x = "Site d'échantillonnage",
+    y = "Proportion",
+    fill = "Sexe",
+    title = "Sex-ratio observé dans deux sites de collecte"
+  )
+```
+
+Ce graphique permet de comparer rapidement les proportions de femelles et de mâles entre les deux sites. Il montre bien les proportions, mais il ne donne pas directement accès aux effectifs absolus.
+
+### Avec un mosaic plot
+
+```{r}
+squid_13 |>
+  ggplot() +
+  geom_mosaic(aes(x = product(location), fill = sex)) +
+  scale_fill_manual(values = c("grey70", "firebrick2")) +
+  labs(
+    x = "Site d'échantillonnage",
+    y = "Proportion",
+    fill = "Sexe",
+    title = "Sexe des calmars selon le site"
+  )
+```
+
+Le graphique en mosaïque rappelle encore mieux qu'il s'agit d'un problème de **table de contingence** :
+
+- la largeur des rectangles dépend des effectifs ;
+- la hauteur des subdivisions dépend des proportions de chaque sexe dans chaque site.
+
+Il est donc particulièrement utile quand on veut garder en tête simultanément les proportions **et** les tailles d'échantillon.
+
+### Avec des intervalles de confiance
+
+Enfin, comme pour toute estimation, il est utile de visualiser l'incertitude :
+
+```{r}
+sex_ratio |>
+  ggplot(aes(x = location, y = proportion_femelles, fill = location)) +
+  geom_col(show.legend = FALSE, alpha = 0.7) +
+  geom_errorbar(aes(ymin = ci_low, ymax = ci_high), width = 0.15) +
+  scale_y_continuous(
+    labels = scales::percent_format(accuracy = 1),
+    limits = c(0, 1)
+  ) +
+  labs(
+    x = "Site d'échantillonnage",
+    y = "Proportion de femelles",
+    title = "Proportion de femelles et incertitude associée"
+  )
+```
+
+Ce graphique est beaucoup plus informatif qu'une simple comparaison de hauteurs de barres. Il montre à la fois :
+
+- la proportion observée de femelles dans chaque site ;
+- l'incertitude associée à ces proportions ;
+- l'importance ou non du chevauchement entre les intervalles de confiance.
+
+Ce n'est pas encore le test d'hypothèses, mais c'est déjà une étape indispensable pour raisonner correctement.
+
+
+## Le test de comparaison de deux proportions
+
+Le test le plus simple pour comparer deux proportions est la fonction `prop.test()`. Elle ne travaille plus à l'échelle individuelle, mais à l'échelle des **effectifs agrégés** :
+
+- `x` contient le nombre de succès dans chaque groupe ;
+- `n` contient la taille de chaque groupe.
+
+Les hypothèses testées sont :
+
+- H$_0$ : les proportions sont identiques dans les deux populations.
+- H$_1$ : les proportions diffèrent entre les deux populations.
+
+```{r}
+test_squid <- prop.test(
+  x = sex_ratio$femelles,
+  n = sex_ratio$effectif
+)
+
+test_squid
+```
+
+La fonction renvoie entre autres :
+
+- une estimation de la proportion dans chaque groupe ;
+- une p-value pour le test d'égalité des proportions ;
+- un intervalle de confiance à 95 % pour la différence entre les proportions.
+
+Il faut noter ici un point de méthode important : contrairement à `binom.test()`, qui repose sur un calcul exact, `prop.test()` repose sur une **approximation du $\chi^2$** et applique par défaut une **correction de continuité**. Dans les grands échantillons, cela ne pose en général aucun problème. Avec de petits effectifs, en revanche, il faudra se tourner vers un test exact.
+
+Le point essentiel, ici, est de bien comprendre que le test porte sur des **comptages agrégés**, mais que ces comptages proviennent de données individuelles convenablement structurées. Si vous sautez directement à la table de comptage sans réfléchir au tableau de départ, vous vous privez d'une bonne partie du raisonnement statistique.
+
+
+:::{.callout-important}
+## À retenir !
+
+Pour comparer deux proportions, il ne faut pas partir d'un tableau résumé trouvé "tout fait" par hasard. Il faut raisonner dans l'ordre :
+
+1. données individuelles au format long ;
+2. définition claire de ce qu'est un "succès" ;
+3. calcul des effectifs et proportions par groupe ;
+4. exploration graphique ;
+5. visualisation de l'incertitude ;
+6. test statistique adapté.
+:::
+
+
+## Du test de deux proportions à la table de contingence
+
+Le même problème peut être présenté sous forme de **table de contingence** :
+
+```{r}
+tab_squid <- squid_13 |>
+  count(location, sex) |>
+  pivot_wider(names_from = sex, values_from = n) |>
+  column_to_rownames("location") |>
+  as.matrix()
+
+tab_squid
+```
+
+Ce tableau croise deux variables qualitatives :
+
+- le site d'échantillonnage ;
+- le sexe.
+
+On peut alors utiliser un test du $\chi^2$ d'indépendance :
+
+```{r}
+chisq.test(tab_squid)
+```
+
+Dans une table 2 x 2, `chisq.test()` et `prop.test()` sont très proches dans leur logique et conduisent en général aux mêmes conclusions.
+
+Le langage diffère légèrement :
+
+- avec `prop.test()`, on raisonne en termes de **comparaison de deux proportions** ;
+- avec `chisq.test()`, on raisonne en termes **d'association entre deux variables qualitatives**.
+
+Mais dans le cas présent, il s'agit de deux façons très voisines d'aborder le même problème.
+
+Il faut donc retenir l'idée suivante :
+
+- le **cas binaire simple** (succès / échec dans deux groupes) peut être vu comme une **table de contingence 2 x 2** ;
+- les tests sur proportions font donc partie d'un cadre plus général, celui de l'analyse des tableaux d'effectifs.
+
+
+## Le cas des petits effectifs : test exact de Fisher
+
+Les fonctions `prop.test()` et `chisq.test()` reposent sur des approximations. Lorsque les effectifs sont faibles, ces approximations peuvent devenir médiocres. Dans ce cas, il est préférable d'utiliser le **test exact de Fisher**.
+
+Nous allons reprendre ici les données sur les calmars, mais en comparant cette fois les sites `3` et `4`. Le site `4` ne contient que 49 individus, ce qui en fait un bon exemple de situation où un test exact mérite d'être envisagé.
+
+```{r}
+squid_34 <- squid |>
+  filter(location %in% c("3", "4"))
+
+tab_squid_small <- table(squid_34$location, squid_34$sex)
+
+tab_squid_small
+```
+
+```{r}
+fisher.test(tab_squid_small)
+```
+
+Le test exact de Fisher repose, comme son nom l'indique, sur un calcul exact. Il est particulièrement utile lorsque :
+
+- la taille totale de l'échantillon est faible ;
+- certains effectifs attendus sont inférieurs à 5 ;
+- la table de contingence contient des cases très peu remplies.
+
+Dans la pratique :
+
+- pour des effectifs confortables, `prop.test()` ou `chisq.test()` conviennent très bien ;
+- pour de petits effectifs, il faut penser à `fisher.test()`.
+
+
+## Comment choisir le bon test ?
+
+On peut résumer les cas les plus fréquents de la façon suivante :
+
+- **un seul échantillon** et une proportion à comparer à une valeur théorique :
+  `binom.test()`
+- **deux groupes indépendants** et une variable binaire :
+  `prop.test()`
+- **table de contingence** entre deux variables qualitatives :
+  `chisq.test()`
+- **petits effectifs** dans une table de contingence :
+  `fisher.test()`
+
+Autrement dit, il faut d'abord se demander :
+
+1. combien de groupes ou de variables sont en jeu ?
+2. est-ce que je compare une proportion à une valeur théorique, ou est-ce que je compare plusieurs groupes ?
+3. les effectifs sont-ils suffisamment grands pour une approximation, ou faut-il un test exact ?
+
+
+:::{.callout-important}
+## À retenir !
+
+Les comparaisons de proportions concernent toujours des variables binaires ou, plus généralement, des tableaux d'effectifs.
+
+Avant de lancer le test :
+
+- identifiez clairement ce qu'est un "succès" et ce qu'est un "échec" ;
+- partez des données individuelles quand vous les avez ;
+- calculez les effectifs et les proportions observées ;
+- examinez l'incertitude des proportions ;
+- choisissez un test exact (`binom.test()` ou `fisher.test()`) lorsque les effectifs sont faibles.
+
+Comme pour les comparaisons de moyennes, l'interprétation ne doit jamais reposer uniquement sur la p-value. Les proportions observées, leurs différences, et leurs intervalles d'incertitude sont tout aussi importants.
+:::
+
+
+## Transition vers le chapitre suivant
+
+Dans ce chapitre, nous nous sommes limités au cas où l'on observe une **variable binaire** ou une **table de contingence simple**. Autrement dit, nous avons comparé des **proportions**.
+
+Le chapitre suivant élargira ce cadre. Nous ne nous demanderons plus seulement si une proportion observée diffère d'une valeur théorique, ou si deux groupes présentent la même proportion. Nous examinerons cette fois si une **distribution observée entière** est compatible avec une distribution théorique attendue :
+
+- un simple modèle proportionnel ;
+- une distribution binomiale ;
+- une distribution de Poisson.
+
+Nous passerons donc des comparaisons de proportions au **test du $\chi^2$ de qualité de l'ajustement** (*goodness of fit test*).
+
+
+## Exercices d'application
+
+1. À partir du jeu de données `squid`, testez si la proportion de femelles au site `2` diffère de 50 %.
+
+2. Comparez la proportion de femelles entre les sites `1` et `2`. Commencez impérativement par un tableau long, puis construisez le tableau de comptage utile au test.
+
+3. À partir du tableau `squid`, construisez une table de contingence croisant `location` et `sex`, puis commentez l'intérêt d'un mosaic plot pour représenter ce tableau.
+
+4. Pour la comparaison entre les sites `3` et `4`, comparez les résultats donnés par `prop.test()` et `fisher.test()`. Pourquoi est-il utile d'examiner les deux ici ?

@@ -46,8 +46,12 @@ format:
   html:
     theme: 
       light: MyUnited.scss
-      dark: darkly
+      dark: MyUnited-dark.scss
     highlight-style: solarized
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-depth: 3
     # code-tools:
     #   source: false
     #   toggle: true
@@ -59,6 +63,9 @@ format:
     link-external-icon: true
     link-external-newwindow: true
   pdf:
+    pdf-engine: xelatex
+    mainfont: "Adelle"
+    sansfont: "Adelle"
     documentclass: scrreprt
     papersize: a4
     highlight-style: github
@@ -66,4 +73,3 @@ format:
     code-block-border-left: "#31BAE9"
     code-depth: 5
     colorlinks: true
-

@@ -4,3 +4,17 @@
 .Ruserdata
 
 /.quarto/
+/.DS_Store
+**/.DS_Store
+
+/cache/
+
+*.aux
+*.log
+*.toc
+*.tex
+tmp-pdfcrop-*
+
+* 2.*
+* 3.*
+* 4.*

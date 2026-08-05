@@ -91,12 +91,12 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6002a56e31bc0883d18632c2e514cc75.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6002a56e31bc0883d18632c2e514cc75.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c1c17b1dd3a99fb2a4972b2f35c93fa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-2a0d91418fdc62e2999cf3e276df34df.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-9843e733b9aa8aad0a9bf3cffbc2a565.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-e41dddcb078eeacf3a37061dfb1b0db1.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -323,7 +323,7 @@ div.csl-indent {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(colorspace)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Le package <code>colorspace</code> <span class="citation" data-cites="R-colorspace">(<a href="references.html#ref-R-colorspace" role="doc-biblioref">Ihaka et al. 2024</a>)</span> permet d’utiliser de très nombreuses palettes de couleurs. Ces palettes ont de nombreux avantages (dont la propriété de permettre aux daltoniens de distinguer correctement les différentes couleurs des palettes catégorielles). N’hésitez pas à consulter <a href="https://colorspace.r-forge.r-project.org/index.html">le site dédié à ce package</a> qui est très complet et présente de nombreux exemples.</p>
+<p>Le package <code>colorspace</code> <span class="citation" data-cites="R-colorspace">(<a href="references.html#ref-R-colorspace" role="doc-biblioref">Ihaka et al. 2025</a>)</span> permet d’utiliser de très nombreuses palettes de couleurs. Ces palettes ont de nombreux avantages (dont la propriété de permettre aux daltoniens de distinguer correctement les différentes couleurs des palettes catégorielles). N’hésitez pas à consulter <a href="https://colorspace.r-forge.r-project.org/index.html">le site dédié à ce package</a> qui est très complet et présente de nombreux exemples.</p>
 <p>Nous aurons aussi besoin des tableaux créés au <a href="07-Incertitude.html" class="quarto-xref"><span>Chapitre 7</span></a> (<code>masses_se</code>, <code>masses_se_bornes</code>, <code>masses_ci_approx</code> et <code>masses_ci</code>).</p>
 <p>Donc pensez bien à charger en mémoire les packages et à relancer les commandes de vos scripts qui vous ont permis de créer ces tableaux s’ils ne sont plus en mémoire dans votre environnement de travail. Il existe plusieurs façons de représenter visuellement les <strong>positions</strong>, les <strong>dispersions</strong> et les incertitudes. Concernant les positions et les dispersions tout d’abord, nous avons déjà vu plusieurs façons de faire au <a href="03-Visualization.html" class="quarto-xref"><span>Chapitre 3</span></a>, en particulier dans les parties consacrées aux histogrammes, aux stripcharts et aux boxplots. Nous reprenons ici brièvement chacun de ces 3 types de graphique afin de les remettre en contexte avec ce que nous avons appris ici.</p>
 <p>Dans un dernier temps, nous verrons comment visualiser l’<strong>incertitude</strong> associée à des calculs de moyennes ou de variances grâce aux barres d’erreurs ou aux encoches des boîtes à moustaches.</p>
@@ -602,7 +602,7 @@ Figure&nbsp;8.8: Comparison des masses corporelles des mâles et femelles de 3 e
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="08-ErrorBars_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-ErrorBars_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -611,7 +611,7 @@ Figure&nbsp;8.8: Comparison des masses corporelles des mâles et femelles de 3 e
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-R-colorspace" class="csl-entry" role="listitem">
-Ihaka, Ross, Paul Murrell, Kurt Hornik, Jason C. Fisher, Reto Stauffer, Claus O. Wilke, Claire D. McWhite, et Achim Zeileis. 2024. <em>colorspace: A Toolbox for Manipulating and Assessing Colors and Palettes</em>. <a href="https://colorspace.R-Forge.R-project.org/">https://colorspace.R-Forge.R-project.org/</a>.
+Ihaka, Ross, Paul Murrell, Kurt Hornik, Jason C. Fisher, Reto Stauffer, Claus O. Wilke, Claire D. McWhite, et Achim Zeileis. 2025. <em>colorspace: A Toolbox for Manipulating and Assessing Colors and Palettes</em>. <a href="https://colorspace.R-Forge.R-project.org/">https://colorspace.R-Forge.R-project.org/</a>.
 </div>
 </div>
 </section>

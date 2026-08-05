@@ -357,7 +357,7 @@ Examinez les tableaux `rates`, `storms` et `population` du package `EDAWR`.
 
 
 
-## Importer des données depuis un tableur
+## Importer des données depuis un tableur {#sec-import}
 
 ### Les règles de base
 

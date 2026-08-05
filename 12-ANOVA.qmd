@@ -2,7 +2,7 @@
 
 ## Pré-requis {#sec-packages4}
 
-Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vos pouvez tout à fait avoir plusieurs script dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire.
+Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu `Session > Restart R`). Inutile en revanche de créer un nouveau `Rproject` : vous pouvez tout à fait avoir plusieurs scripts dans le même répertoire de travail et pour un même `Rproject`. Comme toujours, consultez les chapitres précédents (en particulier [les sections @sec-script] et [-@sec-rproj]) si vous ne savez plus comment faire.
 
 Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé `RStudio`), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d'utiliser :
 
@@ -133,7 +133,7 @@ Enfin, les histogrammes présentés pour chaque groupe semblent très éloignés
 Il semble donc que seul le groupe `eyes` soit véritablement différent du groupe témoin. Pour le vérifier, on peut calculer les intervalles de confiance à 95% des moyennes. Nous examinerons ensuite quelques  graphiques, puis nous ferons un test d'hypothèses.
 
 ```{r}
-Light |> 
+Light |>
   reframe(mean_cl_normal(shift), .by = treatment)
 ```
 
@@ -146,8 +146,12 @@ Comme toujours, il est indispensable de regarder à quoi ressemblent les donnée
 ```{r}
 Light |>
   ggplot(aes(x = treatment, y = shift, fill = treatment)) +
-  geom_boxplot(notch = TRUE, show.legend = FALSE, 
-               alpha = 0.3, outlier.colour = NA) +
+  geom_boxplot(
+    notch = TRUE,
+    show.legend = FALSE,
+    alpha = 0.3,
+    outlier.colour = NA
+  ) +
   geom_jitter(width = 0.2, shape = 21, show.legend = FALSE) +
   labs(x = "traitement", y = "Décalage de phase (sans unité)") +
   scale_fill_brewer(palette = "Accent")
@@ -158,8 +162,7 @@ Puisqu'il y a peu de données, les intervalles de confiance à 95% sont très la
 ```{r}
 Light |>
   ggplot(aes(x = treatment, y = shift, fill = treatment)) +
-  geom_boxplot(show.legend = FALSE, 
-               alpha = 0.3, outlier.colour = NA) +
+  geom_boxplot(show.legend = FALSE, alpha = 0.3, outlier.colour = NA) +
   geom_jitter(width = 0.2, shape = 21, show.legend = FALSE) +
   labs(x = "traitement", y = "Décalage de phase (sans unité)") +
   scale_fill_brewer(palette = "Accent")
@@ -172,7 +175,7 @@ L'examen d'un graphique de densité facetté donne les mêmes informations :
 ```{r}
 #| fig-asp: 1
 
-Light |> 
+Light |>
   ggplot(aes(x = shift, fill = treatment)) +
   geom_density(show.legend = FALSE, alpha = 0.5) +
   geom_rug() +
@@ -185,7 +188,7 @@ Un package utile lorsque l'on dispose d'un grand nombre de groupes que l'on souh
 
 ```{r}
 library(ggridges)
-Light |> 
+Light |>
   ggplot(aes(x = shift, y = treatment, fill = treatment)) +
   geom_density_ridges(show.legend = FALSE, alpha = 0.5) +
   scale_fill_brewer(palette = "Accent") +
@@ -267,26 +270,35 @@ Ci-dessous, j'affiche quelques exemples de situations où les résidus ne sont p
 #| echo: false
 #| layout-ncol: 2
 set.seed(1654)
-dat <- tibble(num = c(rnorm(8, 8, 2), rnorm(8, 12, 6), 
-                      rnorm(8, 16, 10), rnorm(8, 19, 14)),
-              fac = rep(letters[1:4], each = 8))
-out <- lm(num ~fac, data = dat)
+dat <- tibble(
+  num = c(rnorm(8, 8, 2), rnorm(8, 12, 6), rnorm(8, 16, 10), rnorm(8, 19, 14)),
+  fac = rep(letters[1:4], each = 8)
+)
+out <- lm(num ~ fac, data = dat)
 
-dat2 <- tibble(num = c(rnorm(8, 8, 14), rnorm(8, 12, 9), 
-                       rnorm(8, 16, 6), rnorm(8, 19, 1)),
-              fac = rep(letters[1:4], each = 8))
-out2 <- lm(num ~fac, data = dat2)
+dat2 <- tibble(
+  num = c(rnorm(8, 8, 14), rnorm(8, 12, 9), rnorm(8, 16, 6), rnorm(8, 19, 1)),
+  fac = rep(letters[1:4], each = 8)
+)
+out2 <- lm(num ~ fac, data = dat2)
 
 
-dat3 <- tibble(num = c(rnorm(8, 8, 20), rnorm(8, 12, 5), 
-                       rnorm(8, 16, 5), rnorm(8, 19, 20)),
-              fac = rep(letters[1:4], each = 8))
-out3 <- lm(num ~fac, data = dat3)
+dat3 <- tibble(
+  num = c(rnorm(8, 8, 20), rnorm(8, 12, 5), rnorm(8, 16, 5), rnorm(8, 19, 20)),
+  fac = rep(letters[1:4], each = 8)
+)
+out3 <- lm(num ~ fac, data = dat3)
 
-dat4 <- tibble(num = c(rnorm(8, 8, 3), rnorm(8, 12, 3), 
-                       rnorm(8, 16, 3) + 15, rnorm(8, 19, 3)),
-              fac = rep(1:4, each = 8))
-out4 <- lm(num ~fac, data = dat4)
+dat4 <- tibble(
+  num = c(
+    rnorm(8, 8, 3),
+    rnorm(8, 12, 3),
+    rnorm(8, 16, 3) + 15,
+    rnorm(8, 19, 3)
+  ),
+  fac = rep(1:4, each = 8)
+)
+out4 <- lm(num ~ fac, data = dat4)
 
 plot(out, which = 1)
 plot(out2, which = 1)
@@ -446,8 +458,7 @@ tidy(post_hoc2) |>
   geom_point() +
   geom_linerange(aes(ymin = conf.low, ymax = conf.high)) +
   geom_hline(yintercept = 0, linetype = 2) +
-  labs(x = "Comparaison",
-       y = "Différence de moyennes (et IC 95%)") +
+  labs(x = "Comparaison", y = "Différence de moyennes (et IC 95%)") +
   coord_flip() +
   theme_bw()
 ```

@@ -6,6 +6,7 @@ options(repos = "http://cran.r-project.org/")
 
 list.of.packages <- c(
   "readxl",
+  "binom",
   "nycflights13",
   "gapminder",
   "knitr",
@@ -68,6 +69,7 @@ knitr::write_bib(
   c(
     .packages(),
     'bookdown',
+    'binom',
     'knitr',
     'rmarkdown',
     'colorspace',

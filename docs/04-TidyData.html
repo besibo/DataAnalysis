@@ -71,12 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-9ea0a49c779b6fc496fdb60b6bf00fef.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6002a56e31bc0883d18632c2e514cc75.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6002a56e31bc0883d18632c2e514cc75.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c1c17b1dd3a99fb2a4972b2f35c93fa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-2a0d91418fdc62e2999cf3e276df34df.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-9843e733b9aa8aad0a9bf3cffbc2a565.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-e41dddcb078eeacf3a37061dfb1b0db1.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -285,7 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#les-fonctions-separate-et-unite" id="toc-les-fonctions-separate-et-unite" class="nav-link" data-scroll-target="#les-fonctions-separate-et-unite"><span class="header-section-number">4.3.3</span> Les fonctions <code>separate()</code> et <code>unite()</code></a></li>
   <li><a href="#sec-exo-9" id="toc-sec-exo-9" class="nav-link" data-scroll-target="#sec-exo-9"><span class="header-section-number">4.3.4</span> Exercices</a></li>
   </ul></li>
-  <li><a href="#importer-des-données-depuis-un-tableur" id="toc-importer-des-données-depuis-un-tableur" class="nav-link" data-scroll-target="#importer-des-données-depuis-un-tableur"><span class="header-section-number">4.4</span> Importer des données depuis un tableur</a>
+  <li><a href="#sec-import" id="toc-sec-import" class="nav-link" data-scroll-target="#sec-import"><span class="header-section-number">4.4</span> Importer des données depuis un tableur</a>
   <ul class="collapse">
   <li><a href="#les-règles-de-base" id="toc-les-règles-de-base" class="nav-link" data-scroll-target="#les-règles-de-base"><span class="header-section-number">4.4.1</span> Les règles de base</a></li>
   <li><a href="#sec-tableur" id="toc-sec-tableur" class="nav-link" data-scroll-target="#sec-tableur"><span class="header-section-number">4.4.2</span> Fichiers au format tableur (.xls ou .xlsx)</a></li>
@@ -759,8 +759,8 @@ Figure&nbsp;4.3: Évolution du nombre de cas de tuberculose dans 3 pays, de 2011
 </ol>
 </section>
 </section>
-<section id="importer-des-données-depuis-un-tableur" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="importer-des-données-depuis-un-tableur"><span class="header-section-number">4.4</span> Importer des données depuis un tableur</h2>
+<section id="sec-import" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="sec-import"><span class="header-section-number">4.4</span> Importer des données depuis un tableur</h2>
 <section id="les-règles-de-base" class="level3" data-number="4.4.1">
 <h3 data-number="4.4.1" class="anchored" data-anchor-id="les-règles-de-base"><span class="header-section-number">4.4.1</span> Les règles de base</h3>
 <p>Jusqu’à maintenant, nous avons travaillé exclusivement avec des jeux de données déjà disponibles dans <code>R</code>. La plupart du temps, les données sur lesquelles vous devrez travailler devront au préalable être importées dans <code>R</code> ou <code>RStudio</code>, à partir de fichiers issus de tableurs. De tels fichiers se présentent généralement sous l’un des 2 formats suivants :</p>
@@ -1062,7 +1062,8 @@ dbl (6): Id, Taille, Age, Cd, Cu, Hg
 <div class="cell">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>dauphin2</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): objet 'dauphin2' introuvable</code></pre>
+<pre><code>Error:
+! objet 'dauphin2' introuvable</code></pre>
 </div>
 </div>
 </section>
