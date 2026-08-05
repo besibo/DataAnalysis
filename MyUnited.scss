@@ -20,6 +20,8 @@ $blue-600: #234d67 !default;
 $teal-500: #2f7f80 !default;
 $red-500: #b44d4d !default;
 $gold-500: #b08b3f !default;
+$accent-pink: #ca225e !default;
+$accent-pink-dark: #aa1d4f !default;
 
 $gray-100: $bg-100 !default;
 $gray-200: $bg-200 !default;
@@ -34,7 +36,7 @@ $gray-900: $slate-900 !default;
 $blue: $blue-500 !default;
 $indigo: #486581 !default;
 $purple: #6c63a8 !default;
-$pink: #c06c84 !default;
+$pink: $accent-pink !default;
 $red: $red-500 !default;
 $orange: #c27c2c !default;
 $yellow: $gold-500 !default;
@@ -42,7 +44,7 @@ $green: #3e8e63 !default;
 $teal: $teal-500 !default;
 $cyan: #5b8def !default;
 
-$primary: $blue-500 !default;
+$primary: $accent-pink !default;
 $secondary: $slate-600 !default;
 $success: $green !default;
 $info: $teal-500 !default;
@@ -52,10 +54,10 @@ $light: $bg-100 !default;
 $dark: $slate-900 !default;
 $code-color: $blue-600 !default;
 
-$body-bg: $bg-50 !default;
-$body-color: $slate-900 !default;
-$link-color: $blue-600 !default;
-$link-hover-color: darken($blue-600, 8%) !default;
+$body-bg: $white !default;
+$body-color: #333 !default;
+$link-color: $accent-pink !default;
+$link-hover-color: $accent-pink-dark !default;
 
 $border-color: rgba($slate-900, 0.09) !default;
 $border-radius: 0.45rem !default;
@@ -68,16 +70,16 @@ $font-family-monospace: "JetBrains Mono", "SFMono-Regular", Consolas, monospace 
 $font-family-base: $font-family-sans-serif !default;
 $headings-font-family: "Adelle", -apple-system, BlinkMacSystemFont, "Segoe UI",
   sans-serif !default;
-$headings-color: $slate-900 !default;
+$headings-color: #333 !default;
 $headings-font-weight: 800 !default;
-$line-height-base: 1.7 !default;
+$line-height-base: 1.85 !default;
 $headings-line-height: 1.18 !default;
 
-$sidebar-bg: #f7fafc !default;
+$sidebar-bg: $body-bg !default;
 $navbar-bg: rgba($white, 0.9) !default;
 $toc-color: $slate-700 !default;
 
-$code-block-bg: #f3f7fa !default;
+$code-block-bg: rgba(233, 236, 239, 0.3) !default;
 $code-bg: rgba($blue-500, 0.08) !default;
 
 $web-font-path: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" !default;
@@ -137,32 +139,35 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@40
 
 body {
   text-rendering: optimizeLegibility;
-  background: $bg-50;
+  background: $body-bg;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  letter-spacing: -0.03em;
+  color: $accent-pink;
+  letter-spacing: 0;
 }
 
 h1.title,
 .quarto-title-block .title {
+  color: $accent-pink;
   font-size: 2.45rem;
   line-height: 1.05;
   margin-bottom: 0.65rem;
 }
 
 h2 {
+  color: $accent-pink;
   margin-top: 2.3rem;
 }
 
 .quarto-title-banner {
-  background: linear-gradient(180deg, #eef4f8 0%, #e7eef3 100%);
+  background: $body-bg;
   border-bottom: 1px solid rgba($slate-900, 0.06);
 }
 
 .quarto-title-banner .quarto-title .title,
 .quarto-title-banner .title {
-  color: $slate-900;
+  color: $accent-pink;
   max-width: 18ch;
 }
 
@@ -189,18 +194,28 @@ main.content p,
 main.content li,
 #quarto-document-content p,
 #quarto-document-content li {
-  font-size: 1.03rem;
+  font-size: 1.06rem;
 }
 
 main.content p,
 #quarto-document-content p {
-  margin-bottom: 0.95rem;
+  margin-bottom: 1.45rem;
 }
 
 #quarto-sidebar,
-.sidebar {
+#quarto-margin-sidebar,
+.sidebar,
+.margin-sidebar {
   background: $sidebar-bg;
+}
+
+#quarto-sidebar {
   border-right: 1px solid rgba($slate-900, 0.06);
+}
+
+#quarto-margin-sidebar,
+.margin-sidebar {
+  border-left: 1px solid rgba($slate-900, 0.06);
 }
 
 .sidebar-title,
@@ -215,6 +230,37 @@ main.content p,
   font-family: $font-family-sans-serif;
 }
 
+#quarto-sidebar .sidebar-item {
+  margin: 0.18rem 0;
+}
+
+#quarto-sidebar .sidebar-link {
+  color: rgba($slate-900, 0.72);
+  padding-top: 0.46rem;
+  padding-bottom: 0.46rem;
+  line-height: 1.25;
+}
+
+#quarto-sidebar .sidebar-link:hover {
+  color: $accent-pink-dark;
+  background: transparent;
+}
+
+#quarto-sidebar .sidebar-link.active {
+  color: $accent-pink;
+  background: transparent;
+  font-weight: 700;
+}
+
+#quarto-sidebar .chapter-number {
+  color: $accent-pink;
+  font-weight: 700;
+}
+
+#quarto-sidebar .sidebar-link.active .chapter-number {
+  color: $accent-pink;
+}
+
 .sidebar nav[role="doc-toc"] ul > li > a {
   color: $slate-700;
   padding: 0.34rem 0.78rem 0.34rem 0.92rem;
@@ -225,15 +271,15 @@ main.content p,
 }
 
 .sidebar nav[role="doc-toc"] ul > li > a:hover {
-  color: $slate-900;
-  background: rgba($blue-500, 0.08);
+  color: $accent-pink-dark;
+  background: transparent;
 }
 
 .sidebar nav[role="doc-toc"] ul > li.active > a,
 .sidebar nav[role="doc-toc"] ul > li > a.active {
-  color: $slate-900;
-  background: rgba($blue-500, 0.1);
-  border-left-color: $blue-500;
+  color: $accent-pink;
+  background: transparent;
+  border-left-color: $accent-pink;
   font-weight: 700;
 }
 
@@ -241,9 +287,17 @@ main.content p,
   color: $slate-700;
 }
 
+#TOC .nav-link:hover {
+  color: $accent-pink-dark;
+}
+
 #TOC .nav-link.active {
-  color: $blue-600;
+  color: $accent-pink;
   font-weight: 700;
+}
+
+#quarto-margin-sidebar #TOC .nav-link.active {
+  color: $accent-pink !important;
 }
 
 a {
@@ -280,9 +334,10 @@ div.sourceCode,
 .cell > .sourceCode {
   background: $code-block-bg;
   border: 1px solid rgba($slate-900, 0.45);
-  border-left: 0.38rem solid $blue-500;
+  border-left: 0.22rem solid $accent-pink;
   border-radius: 0;
   box-shadow: none;
+  line-height: 1.7;
 }
 
 pre.sourceCode,
@@ -291,6 +346,7 @@ pre.sourceCode,
   border: none;
   border-radius: 0;
   box-shadow: none;
+  line-height: 1.7;
 }
 
 pre.sourceCode code {
@@ -298,7 +354,7 @@ pre.sourceCode code {
 }
 
 .cell-output pre {
-  background: #eef3f7;
+  background: $code-block-bg;
   border: 1px solid rgba($slate-900, 0.08);
   border-radius: 0;
   box-shadow: none;

@@ -47,7 +47,7 @@ format:
     theme: 
       light: MyUnited.scss
       dark: MyUnited-dark.scss
-    highlight-style: solarized
+    highlight-style: atom-one
     toc: true
     toc-depth: 3
     toc-location: right
