@@ -15,11 +15,13 @@ $slate-700: #3e4c59 !default;
 $slate-800: #323f4b !default;
 $slate-900: #1f2933 !default;
 
-$blue-500: #2b5d7d !default;
-$blue-600: #234d67 !default;
-$teal-500: #2f7f80 !default;
-$red-500: #b44d4d !default;
-$gold-500: #b08b3f !default;
+$blue-500: #2474a6 !default;
+$blue-600: #1e5f8a !default;
+$teal-500: #009a9a !default;
+$red-500: #d64545 !default;
+$gold-500: #e2a320 !default;
+$orange-500: #e47f22 !default;
+$green-500: #2f9f67 !default;
 $accent-pink: #ca225e !default;
 $accent-pink-dark: #aa1d4f !default;
 
@@ -38,9 +40,9 @@ $indigo: #486581 !default;
 $purple: #6c63a8 !default;
 $pink: $accent-pink !default;
 $red: $red-500 !default;
-$orange: #c27c2c !default;
+$orange: $orange-500 !default;
 $yellow: $gold-500 !default;
-$green: #3e8e63 !default;
+$green: $green-500 !default;
 $teal: $teal-500 !default;
 $cyan: #5b8def !default;
 
@@ -368,7 +370,7 @@ pre.sourceCode code {
 .callout {
   border: 1px solid rgba($slate-900, 0.08);
   border-radius: 0.95rem;
-  background: rgba($white, 0.88);
+  background: $body-bg;
   box-shadow: 0 8px 22px rgba($slate-900, 0.04);
   overflow: hidden;
 }
@@ -376,18 +378,72 @@ pre.sourceCode code {
 .callout .callout-header {
   font-family: $font-family-sans-serif;
   letter-spacing: -0.01em;
+  border-bottom: 1px solid rgba($slate-900, 0.06);
+}
+
+.callout .callout-body,
+.callout .callout-body-container {
+  padding-bottom: 0 !important;
+}
+
+.callout .callout-body p:last-child,
+.callout .callout-body ul:last-child,
+.callout .callout-body ol:last-child {
+  margin-bottom: 0.2rem !important;
 }
 
 .callout.callout-important {
-  border-left: 0.45rem solid $blue-500;
+  border-left: 0.45rem solid $red-500;
+  background: rgba($red-500, 0.018);
+}
+
+.callout.callout-important .callout-header {
+  background: rgba($red-500, 0.14);
 }
 
 .callout.callout-warning {
   border-left: 0.45rem solid $gold-500;
+  background: rgba($gold-500, 0.022);
+}
+
+.callout.callout-warning .callout-header {
+  background: rgba($gold-500, 0.18);
 }
 
 .callout.callout-note {
   border-left: 0.45rem solid $teal-500;
+  background: rgba($teal-500, 0.018);
+}
+
+.callout.callout-note .callout-header {
+  background: rgba($teal-500, 0.14);
+}
+
+.callout.callout-info {
+  border-left: 0.45rem solid $blue-500;
+  background: rgba($blue-500, 0.018);
+}
+
+.callout.callout-info .callout-header {
+  background: rgba($blue-500, 0.14);
+}
+
+.callout.callout-tip {
+  border-left: 0.45rem solid $green-500;
+  background: rgba($green-500, 0.018);
+}
+
+.callout.callout-tip .callout-header {
+  background: rgba($green-500, 0.14);
+}
+
+.callout.callout-caution {
+  border-left: 0.45rem solid $orange-500;
+  background: rgba($orange-500, 0.02);
+}
+
+.callout.callout-caution .callout-header {
+  background: rgba($orange-500, 0.16);
 }
 
 table {
