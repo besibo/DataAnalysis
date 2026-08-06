@@ -1,6 +1,11 @@
 # Introduction {.unnumbered}
 
-```{r setup, include=FALSE, cache=FALSE, results=FALSE, message=FALSE}
+```{r}
+#| label: setup
+#| include: false
+#| cache: false
+#| results: false
+#| message: false
 options(replace.assign = TRUE, width = 80)
 options(repos = "http://cran.r-project.org/")
 
@@ -13,7 +18,6 @@ list.of.packages <- c(
   "tidyverse",
   "gridExtra",
   "devtools",
-  "extrafont",
   "kableExtra",
   "skimr",
   "bindrcpp",
@@ -32,9 +36,7 @@ list.of.packages <- c(
   "rstatix",
   "janitor",
   "ragg",
-  "systemfonts",
-  "sysfonts",
-  "showtext"
+  "systemfonts"
 )
 new.packages <- list.of.packages[
   !(list.of.packages %in% installed.packages()[, "Package"])
@@ -47,27 +49,6 @@ library(remotes)
 library(knitr)
 library(tidyverse)
 
-if (requireNamespace("sysfonts", quietly = TRUE) &&
-    requireNamespace("showtext", quietly = TRUE)) {
-  sysfonts::font_add(
-    family = "Adelle-Light",
-    regular = "fonts/Adelle light.otf",
-    italic = "fonts/Adelle Light Italic.otf",
-    bold = "fonts/Adelle Semi bold.otf",
-    bolditalic = "fonts/Adelle Semi Bold Italic.otf"
-  )
-
-  gill_sans <- systemfonts::system_fonts() |>
-    dplyr::filter(family == "Gill Sans", style == "Regular") |>
-    dplyr::slice_head(n = 1)
-
-  if (nrow(gill_sans) > 0) {
-    sysfonts::font_add(family = "Gill Sans", regular = gill_sans$path[[1]])
-  }
-
-  showtext::showtext_auto()
-}
-
 remotes::install_github("haleyjeppson/ggmosaic")
 
 # if( !("EDAWR" %in% installed.packages()[,"Package"]) ) {
@@ -78,8 +59,7 @@ opts_chunk$set(
   fig.path = 'figure/',
   cache.path = 'cache/',
   dev = if (
-    (knitr::is_html_output() || knitr::is_latex_output()) &&
-    requireNamespace("ragg", quietly = TRUE)
+    knitr::is_html_output() && requireNamespace("ragg", quietly = TRUE)
   ) {
     "ragg_png"
   } else {
@@ -97,7 +77,9 @@ opts_chunk$set(
 )
 ```
 
-```{r package_bibliography, include=FALSE}
+```{r}
+#| label: package_bibliography
+#| include: false
 # automatically create a bib database for R packages
 knitr::write_bib(
   c(
@@ -243,7 +225,7 @@ Pour apprendre à utiliser un logiciel comme `R`, il faut faire les choses soi-m
 
 Pour que cet apprentissage soit le moins problématique possible, il convient de prendre les choses dans l'ordre. C'est la raison pour laquelle les chapitres de ce livre doivent être lus dans l'ordre, et les exercices d'application faits au fur et à mesure de la lecture.
 
-Une fois compilé en pdf, ce document représente plus de 500 pages, ce qui veut dire que vous devriez vous approprier **environ 25 pages par jour**, en comptant les week-ends ! Si vous n'avancez pas une journée, ce sont 50 pages qu'il faudra intégrer le jour suivant... En particulier, le chapitre 3, consacré aux représentations graphiques, est très long et il est facile de se laisser dépasser.
+Dans sa version complète, ce document représente un volume important, ce qui veut dire que vous devriez vous approprier **environ un chapitre par jour**, en comptant les week-ends ! Si vous n'avancez pas une journée, ce sont deux chapitres qu'il faudra intégrer le jour suivant... En particulier, le chapitre 3, consacré aux représentations graphiques, est très long et il est facile de se laisser dépasser.
 
 ::: callout-warning
 ## Travaillez régulièrement !

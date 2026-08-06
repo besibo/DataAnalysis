@@ -8,7 +8,6 @@ book:
   date: now
   date-format: "D MMMM YYYY"
   search: true
-  downloads: pdf
   repo-url: "https://github.com/besibo/DataAnalysis"
   chapters:
     - index.qmd
@@ -67,15 +66,3 @@ format:
     smooth-scroll: true
     link-external-icon: true
     link-external-newwindow: true
-  pdf:
-    pdf-engine: xelatex
-    fig-format: png
-    mainfont: "Adelle"
-    sansfont: "Adelle"
-    documentclass: scrreprt
-    papersize: a4
-    highlight-style: github
-    code-block-bg: false
-    code-block-border-left: "#31BAE9"
-    code-depth: 5
-    colorlinks: true

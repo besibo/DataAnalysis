@@ -36,7 +36,7 @@ Il permet d'enchaîner logiquement des actions les unes à la suite des autres. 
 ```{r}
 #| eval: false
 
-# Ici, "f" est une fonction quelconque, 
+# Ici, "f" est une fonction quelconque,
 # "x" et "y" sont 2 objets dont la fonction a besoin.
 
 # Il s'agit d'un exemple fictif : ne tapez pas ceci dans votre script !
@@ -51,8 +51,8 @@ De la même façon que le `+` permet d'ajouter une couche supplémentaire à un 
 Pour reprendre un exemple de la @sec-empil sur les diagrammes bâtons empilés, nous avions utilisé ce code :
 
 ```{r}
-penguins |> 
-  filter(!is.na(sex)) |> 
+penguins |>
+  filter(!is.na(sex)) |>
   ggplot(aes(x = fct_infreq(species), fill = sex)) +
   geom_bar(alpha = 0.6, color = "black", position = "fill")
 ```
@@ -68,16 +68,18 @@ On aurait pu faire la même chose ainsi :
 ```{r}
 penguins_clean <- filter(penguins, !is.na(sex))
 ggplot(penguins_clean, aes(x = fct_infreq(species), fill = sex)) +
-    geom_bar(alpha = 0.6, color = "black", position = "fill")
+  geom_bar(alpha = 0.6, color = "black", position = "fill")
 ```
 C'est strictement équivalent. La deuxième méthode à l'inconvénient de nous obliger à créer un objet intermédiaire (que j'ai ici nommé `penguins_clean`). Lorsque l'on a de nombreuses fonctions à enchaîner, il faut donc créer de nombreux objets intermédiaires dont nous n'avons besoin qu'une seule fois, ce qui peut être source de nombreuses erreurs. 
 
 Une troisième façon de procéder est la suivante :
 
 ```{r}
-ggplot(filter(penguins, !is.na(sex)), 
-       aes(x = fct_infreq(species), fill = sex)) +
-    geom_bar(alpha = 0.6, color = "black", position = "fill")
+ggplot(
+  filter(penguins, !is.na(sex)),
+  aes(x = fct_infreq(species), fill = sex)
+) +
+  geom_bar(alpha = 0.6, color = "black", position = "fill")
 ```
 Cette fois, on ne crée plus d'objet intermédiaire, mais on intègre directement la fonction `filter()` à l'intérieur de la fonction `ggplot()`. Le code devient un peu moins lisible, et quand ça n'est pas deux fonctions mais 4, 5 ou plus que nous devons enchaîner, procéder ainsi est la garantie que des erreurs seront commises et qu'elles seront très difficiles à corriger.
 
@@ -85,8 +87,8 @@ On préfère donc toujours utiliser le pipe qui a le mérite de placer chaque fo
 
 ```{r}
 #| eval: false
-penguins |> 
-  filter(!is.na(sex)) |> 
+penguins |>
+  filter(!is.na(sex)) |>
   ggplot(aes(x = fct_infreq(species), fill = sex)) +
   geom_bar(alpha = 0.6, color = "black", position = "fill")
 ```
@@ -133,8 +135,10 @@ knitr::include_graphics('images/filter.png')
 
 Comme son nom l'indique, `filter()` permet de filtrer des lignes en spécifiant un ou des critères de tri portant sur une ou plusieurs variables. Nous pouvons ainsi créer un nouveau tableau ne contenant que les données de l'espèce Adélie :
 
-```{r tidy = FALSE, eval = FALSE}
-peng_adelie <- penguins |> 
+```{r}
+#| tidy: false
+#| eval: false
+peng_adelie <- penguins |>
   filter(species == "Adelie")
 ```
 
@@ -150,10 +154,10 @@ Le premier argument de la fonction `filter()` doit être le nom d'un `data.frame
 
 Créez un objet nommé `adelie_light` qui contiendra uniquement les données de l'espèce Adélie, et uniquement pour les individus pesant 3700 grammes ou moins. Indice : relisez la @sec-comparaison
 
-```{r include=FALSE}
-adelie_light <- penguins |> 
-  filter(species == "Adelie",
-         body_mass_g <= 3700)
+```{r}
+#| include: false
+adelie_light <- penguins |>
+  filter(species == "Adelie", body_mass_g <= 3700)
 
 adelie_light
 ```
@@ -183,8 +187,9 @@ Voyons comment utiliser ces opérateurs avec la fonction `filter()`.
 
 Dans le tableau `penguins`, quels sont les individus pour lesquels la masse n'a pas été mesurée ? Une bonne façon de le savoir est de regarder si, pour la variable `body_mass_g`, des données manquantes sont présentes :
 
-```{r, tidy=FALSE}
-penguins |> 
+```{r}
+#| tidy: false
+penguins |>
   filter(is.na(body_mass_g))
 ```
 
@@ -193,21 +198,24 @@ Seules les lignes contenant `NA` dans la colonne `body_mass_g` sont retenues. Il
 
 Dans le même ordre d'idée, y a t-il des individus dont on ne connait pas le sexe mais dont on connait les mesures biométriques (au moins la masse) ? Là encore, une façon d'obtenir cette information est de sélectionner les individus dont le sexe est manquant, mais pour lesquels la masse n'est pas manquante :
 
-```{r, tidy=FALSE}
-penguins |> 
-  filter(is.na(sex),
-         !is.na(body_mass_g))
+```{r}
+#| tidy: false
+penguins |>
+  filter(is.na(sex), !is.na(body_mass_g))
 ```
 
 Notez l'utilisation du `!` pour la seconde condition. Nous récupérons ici les lignes pour lesquelles `body_mass_g` n'est pas `NA` et pour lesquelles `sex` est `NA`. Seules les lignes qui respectent cette double condition sont retenues. Cette syntaxe est équivalente à :
 
-```{r, tidy=FALSE}
-penguins |> 
+```{r}
+#| tidy: false
+penguins |>
   filter(is.na(sex) & !is.na(body_mass_g))
 ```
 
-```{r, tidy=FALSE, include=FALSE}
-missing_sex <- penguins |> 
+```{r}
+#| tidy: false
+#| include: false
+missing_sex <- penguins |>
   filter(is.na(sex) & !is.na(body_mass_g))
 ```
 
@@ -217,11 +225,14 @@ Dans la fonction `filter()`, séparer plusieurs conditions par des virgules sign
 
 Enfin, pour illustrer l'utilisation de `|` (le `OU` logique) et de `%in%`, imaginons que nous souhaitions extraire les informations des individus de l'espèce Adélie qui vivent soit sur l'île Biscoe, soit sur l'île Dream, et dont le bec mesure moins de 42 mm de longueur :
 
-```{r, tidy = FALSE}
-adel_small <- penguins |> 
-  filter(species == "Adelie", 
-         island == "Biscoe" | island == "Dream", 
-         bill_length_mm < 42)
+```{r}
+#| tidy: false
+adel_small <- penguins |>
+  filter(
+    species == "Adelie",
+    island == "Biscoe" | island == "Dream",
+    bill_length_mm < 42
+  )
 adel_small
 ```
 
@@ -229,11 +240,14 @@ Examinez ce tableau avec `View()` pour vérifier que la variable `island` contie
 
 Une autre solution pour obtenir le même tableau est de remplacer l'expression contenant `|` par une expression contenant `%in%` :
 
-```{r, tidy = FALSE}
-adel_small2 <- penguins |> 
-  filter(species == "Adelie", 
-         island %in% c("Biscoe", "Dream"), 
-         bill_length_mm < 42)
+```{r}
+#| tidy: false
+adel_small2 <- penguins |>
+  filter(
+    species == "Adelie",
+    island %in% c("Biscoe", "Dream"),
+    bill_length_mm < 42
+  )
 adel_small2
 ```
 
@@ -322,9 +336,7 @@ Enfin, on peut utiliser `select()` pour renommer des variables. Mais ce n'est qu
 #| tidy: false
 
 penguins |>
-  select(species:island,
-         b_length = bill_length_mm,
-         flipper = flipper_length_mm)
+  select(species:island, b_length = bill_length_mm, flipper = flipper_length_mm)
 ```
 
 Il est donc généralement préférable d'utiliser `rename()` pour renommer certaines variables sans en éliminer aucune :
@@ -333,8 +345,7 @@ Il est donc généralement préférable d'utiliser `rename()` pour renommer cert
 #| tidy: false
 
 penguins |>
-  rename(b_length = bill_length_mm,
-         flipper = flipper_length_mm)
+  rename(b_length = bill_length_mm, flipper = flipper_length_mm)
 ```
 
 
@@ -365,8 +376,7 @@ Voyons un exemple. À partir de `penguins`, nous allons calculer une nouvelle va
 #| tidy: false
 
 penguins |>
-  mutate(ratio = bill_length_mm / bill_depth_mm,
-         mass_kg = body_mass_g / 1000)
+  mutate(ratio = bill_length_mm / bill_depth_mm, mass_kg = body_mass_g / 1000)
 ```
 
 Si on ne souhaite conserver que les variables nouvellement créées par `mutate()` et éliminer toutes les autres, on peut utiliser `transmute()` :
@@ -375,8 +385,10 @@ Si on ne souhaite conserver que les variables nouvellement créées par `mutate(
 #| tidy: false
 
 penguins |>
-  transmute(ratio = bill_length_mm / bill_depth_mm,
-            mass_kg = body_mass_g / 1000)
+  transmute(
+    ratio = bill_length_mm / bill_depth_mm,
+    mass_kg = body_mass_g / 1000
+  )
 ```
 
 Et comme toujours, pour pouvoir réutiliser ces données, on leur donne un nom :
@@ -384,9 +396,11 @@ Et comme toujours, pour pouvoir réutiliser ces données, on leur donne un nom :
 ```{r}
 #| tidy: false
 
-pengu_ratio <-  penguins |>
-  transmute(ratio = bill_length_mm / bill_depth_mm,
-            mass_kg = body_mass_g / 1000)
+pengu_ratio <- penguins |>
+  transmute(
+    ratio = bill_length_mm / bill_depth_mm,
+    mass_kg = body_mass_g / 1000
+  )
 ```
 
 
@@ -398,15 +412,16 @@ Il n'est pas rare que les tableaux de données que nous importons contiennent de
 #| include: false
 
 library(readxl)
-dauphin <- read_excel("data/dauphin.xls", 
-                      na = "*", skip = 9) |>   # Importer, puis
-  rename(ID = `N°`,                 # Raccourcir les noms, puis
-         Statut = `Statut reproducteur`,
-         Taille = `Taille en cm`,
-         Age = `Age en années`,
-         Cd = `Cd (mg.kg-1)`,
-         Cu = `Cu (mg.kg-1)`,
-         Hg = `Hg (mg.kg-1)`)
+dauphin <- read_excel("data/dauphin.xls", na = "*", skip = 9) |> # Importer, puis
+  rename(
+    ID = `N°`, # Raccourcir les noms, puis
+    Statut = `Statut reproducteur`,
+    Taille = `Taille en cm`,
+    Age = `Age en années`,
+    Cd = `Cd (mg.kg-1)`,
+    Cu = `Cu (mg.kg-1)`,
+    Hg = `Hg (mg.kg-1)`
+  )
 ```
 
 
@@ -416,12 +431,16 @@ dauphin
 C'est le cas des variables `Sexe`, `Statut` et `Organe`. Par ailleurs, la variable `ID` pourrait être supprimée puisqu'elle n'apporte aucune information est est parfaitement redondante avec les numéros de ligne du tableau. Voyons comment réaliser toutes ces actions :
 
 ```{r}
-dauphin_clean <- dauphin |> 
-  select(-ID) |>                 # Suppression de la colonne ID, puis
-  mutate(Sexe = factor(Sexe),     # Transformation de Sexe en facteur
-         Organe = factor(Organe), # Transformation d'Organe en facteur
-         Statut = factor(Statut,  # Transformation de Statut en facteur
-                         levels = c("imm", "mat", "pnl", "pl", "l", "repos")))
+dauphin_clean <- dauphin |>
+  select(-ID) |> # Suppression de la colonne ID, puis
+  mutate(
+    Sexe = factor(Sexe), # Transformation de Sexe en facteur
+    Organe = factor(Organe), # Transformation d'Organe en facteur
+    Statut = factor(
+      Statut, # Transformation de Statut en facteur
+      levels = c("imm", "mat", "pnl", "pl", "l", "repos")
+    )
+  )
 ```
 
 L'objet `dauphin_clean` contient les résultats de nos manipulations :
@@ -451,7 +470,7 @@ Il existe de nombreuses façons de ré-ordonner les modalités d'un facteur le l
 #| label: fig-bxpltcol
 #| fig-cap: "Un exemple de figure avec 2 facteurs et des modalités ordonnées automatiquement par ordre alphabétique"
 
-dauphin_clean |> 
+dauphin_clean |>
   ggplot(aes(x = Organe, y = Cu, fill = Sexe)) +
   geom_boxplot(notch = TRUE) +
   scale_fill_brewer(palette = "Accent") +
@@ -464,9 +483,11 @@ Imaginons que je souhaite faire apparaître les concentrations en cuivre dans le
 #| label: fig-bxpltcol2
 #| fig-cap: "La même figure mais avec les modalités des 2 facteurs ordonnées manuellement"
 
-dauphin_clean |> 
-  mutate(Sexe = factor(Sexe, levels = c("m", "f")),
-         Organe = factor(Organe, levels = c("rein", "foie"))) |> 
+dauphin_clean |>
+  mutate(
+    Sexe = factor(Sexe, levels = c("m", "f")),
+    Organe = factor(Organe, levels = c("rein", "foie"))
+  ) |>
   ggplot(aes(x = Organe, y = Cu, fill = Sexe)) +
   geom_boxplot(notch = TRUE) +
   scale_fill_brewer(palette = "Accent") +
@@ -481,7 +502,7 @@ Une autre solution est de faire appel au package `forcats` (c'est un anagramme d
 #| label: fig-bxpltcol3
 #| fig-cap: "La même figure mais avec les modalités des 2 facteurs inversées avec `fct_rev()`"
 
-dauphin_clean |> 
+dauphin_clean |>
   ggplot(aes(x = fct_rev(Organe), y = Cu, fill = fct_rev(Sexe))) +
   geom_boxplot(notch = TRUE) +
   scale_fill_brewer(palette = "Accent") +
@@ -495,10 +516,8 @@ Il existe de nombreuses autres fonctions très utiles dans le package `forcats`.
 ```{r}
 #| tidy: false
 
-dauphin |> 
-  mutate(Sexe = fct_recode(Sexe, 
-                           "Femelle" = "f",
-                           "Mâle" = "m"))
+dauphin |>
+  mutate(Sexe = fct_recode(Sexe, "Femelle" = "f", "Mâle" = "m"))
 ```
 
 Cela permet de transformer la catégorie `f` en `Femelle` et la catégorie `m` en `Mâle`, et ainsi de rendre plus clair la signification des catégories sur un graphique :
@@ -507,14 +526,16 @@ Cela permet de transformer la catégorie `f` en `Femelle` et la catégorie `m` e
 #| label: fig-bxpltcol4
 #| fig-cap: "La même figure mais avec les modalités plus claires pour le facteur `Sexe`"
 
-dauphin |> 
-  mutate(Sexe = fct_recode(Sexe, 
-                           "Femelle" = "f",
-                           "Mâle" = "m")) |> 
+dauphin |>
+  mutate(Sexe = fct_recode(Sexe, "Femelle" = "f", "Mâle" = "m")) |>
   ggplot(aes(x = fct_rev(Organe), y = Cu, fill = fct_rev(Sexe))) +
   geom_boxplot(notch = TRUE) +
   scale_fill_brewer(palette = "Accent") +
-  labs(x = "Organe", fill = "Sexe", y = "Concentration en cuivre (µg/g de poids sec)") +
+  labs(
+    x = "Organe",
+    fill = "Sexe",
+    y = "Concentration en cuivre (µg/g de poids sec)"
+  ) +
   theme_bw()
 ```
 
@@ -522,22 +543,33 @@ dauphin |>
 Enfin, il existe une autre façon de procéder lorsque toutes les variables `<chr>` d'un tableau doivent être transformées en facteur. `mutate_if()` permet en effet d'appliquer la même fonction à toutes les variables respectant une condition précise. Ici, toutes les colonnes possédant le type `<chr>` seront transformées en facteur. Nous pouvons donc taper ceci :
 
 ```{r}
-dauphin |> 
+dauphin |>
   mutate_if(is.character, as.factor)
 ```
 
 Un inconvénient de cette fonction est qu'il est impossible de changer manuellement l'ordre des catégories d'un facteur en même temps. On est alors obligé de procéder en deux temps :
 
 ```{r}
-dauphin_clean <- dauphin |> 
-  select(-ID) |>                            # Suppression de la colonne ID, puis
-  mutate_if(is.character, as.factor) |>     # Transformation en facteur de toutes les variables <chr>, puis
-  mutate(Sexe = fct_recode(Sexe,            # Changement des modalités du facteur Sexe, puis
-                           "Femelle" = "f",
-                           "Mâle" = "m"),
-         Organe = fct_rev(Organe),          # Inversion des modalités du facteur Organe
-         Statut = fct_relevel(Statut,       # Ré-agencement de l'ordre des modalités du facteur Statut
-                              "imm", "mat", "pnl", "l", "pl", "repos"))
+dauphin_clean <- dauphin |>
+  select(-ID) |> # Suppression de la colonne ID, puis
+  mutate_if(is.character, as.factor) |> # Transformation en facteur de toutes les variables <chr>, puis
+  mutate(
+    Sexe = fct_recode(
+      Sexe, # Changement des modalités du facteur Sexe, puis
+      "Femelle" = "f",
+      "Mâle" = "m"
+    ),
+    Organe = fct_rev(Organe), # Inversion des modalités du facteur Organe
+    Statut = fct_relevel(
+      Statut, # Ré-agencement de l'ordre des modalités du facteur Statut
+      "imm",
+      "mat",
+      "pnl",
+      "l",
+      "pl",
+      "repos"
+    )
+  )
 ```
 
 Dans le code ci-dessus, la fonction `fct_relevel()` joue le même rôle que `factor(..., levels = c(...))`.
@@ -549,24 +581,30 @@ Au final, toutes les transformations que nous avons fait subir à ce jeu de donn
 
 # Importation et mise en forme du jeu de données `dauphin`
 library(readxl)
-dauphin <- read_excel("data/dauphin.xls", 
-                      na = "*", skip = 9) |>   # Importer, puis
-  rename(ID = `N°`,                 # Raccourcir les noms, puis
-         Statut = `Statut reproducteur`,
-         Taille = `Taille en cm`,
-         Age = `Age en années`,
-         Cd = `Cd (mg.kg-1)`,
-         Cu = `Cu (mg.kg-1)`,
-         Hg = `Hg (mg.kg-1)`) |> 
-  select(-ID) |>                   # Supprimer la variable `ID`, puis
-  mutate_if(is.character,           # 'Factoriser' les variables <chr>, puis
-            as.factor) |>          
-  mutate(Sexe = fct_recode(Sexe,    # Modifier les modalités des facteurs
-                           "Female" = "f",
-                           "Male" = "m"),
-         Organe = fct_rev(Organe), 
-         Statut = fct_relevel(Statut,
-                              "imm", "mat", "pnl", "l", "pl", "repos"))
+dauphin <- read_excel("data/dauphin.xls", na = "*", skip = 9) |> # Importer, puis
+  rename(
+    ID = `N°`, # Raccourcir les noms, puis
+    Statut = `Statut reproducteur`,
+    Taille = `Taille en cm`,
+    Age = `Age en années`,
+    Cd = `Cd (mg.kg-1)`,
+    Cu = `Cu (mg.kg-1)`,
+    Hg = `Hg (mg.kg-1)`
+  ) |>
+  select(-ID) |> # Supprimer la variable `ID`, puis
+  mutate_if(
+    is.character, # 'Factoriser' les variables <chr>, puis
+    as.factor
+  ) |>
+  mutate(
+    Sexe = fct_recode(
+      Sexe, # Modifier les modalités des facteurs
+      "Female" = "f",
+      "Male" = "m"
+    ),
+    Organe = fct_rev(Organe),
+    Statut = fct_relevel(Statut, "imm", "mat", "pnl", "l", "pl", "repos")
+  )
 
 dauphin
 ```
@@ -597,16 +635,18 @@ Nous n'avons pas le temps de développer ici des exemples pour chacune de ces fo
 #| echo: false
 #| fig-cap: "Consommation en fonction de la cylindrée"
 
-mpg |> 
-  filter(class != "2seater") |> 
-  mutate(conso = 235.215 / hwy) |> 
+mpg |>
+  filter(class != "2seater") |>
+  mutate(conso = 235.215 / hwy) |>
   ggplot(aes(x = displ, y = conso)) +
   geom_point(aes(color = class)) +
   geom_smooth(method = "lm") +
-  labs(x = "Cylindrée (volume du moteur en litres)",
-       y = "Consommation (litres pour 100 kilomètres)",
-       color = "Type de\nvéhicule",
-       title = "Relation positive entre cylindrée et consommation") +
+  labs(
+    x = "Cylindrée (volume du moteur en litres)",
+    y = "Consommation (litres pour 100 kilomètres)",
+    color = "Type de\nvéhicule",
+    title = "Relation positive entre cylindrée et consommation"
+  ) +
   theme_minimal()
 ```
 
@@ -619,16 +659,24 @@ mpg |>
 #| echo: false
 #| fig-cap: "Consommation en fonction de la cylindrée"
 
-mpg |> 
-  filter(class != "2seater") |> 
-  mutate(conso = 235.215 / hwy) |> 
+mpg |>
+  filter(class != "2seater") |>
+  mutate(conso = 235.215 / hwy) |>
   ggplot(aes(x = displ, y = conso)) +
-  geom_jitter(aes(fill = class), shape=21, width=0.05, height=0.05, alpha = 0.7) +
+  geom_jitter(
+    aes(fill = class),
+    shape = 21,
+    width = 0.05,
+    height = 0.05,
+    alpha = 0.7
+  ) +
   geom_smooth(method = "lm") +
-  labs(x = "Cylindrée (volume du moteur en litres)",
-       y = "Consommation (litres pour 100 kilomètres)",
-       fill = "Type de\nvéhicule",
-       title = "Relation positive entre cylindrée et consommation") +
+  labs(
+    x = "Cylindrée (volume du moteur en litres)",
+    y = "Consommation (litres pour 100 kilomètres)",
+    fill = "Type de\nvéhicule",
+    title = "Relation positive entre cylindrée et consommation"
+  ) +
   theme_minimal()
 ```
 
@@ -686,7 +734,7 @@ Cela est particulièrement utile après l'obtention de résumés groupés (obten
 
 ```{r}
 #| tidy: false
-
+#| 
 penguins |>
   count(species, sex) |>
   arrange(desc(n))
@@ -723,7 +771,7 @@ Cette section est importante car elle permet de faire un premier lien avec les s
 knitr::include_graphics('images/summarizearrow.png')
 ```
 
-```{r, summarisefig2, echo = FALSE, out.width='40%', fig.align='center', fig.cap="(ref:summarise)"}
+```{r}
 #| label: fig-summarise2
 #| echo: false
 #| out-width: '40%'
@@ -769,8 +817,10 @@ penguins |>
 #| include: false
 
 bill <- penguins |>
-  summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
-            ecart_type = sd(bill_length_mm, na.rm = TRUE))
+  summarise(
+    moyenne = mean(bill_length_mm, na.rm = TRUE),
+    ecart_type = sd(bill_length_mm, na.rm = TRUE)
+  )
 ```
 
 La longueur moyenne du bec des manchots (toutes espèces confondues) est donc de `r round(bill[1,1],1)` millimètres.
@@ -781,8 +831,10 @@ De la même façon, on peut demander plusieurs calculs d'indices à la fois, par
 #| tidy: false
 
 penguins |>
-  summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
-            ecart_type = sd(bill_length_mm, na.rm = TRUE))
+  summarise(
+    moyenne = mean(bill_length_mm, na.rm = TRUE),
+    ecart_type = sd(bill_length_mm, na.rm = TRUE)
+  )
 ```
 
 Ici, l'écart-type vaut `r round(bill[1,2],1)` millimètres. 
@@ -790,15 +842,17 @@ Ici, l'écart-type vaut `r round(bill[1,2],1)` millimètres.
 La fonction `summarise()` permet donc de calculer des indices statistiques variés, et permet aussi d'accéder à plusieurs variables à la fois. Par exemple. pour calculer les moyennes, médianes, minima et maxima des longueurs de nageoires et de masses corporelles, on peut procéder ainsi :
 
 ```{r}
-penguins |> 
-  summarise(moy_flip = mean(flipper_length_mm, na.rm = TRUE),
-            med_flip = median(flipper_length_mm, na.rm = TRUE),
-            min_flip = min(flipper_length_mm, na.rm = TRUE),
-            max_flip = max(flipper_length_mm, na.rm = TRUE),
-            moy_mass = mean(body_mass_g, na.rm = TRUE),
-            med_mass = median(body_mass_g, na.rm = TRUE),
-            min_mass = min(body_mass_g, na.rm = TRUE),
-            max_mass = max(body_mass_g, na.rm = TRUE))
+penguins |>
+  summarise(
+    moy_flip = mean(flipper_length_mm, na.rm = TRUE),
+    med_flip = median(flipper_length_mm, na.rm = TRUE),
+    min_flip = min(flipper_length_mm, na.rm = TRUE),
+    max_flip = max(flipper_length_mm, na.rm = TRUE),
+    moy_mass = mean(body_mass_g, na.rm = TRUE),
+    med_mass = median(body_mass_g, na.rm = TRUE),
+    min_mass = min(body_mass_g, na.rm = TRUE),
+    max_mass = max(body_mass_g, na.rm = TRUE)
+  )
 ```
 
 La fonction `summarise()` est donc très utile pour produire des résumés informatifs des données, mais nos exemples ne sont ici pas très pertinents puisque nous avons jusqu'ici calculé des indices sans distinguer les espèces. Si les 3 espèces de manchots ont des caractéristiques très différentes, calculer des moyennes toutes espèces confondues n'a pas de sens. Voyons maintenant comment obtenir ces même indices pour chaque espèce.
@@ -822,11 +876,14 @@ Comme son nom l'indique, l'argument `.by` permet de créer des sous-groupes dans
 
 Pour revenir à l'exemple de la longueur du bec des manchots, imaginons que nous souhaitions calculer les moyennes et les écart-types pour chacune des trois espèces. Voilà comment procéder :
 
-```{r, tidy = FALSE}
+```{r}
+#| tidy: false
 penguins |>
-  summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
-            ecart_type = sd(bill_length_mm, na.rm = TRUE),
-            .by = species)
+  summarise(
+    moyenne = mean(bill_length_mm, na.rm = TRUE),
+    ecart_type = sd(bill_length_mm, na.rm = TRUE),
+    .by = species
+  )
 ```
 
 Ici, les étapes sont les suivantes :
@@ -843,9 +900,11 @@ Cette syntaxe très simple est presque équivalente à celle de la fonction `gro
 #| tidy: false
 
 penguins |>
-  group_by(species) |> 
-  summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
-            ecart_type = sd(bill_length_mm, na.rm = TRUE))
+  group_by(species) |>
+  summarise(
+    moyenne = mean(bill_length_mm, na.rm = TRUE),
+    ecart_type = sd(bill_length_mm, na.rm = TRUE)
+  )
 ```
 
 Les valeurs obtenues sont les mêmes, mais d'une part, les commandes sont fournies avec une syntaxe et dans un ordre différents :
@@ -866,11 +925,13 @@ avec $s$, l'écart-type de l'échantillon et $n$, la taille de l'échantillon (p
 #| tidy: false
 
 stats_esp <- penguins |>
-  summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
-            ecart_type = sd(bill_length_mm, na.rm = TRUE),
-            nb_obs = n(),
-            erreur_std = ecart_type / sqrt(nb_obs),
-            .by = species)
+  summarise(
+    moyenne = mean(bill_length_mm, na.rm = TRUE),
+    ecart_type = sd(bill_length_mm, na.rm = TRUE),
+    nb_obs = n(),
+    erreur_std = ecart_type / sqrt(nb_obs),
+    .by = species
+  )
 
 stats_esp
 ```
@@ -889,11 +950,13 @@ Jusqu'ici, nous avons groupé les données par espèce. Il est tout à fait poss
 #| tidy: false
 
 stats_esp_sex <- penguins |>
-  summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
-            ecart_type = sd(bill_length_mm, na.rm = TRUE),
-            nb_obs = n(),
-            erreur_std = ecart_type / sqrt(nb_obs),
-            .by = c(species, sex))
+  summarise(
+    moyenne = mean(bill_length_mm, na.rm = TRUE),
+    ecart_type = sd(bill_length_mm, na.rm = TRUE),
+    nb_obs = n(),
+    erreur_std = ecart_type / sqrt(nb_obs),
+    .by = c(species, sex)
+  )
 
 stats_esp_sex
 ```
@@ -904,12 +967,14 @@ En plus de la variable `species`, la tableau `stats_esp_sex` contient une variab
 #| tidy: false
 
 stats_esp_sex2 <- penguins |>
-  filter(!is.na(sex)) |> 
-  summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
-            ecart_type = sd(bill_length_mm, na.rm = TRUE),
-            nb_obs = n(),
-            erreur_std = ecart_type / sqrt(nb_obs),
-            .by = c(species, sex))
+  filter(!is.na(sex)) |>
+  summarise(
+    moyenne = mean(bill_length_mm, na.rm = TRUE),
+    ecart_type = sd(bill_length_mm, na.rm = TRUE),
+    nb_obs = n(),
+    erreur_std = ecart_type / sqrt(nb_obs),
+    .by = c(species, sex)
+  )
 
 stats_esp_sex2
 ```
@@ -923,9 +988,8 @@ Enfin, lorsque nous groupons par plusieurs variables, il peut être utile de pr�
 #| tidy: false
 
 penguins |>
-  filter(!is.na(sex)) |> 
-  summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
-            .by = c(species, sex))
+  filter(!is.na(sex)) |>
+  summarise(moyenne = mean(bill_length_mm, na.rm = TRUE), .by = c(species, sex))
 ```
 
 à un tableau sous ce format :
@@ -934,11 +998,12 @@ penguins |>
 #| tidy: false
 
 penguins |>
-  filter(!is.na(sex)) |> 
-  summarise(moyenne = mean(bill_length_mm, na.rm = TRUE),
-            .by = c(species, sex)) |> 
-  pivot_wider(names_from = sex,
-              values_from = moyenne)
+  filter(!is.na(sex)) |>
+  summarise(
+    moyenne = mean(bill_length_mm, na.rm = TRUE),
+    .by = c(species, sex)
+  ) |>
+  pivot_wider(names_from = sex, values_from = moyenne)
 ```
 
 Sous cette forme, les données ne sont plus "rangées", c'est à dire que nous n'avons plus une observation par ligne et une variable par colonne. En effet ici, la variable `sex` est maintenant "étalée" dans 2 colonnes distinctes : chaque modalité du facteur de départ (`female` et `male`) est utilisée en tant que titre de nouvelles colonnes, et la variable `moyenne` est répartie dans deux colonnes. Ce format de tableau n'est pas idéal pour les statistiques ou les représentations graphiques, mais il est plus synthétique, et donc plus facile à inclure dans un rapport ou un compte-rendu.
@@ -950,48 +1015,49 @@ Il est extrêmement fréquent d'avoir à grouper des données en fonction d'une 
 
 
 ```{r}
-penguins |> 
-  summarise(effectif = n(), 
-            .by = species)
+penguins |>
+  summarise(effectif = n(), .by = species)
 ```
 
 ou encore :
 
 ```{r}
-penguins |> 
-  group_by(species) |> 
+penguins |>
+  group_by(species) |>
   summarise(effectif = n())
 ```
 Ces deux opérations sont tellement fréquentes (regrouper puis compter) que le package `dplyr` nous fournit un raccourci : la fonction `count()`.
 
 Le code ci-dessus est équivalent à celui-ci :
 
-```{r, tidy=FALSE}
-penguins |> 
+```{r}
+#| tidy: false
+penguins |>
   count(species)
 ```
 
 Notez qu'avec la fonction `count()`, la colonne qui contient les comptages s'appelle toujours `n` par défaut. Comme avec `.by` et `group_by()`, il est bien sûr possible d'utiliser `count()` avec plusieurs variables :
 
-```{r, tidy=FALSE}
-penguins |> 
+```{r}
+#| tidy: false
+penguins |>
   count(species, sex)
 ```
 
-```{r, tidy=FALSE}
-penguins |> 
-  filter(!is.na(sex)) |> 
+```{r}
+#| tidy: false
+penguins |>
+  filter(!is.na(sex)) |>
   count(species, sex)
 ```
 
 Et il est évidemment possible de présenter le résultats sous un format de tableau large :
 
 ```{r}
-penguins |> 
-  filter(!is.na(sex)) |> 
-  count(species, sex) |> 
-  pivot_wider(names_from = sex,
-              values_from = n)
+penguins |>
+  filter(!is.na(sex)) |>
+  count(species, sex) |>
+  pivot_wider(names_from = sex, values_from = n)
 ```
 
 Vous connaissez maintenant plusieurs méthodes pour calculer à la main des statistiques descriptives pour des variables entières, ou pour des sous-groupes de lignes (par espèce, par sexe, par sexe et par espèce...). Globalement, toutes les fonctions de R qui prennent une série de chiffres en guise d'argument, et qui renvoient une valeur unique, peuvent être utilisées avec la fonction `summarise()`. En particulier, vous pouvez utiliser les fonctions suivantes pour faire des analyses exploratoires :
@@ -1012,8 +1078,10 @@ Et la liste n'est bien sûr pas exhaustive
 
 1. Avec le tableau `diamonds` du package `ggplot2`, faites un tableau indiquant combien de diamants de chaque couleur on dispose. Vous devriez obtenir le tableau suivant :
 
-```{r, tidy=FALSE, echo=FALSE}
-diamonds |> 
+```{r}
+#| tidy: false
+#| echo: false
+diamonds |>
   count(color)
 ```
 
@@ -1022,36 +1090,47 @@ diamonds |>
 
 3. À partir du tableau `weather` faites un tableau indiquant les vitesses de vents minimales, maximales et moyennes, enregistrées chaque mois dans chaque aéroport de New York. Indice : les 3 aéroports de New York sont Newark, LaGuardia Airport et John F. Kennedy, notés respectivement `EWR`, `LGA` et `JFK` dans la variable `origin`. Votre tableau devrait ressembler à ceci :
 
-```{r, tidy=FALSE, echo=FALSE}
+```{r}
+#| tidy: false
+#| echo: false
 windy <- weather |>
-  summarise(max_wind = max(wind_speed, na.rm = TRUE),
-            min_wind = min(wind_speed, na.rm = TRUE),
-            moy_wind = mean(wind_speed, na.rm = TRUE),
-            .by = c(origin, month))
+  summarise(
+    max_wind = max(wind_speed, na.rm = TRUE),
+    min_wind = min(wind_speed, na.rm = TRUE),
+    moy_wind = mean(wind_speed, na.rm = TRUE),
+    .by = c(origin, month)
+  )
 windy
 ```
 
 4. Sachant que les vitesses du vent sont exprimées en miles par heure, certaines valeurs sont-elles surprenantes ? À l'aide de la fonction `filter()`, éliminez la ou les valeurs aberrantes. Vous devriez obtenir ce tableau :
 
-```{r, tidy=FALSE, echo=FALSE}
+```{r}
+#| tidy: false
+#| echo: false
 windy2 <- weather |>
   filter(wind_speed <= 500) |>
-  summarise(max_wind = max(wind_speed, na.rm = TRUE),
-            min_wind = min(wind_speed, na.rm = TRUE),
-            moy_wind = mean(wind_speed, na.rm = TRUE),
-            .by = c(origin, month))
+  summarise(
+    max_wind = max(wind_speed, na.rm = TRUE),
+    min_wind = min(wind_speed, na.rm = TRUE),
+    moy_wind = mean(wind_speed, na.rm = TRUE),
+    .by = c(origin, month)
+  )
 windy2
 ```
 
 5. En utilisant les données de vitesse de vent du tableau `weather`, produisez le graphique suivant :
 
-```{r windspeed, tidy=FALSE, warning = FALSE, echo = FALSE}
+```{r}
+#| label: windspeed
+#| tidy: false
+#| warning: false
+#| echo: false
 weather |>
   filter(wind_speed < 500) |>
   ggplot(aes(x = factor(month), y = wind_speed)) +
   geom_jitter(width = 0.2, height = 0, alpha = 0.2) +
-  labs(x = "Mois",
-       y = "Vitesse du vent (mph)")
+  labs(x = "Mois", y = "Vitesse du vent (mph)")
 ```
 
 Indications :
@@ -1081,36 +1160,36 @@ Pour vous montrer à quel point cet argument peut-être utile dans d'autres cont
 
 ```{r}
 # Pour l'espèce Adélie
-adelie <- penguins |> 
+adelie <- penguins |>
   filter(species == "Adelie")
 
-adelie_lourds <- adelie |> 
+adelie_lourds <- adelie |>
   filter(body_mass_g > quantile(body_mass_g, 0.9, na.rm = TRUE))
 
-adelie_lourds 
+adelie_lourds
 ```
 
 Ici, j'ai commencé par créer un tableau `adelie` qui ne contient que les individus de cette espèce. L'expression `quantile(body_mass_g, 0.9, na.rm = TRUE)` permet d'identifier le quatre vingt dixième percentile des masses corporelles en grammes pour cette espèce, et la fonction `filter()` me permet de ne récupérer que les individus dont la masse est supérieure à cette valeur. Ici, nous récupérons `r nrow(adelie_lourds)` individus dans le tableau `adelie_lourds`, qui correspondent donc aux 10% des individus les plus lourds pour cette espèce. Pour obtenir la même choses pour les 3 espèces, il me faut reproduire ce code pour les manchots Chinstrap et Gentoo, puis il faut que je fusionne les 3 tableaux (voir les détails de cette fonction dans la @sec-bindrows) :
 
 ```{r}
 # Pour l'espèce Chinstrap
-chinstrap <- penguins |> 
+chinstrap <- penguins |>
   filter(species == "Chinstrap")
 
-chinstrap_lourds <- chinstrap |> 
+chinstrap_lourds <- chinstrap |>
   filter(body_mass_g > quantile(body_mass_g, 0.9, na.rm = TRUE))
 
-chinstrap_lourds 
+chinstrap_lourds
 
 
 # Pour l'espèce Gentoo
-gentoo <- penguins |> 
+gentoo <- penguins |>
   filter(species == "Gentoo")
 
-gentoo_lourds <- gentoo |> 
+gentoo_lourds <- gentoo |>
   filter(body_mass_g > quantile(body_mass_g, 0.9, na.rm = TRUE))
 
-gentoo_lourds 
+gentoo_lourds
 
 # Fusion des 3 tableaux
 heavy_penguins <- bind_rows(adelie_lourds, chinstrap_lourds, gentoo_lourds)
@@ -1120,9 +1199,8 @@ heavy_penguins
 Nous récupérons ainsi une unique table contenant `r nrow(heavy_penguins)` que nous pourrions ensuite utiliser pour des statistiques et/ou des représentations graphiques. L'utilisation de l'argument `.by` pourrait toutefois nous éviter de taper beaucoup de code pour aboutir au même résultat :
 
 ```{r}
-penguins |> 
-  filter(body_mass_g > quantile(body_mass_g, 0.9, na.rm = TRUE),
-         .by = species)
+penguins |>
+  filter(body_mass_g > quantile(body_mass_g, 0.9, na.rm = TRUE), .by = species)
 ```
 
 Cette syntaxe évite de dupliquer le code inutilement, elle évite d'avoir à créer des objets supplémentaires inutiles, et permet donc de limiter les risques d'erreur. Il vous sera donc très utile par la suite de prendre l'habitude de réfléchir aux questions posées en pensant à cet argument `.by`.
@@ -1133,9 +1211,11 @@ Cette syntaxe évite de dupliquer le code inutilement, elle évite d'avoir à cr
 Pour bien enfoncer le clou, voici un autre exemple, impliquant la fonction `mutate()`. Imaginez que nous ayons besoin d'identifier, toujours dans le tableau `penguins`, les individus de chaque espèce dont la longueur du bec est supérieure à la moyenne de l'espèce. Il nous faut donc calculer, pour chaque espèce, la moyenne des longueurs de bec, puis créer une nouvelle colonne de vrais/faux pour chaque individu de chaque espèce : ceux dont le bec est supérieur à la moyenne auront `TRUE` dans cette nouvelle colonne, les autres auront `FALSE`. Voilà comment nous pourrions procéder grâce à l'argument `.by` :
 
 ```{r}
-becs <- penguins |> 
-  mutate(long_bill = bill_length_mm >= mean(bill_length_mm, na.rm = TRUE),
-         .by = species)
+becs <- penguins |>
+  mutate(
+    long_bill = bill_length_mm >= mean(bill_length_mm, na.rm = TRUE),
+    .by = species
+  )
 
 becs
 ```
@@ -1143,7 +1223,7 @@ becs
 Vous voyez qu'on peut obtenir le résultat souhaité en une seule commande. Pour mieux voir la nouvelle colonne :
 
 ```{r}
-becs |> 
+becs |>
   relocate(long_bill)
 ```
 
@@ -1152,14 +1232,17 @@ Avec ce nouveau tableau, nous pourrions faire des statistiques ou des graphiques
 ```{r}
 #| label: fig-billlength
 #| fig-cap: "Masse en gramme des mâles et des femelles des 3 espèces de manchots. Les femelles ont majoritairement un bec plus court (en violet) que la moyenne de l'espèce et les mâles plus longs (en orange) que la moyenne de l'espèce."
-becs |> 
-  filter(!is.na(sex)) |> 
+becs |>
+  filter(!is.na(sex)) |>
   ggplot(aes(x = species, y = body_mass_g, color = long_bill)) +
   geom_jitter(height = 0, width = 0.2) +
   facet_wrap(~sex, ncol = 2) +
   labs(x = "", y = "Masse corporelle (g)", color = "Taille du bec") +
   theme_bw() +
-  scale_color_manual(values = c("purple", "orange"), labels = c("Court", "Long"))
+  scale_color_manual(
+    values = c("purple", "orange"),
+    labels = c("Court", "Long")
+  )
 ```
 
 Mais attention, ça n'est pas du tout la même chose que de taper ceci :
@@ -1167,14 +1250,21 @@ Mais attention, ça n'est pas du tout la même chose que de taper ceci :
 ```{r}
 #| label: fig-billlength2
 #| fig-cap: "Masse en gramme des mâles et des femelles des 3 espèces de manchots. Les manchots Adélie ont majoritairement un bec plus court (en violet) que la moyenne toutes espèces confondues."
-penguins |> 
-  filter(!is.na(sex)) |> 
-  ggplot(aes(x = species, y = body_mass_g, color = bill_length_mm >= mean(bill_length_mm, na.rm = TRUE))) +
+penguins |>
+  filter(!is.na(sex)) |>
+  ggplot(aes(
+    x = species,
+    y = body_mass_g,
+    color = bill_length_mm >= mean(bill_length_mm, na.rm = TRUE)
+  )) +
   geom_jitter(height = 0, width = 0.2) +
   facet_wrap(~sex, ncol = 2) +
   labs(x = "", y = "Masse corporelle (g)", color = "Taille du bec") +
   theme_bw() +
-  scale_color_manual(values = c("purple", "orange"), labels = c("Court", "Long"))
+  scale_color_manual(
+    values = c("purple", "orange"),
+    labels = c("Court", "Long")
+  )
 ```
 
 Dans ce code, deux choses ont changé 
@@ -1240,7 +1330,7 @@ popular_dest <- flights |>
 Pour répondre à la deuxième question, on commence là aussi par chercher des informations dans le tableau `flights` au sujet des retards à l'arrivée. Pour limiter la taille des tableaux que l'on va manipuler, on va se concentrer sur les vols ayant eu plus de 15 minutes de retard à l'arrivée :
 
 ```{r}
-late_flights <- flights |> 
+late_flights <- flights |>
   filter(arr_delay > 15)
 
 late_flights
@@ -1312,7 +1402,7 @@ Si l'on souhaite absolument conserver toutes les lignes du tableau de départ, i
 Pour notre deuxième question, on procède exactement de la même façon : on réalise une jointure de tableaux entre `late-flights` et `planes` :
 
 ```{r}
-inner_late <- late_flights |> 
+inner_late <- late_flights |>
   inner_join(planes, by = join_by(tailnum))
 
 inner_late
@@ -1323,9 +1413,9 @@ Ici, la variable qui nous permet d'associer les bonnes informations du tableau `
 Pour simplifier la suite des analyses, nous pouvons sélectionner les seules variables qui nous intéressent, et calculer l'âge des avions :
 
 ```{r}
-inner_late <- late_flights |> 
-  inner_join(planes, by = join_by(tailnum)) |> 
-  select(tailnum, arr_delay, year.y) |> 
+inner_late <- late_flights |>
+  inner_join(planes, by = join_by(tailnum)) |>
+  select(tailnum, arr_delay, year.y) |>
   mutate(age = 2013 - year.y)
 
 inner_late
@@ -1341,11 +1431,14 @@ Lors de la jointure, un suffixe est donc ajouté automatiquement aux deux variab
 Pour répondre à la question posée au départ, il ne reste plus qu'à visualiser les résultats sur un graphique par exemple :
 
 ```{r}
-inner_late |> 
+inner_late |>
   ggplot(aes(x = age, y = arr_delay)) +
   geom_point(alpha = 0.4) +
   geom_smooth() +
-  labs(x = "Âge des avions (en années)", y = "Retard à l'arrivée des vols (en minutes)") +
+  labs(
+    x = "Âge des avions (en années)",
+    y = "Retard à l'arrivée des vols (en minutes)"
+  ) +
   theme_bw()
 ```
 
@@ -1402,14 +1495,17 @@ On trouve évidemment les mêmes résultats qu'avec la fonction `anti_join()` é
 De la même façon, répondre à la deuxième question avec une jointure gauche est presque identique à ce que nous avons vu avec `inner_join()` :
 
 ```{r}
-late_flights |> 
-  inner_join(planes, by = join_by(tailnum)) |> 
-  select(tailnum, arr_delay, year.y) |> 
-  mutate(age = 2013 - year.y) |> 
+late_flights |>
+  inner_join(planes, by = join_by(tailnum)) |>
+  select(tailnum, arr_delay, year.y) |>
+  mutate(age = 2013 - year.y) |>
   ggplot(aes(x = age, y = arr_delay)) +
   geom_point(alpha = 0.4) +
   geom_smooth() +
-  labs(x = "Âge des avions (en années)", y = "Retard à l'arrivée des vols (en minutes)") +
+  labs(
+    x = "Âge des avions (en années)",
+    y = "Retard à l'arrivée des vols (en minutes)"
+  ) +
   theme_bw()
 ```
 
@@ -1475,16 +1571,13 @@ Le fonctionnement de `bind_cols()` est le même :
 ```{r}
 #| tidy: false
 
-a <- tibble(x = 1:3,
-            y = c(2, 4, 6),
-            z = c(TRUE, FALSE, FALSE))
+a <- tibble(x = 1:3, y = c(2, 4, 6), z = c(TRUE, FALSE, FALSE))
 
-b <- tibble(r = 10:8,
-            s = rnorm(3))
+b <- tibble(r = 10:8, s = rnorm(3))
 
 a
 b
-bind_cols(a,b)
+bind_cols(a, b)
 ```
 
 Ici, puisque `a` et `b` ont le même nombre de lignes, il est possible de les accoler. Cela n'a de sens que si les lignes des 2 tableaux correspondent aux mêmes observations.

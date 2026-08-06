@@ -139,13 +139,17 @@ On constate ici que pour les 2 traitements, les valeurs des différents indices 
 
 Pour la fonction `skim()` le plus simple est là aussi d'utiliser le tableau large :
 
-```{r,  render = knitr::normal_print, size = 'small'}
+```{r}
+#| render: !expr knitr::normal_print
+#| size: 'small'
 skim(Testo_large)
 ```
 
 On arrive toutefois aux mêmes résultats avec le tableau long, à condition de grouper les données par traitement (variable `Traitement`) avec `group_by()` :
 
-```{r, render = knitr::normal_print, size = 'small'}
+```{r}
+#| render: !expr knitr::normal_print
+#| size: 'small'
 Testo_long |>
   group_by(Moment) |>
   skim(DO)
@@ -170,7 +174,7 @@ Tous les graphiques présentés dans la @sec-oneeach (précisément consacrée �
 
 ### Avec un stripchart
 
-```{r, fig.asp = 1.5, out.width = '25%', fig.width = 2}
+```{r}
 #| fig-asp: 1.5
 #| fig-width: 3
 #| out-width: '50%'
@@ -460,4 +464,3 @@ Au final, à vous de choisir si vous préférer utiliser les fonction classiques
 Les autruches vivent dans des environnements chauds et elles sont donc fréquemment exposées au soleil durant de longues périodes. Dans des environnements similaires, les mammifères ont des mécanismes physiologiques leur permettant de réduire la température de leur cerveau par rapport à celle de leur corps. Une équipe de chercheurs [@Fuller2003] a testé si les autruches pouvaient faire de même. La température du corps et du cerveau de 37 autruches a été enregistrée par une journée chaude typique. Les résultats, exprimés en degrés Celsius, figurent dans [le fichier `Autruches.csv`](data/Autruches.csv).
 
 Importez ces données et faites-en l'analyse pour savoir s'il existe une différence de température moyenne entre le corps et le cerveau des autruches. Vos observations chez les autruches sont-elles conformes à ce qui est observé chez les mammifères dans un environnement similaire ? Comme toujours, vous commencerez par faire une analyse descriptive des données, sous forme numérique et graphique, avant de vous lancer dans les tests d'hypothèses.
-

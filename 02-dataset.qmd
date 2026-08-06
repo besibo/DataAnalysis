@@ -109,7 +109,8 @@ Cela nous permet de récupérer les données sous la forme d'un vecteur ou, comm
 
 Si, par exemple, vous souhaitez extraire les données relatives à la clarté des diamants (colonne `clarity`) du tableau `diamonds`, vous pouvez taper ceci :
 
-```{r eval=FALSE}
+```{r}
+#| eval: false
 library(ggplot2)
 diamonds$clarity
 ```
@@ -121,7 +122,8 @@ Le résultat est pour le moins indigeste ! Lorsqu'un tableau contient de nombreu
 
 Pour utiliser la fonction `skim()`, vous devez au préalable installer le package `skimr` :
 
-```{r eval=FALSE}
+```{r}
+#| eval: false
 install.packages("skimr")
 ```
 
@@ -130,7 +132,8 @@ Ce package est un peu "expérimental" et il se peut que l'installation pose prob
 1. Quittez `RStudio` (sans oublier de sauvegarder votre travail au préalable)
 2. Relancez `RStudio` et dans la console, tapez ceci :
 
-```{r eval=FALSE}
+```{r}
+#| eval: false
 install.packages("rlang")
 ```
 
@@ -156,7 +159,9 @@ Une fonctionnalité particulièrement utile de `R` est son système d'aide. On p
 
 Par exemple, examinez l'aide du jeu de données `penguins` :
 
-```{r eval=FALSE, tidy=FALSE}
+```{r}
+#| eval: false
+#| tidy: false
 ?penguins
 ```
 

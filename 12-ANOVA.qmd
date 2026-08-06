@@ -58,7 +58,9 @@ Le décalage de phase du cycle de production de mélatonine était mesuré 48h p
 
 Les données brutes de cette étude sont fournies dans le fichier [`Light.csv`](data/Light.csv). Importez ces données dans `RStudio` et examinez les données brutes grâce à la fonction `View()`.
 
-```{r, echo = -1, message = FALSE}
+```{r}
+#| echo: !expr -1
+#| message: false
 Light <- read_csv("data/Light.csv")
 Light
 ```
@@ -113,7 +115,9 @@ Light |>
 
 Nous avons ici la confirmation que le design expérimental n'est pas équilibré, puisque le groupe `control` compte un individu de plus. Nous pouvons ensuite utiliser la fonction `skim` du package `skimr` pour obtenir un résumé des données :
 
-```{r, render = knitr::normal_print, size = 'small'}
+```{r}
+#| render: !expr knitr::normal_print
+#| size: 'small'
 Light |>
   group_by(treatment) |>
   skim()
@@ -222,7 +226,8 @@ res
 
 L'affichage des résultats bruts ne nous apprend que peu de choses. En revanche, la fonction `summary()` donne la réponse du test :
 
-```{r, message = FALSE}
+```{r}
+#| message: false
 summary(res)
 ```
 
@@ -352,7 +357,8 @@ Toutes les conditions d'application de l'ANOVA sont donc vérifiées. Nous avion
 
 Dernière chose, il est possible de produire les 3 graphiques ci-dessus (et même un quatrième que nous ne décrirons pas ici), en une seule commande :
 
-```{r eval=FALSE}
+```{r}
+#| eval: false
 plot(res)
 ```
 
@@ -604,4 +610,3 @@ L'efficacité de 6 insecticides nommés A, B, C, D, E et F a été testée sur 6
 ### La longueur des nageoires des manchots femelles
 
 Avec le jeu de données `penguins` du package `palmerpenguins`, comparez la longueur des nageoires des femelles des 3 espèces de manchots. Les femelles des 3 espèces ont-elles toutes des nageoires de longueur différentes, et quelle est la magnitude de ces éventuelles différences ?
-

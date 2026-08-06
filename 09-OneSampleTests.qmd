@@ -66,7 +66,8 @@ Temperature
 
 La première chose à faire quand on travaille avec des données inconnues, c'est d'examiner les données brutes. Ici, les données sont importées au format `tibble`, donc seules les premières lignes sont visibles. Pour visualiser l'ensemble du tableau, utilisez la fonction `View()` (avec un `V` majuscule) ou, si vous avez mis en mémoire le `tidyverse`, la fonction `view()` (sans majuscule) :
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
 View(Temperature)
 ```
 
@@ -131,7 +132,9 @@ On constate ici que l'intervalle interquartile a une largeur de 0.56ºC. Cela si
 
 Enfin, pour obtenir des informations complémentaires, on peut utiliser la fonction `skim()` du package `skimr` :
 
-```{r,  render = knitr::normal_print, size = 'small'}
+```{r}
+#| render: !expr knitr::normal_print
+#| size: 'small'
 skim(Temp_clean)
 ```
 

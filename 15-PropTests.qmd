@@ -171,7 +171,9 @@ squid_3 |>
 
 On peut également demander un résumé rapide du tableau :
 
-```{r, render = knitr::normal_print, size = 'small'}
+```{r}
+#| render: !expr knitr::normal_print
+#| size: 'small'
 skim(squid_3)
 ```
 

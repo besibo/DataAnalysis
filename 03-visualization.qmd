@@ -781,7 +781,8 @@ Ordonner les catégories par ordre décroissant est souvent indispensable afin d
 
 Si nous souhaitons connaître le nombre précis d'individus de chaque espèce, il nous faut faire appel à plusieurs fonctions du package `dplyr` que nous détaillerons dans le chapitre @sec-wrangling. Ci-dessous, nous créons un nouveau tableau `species_table` contenant le nombre d'individus de chaque espèce et les espèces sont ordonnées par abondance décroissante :
 
-```{r tidy = FALSE}
+```{r}
+#| tidy: false
 species_table <- penguins |> # On prend le tableau penguins, puis...
   count(species) |> # On compte les effectifs de chaque espèce, puis...
   arrange(desc(n)) # On trie par effectif décroissants ...
@@ -1884,7 +1885,10 @@ Je vous laisse explorer l'aide de cette fonction ainsi que celle de `scale_fill_
 
 Lorsqu'une variable catégorielle est associée à la couleur, il est évidemment possible aussi d'effectuer les choix de palettes. Voyons en exemple en associant la couleur de remplissage des points à l'espèce plutôt qu'à la masse :
 
-```{r fig-gill-sans, dev='ragg_png', fig.ext='png'}
+```{r}
+#| label: fig-gill-sans
+#| dev: 'ragg_png'
+#| fig-ext: 'png'
 ggplot(
   penguins,
   aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
@@ -1903,7 +1907,10 @@ ggplot(
 
 La version discrète de `viridis` peut maintenant être appliquée. Les mêmes options que pour la version continue sont disponibles :
 
-```{r fig-gill-sans-size, dev='ragg_png', fig.ext='png'}
+```{r}
+#| label: fig-gill-sans-size
+#| dev: 'ragg_png'
+#| fig-ext: 'png'
 ggplot(
   penguins,
   aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
@@ -2176,7 +2183,8 @@ Enfin, je vous encourage vivement à faire preuve de curiosité et à explorer d
 
 1. Avec le jeu de données `diamonds`, du packages `ggplot2`, tapez les commandes suivantes pour créer un nouveau tableau `diams` contenant moins de lignes (3000 au lieu de près de 54000) :
 
-```{r tidy = FALSE}
+```{r}
+#| tidy: false
 library(dplyr)
 set.seed(4532) # Afin que tout le monde récupère les mêmes lignes
 diams <- diamonds |>
@@ -2204,7 +2212,8 @@ ggplot(data = diams, mapping = aes(x = carat, y = price)) +
 
 6. Créer un nouveau jeu de données en exécutant ces commandes :
 
-```{r tidy=FALSE}
+```{r}
+#| tidy: false
 set.seed(1234)
 small_flights <- flights |>
   filter(!is.na(arr_delay), distance < 3000) |>

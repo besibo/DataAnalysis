@@ -87,7 +87,9 @@ p3
 
 Plus la dispersion autour d'une droite parfaite sera grande, plus la corrélation sera faible. C'est la raison pour laquelle lorsque l'on parle de "corrélation", on sous-entend généralement **corrélation linéaire**. Ainsi, 2 variables peuvent avoir une relation très forte, mais un coefficient de corrélation nul, si leur relation n'est pas linéaire :
 
-```{r, echo = FALSE, warning = FALSE}
+```{r}
+#| echo: false
+#| warning: false
 set.seed(12345)
 ex3 <- tibble(x = 1:100, y = -(x - 50)^2 + 2500)
 
@@ -98,7 +100,9 @@ ggplot(ex3, aes(x, y)) +
 
 L'exploration graphique de vos données devrait donc toujours être une priorité. Calculer un coefficient de corrélation nul ou très faible ne signifie par pour autant une absence de relation entre les 2 variables numériques étudiées. Cela peut signifier une relation non linéaire. La solution la plus simple pour distinguer une relation telle que celle du graphique précédent, et une absence de relation telle que celle présentée dans le graphique ci-dessous, est l'examen visuel des données :
 
-```{r, echo = FALSE, warning = FALSE}
+```{r}
+#| echo: false
+#| warning: false
 set.seed(12346)
 ex4 <- tibble(x = rnorm(100, 50, 10), y = rnorm(100, 50, 10))
 
@@ -139,7 +143,10 @@ Les adultes qui infligent des mauvais traitements à leurs enfants ont souvent �
 
 Les données récoltées par les chercheurs figurent dans le fichier [`birds.csv`](data/birds.csv). Importez ces données dans `RStudio` dans un objet noté `birds`.
 
-```{r echo = -1, message = FALSE, warning = FALSE}
+```{r}
+#| echo: !expr -1
+#| message: false
+#| warning: false
 birds <- read_csv("data/birds.csv")
 birds
 ```
@@ -166,7 +173,8 @@ Calculer une corrélation n'a de sens que si les données étudiées sont appari
 
 Comme toujours, la première chose à faire est d'examiner quelques statistiques descriptives pour se faire une idée de la forme des données et pour repérer les éventuelles données manquantes ou aberrantes.
 
-```{r, render = knitr::normal_print}
+```{r}
+#| render: !expr knitr::normal_print
 skim(birds)
 ```
 
@@ -268,7 +276,7 @@ Pour résumer, l'examen du nuage de points permet de vérifier les 2 premières 
 - Des ouliers sont présents (quelques points fortement éloignés du reste des observations).
 - Une relation non linéaire existe entre les deux variables.
 
-```{r, echo = FALSE, warning = FALSE}
+```{r}
 #| echo: false
 #| warning: false
 
@@ -456,7 +464,9 @@ On souhaite déterminer si le coefficient de consanguinité est associé à la p
 - Faire le test approprié en posant les hypothèses nulles et alternatives judicieuses.
 - Répondre à la question posée en intégrant tous les éléments utiles.
 
-```{r include=FALSE, render = knitr::normal_print}
+```{r}
+#| include: false
+#| render: !expr knitr::normal_print
 loups <- read_csv("data/loups.csv")
 loups |>
   ggplot(aes(x = inbreedCoef, y = nPups)) +
@@ -486,7 +496,9 @@ Y a-t-il un lien entre le caractère impressionnant ("`impressiveness`") d'un so
 
 Les données de @wiseman1996 sont disponibles dans le fichier [`ropetrick.csv`](data/ropetrick.csv). Importez ces données et analysez-les en respectant les consignes de l'exercice précédent.
 
-```{r include=FALSE, render = knitr::normal_print}
+```{r}
+#| include: false
+#| render: !expr knitr::normal_print
 rope <- read_csv("data/ropetrick.csv")
 rope |>
   ggplot(aes(x = years, y = impressiveness)) +
@@ -503,4 +515,3 @@ rope |>
 
 cor.test(rope$impressiveness, rope$years, method = "spearman")
 ```
-

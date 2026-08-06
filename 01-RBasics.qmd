@@ -130,7 +130,9 @@ Pour exécuter les commandes du script dans la console, il suffit de placer le c
 
 Voici un exemple de script que je ne vous demande pas de reproduire. Lisez simplement attentivement son contenu :
 
-```{r eval=FALSE, tidy = FALSE}
+```{r}
+#| eval: false
+#| tidy: false
 # Penser à installer le package ggplot2 si besoin
 # install.packages("ggplot2")
 
@@ -167,7 +169,10 @@ Même si vous ne comprenez pas encore les commandes qui figurent dans ce script 
 
 Si j'exécute ce script dans la console de `RStudio` (en sélectionnant toutes les lignes et en pressant les touches `ctrl + enter` ou `command + enter` sous macOS), voilà ce qui est produit :
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
 # Penser à installer le package ggplot2 si besoin
 # install.packages("ggplot2")
 
@@ -225,7 +230,8 @@ cliquez sur "Browse...", naviguez jusqu'au dossier que vous avez créé plus tô
 
 Pour vérifier que tout s'est bien passé jusqu'ici, tapez la commande suivante dans votre script puis envoyez-la dans la console en pressant les touches `ctrl + entrée` (ou `command + entrée` sous MacOS).
 
-```{r, eval=FALSE}
+```{r}
+#| eval: false
 getwd()
 ```
 
@@ -889,7 +895,9 @@ Cette liste va très rapidement s'allonger au fil des séances. Je vous conseill
 
 Certaines fonctions ont besoin d'arguments (par exemple, la fonction `factor()`), d'autres peuvent s'en passer (par exemple, la fonction `getwd()`). Pour apprendre comment utiliser une fonction particulière, pour découvrir quels sont ses arguments possibles, quel est leur rôle et leur intérêt, la meilleure solution est de consulter l'aide de cette fonction. Il suffit pour cela de taper un `?` suivi du nom de la fonction :
 
-```{r eval=FALSE, tidy=FALSE}
+```{r}
+#| eval: false
+#| tidy: false
 ?factor()
 ```
 
@@ -898,12 +906,15 @@ Toutes les fonctions et jeux de données disponibles dans `R` disposent d'un fic
 log(100)
 ```
 Que se passe-t'il ? Pour le savoir, il faut consulter l'aide de la fonction log :
-```{r eval=FALSE, tidy=FALSE}
+```{r}
+#| eval: false
+#| tidy: false
 ?log()
 ```
 
 Ce fichier d'aide nous apprend que par défaut, la syntaxe de la fonction `log()` est la suivante :
-```{r eval=FALSE}
+```{r}
+#| eval: false
 log(x, base = exp(1))
 ```
 Par défaut, la base du logarithme est fixée à `exp(1)`. Nous avons donc calculé un logarithme népérien (en base *e*). Cette fonction prend donc 2 arguments :
@@ -971,14 +982,16 @@ Un package doit être installé une fois seulement sur un ordinateur, sauf si un
 
 Après avoir installé un package, vous pouvez le charger en utilisant la fonction `library()`. Par exemple, pour charger `ggplot2` et `dplyr` tapez ceci dans la console :
 
-```{r, eval=FALSE}
+```{r}
+#| eval: false
 library(ggplot2)
 library(dplyr)
 ```
 
 Puisque ces packages font partie du `tidyverse`, on aurait pu les charger tous les deux (et d'autres) en une seule étape en tapant :
 
-```{r, eval=FALSE}
+```{r}
+#| eval: false
 library(tidyverse)
 ```
 

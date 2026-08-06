@@ -72,7 +72,8 @@ Lizard_raw <- read_csv("data/HornedLizards.csv")
 Lizard_raw
 ```
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
 View(Lizard_raw)
 ```
 
@@ -106,7 +107,9 @@ Lorsque vous disposez de données appartenant à des groupes indépendants, il f
 
 Comme dans le @sec-moy2 sur les données appariées, les statistiques descriptives doivent ici être réalisées pour chaque groupe d'individus, et non tous groupes confondus. Ici, le plus simple est d'utiliser la fonction `skim()` sur les données groupées par niveau du facteur `Survival` (avec la fonction `group_by()`) :
 
-```{r, render = knitr::normal_print, size = 'small'}
+```{r}
+#| render: !expr knitr::normal_print
+#| size: 'small'
 Lizard |>
   group_by(Survival) |>
   skim()
@@ -212,7 +215,7 @@ En général, il est donc inutile de faire à la fois les histogrammes et les di
 
 ### Avec des boites à moustaches
 
-```{r, fig.asp = 1.5, out.width = '25%', fig.width = 2}
+```{r}
 #| fig-asp: 1.5
 #| fig-width: 3
 #| out-width: '50%'
@@ -233,7 +236,7 @@ Nous visualisons ici encore plus clairement que sur les histogrammes le fait que
 
 Enfin, il est tout à fait possible de représenter sur le même graphique les boîtes à moustaches et les données brutes sous forme de stripchart. On a ainsi à la fois (i) une visualisation simplifiée de la position et de la dispersion des données avec les boîtes à moustache, et (ii) accès à l'ensemble des données brutes, ce qui permet parfois de voir des structures invisibles sur les boîtes à moustaches (regroupement de points par exemples). Afin de ne pas dupliquer les valeurs les plus extrêmes du jeu de données, nous indiquerons à `geom_boxplot()` de ne pas afficher les outliers sur le graphique : tous les points seront en effet déjà affichés par `geom_jitter()` :
 
-```{r, fig.asp = 1.5, out.width = '25%', fig.width = 2}
+```{r}
 #| fig-asp: 1.5
 #| fig-width: 3
 #| out-width: '50%'
@@ -615,7 +618,8 @@ Lizard$Survival
 
 Par défaut, dans `RStudio`, les niveaux d'un facteur sont classés par ordre alphabétique sauf si on spécifie manuellement un ordre différent. Ici, le niveau "killed" est donc le premier niveau du facteur, et "living" le second. Attention, on parle bien ici des niveaux, ou modalités, et non des données elles-mêmes. Ici, le premier lézard mesuré appartient à la catégorie `living`. Ça n'est pas ça qui est important : c'est bien l'ordre des niveaux qui compte, et on peut le vour tout en bas, après `Levels: ...`. Lorsque l'on réalise un test de Student avec ces données (ou un test de Wilcoxon d'ailleurs), la différence de moyenne qui est examinée par le test est donc "moyenne des `killed` - moyenne des `living`". Lorsque nous avons tapé ceci :
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
 t.test(
   Horn_len ~ Survival,
   data = Lizard,
@@ -631,7 +635,8 @@ nous avons donc en réalité posé les hypothèses suivantes :
 
 Ce test est donc erroné, ce qui explique qu'il nous renvoie un résultat faux et une *p*-value de 1. Ici, puisque l'ordre des catégories est "killed" d'abord et "living" ensuite, la seule façon correcte de faire un test unilatéral qui a du sens est donc celle que nous avons réalisée en premier :
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
 t.test(
   Horn_len ~ Survival,
   data = Lizard,
