@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>16&nbsp; Qualité de l’ajustement – Analyse de Données</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./15-PropTests.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-0fafe05eccea9eb6b9ed9845e016efd8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-7e738d9e8173abc4a682ec407aac757a.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-31c531682f4fc4582c5e8f83111e5171.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-25217d6097b7516f83355236e29dd02b.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+window.MathJax = {
+  output: {
+    font: "mathjax-pagella"
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml-nofont.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16-GoodnessFit.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Qualité de l’ajustement</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title"><span id="sec-goodness-fit" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Qualité de l’ajustement</span></span></h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analyse de Données</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/besibo/DataAnalysis" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+    <a href="./Analyse-de-Données.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-RBasics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><code>R</code> et <code>RStudio</code> : les bases</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Dataset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Explorez votre premier jeu de données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-Visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualiser des données avec <code>ggplot2</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-TidyData.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">(Ar)ranger des données avec <code>tidyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-DataWrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Manipuler des tableaux avec <code>dplyr</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-EDA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploration statistique des données</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Incertitude.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dispersion et incertitude</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ErrorBars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Visualiser l’incertitude et la dispersion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-OneSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Comparaison de la moyenne d’une population à une valeur théorique</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-TwoSamplePairedTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons appariés</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-TwoSampleTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : deux échantillons indépendants</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-ANOVA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Comparaison de moyennes : plus de 2 groupes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-Correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Corrélation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Régression linéaire</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-PropTests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Comparaison de proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-GoodnessFit.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Qualité de l’ajustement</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#sec-packages8" id="toc-sec-packages8" class="nav-link active" data-scroll-target="#sec-packages8"><span class="header-section-number">16.1</span> Pré-requis</a></li>
+  <li><a href="#contexte" id="toc-contexte" class="nav-link" data-scroll-target="#contexte"><span class="header-section-number">16.2</span> Contexte</a></li>
+  <li><a href="#importation-et-mise-en-forme-des-données" id="toc-importation-et-mise-en-forme-des-données" class="nav-link" data-scroll-target="#importation-et-mise-en-forme-des-données"><span class="header-section-number">16.3</span> Importation et mise en forme des données</a></li>
+  <li><a href="#le-modèle-proportionnel" id="toc-le-modèle-proportionnel" class="nav-link" data-scroll-target="#le-modèle-proportionnel"><span class="header-section-number">16.4</span> Le modèle proportionnel</a></li>
+  <li><a href="#exploration-graphique" id="toc-exploration-graphique" class="nav-link" data-scroll-target="#exploration-graphique"><span class="header-section-number">16.5</span> Exploration graphique</a></li>
+  <li><a href="#le-test-du-chi-deux-de-qualité-de-lajustement" id="toc-le-test-du-chi-deux-de-qualité-de-lajustement" class="nav-link" data-scroll-target="#le-test-du-chi-deux-de-qualité-de-lajustement"><span class="header-section-number">16.6</span> Le test du chi-deux de qualité de l’ajustement</a></li>
+  <li><a href="#conditions-dapplication" id="toc-conditions-dapplication" class="nav-link" data-scroll-target="#conditions-dapplication"><span class="header-section-number">16.7</span> Conditions d’application</a></li>
+  <li><a href="#magnitude-de-leffet" id="toc-magnitude-de-leffet" class="nav-link" data-scroll-target="#magnitude-de-leffet"><span class="header-section-number">16.8</span> Magnitude de l’effet</a></li>
+  <li><a href="#le-cas-de-deux-catégories" id="toc-le-cas-de-deux-catégories" class="nav-link" data-scroll-target="#le-cas-de-deux-catégories"><span class="header-section-number">16.9</span> Le cas de deux catégories</a></li>
+  <li><a href="#ajustement-à-une-loi-de-poisson" id="toc-ajustement-à-une-loi-de-poisson" class="nav-link" data-scroll-target="#ajustement-à-une-loi-de-poisson"><span class="header-section-number">16.10</span> Ajustement à une loi de Poisson</a></li>
+  <li><a href="#comment-choisir-et-interpréter-un-test-de-qualité-de-lajustement" id="toc-comment-choisir-et-interpréter-un-test-de-qualité-de-lajustement" class="nav-link" data-scroll-target="#comment-choisir-et-interpréter-un-test-de-qualité-de-lajustement"><span class="header-section-number">16.11</span> Comment choisir et interpréter un test de qualité de l’ajustement ?</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">16.12</span> Conclusion</a></li>
+  <li><a href="#exercices-dapplication" id="toc-exercices-dapplication" class="nav-link" data-scroll-target="#exercices-dapplication"><span class="header-section-number">16.13</span> Exercices d’application</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>WORK IN PROGRESS!!! DON’T TAKE ANYTHING IN HERE FOR GRANTED. THIS CHAPTER IS STILL UNDER CONSTRUCTION.</p>
+<section id="sec-packages8" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="sec-packages8"><span class="header-section-number">16.1</span> Pré-requis</h2>
+<p>Comme pour chaque nouveau chapitre, je vous conseille de travailler dans un nouveau script que vous placerez dans votre répertoire de travail, et dans une nouvelle session de travail (Menu <code>Session &gt; Restart R</code>). Inutile en revanche de créer un nouveau <code>Rproject</code> : vous pouvez tout à fait avoir plusieurs scripts dans le même répertoire de travail et pour un même <code>Rproject</code>. Comme toujours, consultez les chapitres précédents (en particulier <a href="01-RBasics.html#sec-script" class="quarto-xref">les sections&nbsp;<span>1.3.2</span></a> et <a href="01-RBasics.html#sec-rproj" class="quarto-xref"><span>1.3.3</span></a>) si vous ne savez plus comment faire.</p>
+<p>Si vous êtes dans une nouvelle session de travail (ou que vous avez quitté puis relancé <code>RStudio</code>), vous devrez penser à recharger en mémoire les packages utiles. Dans ce chapitre, vous aurez besoin d’utiliser :</p>
+<ul>
+<li>le <code>tidyverse</code> <span class="citation" data-cites="R-tidyverse">(<a href="references.html#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span>, qui comprend notamment <code>readr</code> <span class="citation" data-cites="R-readr">(<a href="references.html#ref-R-readr" role="doc-biblioref">Wickham, Hester, et Bryan 2026</a>)</span>, <code>dplyr</code> <span class="citation" data-cites="R-dplyr">(<a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al. 2026</a>)</span>, <code>tidyr</code> <span class="citation" data-cites="R-tidyr">(<a href="references.html#ref-R-tidyr" role="doc-biblioref">Wickham, Vaughan, et Girlich 2025</a>)</span> et <code>ggplot2</code> <span class="citation" data-cites="R-ggplot2">(<a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al. 2026</a>)</span> ;</li>
+<li><code>skimr</code> <span class="citation" data-cites="R-skimr">(<a href="references.html#ref-R-skimr" role="doc-biblioref">Waring et al. 2026</a>)</span>, qui permet de calculer des résumés de données très informatifs ;</li>
+<li><code>janitor</code> <span class="citation" data-cites="R-janitor">(<a href="references.html#ref-R-janitor" role="doc-biblioref">Firke 2024</a>)</span>, pour nettoyer facilement les noms de variables d’un tableau.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Vous aurez également besoin des jeux de données suivants que vous pouvez dès maintenant télécharger dans votre répertoire de travail :</p>
+<ul>
+<li><a href="data/squid.txt"><code>squid.txt</code></a></li>
+<li><a href="data/loups.csv"><code>loups.csv</code></a></li>
+</ul>
+<p>Enfin, je spécifie ici une fois pour toutes le thème que j’utiliserai pour tous les graphiques de ce chapitre. Libre à vous de choisir un thème différent ou de vous contenter du thème proposé par défaut :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="contexte" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="contexte"><span class="header-section-number">16.2</span> Contexte</h2>
+<p>Dans le chapitre précédent, nous avons comparé des <strong>proportions</strong>. Dans le cas le plus simple, la variable étudiée ne possède que deux modalités : succès / échec, femelle / mâle, vivant / mort, présent / absent, etc. Le test binomial permet alors de comparer une proportion observée à une valeur théorique, et <code>prop.test()</code> permet de comparer deux proportions.</p>
+<p>Mais de nombreuses questions ne se résument pas à deux catégories. On peut vouloir savoir si :</p>
+<ul>
+<li>les observations sont réparties de façon équilibrée entre plusieurs catégories ;</li>
+<li>une distribution observée correspond à une distribution théorique connue ;</li>
+<li>des comptages suivent une loi binomiale ou une loi de Poisson ;</li>
+<li>les écarts entre effectifs observés et effectifs attendus sont compatibles avec les fluctuations d’échantillonnage.</li>
+</ul>
+<p>Dans ce chapitre, nous allons donc passer d’une proportion isolée à une <strong>distribution de fréquences entière</strong>.</p>
+<p>L’idée générale reste pourtant très proche de celle du chapitre précédent. Il faut toujours comparer ce que l’on observe à ce que l’on aurait attendu si l’hypothèse nulle était vraie. La différence, c’est que cette comparaison ne porte plus sur une seule proportion, mais sur plusieurs effectifs simultanément.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+À retenir !
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un test de qualité de l’ajustement compare une distribution observée d’effectifs à une distribution attendue sous un modèle théorique.</p>
+<p>Le raisonnement est toujours le même :</p>
+<ol type="1">
+<li>définir clairement le modèle attendu sous H<span class="math inline">\(_0\)</span> ;</li>
+<li>calculer les effectifs observés ;</li>
+<li>calculer les effectifs attendus ;</li>
+<li>mesurer l’écart entre observé et attendu ;</li>
+<li>décider si cet écart est compatible avec les fluctuations d’échantillonnage.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="importation-et-mise-en-forme-des-données" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="importation-et-mise-en-forme-des-données"><span class="header-section-number">16.3</span> Importation et mise en forme des données</h2>
+<p>Nous allons commencer avec le jeu de données <a href="data/squid.txt"><code>squid.txt</code></a>, déjà utilisé au chapitre précédent. Pour rappel, ce fichier contient des données sur des calmars échantillonnés dans plusieurs sites. Les variables disponibles sont :</p>
+<ul>
+<li><code>Sample</code> : identifiant de l’observation ;</li>
+<li><code>Year</code> et <code>Month</code> : date de collecte ;</li>
+<li><code>Location</code> : site d’échantillonnage ;</li>
+<li><code>Sex</code> : sexe de l’individu ;</li>
+<li><code>GSI</code> : gonado-somatic index.</li>
+</ul>
+<p>Nous allons importer les données, nettoyer les noms de variables, puis transformer certaines colonnes en facteurs :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>squid <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"data/squid.txt"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="fu">factor</span>(location),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> <span class="fu">factor</span>(month, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">factor</span>(sex, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>)),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">female =</span> sex <span class="sc">==</span> <span class="st">"female"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>squid</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,644 × 7
+   sample  year month location sex      gsi female
+    &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;  &lt;dbl&gt; &lt;lgl&gt; 
+ 1      1     1 1     1        female 10.4  TRUE  
+ 2      2     1 1     3        female  9.83 TRUE  
+ 3      3     1 1     1        female  9.74 TRUE  
+ 4      4     1 1     1        female  9.31 TRUE  
+ 5      5     1 1     1        female  8.99 TRUE  
+ 6      6     1 1     1        female  8.77 TRUE  
+ 7      7     1 1     1        female  8.26 TRUE  
+ 8      8     1 1     3        female  7.40 TRUE  
+ 9      9     1 1     3        female  7.22 TRUE  
+10     10     1 2     1        female  6.84 TRUE  
+# ℹ 2,634 more rows</code></pre>
+</div>
+</div>
+<p>Comme dans le chapitre précédent, nous disposons d’un tableau au format long :</p>
+<ul>
+<li>chaque ligne correspond à un individu ;</li>
+<li>les variables <code>month</code>, <code>location</code> et <code>sex</code> sont qualitatives ;</li>
+<li>la variable <code>female</code> code le sexe sous forme binaire.</li>
+</ul>
+<p>Ce format est important. Même quand le test statistique travaille finalement sur des effectifs agrégés, il est préférable de partir des données individuelles quand elles sont disponibles. Cela permet de contrôler la structure du tableau, les valeurs manquantes, les regroupements éventuels et le sens biologique des catégories.</p>
+</section>
+<section id="le-modèle-proportionnel" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="le-modèle-proportionnel"><span class="header-section-number">16.4</span> Le modèle proportionnel</h2>
+<p>Le modèle de probabilité le plus simple est le <strong>modèle proportionnel</strong>. Dans ce modèle, la fréquence attendue d’un événement est proportionnelle au nombre d’occasions qu’il avait de se produire.</p>
+<p>Par exemple, si les calmars étaient échantillonnés au hasard tout au long de l’année, et avec un effort d’échantillonnage identique chaque jour, on ne devrait pas attendre exactement le même nombre d’individus dans chaque mois. Les mois n’ont pas tous la même durée. Il serait donc plus logique d’attendre un nombre d’individus proportionnel au nombre de jours de chaque mois.</p>
+<p>Cette hypothèse est volontairement simple. Elle ne tient pas compte de la biologie de l’espèce, ni de la disponibilité réelle des calmars, ni de l’effort d’échantillonnage des observateurs. Elle nous servira ici de modèle nul.</p>
+<p>Les hypothèses testées sont :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : les effectifs mensuels sont proportionnels au nombre de jours de chaque mois.</li>
+<li>H<span class="math inline">\(_1\)</span> : les effectifs mensuels ne sont pas proportionnels au nombre de jours de chaque mois.</li>
+</ul>
+<p>Commençons par calculer les effectifs observés par mois :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>monthly_counts <span class="ot">&lt;-</span> squid <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>monthly_counts</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 2
+   month     n
+   &lt;fct&gt; &lt;int&gt;
+ 1 1       254
+ 2 2       210
+ 3 3       227
+ 4 4       322
+ 5 5       296
+ 6 6       227
+ 7 7       222
+ 8 8       178
+ 9 9       195
+10 10      181
+11 11      130
+12 12      202</code></pre>
+</div>
+</div>
+<p>Pour calculer les effectifs attendus, il faut d’abord préciser les proportions attendues sous H<span class="math inline">\(_0\)</span>. Ici, elles sont simplement proportionnelles au nombre de jours de chaque mois :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>month_days <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">month =</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">days =</span> <span class="fu">c</span>(<span class="dv">31</span>, <span class="dv">28</span>, <span class="dv">31</span>, <span class="dv">30</span>, <span class="dv">31</span>, <span class="dv">30</span>, <span class="dv">31</span>, <span class="dv">31</span>, <span class="dv">30</span>, <span class="dv">31</span>, <span class="dv">30</span>, <span class="dv">31</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">expected_prop =</span> days <span class="sc">/</span> <span class="fu">sum</span>(days))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>month_days</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 3
+   month  days expected_prop
+   &lt;fct&gt; &lt;dbl&gt;         &lt;dbl&gt;
+ 1 1        31        0.0849
+ 2 2        28        0.0767
+ 3 3        31        0.0849
+ 4 4        30        0.0822
+ 5 5        31        0.0849
+ 6 6        30        0.0822
+ 7 7        31        0.0849
+ 8 8        31        0.0849
+ 9 9        30        0.0822
+10 10       31        0.0849
+11 11       30        0.0822
+12 12       31        0.0849</code></pre>
+</div>
+</div>
+<p>Nous pouvons maintenant réunir les effectifs observés et attendus dans un même tableau :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>monthly_fit <span class="ot">&lt;-</span> monthly_counts <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(month_days, <span class="at">by =</span> <span class="st">"month"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">expected =</span> <span class="fu">sum</span>(n) <span class="sc">*</span> expected_prop,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">difference =</span> n <span class="sc">-</span> expected,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">contribution =</span> (n <span class="sc">-</span> expected)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> expected</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>monthly_fit</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 7
+   month     n  days expected_prop expected difference contribution
+   &lt;fct&gt; &lt;int&gt; &lt;dbl&gt;         &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
+ 1 1       254    31        0.0849     225.      29.4        3.86  
+ 2 2       210    28        0.0767     203.       7.17       0.254 
+ 3 3       227    31        0.0849     225.       2.44       0.0265
+ 4 4       322    30        0.0822     217.     105.        50.4   
+ 5 5       296    31        0.0849     225.      71.4       22.7   
+ 6 6       227    30        0.0822     217.       9.68       0.432 
+ 7 7       222    31        0.0849     225.      -2.56       0.0292
+ 8 8       178    31        0.0849     225.     -46.6        9.65  
+ 9 9       195    30        0.0822     217.     -22.3        2.29  
+10 10      181    31        0.0849     225.     -43.6        8.45  
+11 11      130    30        0.0822     217.     -87.3       35.1   
+12 12      202    31        0.0849     225.     -22.6        2.27  </code></pre>
+</div>
+</div>
+<p>La colonne <code>expected</code> indique le nombre de calmars que l’on aurait attendu dans chaque mois si l’hypothèse nulle était vraie. La colonne <code>difference</code> indique l’écart entre l’effectif observé et l’effectif attendu. Enfin, la colonne <code>contribution</code> indique la contribution de chaque mois à la statistique du <span class="math inline">\(\chi^2\)</span>.</p>
+</section>
+<section id="exploration-graphique" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="exploration-graphique"><span class="header-section-number">16.5</span> Exploration graphique</h2>
+<p>Avant de réaliser le test, il est toujours utile de représenter les effectifs observés et attendus. Cela permet d’identifier les catégories qui contribuent le plus à l’écart global.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>monthly_fit <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(month, <span class="at">observed =</span> n, expected) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(observed, expected),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"type"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"count"</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> count, <span class="at">fill =</span> type)) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Mois"</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Effectif"</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">""</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Effectifs observés et attendus par mois"</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="16-GoodnessFit_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On voit que certains mois s’écartent fortement du modèle proportionnel. Les mois d’avril et mai présentent davantage de calmars que prévu, alors que novembre en présente beaucoup moins. Le graphique ne constitue pas un test, mais il permet déjà de comprendre d’où viendra l’essentiel de la statistique de test.</p>
+<p>On peut aussi représenter les contributions au <span class="math inline">\(\chi^2\)</span> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>monthly_fit <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> contribution)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"firebrick2"</span>, <span class="at">alpha =</span> <span class="fl">0.65</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Mois"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Contribution au chi-deux"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Contribution de chaque mois à l'écart total"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="16-GoodnessFit_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ce graphique rappelle qu’un test du <span class="math inline">\(\chi^2\)</span> de qualité de l’ajustement ne se contente pas de dire si l’écart global est significatif. Il permet aussi d’identifier les catégories qui expliquent le mieux cet écart.</p>
+</section>
+<section id="le-test-du-chi-deux-de-qualité-de-lajustement" class="level2" data-number="16.6">
+<h2 data-number="16.6" class="anchored" data-anchor-id="le-test-du-chi-deux-de-qualité-de-lajustement"><span class="header-section-number">16.6</span> Le test du chi-deux de qualité de l’ajustement</h2>
+<p>Le test du <span class="math inline">\(\chi^2\)</span> de qualité de l’ajustement compare des effectifs observés à des effectifs attendus sous l’hypothèse nulle.</p>
+<p>La statistique de test est :</p>
+<p><span class="math display">\[\chi^2 = \sum_i \frac{(\textrm{Observé}_i - \textrm{Attendu}_i)^2}{\textrm{Attendu}_i}\]</span></p>
+<p>Dans cette formule, <span class="math inline">\(i\)</span> désigne les différentes catégories. Ici, les catégories sont les douze mois de l’année.</p>
+<p>Plus la valeur de <span class="math inline">\(\chi^2\)</span> est grande, plus l’écart entre les effectifs observés et attendus est important. La p-value indique ensuite si un écart au moins aussi grand serait plausible si l’hypothèse nulle était vraie.</p>
+<p>Dans <code>R</code>, le test se réalise avec la fonction <code>chisq.test()</code>. Comme le package <code>janitor</code> possède également une fonction nommée <code>chisq.test()</code>, nous allons appeler explicitement la fonction du package <code>stats</code>, qui est chargé automatiquement avec <code>R</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>test_month <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">chisq.test</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> monthly_fit<span class="sc">$</span>n,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">p =</span> monthly_fit<span class="sc">$</span>expected_prop</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>test_month</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test for given probabilities
+
+data:  monthly_fit$n
+X-squared = 135.5, df = 11, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Ici, la p-value est très petite. On rejette donc l’hypothèse nulle : la répartition mensuelle des calmars échantillonnés n’est pas compatible avec une répartition simplement proportionnelle au nombre de jours des mois.</p>
+<p>Cela ne signifie pas que le mois a nécessairement un effet biologique direct sur la présence des calmars. C’est une conclusion importante. Le test nous dit seulement que le modèle nul proposé ne décrit pas correctement les effectifs observés. L’écart peut venir de la biologie de l’espèce, de la saison de reproduction, de l’effort d’échantillonnage, de la disponibilité des individus, ou de plusieurs de ces facteurs à la fois.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Attention
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un test de qualité de l’ajustement ne teste jamais “si les données sont intéressantes”. Il teste toujours l’ajustement à un modèle précis.</p>
+<p>Si le modèle nul est mal choisi, la p-value peut être très petite sans que l’interprétation biologique soit claire.</p>
+</div>
+</div>
+</section>
+<section id="conditions-dapplication" class="level2" data-number="16.7">
+<h2 data-number="16.7" class="anchored" data-anchor-id="conditions-dapplication"><span class="header-section-number">16.7</span> Conditions d’application</h2>
+<p>Le test du <span class="math inline">\(\chi^2\)</span> repose sur une approximation. Pour que cette approximation soit correcte, les effectifs attendus ne doivent pas être trop faibles. Les règles usuelles sont les suivantes :</p>
+<ul>
+<li>aucun effectif attendu ne devrait être inférieur à 1 ;</li>
+<li>pas plus de 20 % des effectifs attendus ne devraient être inférieurs à 5.</li>
+</ul>
+<p>Dans notre exemple, on peut examiner les effectifs attendus directement :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>monthly_fit <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(month, expected)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 2
+   month expected
+   &lt;fct&gt;    &lt;dbl&gt;
+ 1 1         225.
+ 2 2         203.
+ 3 3         225.
+ 4 4         217.
+ 5 5         225.
+ 6 6         217.
+ 7 7         225.
+ 8 8         225.
+ 9 9         217.
+10 10        225.
+11 11        217.
+12 12        225.</code></pre>
+</div>
+</div>
+<p>Ici, tous les effectifs attendus sont largement supérieurs à 5. Les conditions d’application du test sont donc satisfaites.</p>
+</section>
+<section id="magnitude-de-leffet" class="level2" data-number="16.8">
+<h2 data-number="16.8" class="anchored" data-anchor-id="magnitude-de-leffet"><span class="header-section-number">16.8</span> Magnitude de l’effet</h2>
+<p>Comme toujours, la p-value ne mesure pas la taille de l’effet. Elle indique si les données sont compatibles avec l’hypothèse nulle, pas si l’écart observé est biologiquement important.</p>
+<p>Pour évaluer la magnitude de l’écart, on peut regarder :</p>
+<ul>
+<li>les différences entre effectifs observés et attendus ;</li>
+<li>les contributions au <span class="math inline">\(\chi^2\)</span> ;</li>
+<li>une mesure globale comme le <span class="math inline">\(V\)</span> de Cramer.</li>
+</ul>
+<p>Dans le cas d’un test de qualité de l’ajustement, le <span class="math inline">\(V\)</span> de Cramer peut être calculé ainsi :</p>
+<p><span class="math display">\[V = \sqrt{\frac{\chi^2}{n(k-1)}}\]</span></p>
+<p>où <span class="math inline">\(n\)</span> est l’effectif total et <span class="math inline">\(k\)</span> le nombre de catégories.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cramer_v_month <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unname</span>(test_month<span class="sc">$</span>statistic) <span class="sc">/</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">sum</span>(monthly_fit<span class="sc">$</span>n) <span class="sc">*</span> (<span class="fu">nrow</span>(monthly_fit) <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>cramer_v_month</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.06825642</code></pre>
+</div>
+</div>
+<p>Ici, la valeur de <span class="math inline">\(V\)</span> reste modérée. Cela illustre un point très général : avec un grand échantillon, un écart peut être statistiquement très net tout en restant d’une magnitude raisonnable. L’interprétation doit donc s’appuyer à la fois sur le test, les effectifs observés, les effectifs attendus et la taille d’effet.</p>
+</section>
+<section id="le-cas-de-deux-catégories" class="level2" data-number="16.9">
+<h2 data-number="16.9" class="anchored" data-anchor-id="le-cas-de-deux-catégories"><span class="header-section-number">16.9</span> Le cas de deux catégories</h2>
+<p>Le test du <span class="math inline">\(\chi^2\)</span> de qualité de l’ajustement fonctionne aussi avec seulement deux catégories. Dans ce cas, il devient très proche du test binomial vu au chapitre précédent.</p>
+<p>Reprenons la variable <code>sex</code> du jeu de données <code>squid</code>. Si l’on souhaite tester si la proportion globale de femelles diffère de 50 %, on peut écrire les hypothèses suivantes :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : les mâles et les femelles sont également fréquents dans la population.</li>
+<li>H<span class="math inline">\(_1\)</span> : les mâles et les femelles ne sont pas également fréquents dans la population.</li>
+</ul>
+<p>Commençons par les effectifs :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sex_counts <span class="ot">&lt;-</span> squid <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(sex)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>sex_counts</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  sex        n
+  &lt;fct&gt;  &lt;int&gt;
+1 male    1402
+2 female  1242</code></pre>
+</div>
+</div>
+<p>Le test du <span class="math inline">\(\chi^2\)</span> de qualité de l’ajustement s’écrit :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">chisq.test</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sex_counts<span class="sc">$</span>n,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">p =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test for given probabilities
+
+data:  sex_counts$n
+X-squared = 9.6823, df = 1, p-value = 0.001861</code></pre>
+</div>
+</div>
+<p>On peut comparer ce résultat à celui du test binomial exact :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">binom.test</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">sum</span>(squid<span class="sc">$</span>female),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">nrow</span>(squid),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">p =</span> <span class="fl">0.5</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Exact binomial test
+
+data:  sum(squid$female) and nrow(squid)
+number of successes = 1242, number of trials = 2644, p-value = 0.001981
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.4505726 0.4889801
+sample estimates:
+probability of success 
+             0.4697428 </code></pre>
+</div>
+</div>
+<p>Les deux tests conduisent ici à la même conclusion : la proportion de femelles est significativement différente de 50 %. La proportion observée vaut :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(squid<span class="sc">$</span>female)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4697428</code></pre>
+</div>
+</div>
+<p>La proportion de femelles est donc d’environ 47 %. L’écart à 50 % est statistiquement significatif, mais il reste modeste en magnitude. L’intervalle de confiance fourni par <code>binom.test()</code> est donc indispensable pour interpréter correctement le résultat.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+À retenir !
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Avec seulement deux catégories, le test du <span class="math inline">\(\chi^2\)</span> de qualité de l’ajustement et le test binomial répondent à une question très proche.</p>
+<p>En pratique, si la question porte sur une proportion unique et que vous disposez d’un ordinateur, <code>binom.test()</code> reste souvent préférable : il fournit un test exact et un intervalle de confiance directement interprétable.</p>
+</div>
+</div>
+</section>
+<section id="ajustement-à-une-loi-de-poisson" class="level2" data-number="16.10">
+<h2 data-number="16.10" class="anchored" data-anchor-id="ajustement-à-une-loi-de-poisson"><span class="header-section-number">16.10</span> Ajustement à une loi de Poisson</h2>
+<p>Le test de qualité de l’ajustement ne sert pas seulement à comparer des effectifs observés à des proportions théoriques fixées à l’avance. Il permet aussi de tester si des données de comptage suivent une distribution de probabilité particulière.</p>
+<p>La loi de Poisson est particulièrement importante pour les variables de comptage. Elle peut décrire le nombre d’événements observés dans une unité d’espace ou de temps lorsque :</p>
+<ul>
+<li>les événements sont indépendants les uns des autres ;</li>
+<li>la probabilité d’un événement est constante dans l’espace ou dans le temps ;</li>
+<li>les événements ne se regroupent pas en paquets.</li>
+</ul>
+<p>Nous allons utiliser le fichier <a href="data/loups.csv"><code>loups.csv</code></a>, qui contient des données sur le nombre de louveteaux observés dans différentes portées. Les variables disponibles sont :</p>
+<ul>
+<li><code>inbreedCoef</code> : coefficient de consanguinité ;</li>
+<li><code>nPups</code> : nombre de louveteaux dans la portée.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>wolves <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/loups.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>wolves</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 24 × 2
+   inbreedCoef nPups
+         &lt;dbl&gt; &lt;dbl&gt;
+ 1        0        6
+ 2        0        6
+ 3        0.13     7
+ 4        0.13     5
+ 5        0.13     4
+ 6        0.19     8
+ 7        0.19     7
+ 8        0.19     4
+ 9        0.25     6
+10        0.24     3
+# ℹ 14 more rows</code></pre>
+</div>
+</div>
+<p>Ici, nous allons nous concentrer uniquement sur <code>nPups</code>, c’est-à-dire sur le nombre de louveteaux par portée. La question posée est la suivante : la distribution observée du nombre de louveteaux par portée est-elle compatible avec une loi de Poisson ?</p>
+<p>Les hypothèses sont donc :</p>
+<ul>
+<li>H<span class="math inline">\(_0\)</span> : le nombre de louveteaux par portée suit une loi de Poisson.</li>
+<li>H<span class="math inline">\(_1\)</span> : le nombre de louveteaux par portée ne suit pas une loi de Poisson.</li>
+</ul>
+<p>Commençons par quelques statistiques descriptives :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>wolves <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_pups =</span> <span class="fu">mean</span>(nPups),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">var_pups =</span> <span class="fu">var</span>(nPups),</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ratio_var_mean =</span> <span class="fu">var</span>(nPups) <span class="sc">/</span> <span class="fu">mean</span>(nPups)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+      n mean_pups var_pups ratio_var_mean
+  &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;
+1    24      3.96     3.52          0.889</code></pre>
+</div>
+</div>
+<p>Pour une loi de Poisson, la moyenne et la variance sont égales. Le rapport variance / moyenne donne donc une première indication :</p>
+<ul>
+<li>s’il est proche de 1, la distribution est compatible avec une loi de Poisson ;</li>
+<li>s’il est nettement supérieur à 1, les données sont plus agrégées que prévu ;</li>
+<li>s’il est nettement inférieur à 1, les données sont plus régulières que prévu.</li>
+</ul>
+<p>Ici, ce rapport est proche de 1, ce qui suggère que la loi de Poisson n’est pas une hypothèse absurde. Mais ce n’est qu’un examen descriptif. Il faut maintenant comparer les effectifs observés et attendus.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pup_counts <span class="ot">&lt;-</span> wolves <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(nPups, <span class="at">name =</span> <span class="st">"observed"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">complete</span>(<span class="at">nPups =</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(nPups), <span class="at">fill =</span> <span class="fu">list</span>(<span class="at">observed =</span> <span class="dv">0</span>))</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>pup_counts</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 2
+  nPups observed
+  &lt;dbl&gt;    &lt;int&gt;
+1     0        0
+2     1        1
+3     2        4
+4     3        8
+5     4        3
+6     5        2
+7     6        3
+8     7        2
+9     8        1</code></pre>
+</div>
+</div>
+<p>Pour calculer les effectifs attendus sous une loi de Poisson, nous devons connaître le paramètre de cette loi. Pour une loi de Poisson, ce paramètre est la moyenne, souvent notée <span class="math inline">\(\lambda\)</span>. Comme il n’est pas connu, nous allons l’estimer à partir des données :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>lambda_pups <span class="ot">&lt;-</span> <span class="fu">mean</span>(wolves<span class="sc">$</span>nPups)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>lambda_pups</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.958333</code></pre>
+</div>
+</div>
+<p>Nous pouvons maintenant calculer les probabilités attendues grâce à la fonction <code>dpois()</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>pup_fit <span class="ot">&lt;-</span> pup_counts <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">expected_prob =</span> <span class="fu">dpois</span>(nPups, <span class="at">lambda =</span> lambda_pups),</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">expected =</span> <span class="fu">nrow</span>(wolves) <span class="sc">*</span> expected_prob</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>pup_fit</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 4
+  nPups observed expected_prob expected
+  &lt;dbl&gt;    &lt;int&gt;         &lt;dbl&gt;    &lt;dbl&gt;
+1     0        0        0.0191    0.458
+2     1        1        0.0756    1.81 
+3     2        4        0.150     3.59 
+4     3        8        0.197     4.74 
+5     4        3        0.195     4.69 
+6     5        2        0.155     3.71 
+7     6        3        0.102     2.45 
+8     7        2        0.0577    1.38 
+9     8        1        0.0285    0.685</code></pre>
+</div>
+</div>
+<p>Les effectifs attendus sont faibles pour plusieurs valeurs du nombre de louveteaux. Si l’on utilisait directement toutes les catégories, les conditions d’application du test du <span class="math inline">\(\chi^2\)</span> ne seraient pas bien respectées. Dans ce cas, une solution classique consiste à regrouper des catégories voisines, à condition que ce regroupement ait du sens.</p>
+<p>Ici, nous allons distinguer les portées petites (<code>0-2</code> louveteaux), intermédiaires (<code>3-4</code> louveteaux), et grandes (<code>5+</code> louveteaux) :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>pup_fit_grouped <span class="ot">&lt;-</span> pup_fit <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="fu">case_when</span>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>      nPups <span class="sc">&lt;=</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"0-2"</span>,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>      nPups <span class="sc">&lt;=</span> <span class="dv">4</span> <span class="sc">~</span> <span class="st">"3-4"</span>,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>      nPups <span class="sc">&gt;=</span> <span class="dv">5</span> <span class="sc">~</span> <span class="st">"5+"</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">observed =</span> <span class="fu">sum</span>(observed),</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">expected =</span> <span class="fu">sum</span>(expected),</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> class</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">factor</span>(class, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0-2"</span>, <span class="st">"3-4"</span>, <span class="st">"5+"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(class)</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>pup_fit_grouped</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  class observed expected
+  &lt;fct&gt;    &lt;int&gt;    &lt;dbl&gt;
+1 0-2          5     5.86
+2 3-4         11     9.42
+3 5+           8     8.23</code></pre>
+</div>
+</div>
+<p>La comparaison graphique est souvent la meilleure façon de comprendre le test :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>pup_fit_grouped <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(observed, expected),</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"type"</span>,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"count"</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> class, <span class="at">y =</span> count, <span class="at">fill =</span> type)) <span class="sc">+</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Nombre de louveteaux"</span>,</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Nombre de portées"</span>,</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">""</span>,</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution observée et attendue du nombre de louveteaux"</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="16-GoodnessFit_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Les écarts entre effectifs observés et attendus semblent faibles. On peut maintenant réaliser le test. Comme nous avons estimé <span class="math inline">\(\lambda\)</span> à partir des données, nous perdons un degré de liberté. La fonction <code>chisq.test()</code> ne le sait pas. Elle calcule donc une p-value avec un nombre de degrés de liberté trop grand. Nous allons utiliser la statistique du <span class="math inline">\(\chi^2\)</span> renvoyée par le test, puis recalculer nous-mêmes la p-value avec le bon nombre de degrés de liberté.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>test_pups <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">chisq.test</span>(</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> pup_fit_grouped<span class="sc">$</span>observed,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">p =</span> pup_fit_grouped<span class="sc">$</span>expected <span class="sc">/</span> <span class="fu">sum</span>(pup_fit_grouped<span class="sc">$</span>expected)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>test_pups</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test for given probabilities
+
+data:  pup_fit_grouped$observed
+X-squared = 0.37877, df = 2, p-value = 0.8275</code></pre>
+</div>
+</div>
+<p>Le nombre correct de degrés de liberté est :</p>
+<p><span class="math display">\[df = k - 1 - m\]</span></p>
+<p>où <span class="math inline">\(k\)</span> est le nombre de catégories après regroupement et <span class="math inline">\(m\)</span> le nombre de paramètres estimés à partir des données. Ici, <span class="math inline">\(k = 3\)</span> et <span class="math inline">\(m = 1\)</span>, car nous avons estimé <span class="math inline">\(\lambda\)</span>. On obtient donc :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df_pups <span class="ot">&lt;-</span> <span class="fu">nrow</span>(pup_fit_grouped) <span class="sc">-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>df_pups</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+<p>La p-value correcte est alors :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>chi2_pups <span class="ot">&lt;-</span> <span class="fu">sum</span>(</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  (pup_fit_grouped<span class="sc">$</span>observed <span class="sc">-</span> pup_fit_grouped<span class="sc">$</span>expected)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    pup_fit_grouped<span class="sc">$</span>expected</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(chi2_pups, <span class="at">df =</span> df_pups)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5288993</code></pre>
+</div>
+</div>
+<p>Ici, la p-value est grande. On ne rejette donc pas l’hypothèse nulle. La distribution du nombre de louveteaux par portée n’est pas significativement différente de celle attendue sous une loi de Poisson.</p>
+<p>Cette conclusion doit toutefois rester prudente. L’échantillon ne contient que 24 portées, ce qui limite fortement la puissance du test. Ne pas rejeter H<span class="math inline">\(_0\)</span> ne signifie donc pas que la loi de Poisson est vraie. Cela signifie seulement que, avec ces données, nous n’avons pas de preuve claire d’un écart à cette loi.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Estimation des paramètres et degrés de liberté
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quand les probabilités attendues sont entièrement fixées par l’hypothèse nulle, le nombre de degrés de liberté vaut :</p>
+<p><span class="math display">\[df = k - 1\]</span></p>
+<p>où <span class="math inline">\(k\)</span> est le nombre de catégories.</p>
+<p>Quand un ou plusieurs paramètres sont estimés à partir des données, il faut retirer un degré de liberté supplémentaire pour chaque paramètre estimé :</p>
+<p><span class="math display">\[df = k - 1 - m\]</span></p>
+<p>Cette correction est indispensable pour obtenir la bonne p-value.</p>
+</div>
+</div>
+</section>
+<section id="comment-choisir-et-interpréter-un-test-de-qualité-de-lajustement" class="level2" data-number="16.11">
+<h2 data-number="16.11" class="anchored" data-anchor-id="comment-choisir-et-interpréter-un-test-de-qualité-de-lajustement"><span class="header-section-number">16.11</span> Comment choisir et interpréter un test de qualité de l’ajustement ?</h2>
+<p>On peut résumer les cas les plus fréquents de la façon suivante :</p>
+<ul>
+<li><strong>une distribution catégorielle</strong> à comparer à des proportions fixées à l’avance : <code>chisq.test(x, p = ...)</code></li>
+<li><strong>deux catégories seulement</strong>, avec une proportion à comparer à une valeur théorique : <code>binom.test()</code>, ou <code>chisq.test()</code> si les effectifs sont grands</li>
+<li><strong>une variable de comptage</strong> à comparer à une loi de Poisson : calcul des probabilités attendues avec <code>dpois()</code>, puis test du <span class="math inline">\(\chi^2\)</span></li>
+<li><strong>une distribution de nombres de succès</strong> à comparer à une loi binomiale : calcul des probabilités attendues avec <code>dbinom()</code>, puis test du <span class="math inline">\(\chi^2\)</span></li>
+</ul>
+<p>Dans tous les cas, il faut examiner les données avant le test. En particulier :</p>
+<ol type="1">
+<li>les catégories doivent avoir un sens biologique ou expérimental ;</li>
+<li>les effectifs attendus doivent être suffisamment grands ;</li>
+<li>les regroupements éventuels doivent être décidés de façon raisonnable ;</li>
+<li>les paramètres estimés à partir des données doivent être pris en compte dans les degrés de liberté ;</li>
+<li>l’interprétation doit porter sur le modèle testé, et pas sur une idée vague de “bonne” ou “mauvaise” distribution.</li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Attention
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un test non significatif ne prouve pas que le modèle testé est vrai.</p>
+<p>Il indique seulement que l’écart entre les données et le modèle n’est pas suffisamment grand pour rejeter l’hypothèse nulle, compte tenu de la taille de l’échantillon et des catégories utilisées.</p>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2" data-number="16.12">
+<h2 data-number="16.12" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">16.12</span> Conclusion</h2>
+<p>Les tests de qualité de l’ajustement prolongent directement les tests sur proportions. Dans les deux cas, il s’agit de comparer des effectifs observés à des effectifs attendus sous un modèle nul.</p>
+<p>La nouveauté de ce chapitre est que le modèle nul peut maintenant porter sur une distribution entière :</p>
+<ul>
+<li>distribution proportionnelle entre plusieurs catégories ;</li>
+<li>distribution binomiale ;</li>
+<li>distribution de Poisson ;</li>
+<li>plus généralement, toute distribution pour laquelle on peut calculer des probabilités attendues.</li>
+</ul>
+<p>Comme toujours, le test ne suffit pas. Il faut aussi examiner les effectifs observés, les effectifs attendus, les contributions au <span class="math inline">\(\chi^2\)</span>, les conditions d’application, et la magnitude des écarts observés.</p>
+</section>
+<section id="exercices-dapplication" class="level2" data-number="16.13">
+<h2 data-number="16.13" class="anchored" data-anchor-id="exercices-dapplication"><span class="header-section-number">16.13</span> Exercices d’application</h2>
+<ol type="1">
+<li><p>À partir du jeu de données <code>squid</code>, testez si les effectifs de calmars sont répartis de façon égale entre les 12 mois de l’année. Comparez ce test avec le modèle proportionnel au nombre de jours des mois présenté dans ce chapitre.</p></li>
+<li><p>À partir du jeu de données <code>squid</code>, réalisez un test du <span class="math inline">\(\chi^2\)</span> de qualité de l’ajustement pour tester si les quatre sites d’échantillonnage contiennent les mêmes effectifs de calmars. Représentez les effectifs observés et attendus sur un graphique.</p></li>
+<li><p>Reprenez le jeu de données <code>loups.csv</code>. Réalisez le test d’ajustement à une loi de Poisson sans regrouper les catégories. Examinez les effectifs attendus. Pourquoi ce test n’est-il pas satisfaisant ?</p></li>
+<li><p>Toujours avec <code>loups.csv</code>, proposez un autre regroupement des nombres de louveteaux. Recalculez le test et comparez la conclusion à celle du chapitre.</p></li>
+<li><p>À partir du jeu de données <code>HornedLizards.csv</code>, testez si les lézards vivants et tués par prédation sont également fréquents dans l’échantillon. Comparez les résultats de <code>chisq.test()</code> et <code>binom.test()</code>.</p></li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-R-janitor" class="csl-entry" role="listitem">
+Firke, Sam. 2024. <em>janitor: Simple Tools for Examining and Cleaning Dirty Data</em>. <a href="https://github.com/sfirke/janitor">https://github.com/sfirke/janitor</a>.
+</div>
+<div id="ref-R-skimr" class="csl-entry" role="listitem">
+Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, et Shannon Ellis. 2026. <em>skimr: Compact and Flexible Summaries of Data</em>. <a href="https://docs.ropensci.org/skimr/">https://docs.ropensci.org/skimr/</a>.
+</div>
+<div id="ref-R-tidyverse" class="csl-entry" role="listitem">
+Wickham, Hadley. 2023. <em>tidyverse: Easily Install and Load the Tidyverse</em>. <a href="https://tidyverse.tidyverse.org">https://tidyverse.tidyverse.org</a>.
+</div>
+<div id="ref-R-ggplot2" class="csl-entry" role="listitem">
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, Dewey Dunnington, et Teun van den Brand. 2026. <em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+</div>
+<div id="ref-R-dplyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, et Davis Vaughan. 2026. <em>dplyr: A Grammar of Data Manipulation</em>. <a href="https://dplyr.tidyverse.org">https://dplyr.tidyverse.org</a>.
+</div>
+<div id="ref-R-readr" class="csl-entry" role="listitem">
+Wickham, Hadley, Jim Hester, et Jennifer Bryan. 2026. <em>readr: Read Rectangular Text Data</em>. <a href="https://readr.tidyverse.org">https://readr.tidyverse.org</a>.
+</div>
+<div id="ref-R-tidyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Davis Vaughan, et Maximilian Girlich. 2025. <em>tidyr: Tidy Messy Data</em>. <a href="https://tidyr.tidyverse.org">https://tidyr.tidyverse.org</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./15-PropTests.html" class="pagination-link" aria-label="Comparaison de proportions">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Comparaison de proportions</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

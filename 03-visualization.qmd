@@ -87,17 +87,23 @@ Pour l'année 2007, le jeu de données contient des informations pour 142 pays. 
 #| message: false
 #| warning: false
 
-gapminder_2007 <- gapminder |> 
-  filter(year == 2007) |> 
-  select(-year) |> 
-  rename_all(str_to_title) |> 
-  rename(`Life Expectancy` = Lifeexp,
-         `GDP per Capita` = Gdppercap,
-         Population = Pop)
+gapminder_2007 <- gapminder |>
+  filter(year == 2007) |>
+  select(-year) |>
+  rename_all(str_to_title) |>
+  rename(
+    `Life Expectancy` = Lifeexp,
+    `GDP per Capita` = Gdppercap,
+    Population = Pop
+  )
 
-gapminder_2007 |> 
-  head() |> 
-  knitr::kable(caption = "Les 6 premières lignes du jeu de données `gapminder` pour l'année 2007.", booktabs = TRUE, longtable = TRUE)
+gapminder_2007 |>
+  head() |>
+  knitr::kable(
+    caption = "Les 6 premières lignes du jeu de données `gapminder` pour l'année 2007.",
+    booktabs = TRUE,
+    longtable = TRUE
+  )
 ```
 
 Pour chaque ligne, les variables suivantes sont décrites : 
@@ -118,13 +124,16 @@ Examinons maintenant la @fig-gapminder qui représente ces variables pour chacun
 #| message: false
 #| warning: false
 
-gapminder_2007 |> 
-  ggplot(aes(x = `GDP per Capita`, y = `Life Expectancy`, fill = Continent, 
-             size = Population)) + 
+gapminder_2007 |>
+  ggplot(aes(
+    x = `GDP per Capita`,
+    y = `Life Expectancy`,
+    fill = Continent,
+    size = Population
+  )) +
   geom_point(color = "grey35", shape = 21) +
   scale_x_log10(labels = label_dollar()) +
-  labs(x = "GDP per capita (US$)",
-       y = "Life expectancy at birth (years)") +
+  labs(x = "GDP per capita (US$)", y = "Life expectancy at birth (years)") +
   theme_bw()
 ```
 
@@ -364,15 +373,13 @@ Comme évoqué plus haut, par défaut, `R` choisit arbitrairement de découper l
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g)) +
-  geom_histogram(fill = "steelblue", color = "black",
-                 bins = 10)
+  geom_histogram(fill = "steelblue", color = "black", bins = 10)
 ```
 Ici, diminuer le nombre de classes à 10 a pour effet de trop lisser la distribution des données. On ne visualise plus les variations subtiles de la distribution. À l'inverse, trop augmenter le nombre de classes n'est pas pertinent non plus :
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g)) +
-  geom_histogram(fill = "steelblue", color = "black",
-                 bins = 100)
+  geom_histogram(fill = "steelblue", color = "black", bins = 100)
 ```
 
 Ici, passer à 100 classes de taille génère un histogramme plein de trous, avec des classes très étroites, dont certaines sont très représentées, et immédiatement suivies ou précédées par des classes très peu représentées. Cela n'a pas de logique, et c'est presque toujours le signe qu'il faut réduire le nombre de classes.
@@ -381,8 +388,7 @@ Au final, pour ces données, un nombre de classes compris entre 20 et 30 semble 
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g)) +
-  geom_histogram(fill = "steelblue", color = "black",
-                 bins = 25)
+  geom_histogram(fill = "steelblue", color = "black", bins = 25)
 ```
 
 C'est un bon choix, entre trop peu d'information, et trop de bruit visuel. Évidemment, ce nombre sera différent pour chaque jeu de données. On constate ici à peu près 3 pics (autour de 3500 grammes, un peu au-dessus de 4500 grammes, et autour de 5500 grammes) qui reflètent bien la distribution de ces données.
@@ -392,8 +398,7 @@ On peut également modifier **la largeur des classes** (et non plus leur nombre)
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g)) +
-  geom_histogram(fill = "steelblue", color = "black",
-                 binwidth = 200)
+  geom_histogram(fill = "steelblue", color = "black", binwidth = 200)
 ```
 
 Ici, chaque catégorie recouvre 200 grammes. Avec l'argument `bins`, on indique à `R` combien on souhaite obtenir de classes, et il détermine automatiquement leur largeur. Avec `binwidth`, on indique la largeur des classes souhaitées, et `R` détermine automatiquement le nombre de classes nécessaires pour couvrir la totalité des données.
@@ -402,8 +407,11 @@ Enfin, il est possible de déterminer manuellement les limites des classes souha
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g)) +
-  geom_histogram(fill = "steelblue", color = "black",
-                 breaks = c(2500, 2750, 3000, 3500, 4000, 4500, 5000, 6000, 7000))
+  geom_histogram(
+    fill = "steelblue",
+    color = "black",
+    breaks = c(2500, 2750, 3000, 3500, 4000, 4500, 5000, 6000, 7000)
+  )
 ```
 
 Vous constatez ici que les choix effectués ne sont pas très pertinents : toutes les classes n'ont pas la même largeur. Cela rend l'interprétation difficile. Il est donc vivement conseillé, pour spécifier `breaks`, de créer des suites régulières, comme avec la fonction `seq()` (consultez son fichier d'aide et les exemples) :
@@ -416,8 +424,7 @@ Vous constatez ici que les choix effectués ne sont pas très pertinents : toute
 limites <- seq(from = 2500, to = 6500, by = 250)
 limites
 ggplot(penguins, aes(x = body_mass_g)) +
-  geom_histogram(fill = "steelblue", color = "black",
-                 breaks = limites)
+  geom_histogram(fill = "steelblue", color = "black", breaks = limites)
 ```
 
 Il est important que toute la gamme des valeurs de `body_mass_g` soit bien couverte par les limites des classes que nous avons définies, sinon, certaines valeurs sont omises et l'histogramme est donc incomplet/incorrect. Une façon de s'en assurer est d'afficher le résumé des données pour la colonne `body_mass_g` du jeu de données `penguins` :
@@ -437,8 +444,7 @@ La fonction `geom_rug()` permet d'ajouter les données réelles sous forme de se
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g)) +
-  geom_histogram(fill = "steelblue", color = "black",
-                 bins = 25) +
+  geom_histogram(fill = "steelblue", color = "black", bins = 25) +
   geom_rug()
 ```
 
@@ -446,8 +452,7 @@ Les tirets qui sont maintenant visibles en-dessous de l'histogramme corresponden
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g)) +
-  geom_histogram(fill = "steelblue", color = "black",
-                 bins = 25) +
+  geom_histogram(fill = "steelblue", color = "black", bins = 25) +
   geom_rug(alpha = 0.3)
 ```
 
@@ -468,9 +473,13 @@ Enfin, on peut créer un graphique qui présentera à la fois l'histogramme (ave
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g)) +
-  geom_histogram(aes(y = after_stat(density)),
-                 fill = "steelblue", color = "black",
-                 bins = 25, alpha = 0.7) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    fill = "steelblue",
+    color = "black",
+    bins = 25,
+    alpha = 0.7
+  ) +
   geom_rug(alpha = 0.3) +
   geom_density(color = "purple", linewidth = 2)
 ```
@@ -484,8 +493,7 @@ Sur le dernier exemple, vous constatez que la fonction `aes()` apparaît une foi
 ```{r}
 #| eval: false
 ggplot(penguins, aes(x = body_mass_g, y = after_stat(density))) +
-  geom_histogram(fill = "steelblue", color = "black",
-                 bins = 25, alpha = 0.7) +
+  geom_histogram(fill = "steelblue", color = "black", bins = 25, alpha = 0.7) +
   geom_rug(alpha = 0.3) +
   geom_density(color = "purple", linewidth = 2)
 ```
@@ -502,13 +510,15 @@ Ainsi, ajouter `y = after_stat(density)` à l'intérieur de `ggplot()` renvoie d
 
 ```{r}
 ggplot(data = penguins) +
-  geom_histogram(aes(x = body_mass_g, y = after_stat(density)),
-                 fill = "steelblue", color = "black",
-                 bins = 25, alpha = 0.7) +
-  geom_rug(aes(x = body_mass_g),
-           alpha = 0.3) +
-  geom_density(aes(x = body_mass_g),
-               color = "purple", linewidth = 2)
+  geom_histogram(
+    aes(x = body_mass_g, y = after_stat(density)),
+    fill = "steelblue",
+    color = "black",
+    bins = 25,
+    alpha = 0.7
+  ) +
+  geom_rug(aes(x = body_mass_g), alpha = 0.3) +
+  geom_density(aes(x = body_mass_g), color = "purple", linewidth = 2)
 ```
 
 C'est plus long, mais c'est tout à fait correct et ça produit exactement le même résultat qu'auparavant.
@@ -539,7 +549,6 @@ En examinant le tableau `penguins` de plus près, on se rend compte que les 3 es
 #| label: fig-cloud
 #| fig-cap: "Nuage de points des masses corporelles des 3 espèces de manchots"
 
-
 ggplot(penguins, aes(x = seq_along(body_mass_g), y = body_mass_g)) +
   geom_point(aes(color = species))
 ```
@@ -560,8 +569,13 @@ Chacune de ces caractéristiques esthétiques peut être associée à une variab
 
 ```{r}
 ggplot(penguins, aes(x = seq_along(body_mass_g), y = body_mass_g)) +
-  geom_point(shape = 23, fill = "steelblue", color = "black", 
-             size = 3, alpha = 0.5)
+  geom_point(
+    shape = 23,
+    fill = "steelblue",
+    color = "black",
+    size = 3,
+    alpha = 0.5
+  )
 ```
 
 L'ajout de la transparence permet de régler le problème des points qui se superposent (un phénomène nommé "overplotting").
@@ -599,7 +613,6 @@ ggplot(penguins, aes(x = "", y = body_mass_g)) +
 
 ggplot(penguins, aes(x = "", y = body_mass_g)) +
   geom_jitter(width = 0.1, height = 2000)
-
 ```
 
 - Le premier exemple (@fig-jitter-1) ne présente aucune dispersion, ni horizontale (`width = 0`), ni verticale (`height = 0`). Les points apparaissent donc tous alignés, ils ont en effet tous la même valeur sur l'axe des abscisses. Leur position sur l'axe des `y` reflète la masse réellement observée pour chaque individu. Cette façon de représenter les données n'est pas très utile car la superposition des points vient empêcher la visualisation correcte de la distribution : ici, il est impossible de dire quelles sont les masses les plus fréquemment observées ou les plus rarement observées. 
@@ -624,9 +637,13 @@ Enfin, puisqu'un stripchart permet d'afficher des points sur un graphiques, les 
 #| fig-cap: "Un exemple de stripchart"
 
 ggplot(penguins, aes(x = "", y = body_mass_g)) +
-  geom_jitter(aes(color = species, shape = species),
-              size = 3, alpha = 0.6, 
-              width = 0.1, height = 0)
+  geom_jitter(
+    aes(color = species, shape = species),
+    size = 3,
+    alpha = 0.6,
+    width = 0.1,
+    height = 0
+  )
 ```
 
 Sur cette figure, comme pour le nuage de points réalisé plus haut, j'ai associé la variable `species` à la couleur des points (donc à l'intérieur de `aes()`). J'ai également associé cette variable à la forme des points `shape = species` à l'intérieur de `aes()`. C'est ce qui explique que chacune des 3 espèces apparaît sous la forme de symboles de formes et de couleurs différents. Pour limiter l'overplotting, j'ai spécifié un bruit horizontal, et j'ai fixé le bruit vertical à zéro. Enfin j'ai augmenté la taille des symboles (avec `size = 3`, en dehors de `aes()` car `3` est une constante qui s'appliquera à tous les points du graphique de la même manière) et leur transparence (avec `alpha = 0.6`, toujours en dehors de `aes()` pour la même raison). On constate ici encore que les masses corporelles des manchots Adélie et Chinstrap sont très similaires, et inférieures à celles de l'espèce Gentoo.
@@ -642,8 +659,12 @@ Sur cette figure, comme pour le nuage de points réalisé plus haut, j'ai associ
 ```{r}
 #| include: false
 ggplot(penguins, aes(x = flipper_length_mm)) +
-  geom_histogram(aes(y = ..density..), bins = 25,
-                 fill = "steelblue", color = "black") +
+  geom_histogram(
+    aes(y = ..density..),
+    bins = 25,
+    fill = "steelblue",
+    color = "black"
+  ) +
   geom_density(color = "orange", size = 1.5) +
   geom_rug(alpha = 0.3)
 ```
@@ -659,7 +680,17 @@ Une difficulté, toutefois, concerne la façon dont les données sont présenté
 
 ```{r}
 panier <- tibble(
-  fruit = c("pomme", "pomme", "banane", "pomme", "orange", "banane", "orange", "banane", "banane")
+  fruit = c(
+    "pomme",
+    "pomme",
+    "banane",
+    "pomme",
+    "orange",
+    "banane",
+    "orange",
+    "banane",
+    "banane"
+  )
 )
 
 panier_counted <- tibble(
@@ -751,10 +782,10 @@ Ordonner les catégories par ordre décroissant est souvent indispensable afin d
 Si nous souhaitons connaître le nombre précis d'individus de chaque espèce, il nous faut faire appel à plusieurs fonctions du package `dplyr` que nous détaillerons dans le chapitre @sec-wrangling. Ci-dessous, nous créons un nouveau tableau `species_table` contenant le nombre d'individus de chaque espèce et les espèces sont ordonnées par abondance décroissante :
 
 ```{r tidy = FALSE}
-species_table <- penguins |>   # On prend le tableau penguins, puis...
-  count(species) |>            # On compte les effectifs de chaque espèce, puis...
-  arrange(desc(n))              # On trie par effectif décroissants ...
-species_table                   # Enfin, on affiche la nouvelle table
+species_table <- penguins |> # On prend le tableau penguins, puis...
+  count(species) |> # On compte les effectifs de chaque espèce, puis...
+  arrange(desc(n)) # On trie par effectif décroissants ...
+species_table # Enfin, on affiche la nouvelle table
 ```
 
 Ici, la table a été triée par effectifs décroissants. Mais attention, **les niveaux** du facteur `species` n'ont pas été modifiés :
@@ -777,8 +808,7 @@ Si nous souhaitons trier ces catégories par effectif décroissant, la fonction 
 3. L'argument optionnel `.desc` qui permet de préciser si le tri doit être fait en ordre croissant (c'est le cas par défaut) ou décroissant.
 
 ```{r}
-ggplot(species_table, 
-       aes(x = fct_reorder(species, n, .desc = TRUE), y = n)) +
+ggplot(species_table, aes(x = fct_reorder(species, n, .desc = TRUE), y = n)) +
   geom_col()
 ```
 
@@ -790,8 +820,7 @@ Une dernière précision : inverser l'ordre des variables sur les axes du graphi
 ggplot(penguins, aes(y = fct_infreq(species))) +
   geom_bar(fill = "steelblue", color = "black", alpha = 0.7)
 
-ggplot(species_table, 
-       aes(y = fct_reorder(species, n, .desc = TRUE), x = n)) +
+ggplot(species_table, aes(y = fct_reorder(species, n, .desc = TRUE), x = n)) +
   geom_col(fill = "firebrick", color = "black", alpha = 0.7)
 ```
 
@@ -816,10 +845,9 @@ ggplot(species_table,
 #| fig-cap: "Répartition des effectifs par espèce et par sexe"
 #| echo: false
 
-
 penguins |>
   count(species, sex) |>
-  mutate(cat = paste(species, sex, sep = " - ")) |> 
+  mutate(cat = paste(species, sex, sep = " - ")) |>
   ggplot(aes(x = factor(1), y = n, fill = factor(cat))) +
   geom_bar(width = 1, stat = "identity", color = "black") +
   coord_polar(theta = "y") +
@@ -828,8 +856,11 @@ penguins |>
   scale_y_continuous(NULL, labels = NULL) +
   scale_x_discrete(NULL, labels = NULL) +
   theme_bw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        axis.ticks.y=element_blank())
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.ticks.y = element_blank()
+  )
 ```
 
 - Quelle est la catégorie la plus représentée ?
@@ -845,8 +876,12 @@ Il est difficile (voir impossible) de répondre précisément à ces questions a
 
 penguins |>
   count(species, sex) |>
-  mutate(cat = paste(species, sex, sep = " - ")) |> 
-  ggplot(aes(y = fct_reorder(cat, n, .desc = TRUE), x = n, fill = fct_reorder(cat, n, .desc = TRUE))) +
+  mutate(cat = paste(species, sex, sep = " - ")) |>
+  ggplot(aes(
+    y = fct_reorder(cat, n, .desc = TRUE),
+    x = n,
+    fill = fct_reorder(cat, n, .desc = TRUE)
+  )) +
   geom_col(color = "black", show.legend = FALSE, alpha = 0.5) +
   scale_fill_brewer() +
   labs(x = "Effectif", y = "Catégorie") +
@@ -987,8 +1022,8 @@ ggplot(penguins, aes(x = fct_infreq(species), fill = sex)) +
 L'argument `position = "fill"` de la fonction `geom_bar()` permet de transformer en proportions les abondances de chaque modalités de la variable portée par l'axe des `x`. L'axe des ordonnées varie maintenant entre 0 et 1 (0% et 100%), ce qui rend les comparaisons plus aisées. Ici, le fait que le sexe de quelques individus n'ait pas pu être déterminé vient gêner la lecture du graphique. On peut supprimer ces valeurs grâce à la fonction `filter()` du packages `dplyr`. Nous verrons dans le #sec-wrangling la signification du code suivant. Pour l'instant retenez simplement qu'il permet d'éliminer les individus dont le sexe est inconnu :
 
 ```{r}
-penguins |> 
-  filter(!is.na(sex)) |> 
+penguins |>
+  filter(!is.na(sex)) |>
   ggplot(aes(x = fct_infreq(species), fill = sex)) +
   geom_bar(alpha = 0.6, color = "black", position = "fill")
 ```
@@ -1006,16 +1041,19 @@ La seule chose qui a changé est la valeur prise par l'argument `position`, que 
 
 - soit retirer les données manquantes, comme précédemment :
 ```{r}
-penguins |> 
-  filter(!is.na(sex)) |> 
+penguins |>
+  filter(!is.na(sex)) |>
   ggplot(aes(x = fct_infreq(species), fill = sex)) +
   geom_bar(alpha = 0.6, color = "black", position = "dodge")
 ```
 - soit imposer que toutes les sous-catégories apparaissent pour chaque catégorie :
 ```{r}
 ggplot(penguins, aes(x = fct_infreq(species), fill = sex)) +
-  geom_bar(alpha = 0.6, color = "black",
-           position = position_dodge(preserve = "single") )
+  geom_bar(
+    alpha = 0.6,
+    color = "black",
+    position = position_dodge(preserve = "single")
+  )
 ```
 Ici, l'argument `position` prend une valeur plus complexe puisque nous faisons appel à une fonction nommée `position_dodge()`. C'est l'argument `preserve = "single"` qui permet de s'assurer que toutes les sous-catégories sont bien représentées au sein de chaque catégorie, et donc, que toutes les barres ont bien la même largueur.
 
@@ -1102,7 +1140,6 @@ On peut maintenant accéder à un nouvel objet géométrique, `geom_mosaic()`, d
 #| warning: false
 #| message: false
 
-
 ggplot(penguins) +
   geom_mosaic(aes(x = product(species), fill = sex))
 ```
@@ -1137,8 +1174,7 @@ La syntaxe est ici tout à fait classique. Pour réaliser un histogramme, on pla
 #| fig-asp: 1.2
 
 ggplot(penguins, aes(x = bill_depth_mm)) +
-  geom_histogram(fill = "steelblue", color = "black", 
-                 alpha = 0.6, bins = 20) +
+  geom_histogram(fill = "steelblue", color = "black", alpha = 0.6, bins = 20) +
   facet_wrap(~species, ncol = 1)
 ```
 
@@ -1149,8 +1185,7 @@ On peut aussi choisir d'utiliser une couleur pour chaque espèce (mais on n'affi
 #| fig-asp: 1.2
 
 ggplot(penguins, aes(x = bill_depth_mm, fill = species)) +
-  geom_histogram(show.legend = FALSE, color = "black", 
-                 alpha = 0.6, bins = 20) +
+  geom_histogram(show.legend = FALSE, color = "black", alpha = 0.6, bins = 20) +
   facet_wrap(~species, ncol = 1, scales = "free_y")
 ```
 
@@ -1171,7 +1206,6 @@ Nous avons déjà abordé ce type de graphique dans la @sec-cloud. Contrairement
 #| fig-width: 3
 #| label: fig-facstrip
 #| fig-cap: "Un exemple de stripchart"
-
 
 ggplot(penguins, aes(x = species, y = bill_depth_mm)) +
   geom_jitter(width = 0.20, height = 0)
@@ -1251,13 +1285,13 @@ pl1 <- penguins |>
 pl2 <- penguins |>
   filter(species == "Adelie") |>
   ggplot(aes(x = body_mass_g)) +
-    geom_histogram(bins = 15, color = "black", fill = "grey85") +
-    coord_flip()
+  geom_histogram(bins = 15, color = "black", fill = "grey85") +
+  coord_flip()
 
 pl3 <- penguins |>
   filter(species == "Adelie") |>
-  ggplot(aes(x= "Adelie", y = body_mass_g)) +
-    geom_boxplot(notch = TRUE)
+  ggplot(aes(x = "Adelie", y = body_mass_g)) +
+  geom_boxplot(notch = TRUE)
 
 pl1 + pl2 + pl3
 ```
@@ -1283,8 +1317,10 @@ Les possibilités sont très nombreuses et il ne sera pas possible d'être exhau
 Dans cette situation, on fait en général un nuage de points qui porte une variable numérique sur chaque axe, et on associe la troisième variable numérique soit à la couleur des points, soit à leur taille (soit aux deux à la fois). Par exemple, pour examiner les relations entre longueur du bec, épaisseur du bec, et masse corporelle, on peut procéder ainsi :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, size = body_mass_g)
+) +
   geom_point(shape = 21, fill = "steelblue", color = "black", alpha = 0.6)
 ```
 
@@ -1293,8 +1329,10 @@ C'est ce qu'on appelle un "bubble plot". Ici on constate que les individus qui o
 Une autre façon de visualiser ces mêmes données consiste à associer la masse des individus à la couleur de remplissage des symboles :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, fill = body_mass_g)
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6, size = 2)
 ```
 
@@ -1303,8 +1341,15 @@ Cette fois, les individus les plus légers apparaissent en bleu très sombre, et
 Enfin, il est évidemment possible de jouer à la fois sur la couleur et sur la taille des symboles :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = body_mass_g,
+    size = body_mass_g
+  )
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6)
 ```
 
@@ -1326,11 +1371,16 @@ Pour commencer, essayez de reproduire le graphique suivant :
 ```{r}
 #| echo: false
 
-ggplot(penguins, aes(x = bill_length_mm, 
-                     y = bill_depth_mm,
-                     color = species, 
-                     size = body_mass_g, 
-                     shape = sex)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    color = species,
+    size = body_mass_g,
+    shape = sex
+  )
+) +
   geom_point(alpha = 0.6)
 ```
 
@@ -1345,24 +1395,33 @@ Au final, beaucoup d'informations sont présentées sur ce graphique et c'est pr
 
 ```{r}
 #| echo: false
-penguins |> 
-  filter(!is.na(sex)) |> 
-  ggplot(aes(x = bill_length_mm, 
-             y = bill_depth_mm,
-             fill = species, 
-             size = body_mass_g, 
-             shape = sex)) +
+penguins |>
+  filter(!is.na(sex)) |>
+  ggplot(aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = species,
+    size = body_mass_g,
+    shape = sex
+  )) +
   geom_point(alpha = 0.6) +
   scale_shape_manual(labels = c("Femelles", "Mâles"), values = c(21, 24)) +
-  scale_fill_brewer(palette = "Accent", labels = c("Adélie", "Chinstrap", "Gentoo")) +
+  scale_fill_brewer(
+    palette = "Accent",
+    labels = c("Adélie", "Chinstrap", "Gentoo")
+  ) +
   theme_bw() +
-  guides(fill = guide_legend(override.aes = list(size = 3, shape = 21)),
-         shape = guide_legend(override.aes = list(size = 3))) +
-  labs(x = "Longueur du bec (mm)", 
-       y = "Épaisseur du bec (mm)",
-       fill = "Espèce",
-       shape = "Sexe",
-       size = "Masse (g)")
+  guides(
+    fill = guide_legend(override.aes = list(size = 3, shape = 21)),
+    shape = guide_legend(override.aes = list(size = 3))
+  ) +
+  labs(
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    fill = "Espèce",
+    shape = "Sexe",
+    size = "Masse (g)"
+  )
 ```
 En particulier, sur ce graphique, il est presque impossible de déterminer la masse des individus mâles. La légende indique en effet des tailles de cercles qui correspondent à des masses spécifiques. Mais nous n'avons aucune indication pour la taille des triangles. Il vaudrait donc mieux procéder ainsi :
 
@@ -1371,21 +1430,28 @@ En particulier, sur ce graphique, il est presque impossible de déterminer la ma
 #| fig-cap: "Relation entre la morphologie du bec, la masse et le sexe chez trois espèces de manchots de l'archipel Palmer"
 #| echo: false
 
-penguins |> 
-  filter(!is.na(sex)) |> 
-  mutate(species = str_replace_all(species, "Adelie", "Adélie")) |> 
-  ggplot(aes(x = bill_length_mm, 
-             y = bill_depth_mm,
-             fill = sex, 
-             size = body_mass_g)) +
+penguins |>
+  filter(!is.na(sex)) |>
+  mutate(species = str_replace_all(species, "Adelie", "Adélie")) |>
+  ggplot(aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = sex,
+    size = body_mass_g
+  )) +
   geom_point(alpha = 0.6, shape = 21) +
   facet_wrap(~species, ncol = 3, scales = "free_x") +
-  scale_fill_manual(labels = c("Femelles", "Mâles"), values = c("purple", "orange")) +
+  scale_fill_manual(
+    labels = c("Femelles", "Mâles"),
+    values = c("purple", "orange")
+  ) +
   theme_bw() +
-  labs(x = "Longueur du bec (mm)", 
-       y = "Épaisseur du bec (mm)",
-       fill = "Sexe",
-       size = "Masse (g)")
+  labs(
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    fill = "Sexe",
+    size = "Masse (g)"
+  )
 ```
 
 En associant le sexe des individus à la couleur de remplissage plutôt qu'à la forme des points, et en faisant un sous-graphique par espèce, on élimine la difficulté de lecture liée à la taille des symboles triangulaires. L'information concernant la masse des individus est donc plus facile à visualiser. Le dimorphisme sexuel de taille des becs, présent pour chaque espèce, apparaît beaucoup plus clairement qu'avant (les mâles ont des becs plus longs et épais que les femelles). Mais les **différences inter-spécifiques** de morphologie des becs sont moins visibles qu'avant, notamment pour les différences de longueur des becs selon les espèces. On ne peut malheureusement pas gagner sur les tableaux à la fois. C'est la raison pour laquelle les choix de graphiques que vous ferez devront refléter les questions auxquelles vous vous intéressez, et les messages que vous souhaitez faire passer.
@@ -1415,8 +1481,10 @@ Si l'on s'en tient à ça, la relation semble claire : plus le bec des individus
 En réalité, cette vision des choses est totalement trompeuse ! N'oubliez pas que nous avons 3 espèces distinctes dans ce jeu de données, et que ces espèces peuvent présenter des caractéristiques morphologiques très variées. Examiner la relation becs-nageoires tel que nous l'avons fait, sans considérer les espèces, n'a strictement aucun sens ! Pour s'en convaincre, il suffit d'associer la couleur (des points et des lignes) à l'espèce :
 
 ```{r}
-ggplot(penguins, aes(x = bill_depth_mm, y = flipper_length_mm,
-                     color = species)) +
+ggplot(
+  penguins,
+  aes(x = bill_depth_mm, y = flipper_length_mm, color = species)
+) +
   geom_point() +
   geom_smooth(method = "lm")
 ```
@@ -1428,8 +1496,10 @@ En statistiques ce phénomène (observer une relation inverse lorsque plusieurs 
 Ici, si la relation entre nos deux variables numériques s'inverse lorsque l'on examine cette relation à l'échelle de chaque modalité de la variable catégorielle. Une façon encore plus nette de mettre la relation positive en évidence est la suivante :
 
 ```{r}
-ggplot(penguins, aes(x = bill_depth_mm, y = flipper_length_mm,
-                     color = species)) +
+ggplot(
+  penguins,
+  aes(x = bill_depth_mm, y = flipper_length_mm, color = species)
+) +
   geom_point(show.legend = FALSE) +
   geom_smooth(method = "lm", show.legend = FALSE) +
   facet_wrap(~species, scales = "free")
@@ -1438,10 +1508,14 @@ ggplot(penguins, aes(x = bill_depth_mm, y = flipper_length_mm,
 Même sans connaître en détail le principe et les limites de la régression linéaire, vous comprenez j'espère à quel point l'exploration rigoureuse d'un jeu de données est importante. Par exemple, nous avons vu que plus tôt que, pour chaque espèce, les mâles sont plus lourds que les femelles. Est-ce que des différences morphologiques entre les sexes pourraient expliquer la relation que nous observons ici entre épaisseur du bec et longueur des nageoires ? Est-il possible qu'un second effet Simpson se cache dans ces données ? Si on distingue les deux sexes au sein de chaque espèce, la relation existe-t-elle toujours ? Et si oui, est-elle toujours positive ou s'inverse-t-elle à nouveau ? Pour le savoir, on peut utiliser une autre fonction permettant de produire des sous-graphiques, la fonction `facte_grid()`, qui permet de faire un sous graphique pour chaque combinaison de modalités de 2 variables catégorielles :
 
 ```{r}
-penguins |> 
-  filter(!is.na(sex)) |>    # Elimine les individus dont le sexe est inconnu
-  ggplot(aes(x = bill_depth_mm, y = flipper_length_mm,
-                     color = species, shape = sex)) +
+penguins |>
+  filter(!is.na(sex)) |> # Elimine les individus dont le sexe est inconnu
+  ggplot(aes(
+    x = bill_depth_mm,
+    y = flipper_length_mm,
+    color = species,
+    shape = sex
+  )) +
   geom_point(show.legend = FALSE) +
   geom_smooth(method = "lm", show.legend = FALSE) +
   facet_grid(sex ~ species, scales = "free")
@@ -1495,22 +1569,38 @@ Le point de départ le plus évident est d'ajouter des labels de qualité. La fo
 Reprenons par exemple le graphique permettant de visualiser la relation entre épaisseur et longueur du bec selon la masse des individus :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = body_mass_g,
+    size = body_mass_g
+  )
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6)
 ```
 
 Nous préciser les légendes en ajoutant la fonction `labs()` sur une nouvelle couche du graphique :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = body_mass_g,
+    size = body_mass_g
+  )
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'")
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'"
+  )
 ```
 
 Pour annoter correctement les légendes situées à droite, il convient d'avoir bien compris ce qui, dans notre code, a permis à `R` de générer automatiquement ces légendes. Le gradient de couleur a été créé parce que nous avons tapé `fill = body_mass_g`. Et l'échelle de taille des symboles a été créée parce que nous avons tapé `size = body_mass_g`. Dans la fonction `labs()`, nous devons donc préciser `fill = "..."` et `size = "..."` pour modifier le titre de ces 2 légendes :
@@ -1519,16 +1609,25 @@ Pour annoter correctement les légendes situées à droite, il convient d'avoir 
 #| label: fig-label
 #| fig-cap: "Une figure correctement légendée"
 
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = body_mass_g,
+    size = body_mass_g
+  )
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Masse (g)",
-       size = "Masse (g)")
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Masse (g)",
+    size = "Masse (g)"
+  )
 ```
 
 À partir de maintenant, vous devriez systématiquement légender les axes de vos graphiques et annoter vos légendes correctement, en n'oubliant pas de préciser les unités lorsque c'est pertinent, pour tous les graphiques que vous intégrez dans vos rapports, compte-rendus, mémoires, présentation, etc.
@@ -1557,16 +1656,25 @@ Par exemple, il est possible d'utiliser la palette `viridis`. Selon [ses auteurs
 Pour utiliser cette palette, il suffit d'ajouter une couche à notre graphique :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = body_mass_g,
+    size = body_mass_g
+  )
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Masse (g)",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Masse (g)",
+    size = "Masse (g)"
+  ) +
   scale_fill_viridis_c()
 ```
 
@@ -1575,32 +1683,50 @@ La palette `viridis` est proposée pour les échelles continues (d'où le `_c` �
 Ici, les individus les plus lourds apparaissent en jaune, et les plus légers en bleu sombre. Si on souhaite faire le contraire, c'est possible :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = body_mass_g,
+    size = body_mass_g
+  )
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Masse (g)",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Masse (g)",
+    size = "Masse (g)"
+  ) +
   scale_fill_viridis_c(direction = -1)
 ```
 
 D'autres palettes de couleurs sont également accessibles grâce à l'argument `option = ` de ces fonctions :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = body_mass_g,
+    size = body_mass_g
+  )
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Masse (g)",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Masse (g)",
+    size = "Masse (g)"
+  ) +
   scale_fill_viridis_c(option = "A")
 ```
 
@@ -1612,19 +1738,38 @@ Voici toutes les possibilités :
 #| fig-asp: 3
 #| warning: false
 
-pp <- ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g, size = body_mass_g)) +
+pp <- ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = body_mass_g,
+    size = body_mass_g
+  )
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       fill = "Masse (g)",
-       size = "Masse (g)")
+  labs(
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    fill = "Masse (g)",
+    size = "Masse (g)"
+  )
 
-p1 <- pp + scale_fill_viridis_c(option = "A") + ggtitle('option = "A" (ou option = "magma")')
-p2 <- pp + scale_fill_viridis_c(option = "B") + ggtitle('option = "B" (ou option = "inferno")')
-p3 <- pp + scale_fill_viridis_c(option = "C") + ggtitle('option = "C" (ou option = "plasma")')
-p4 <- pp + scale_fill_viridis_c(option = "D") + ggtitle('option = "D" (ou option = "viridis")')
-p5 <- pp + scale_fill_viridis_c(option = "E") + ggtitle('option = "E" (ou option = "cividis")')
+p1 <- pp +
+  scale_fill_viridis_c(option = "A") +
+  ggtitle('option = "A" (ou option = "magma")')
+p2 <- pp +
+  scale_fill_viridis_c(option = "B") +
+  ggtitle('option = "B" (ou option = "inferno")')
+p3 <- pp +
+  scale_fill_viridis_c(option = "C") +
+  ggtitle('option = "C" (ou option = "plasma")')
+p4 <- pp +
+  scale_fill_viridis_c(option = "D") +
+  ggtitle('option = "D" (ou option = "viridis")')
+p5 <- pp +
+  scale_fill_viridis_c(option = "E") +
+  ggtitle('option = "E" (ou option = "cividis")')
 
 p1 + p2 + p3 + p4 + p5 + plot_layout(ncol = 1)
 ```
@@ -1632,16 +1777,25 @@ p1 + p2 + p3 + p4 + p5 + plot_layout(ncol = 1)
 Dernière chose concernant `viridis` : la fonction `scale_fill_viridis_b()` discrétise la variable continue pour en faire une échelle discontinue. Il est en effet parfois plus facile de repérer une couleur parmi une palette de 4 ou 5 couleurs distinctes, plutôt qu'au sein d'un gradient. Voilà à quoi cela ressemble :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = body_mass_g,
+    size = body_mass_g
+  )
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Masse (g)",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Masse (g)",
+    size = "Masse (g)"
+  ) +
   scale_fill_viridis_b(option = "E")
 ```
 
@@ -1649,82 +1803,121 @@ ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
 Outre les fonctions d'échelles proposant les palettes `viridis`, les fonctions se terminant par `_gradient()`, `_gradient2()` et `_gradientn()` permettent de spécifier manuellement les couleurs à intégrer dans un dégradé. Avec la fonction `scale_fill_gradient()` on indique simplement les couleurs du début de de la fin du gradient :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = body_mass_g,
+    size = body_mass_g
+  )
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Masse (g)",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Masse (g)",
+    size = "Masse (g)"
+  ) +
   scale_fill_gradient(low = "gold", high = "firebrick3")
 ```
 
 N'importe quelle nom de couleur valide, ou n'importe que code couleur hexadécimal fonctionne (voir par exemple [ce site]() pour trouver les codes hexadécimaux dont vous avez besoin) :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = body_mass_g,
+    size = body_mass_g
+  )
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Masse (g)",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Masse (g)",
+    size = "Masse (g)"
+  ) +
   scale_fill_gradient(low = "#A0F87D", high = "#151197")
 ```
 
 Avec la fonction `scale_fill_gradient2()`, nous avons plus de contrôle : on indique une couleur de départ, une couleur d'arrivée, mais aussi, une couleur intermédiaire, et la valeur numérique à laquelle cette couleur doit apparaître :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = body_mass_g, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    fill = body_mass_g,
+    size = body_mass_g
+  )
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Masse (g)",
-       size = "Masse (g)") +
-  scale_fill_gradient2(low = "deeppink", high = "gold", mid = "darkslateblue",
-                       midpoint = 4500)
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Masse (g)",
+    size = "Masse (g)"
+  ) +
+  scale_fill_gradient2(
+    low = "deeppink",
+    high = "gold",
+    mid = "darkslateblue",
+    midpoint = 4500
+  )
 ```
 
 Je vous laisse explorer l'aide de cette fonction ainsi que celle de `scale_fill_gradientn()` pour savoir comment en utiliser toutes les possibilités.
 
 Lorsqu'une variable catégorielle est associée à la couleur, il est évidemment possible aussi d'effectuer les choix de palettes. Voyons en exemple en associant la couleur de remplissage des points à l'espèce plutôt qu'à la masse :
 
-```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = species, size = body_mass_g)) +
+```{r fig-gill-sans, dev='ragg_png', fig.ext='png'}
+ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Espèce",
-       size = "Masse (g)")
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Espèce",
+    size = "Masse (g)"
+  )
 ```
 
 La version discrète de `viridis` peut maintenant être appliquée. Les mêmes options que pour la version continue sont disponibles :
 
-```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = species, size = body_mass_g)) +
+```{r fig-gill-sans-size, dev='ragg_png', fig.ext='png'}
+ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Espèce",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Espèce",
+    size = "Masse (g)"
+  ) +
   scale_fill_viridis_d(option = "B")
 ```
 
@@ -1735,44 +1928,57 @@ Les possibilités sont nombreuses, notamment grâce aux fonctions `scale_fill_br
 Certaines palettes sont séquentielles (lorsque les catégories se suivent logiquement, pour les variables catégorielles ordinales en particulier), d'autres contiennent des couleurs indépendantes :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = species, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Espèce",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Espèce",
+    size = "Masse (g)"
+  ) +
   scale_fill_brewer(palette = "Accent")
 ```
 
 Enfin, il est possible de spécifier manuellement la liste des couleurs que l'on souhaite utiliser avec la fonction `scale_fill_manual()`. il faut bien entendu indiquer autant de couleurs que de modalités pour notre variable catégorielle (ici 3 espèces dont 3 couleurs) :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = species, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Espèce",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Espèce",
+    size = "Masse (g)"
+  ) +
   scale_fill_manual(values = c("deepskyblue", "darkorchid3", "lightsalmon"))
 ```
 
 Dernière chose concernant les couleurs : un choix de fonction `scale_XXX_XXX()` inapproprié est une cause d'erreur très fréquente ! Par exemple, pour la première figure de la partie consacrée au paradoxe de Simpson (@sec-simpson), la couleur des points et des lignes n'est pas spécifiée avec `fill` mais avec `color`. C'est donc bien une fonction qui commence par `scale_color_` qu'il faut utiliser : 
 
 ```{r}
-ggplot(penguins, aes(x = bill_depth_mm, y = flipper_length_mm,
-                     color = species)) +
+ggplot(
+  penguins,
+  aes(x = bill_depth_mm, y = flipper_length_mm, color = species)
+) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "Épaisseur du bec (mm)", y = "Longueur des nageoires (mm)",
-       color = "Espèce") +
+  labs(
+    x = "Épaisseur du bec (mm)",
+    y = "Longueur des nageoires (mm)",
+    color = "Espèce"
+  ) +
   scale_color_brewer(palette = "Set2")
 ```
 
@@ -1839,32 +2045,40 @@ Il est possible de spécifier chaque élément manuellement. Nous nous contenter
 Reprenons par exemple le code suivant :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = species, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Espèce",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Espèce",
+    size = "Masse (g)"
+  ) +
   scale_fill_viridis_d(option = "B")
 ```
 
 Le thème utilisé par défaut est `theme_gray()`. Il est notamment responsable de l'arrière plan gris et du quadrillage blanc. Pour changer de thème, il suffit d'ajouter une couche au graphique en donnant le nom du nouveau thème :
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = species, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Espèce",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Espèce",
+    size = "Masse (g)"
+  ) +
   scale_fill_viridis_d(option = "B") +
   theme_bw()
 ```
@@ -1881,16 +2095,20 @@ Le fond gris a disparu, et le quadrillage a changé de couleur. Les thèmes comp
 - `theme_void()` : thème vide, seuls les objets géométriques restent visibles.
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = species, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Espèce",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Espèce",
+    size = "Masse (g)"
+  ) +
   scale_fill_viridis_d(option = "B") +
   theme_minimal()
 ```
@@ -1899,85 +2117,46 @@ Tous les thèmes possèdent la même liste d'argument. L'un d'entre eux est l'ar
 
 Dans l'exemple ci-dessous, j'utilise la police "Gill Sans". Si cette police n'est pas disponible sur votre ordinateur, ce code produira une erreur (ou `R` prendra simplement la police par défaut. Si c'est le cas, remplacez-la par une police de votre ordinateur. Attention, son nom exact doit être utilisé. Cela signifie bien sûr le respect des espaces, majuscules, etc.
 
-```{r}
-#| eval: false
 
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = species, size = body_mass_g)) +
+```{r}
+ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Espèce",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Espèce",
+    size = "Masse (g)"
+  ) +
   scale_fill_viridis_d(option = "B") +
   theme_minimal(base_family = "Gill Sans")
 ```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-pplot1 <- ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = species, size = body_mass_g)) +
-  geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec de 3 espèces de manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Espèce",
-       size = "Masse (g)") +
-  scale_fill_viridis_d(option = "B") +
-  theme_minimal(base_family = "Gill Sans")
-
-ggsave(filename = "images/fonts1.pdf", plot = pplot1, device = cairo_pdf, width = 7, height = 5)
-```
-
-![](images/fonts1.pdf)
 
 Il est également possible de spécifier la taille de police qui devrait être utilisée par défaut. On spécifie la taille de base avec l'argument `base_size = `, et toutes les autres tailles de polices seront mises à jour pour refléter le changement. Ainsi, les différences de tailles entre titre, sous-titres, légendes des axes, etc, seront maintenues :
 
 ```{r}
-#| eval: false
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = species, size = body_mass_g)) +
+ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
+) +
   geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec des manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Espèce",
-       size = "Masse (g)") +
+  labs(
+    title = "Forme du bec des manchots et relation avec leur masse",
+    subtitle = "Les manchots les plus lourds ont des becs longs et fins",
+    x = "Longueur du bec (mm)",
+    y = "Épaisseur du bec (mm)",
+    caption = "Source :  package 'palmerpenguins'",
+    fill = "Espèce",
+    size = "Masse (g)"
+  ) +
   scale_fill_viridis_d(option = "B") +
   theme_minimal(base_family = "Gill Sans", base_size = 14)
 ```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-pplot2 <- ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
-                     fill = species, size = body_mass_g)) +
-  geom_point(shape = 21, color = "black", alpha = 0.6) +
-  labs(title = "Forme du bec des manchots et relation avec leur masse",
-       subtitle = "Les manchots les plus lourds ont des becs longs et fins",
-       x = "Longueur du bec (mm)",
-       y = "Épaisseur du bec (mm)",
-       caption = "Source :  package 'palmerpenguins'",
-       fill = "Espèce",
-       size = "Masse (g)") +
-  scale_fill_viridis_d(option = "B") +
-  theme_minimal(base_family = "Gill Sans", base_size = 14)
-
-ggsave(filename = "images/fonts2.pdf", plot = pplot2, device = cairo_pdf, width = 7, height = 5)
-```
-
-![](images/fonts2.pdf)
 
 Le choix d'un thème et d'une police adaptés doivent vous permettre de faire des graphiques originaux et clairs. Rappelez-vous toujours que vos choix en matière de graphiques doivent avoir pour objectif principal de rendre les tendances plus faciles à décrypter pour un lecteur non familier de vos données. C'est un outil de communication au même titre que n'importe quel paragraphe d'un rapport ou compte-rendu. Et comme pour un paragraphe, la première version d'un graphique est rarement la bonne.
 
@@ -2012,8 +2191,7 @@ diams <- diamonds |>
 #| fig-cap: "Prix de 3000 diamants en fonction de leur taille en carats et de leur clarté."
 ggplot(data = diams, mapping = aes(x = carat, y = price)) +
   geom_point(alpha = 0.5, shape = 4, aes(color = clarity)) +
-  labs(x = "Carat", y = "Prix ($US)",
-       color = "Clarté") +
+  labs(x = "Carat", y = "Prix ($US)", color = "Clarté") +
   theme_bw()
 ```
 
@@ -2029,8 +2207,7 @@ ggplot(data = diams, mapping = aes(x = carat, y = price)) +
 ```{r tidy=FALSE}
 set.seed(1234)
 small_flights <- flights |>
-  filter(!is.na(arr_delay),
-         distance < 3000)  |>
+  filter(!is.na(arr_delay), distance < 3000) |>
   sample_n(1000)
 ```
 
@@ -2045,16 +2222,18 @@ En vous appuyant sur les fonctions et les principes de la grammaire des graphiqu
 
 small_flights |>
   ggplot(aes(x = distance, y = air_time, color = origin, shape = origin)) +
-    geom_point(alpha = 0.8) +
-    scale_color_brewer(palette = "Set1") +
-    labs(x = "Distance parcourue en vol (miles)",
-         y = "Temps de vol (minutes)",
-         title = "Relation entre le temps de vol et la distance parcourue",
-         subtitle = "Seuls les vols au départ de JFK et Newark parcourent plus de 1600 miles",
-         color = "Aéroport de\nNew York",
-         shape = "Aéroport de\nNew York",
-         caption = "Données : small_flights") +
-    theme_bw()
+  geom_point(alpha = 0.8) +
+  scale_color_brewer(palette = "Set1") +
+  labs(
+    x = "Distance parcourue en vol (miles)",
+    y = "Temps de vol (minutes)",
+    title = "Relation entre le temps de vol et la distance parcourue",
+    subtitle = "Seuls les vols au départ de JFK et Newark parcourent plus de 1600 miles",
+    color = "Aéroport de\nNew York",
+    shape = "Aéroport de\nNew York",
+    caption = "Données : small_flights"
+  ) +
+  theme_bw()
 ```
 
 Quelques indices :
@@ -2071,16 +2250,18 @@ Quelques indices :
 #| warning: false
 small_flights |>
   ggplot(aes(x = factor(month), fill = origin)) +
-    geom_bar() +
-    facet_wrap(~fct_infreq(carrier), nrow = 4) +
-    scale_fill_brewer(palette = "Accent") +
-    labs(x = "Mois de l'année 2013",
-         y = "Nombre de vols",
-         title = "Évolution mensuelle du trafic aérien New Yorkais en 2013",
-         subtitle = "Seules 9 compagnies aériennes sur 14 ont déservi New York toute l'année",
-         fill = "Aéroport de\nNew York",
-         caption = "Données : small_flights") +
-    theme_bw()
+  geom_bar() +
+  facet_wrap(~ fct_infreq(carrier), nrow = 4) +
+  scale_fill_brewer(palette = "Accent") +
+  labs(
+    x = "Mois de l'année 2013",
+    y = "Nombre de vols",
+    title = "Évolution mensuelle du trafic aérien New Yorkais en 2013",
+    subtitle = "Seules 9 compagnies aériennes sur 14 ont déservi New York toute l'année",
+    fill = "Aéroport de\nNew York",
+    caption = "Données : small_flights"
+  ) +
+  theme_bw()
 ```
 
 Quelques indices :

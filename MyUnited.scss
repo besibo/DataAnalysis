@@ -58,6 +58,7 @@ $code-color: $blue-600 !default;
 
 $body-bg: $white !default;
 $body-color: #333 !default;
+$math-color: rgba($body-color, 0.82) !default;
 $link-color: $accent-pink !default;
 $link-hover-color: $accent-pink-dark !default;
 
@@ -142,6 +143,10 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@40
 body {
   text-rendering: optimizeLegibility;
   background: $body-bg;
+}
+
+mjx-container[jax="CHTML"] {
+  color: $math-color;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -289,13 +294,21 @@ main.content p,
   color: $slate-700;
 }
 
+#quarto-margin-sidebar #TOC .header-section-number {
+  color: $accent-pink;
+}
+
+#quarto-margin-sidebar #TOC ul ul .nav-link {
+  padding-left: 2rem;
+}
+
 #TOC .nav-link:hover {
   color: $accent-pink-dark;
 }
 
 #TOC .nav-link.active {
   color: $accent-pink;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 #quarto-margin-sidebar #TOC .nav-link.active {

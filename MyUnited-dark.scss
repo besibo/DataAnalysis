@@ -23,6 +23,8 @@ $gold-400: #f0c64f !default;
 $red-400: #ff7a7a !default;
 $orange-400: #ffad4f !default;
 $green-400: #63d98b !default;
+$accent-pink: #df3d75 !default;
+$accent-pink-dark: #f06293 !default;
 
 $gray-100: $bg-800 !default;
 $gray-200: $bg-750 !default;
@@ -37,7 +39,7 @@ $gray-900: $text-100 !default;
 $blue: $blue-500 !default;
 $indigo: #7f9cf5 !default;
 $purple: #a78bfa !default;
-$pink: #f687b3 !default;
+$pink: $accent-pink !default;
 $red: $red-400 !default;
 $orange: $orange-400 !default;
 $yellow: $gold-400 !default;
@@ -45,7 +47,7 @@ $green: $green-400 !default;
 $teal: $teal-400 !default;
 $cyan: #7dd3fc !default;
 
-$primary: $blue-400 !default;
+$primary: $accent-pink !default;
 $secondary: $text-400 !default;
 $success: $green !default;
 $info: $teal-400 !default;
@@ -57,8 +59,9 @@ $code-color: #9cc4ea !default;
 
 $body-bg: $bg-900 !default;
 $body-color: $text-200 !default;
-$link-color: #8bb8e8 !default;
-$link-hover-color: #b7d3f0 !default;
+$math-color: rgba($body-color, 0.88) !default;
+$link-color: $accent-pink !default;
+$link-hover-color: $accent-pink-dark !default;
 
 $border-color: rgba($white, 0.1) !default;
 $border-radius: 0.45rem !default;
@@ -76,7 +79,7 @@ $headings-font-weight: 800 !default;
 $line-height-base: 1.85 !default;
 $headings-line-height: 1.18 !default;
 
-$sidebar-bg: #111922 !default;
+$sidebar-bg: $body-bg !default;
 $navbar-bg: rgba(#111922, 0.92) !default;
 $toc-color: $text-300 !default;
 
@@ -144,18 +147,25 @@ body {
   color: $text-200;
 }
 
+mjx-container[jax="CHTML"] {
+  color: $math-color;
+}
+
 h1, h2, h3, h4, h5, h6 {
+  color: $accent-pink;
   letter-spacing: 0;
 }
 
 h1.title,
 .quarto-title-block .title {
+  color: $accent-pink;
   font-size: 2.45rem;
   line-height: 1.05;
   margin-bottom: 0.65rem;
 }
 
 h2 {
+  color: $accent-pink;
   margin-top: 2.3rem;
 }
 
@@ -166,7 +176,7 @@ h2 {
 
 .quarto-title-banner .quarto-title .title,
 .quarto-title-banner .title {
-  color: $text-100;
+  color: $accent-pink;
   max-width: 18ch;
 }
 
@@ -202,9 +212,19 @@ main.content p,
 }
 
 #quarto-sidebar,
-.sidebar {
+#quarto-margin-sidebar,
+.sidebar,
+.margin-sidebar {
   background: $sidebar-bg;
+}
+
+#quarto-sidebar {
   border-right: 1px solid rgba($white, 0.08);
+}
+
+#quarto-margin-sidebar,
+.margin-sidebar {
+  border-left: 1px solid rgba($white, 0.08);
 }
 
 .sidebar-title,
@@ -236,21 +256,64 @@ main.content p,
 }
 
 .sidebar nav[role="doc-toc"] ul > li > a:hover {
-  color: $text-100;
-  background: rgba($blue-400, 0.14);
+  color: $accent-pink-dark;
+  background: transparent;
 }
 
 .sidebar nav[role="doc-toc"] ul > li.active > a,
 .sidebar nav[role="doc-toc"] ul > li > a.active {
-  color: $text-100;
-  background: rgba($blue-400, 0.16);
-  border-left-color: $blue-400;
+  color: $accent-pink;
+  background: transparent;
+  border-left-color: $accent-pink;
   font-weight: 700;
 }
 
-#TOC .nav-link.active {
-  color: $text-100;
+#quarto-sidebar .sidebar-link:hover {
+  color: $accent-pink-dark;
+  background: transparent;
+}
+
+#quarto-sidebar .sidebar-link.active {
+  color: $accent-pink;
+  background: transparent;
   font-weight: 700;
+}
+
+#quarto-sidebar .sidebar-item .sidebar-link.active,
+#quarto-sidebar .sidebar-item.active > .sidebar-link,
+#quarto-sidebar .sidebar-item.active > .sidebar-item-container .sidebar-link,
+#quarto-sidebar .sidebar-item-container.active .sidebar-link,
+#quarto-sidebar .sidebar-link.active .menu-text,
+#quarto-sidebar .sidebar-link.active .sidebar-item-text,
+#quarto-sidebar .sidebar-item.active .menu-text,
+#quarto-sidebar .sidebar-item.active .sidebar-item-text {
+  color: $accent-pink !important;
+}
+
+#quarto-sidebar .chapter-number {
+  color: $accent-pink;
+  font-weight: 700;
+}
+
+#quarto-sidebar .sidebar-link.active .chapter-number {
+  color: $accent-pink;
+}
+
+#quarto-margin-sidebar #TOC .header-section-number {
+  color: $accent-pink;
+}
+
+#quarto-margin-sidebar #TOC ul ul .nav-link {
+  padding-left: 2rem;
+}
+
+#TOC .nav-link.active {
+  color: $accent-pink;
+  font-weight: 400;
+}
+
+#quarto-margin-sidebar #TOC .nav-link.active {
+  color: $accent-pink !important;
 }
 
 a {

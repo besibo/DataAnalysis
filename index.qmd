@@ -30,7 +30,11 @@ list.of.packages <- c(
   "scales",
   "colorspace",
   "rstatix",
-  "janitor"
+  "janitor",
+  "ragg",
+  "systemfonts",
+  "sysfonts",
+  "showtext"
 )
 new.packages <- list.of.packages[
   !(list.of.packages %in% installed.packages()[, "Package"])
@@ -43,6 +47,27 @@ library(remotes)
 library(knitr)
 library(tidyverse)
 
+if (requireNamespace("sysfonts", quietly = TRUE) &&
+    requireNamespace("showtext", quietly = TRUE)) {
+  sysfonts::font_add(
+    family = "Adelle-Light",
+    regular = "fonts/Adelle light.otf",
+    italic = "fonts/Adelle Light Italic.otf",
+    bold = "fonts/Adelle Semi bold.otf",
+    bolditalic = "fonts/Adelle Semi Bold Italic.otf"
+  )
+
+  gill_sans <- systemfonts::system_fonts() |>
+    dplyr::filter(family == "Gill Sans", style == "Regular") |>
+    dplyr::slice_head(n = 1)
+
+  if (nrow(gill_sans) > 0) {
+    sysfonts::font_add(family = "Gill Sans", regular = gill_sans$path[[1]])
+  }
+
+  showtext::showtext_auto()
+}
+
 remotes::install_github("haleyjeppson/ggmosaic")
 
 # if( !("EDAWR" %in% installed.packages()[,"Package"]) ) {
@@ -52,6 +77,14 @@ remotes::install_github("haleyjeppson/ggmosaic")
 opts_chunk$set(
   fig.path = 'figure/',
   cache.path = 'cache/',
+  dev = if (
+    (knitr::is_html_output() || knitr::is_latex_output()) &&
+    requireNamespace("ragg", quietly = TRUE)
+  ) {
+    "ragg_png"
+  } else {
+    "png"
+  },
   tidy = FALSE,
   fig.align = 'center',
   out.width = '90%',

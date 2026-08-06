@@ -27,6 +27,7 @@ book:
     - 13-Correlation.qmd
     - 14-Regression.qmd
     - 15-PropTests.qmd
+    - 16-GoodnessFit.qmd
     - references.qmd
   
 crossref:
@@ -47,6 +48,10 @@ format:
     theme: 
       light: MyUnited.scss
       dark: MyUnited-dark.scss
+    include-in-header: mathjax-config.html
+    html-math-method:
+      method: mathjax
+      url: "https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml-nofont.js"
     highlight-style: atom-one
     toc: true
     toc-depth: 3
@@ -64,6 +69,7 @@ format:
     link-external-newwindow: true
   pdf:
     pdf-engine: xelatex
+    fig-format: png
     mainfont: "Adelle"
     sansfont: "Adelle"
     documentclass: scrreprt

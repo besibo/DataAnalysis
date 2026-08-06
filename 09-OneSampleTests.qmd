@@ -521,11 +521,11 @@ La syntaxe est identique à celle du test de Student à un échantillon à une e
 
 Les hypothèses nulles et alternatives de ce test sont les mêmes que celles du test de Student à un échantillon. En toute rigueur, on compare la médiane à une valeur théorique, et non la moyenne. Mais dans la pratique, la grande majorité des utilisateurs de ce test font l'amalgame entre moyenne et médiane. Ici, la conclusion correcte devrait donc être :
 
-> Au seuil $\alpha$ de 5%, on ne peut pas rejeter l'hypothèse nulle (test de Wilcoxon des rangs signés, $V$ = 143, $p$ = 0.6077). La médiane de la population ($\widehat{med}$ = 36.94) n'est pas significativement différente de 37ºC (IC 95% : $[36.78 ; 37.11]$).
+> Au seuil $\alpha$ de 5%, on ne peut pas rejeter l'hypothèse nulle (test de Wilcoxon des rangs signés, $V$ = 143, *p* = 0.6077). La médiane de la population ($\widehat{med}$ = 36.94) n'est pas significativement différente de 37ºC (IC 95% : $[36.78 ; 37.11]$).
 
 Si les données ne suivent pas la loi Normale, la médiane est bien la métrique la plus intéressante puisque c'est elle qui nous renseigne sur la tendance centrale des données.
 
-Enfin, les tests de Wilcoxon renvoient souvent des messages d'avertissement. Il ne s'agit que de ça : des avertissements. Tant que la $p$-value d'un test est éloignée de la valeur seuil $\alpha$, cela n'a pas d'importance. Quand en revanche la $p$-value est très proche de $\alpha$, les messages d'avertissement doivent vous alerter : il faut être très prudent face aux conclusions du test qui peuvent alors être assez "fragiles".
+Enfin, les tests de Wilcoxon renvoient souvent des messages d'avertissement. Il ne s'agit que de ça : des avertissements. Tant que la *p*-value d'un test est éloignée de la valeur seuil $\alpha$, cela n'a pas d'importance. Quand en revanche la *p*-value est très proche de $\alpha$, les messages d'avertissement doivent vous alerter : il faut être très prudent face aux conclusions du test qui peuvent alors être assez "fragiles".
 
 
 ## Les notions d'erreur et de puissance statistique {#sec-puiss}

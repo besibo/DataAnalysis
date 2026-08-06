@@ -315,7 +315,7 @@ Lizard |>
   shapiro.test()
 ```
 
-> La $p$-value est supérieure à $\alpha = 0.05$, donc on ne peut pas rejeter l'hypothèse nulle de normalité pour la taille des cornes de la population des lézards cornus morts (test de Shapiro-Wilk, $W = 0.93$, $p = 0.065$).
+> La *p*-value est supérieure à $\alpha = 0.05$, donc on ne peut pas rejeter l'hypothèse nulle de normalité pour la taille des cornes de la population des lézards cornus morts (test de Shapiro-Wilk, $W = 0.93$, $p = 0.065$).
 
 Pour les individus vivants :
 
@@ -329,7 +329,7 @@ Lizard |>
   shapiro.test()
 ```
 
-> La $p$-value est inférieure à $\alpha = 0.05$, donc on rejette l'hypothèse nulle de normalité pour la taille des cornes de la population des lézards cornus vivants (test de Shapiro-Wilk, $W = 0.96$, $p < 0.001$).
+> La *p*-value est inférieure à $\alpha = 0.05$, donc on rejette l'hypothèse nulle de normalité pour la taille des cornes de la population des lézards cornus vivants (test de Shapiro-Wilk, $W = 0.96$, $p < 0.001$).
 
 L'une des 2 séries de données ne suit pas la loi Normale, nous sommes donc censés passer directement au point 4 de la procédure.
 
@@ -414,7 +414,7 @@ wilcox.test(Horn_len ~ Survival, data = Lizard, conf.int = TRUE)
 
 L'argument `var.equal = TRUE` n'existe pas pour ce test, puisque c'est justement un test non paramétrique qui ne requiert pas l'homogénéité des variances. En revanche, comme pour tous les autres tests de Wilcoxon que nous avons réalisés jusqu'ici, l'argument `conf.int = TRUE` permet d'afficher les estimateurs pertinents, ici, la différence de médiane entre les 2 populations et l'intervalle de confiance à 95% de cette différence de médiane.
 
-La conclusion est ici la même que pour le test de Student : puisque la $p$-value est très inférieure à $\alpha$, on rejette l'hypothèse nulle : les médianes sont bel et bien différentes.
+La conclusion est ici la même que pour le test de Student : puisque la *p*-value est très inférieure à $\alpha$, on rejette l'hypothèse nulle : les médianes sont bel et bien différentes.
 
 
 ## L'autre alternative non paramétrique
@@ -428,7 +428,7 @@ Enfin, dans le cas où la variable étudiée suit la loi Normale dans les deux p
 t.test(Horn_len ~ Survival, data = Lizard)
 ```
 
-La seule différence par rapport à la syntaxe du test $t$ de Student paramétrique est la suppression de l'argument `var.equal = TRUE`. Attention donc, à bien utiliser la syntaxe correcte. Le test du $t$ de Welch ne devrait être réalisé que lorsque la Normalité est vérifiée pour les 2 populations, mais pas l'homoscédasticité. Par rapport au test de Student classique, on constate que le nombre de degrés de libertés est très différent, et donc la $p$-value également. Les bornes de l'intervalle de confiance à 95% de la différence de moyenne sont différentes également puisque leur calcul a été fait en supposant que les 2 populations n'avaient pas même variance.
+La seule différence par rapport à la syntaxe du test $t$ de Student paramétrique est la suppression de l'argument `var.equal = TRUE`. Attention donc, à bien utiliser la syntaxe correcte. Le test du $t$ de Welch ne devrait être réalisé que lorsque la Normalité est vérifiée pour les 2 populations, mais pas l'homoscédasticité. Par rapport au test de Student classique, on constate que le nombre de degrés de libertés est très différent, et donc la *p*-value également. Les bornes de l'intervalle de confiance à 95% de la différence de moyenne sont différentes également puisque leur calcul a été fait en supposant que les 2 populations n'avaient pas même variance.
 
 ## Exercices d'application
 
@@ -587,7 +587,7 @@ t.test(
 )
 ```
 
-Puisque la $p$-value de ce test est inférieure à $\alpha = 0.05$, on rejette l'hypothèse nulle de l'égalité des moyennes. On valide donc l'hypothèse alternative : les lézards cornus morts ont en moyenne des cornes plus courtes que les lézards vivants. Cette différence de longueur de cornes est en faveur des lézards vivants et vaut très probablement au moins $1.4$ millimètres (c'est l'intervalle de confiance à 95% de la différence de moyennes qui nous le dit).
+Puisque la *p*-value de ce test est inférieure à $\alpha = 0.05$, on rejette l'hypothèse nulle de l'égalité des moyennes. On valide donc l'hypothèse alternative : les lézards cornus morts ont en moyenne des cornes plus courtes que les lézards vivants. Cette différence de longueur de cornes est en faveur des lézards vivants et vaut très probablement au moins $1.4$ millimètres (c'est l'intervalle de confiance à 95% de la différence de moyennes qui nous le dit).
 
 Dernière chose importante : il ne faut pas se tromper dans le choix de l'hypothèse alternative. En effet, nous aurions pu tenter de tester exactement la même chose en formulant les hypothèses suivantes :
 
@@ -605,7 +605,7 @@ t.test(
 )
 ```
 
-Ici, la $p$-value est très supérieure à $\alpha$ puisqu'elle vaut 1. Une $p$-value de 1 devrait toujours attirer votre attention. La conclusion devrait donc être que l'on ne peut pas rejeter H$_0$ : les lézards morts et vivants ont en moyenne des cornes de même longueur. Nous savons pourtant que c'est faux.
+Ici, la *p*-value est très supérieure à $\alpha$ puisqu'elle vaut 1. Une *p*-value de 1 devrait toujours attirer votre attention. La conclusion devrait donc être que l'on ne peut pas rejeter H$_0$ : les lézards morts et vivants ont en moyenne des cornes de même longueur. Nous savons pourtant que c'est faux.
 
 Le problème est ici liè à l'ordre des catégories "vivant" ou "mort" dans le facteur `Survival` du tableau `Lizard`. Les dernières lignes des tests que nous venons de faire indiquent la moyenne de chaque groupe, mais le groupe "killed" apparaît toujours avant le groupe "living". C'est l'ordre des niveaux dans le facteur `Survival` qui doit dicter la syntaxe appropriée :
 
@@ -629,7 +629,7 @@ nous avons donc en réalité posé les hypothèses suivantes :
 - H$_0$ : la moyenne de longueur des cornes de la population des lézards **morts** est égale à celle des lézards **vivants**. Leur différence vaut 0 ($\mu_{killed}-\mu_{living} = 0$).
 - H$_1$ : la moyenne de longueur des cornes de la population des lézards **morts** est **supérieure** à celle des lézards **vivants**. Leur différence est **supérieure** à 0 ($\mu_{killed}-\mu_{living} > 0$).
 
-Ce test est donc erroné, ce qui explique qu'il nous renvoie un résultat faux et une $p$-value de 1. Ici, puisque l'ordre des catégories est "killed" d'abord et "living" ensuite, la seule façon correcte de faire un test unilatéral qui a du sens est donc celle que nous avons réalisée en premier :
+Ce test est donc erroné, ce qui explique qu'il nous renvoie un résultat faux et une *p*-value de 1. Ici, puisque l'ordre des catégories est "killed" d'abord et "living" ensuite, la seule façon correcte de faire un test unilatéral qui a du sens est donc celle que nous avons réalisée en premier :
 
 ```{r, eval = FALSE}
 t.test(
