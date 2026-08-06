@@ -1887,8 +1887,6 @@ Lorsqu'une variable catégorielle est associée à la couleur, il est évidemmen
 
 ```{r}
 #| label: fig-gill-sans
-#| dev: 'ragg_png'
-#| fig-ext: 'png'
 ggplot(
   penguins,
   aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
@@ -1909,8 +1907,6 @@ La version discrète de `viridis` peut maintenant être appliquée. Les mêmes o
 
 ```{r}
 #| label: fig-gill-sans-size
-#| dev: 'ragg_png'
-#| fig-ext: 'png'
 ggplot(
   penguins,
   aes(x = bill_length_mm, y = bill_depth_mm, fill = species, size = body_mass_g)
