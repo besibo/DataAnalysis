@@ -167,6 +167,10 @@ h2 {
   margin-top: 2.3rem;
 }
 
+h4 {
+  font-weight: 600;
+}
+
 .quarto-title-banner {
   background: $body-bg;
   border-bottom: 1px solid rgba($slate-900, 0.06);
@@ -325,6 +329,12 @@ blockquote {
   background: rgba($blue-500, 0.05);
   padding: 0.9rem 1.1rem;
   border-radius: 0 $border-radius $border-radius 0;
+}
+
+main.content blockquote > :last-child,
+#quarto-document-content blockquote > :last-child,
+blockquote > :last-child {
+  margin-bottom: 0 !important;
 }
 
 code,
